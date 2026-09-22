@@ -1,0 +1,1594 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scha Digital Learning Hub - Marketplace Bahan Pendidikan Digital</title>
+  <meta name="description" content="Pusat sehenti bahan pendidikan digital: Lembaran Kerja, E-Book, Aplikasi & Video Pembelajaran.">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0fdf4',
+              100: '#dcfce7',
+              500: '#22c55e',
+              600: '#16a34a',
+              700: '#15803d',
+              800: '#166534',
+              900: '#14532d',
+            },
+            accent: {
+              50: '#fff7ed',
+              500: '#f97316',
+              600: '#ea580c',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  
+  <style>
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    [v-cloak] { display: none; }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 flex flex-col min-h-screen font-sans antialiased">
+
+  <!-- TOP HEADER & NAVIGATION -->
+  <header class="sticky top-0 z-40 bg-white border-b border-slate-200 shadow-sm">
+    <!-- Top notification banner -->
+    <div class="bg-brand-700 text-white text-xs py-1.5 px-4 text-center font-medium">
+      📚 Hub Pembelajaran Digital Mesra Ibu Bapa & Pendidik | Penghantaran Pantas via WhatsApp / E-mel
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 gap-4">
+        
+        <!-- Logo -->
+        <a href="#home" onclick="navTo('home')" class="flex items-center gap-2.5 shrink-0 group">
+          <div id="brandLogoContainer" class="w-10 h-10 rounded-xl bg-brand-600 text-white flex items-center justify-center font-bold text-xl shadow-md group-hover:scale-105 transition-transform">
+            S
+          </div>
+          <div>
+            <span id="brandNameDisplay" class="font-extrabold text-lg sm:text-xl tracking-tight text-slate-900 block leading-none">Scha Digital</span>
+            <span class="text-[10px] uppercase font-bold text-brand-600 tracking-wider">Learning Hub</span>
+          </div>
+        </a>
+
+        <!-- Search Bar -->
+        <div class="flex-1 max-w-xl mx-2 hidden sm:block">
+          <div class="relative">
+            <input 
+              type="text" 
+              id="globalSearchInput"
+              placeholder="Cari lembaran kerja, e-book, aplikasi..." 
+              oninput="handleSearchInput(event)"
+              class="w-full pl-10 pr-4 py-2 bg-slate-100 border border-transparent rounded-full text-sm focus:bg-white focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/20 transition-all"
+            >
+            <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-2.5"></i>
+          </div>
+        </div>
+
+        <!-- Right Nav Actions -->
+        <div class="flex items-center gap-3">
+          <button onclick="navTo('shop')" class="text-sm font-semibold text-slate-700 hover:text-brand-600 hidden md:block px-2 py-1">
+            Kedai
+          </button>
+
+          <!-- Cart Button -->
+          <button onclick="navTo('cart')" class="relative p-2 text-slate-700 hover:text-brand-600 hover:bg-slate-100 rounded-full transition-colors" title="Troli Sopping">
+            <i data-lucide="shopping-cart" class="w-6 h-6"></i>
+            <span id="cartBadge" class="absolute -top-1 -right-1 bg-accent-500 text-white text-[10px] font-extrabold w-5 h-5 rounded-full flex items-center justify-center border-2 border-white hidden">0</span>
+          </button>
+
+          <!-- Admin Portal Access -->
+          <button onclick="openAdminModal()" class="flex items-center gap-1.5 text-xs font-semibold bg-slate-900 text-white px-3 py-2 rounded-lg hover:bg-brand-700 transition-colors">
+            <i data-lucide="shield-check" class="w-4 h-4"></i>
+            <span class="hidden sm:inline">Seller Center</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Search Bar -->
+      <div class="pb-3 sm:hidden">
+        <div class="relative">
+          <input 
+            type="text" 
+            placeholder="Cari bahan pembelajaran..." 
+            oninput="handleSearchInput(event)"
+            class="w-full pl-10 pr-4 py-2 bg-slate-100 border border-transparent rounded-full text-sm focus:bg-white focus:border-brand-500 focus:outline-none"
+          >
+          <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-2.5"></i>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT VIEW CONTAINERS -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+    
+    <!-- VIEW 1: HOME PAGE -->
+    <div id="view-home" class="view-section space-y-10">
+      
+      <!-- Hero Banner Carousel/Section -->
+      <div id="heroBanner" class="relative rounded-2xl overflow-hidden bg-gradient-to-r from-brand-800 to-brand-600 text-white p-6 sm:p-10 shadow-lg flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="space-y-4 max-w-xl text-center md:text-left z-10">
+          <span class="inline-block bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider text-brand-100">
+            Koleksi Digital Premium
+          </span>
+          <h1 id="bannerTitle" class="text-2xl sm:text-4xl font-extrabold leading-tight">
+            Tingkatkan Pembelajaran Anak Lebih Kreatif & Interaktif
+          </h1>
+          <p id="bannerDesc" class="text-sm sm:text-base text-brand-100 font-normal">
+            Akses pantas kepada ratusan modul lembaran kerja, e-book, dan aplikasi latihan sekolah rendah & pra-sekolah.
+          </p>
+          <div class="pt-2">
+            <button id="bannerBtn" onclick="navTo('shop')" class="bg-accent-500 hover:bg-accent-600 text-white font-bold px-6 py-3 rounded-xl shadow-md transition-all transform hover:-translate-y-0.5 inline-flex items-center gap-2">
+              <span>Terokai Bahan</span>
+              <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+        <div class="w-full md:w-1/3 flex justify-center z-10">
+          <div class="w-48 h-48 sm:w-64 sm:h-64 bg-white/10 rounded-2xl border border-white/20 p-4 backdrop-blur-sm flex flex-col items-center justify-center text-center shadow-2xl">
+            <i data-lucide="book-open-check" class="w-20 h-20 text-white/90 mb-3 stroke-[1.5]"></i>
+            <span class="text-sm font-bold">100% Format Digital PDF / App</span>
+            <span class="text-xs text-brand-200 mt-1">Muat Turun Serta Merta</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product Types Horizontal Scroll Bar -->
+      <div>
+        <h2 class="text-base font-bold text-slate-900 mb-4 flex items-center gap-2">
+          <i data-lucide="layers" class="w-5 h-5 text-brand-600"></i>
+          Jenis Bahan Digital
+        </h2>
+        <div id="typePills" class="flex gap-3 overflow-x-auto pb-2 no-scrollbar">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- Categories Section -->
+      <div>
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+            <i data-lucide="grid" class="w-5 h-5 text-brand-600"></i>
+            Kategori Pilihan
+          </h2>
+          <button onclick="navTo('shop')" class="text-xs font-bold text-brand-600 hover:underline flex items-center gap-1">
+            Lihat Semua <i data-lucide="chevron-right" class="w-3 h-3"></i>
+          </button>
+        </div>
+        <div id="homeCategoriesGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- Featured Products -->
+      <div>
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h2 class="text-lg sm:text-xl font-bold text-slate-900 flex items-center gap-2">
+              <i data-lucide="sparkles" class="w-5 h-5 text-amber-500"></i>
+              Bahan Popular & Pilihan Utama
+            </h2>
+            <p class="text-xs text-slate-500">Lembaran kerja paling banyak mendapat sambutan guru & ibu bapa</p>
+          </div>
+          <button onclick="navTo('shop')" class="text-xs font-bold text-brand-600 hover:underline">
+            Lihat Semua Katalog
+          </button>
+        </div>
+        <div id="featuredProductsGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+    </div>
+
+    <!-- VIEW 2: SHOP / MARKETPLACE CATALOG -->
+    <div id="view-shop" class="view-section hidden space-y-6">
+      
+      <!-- Filter Bar -->
+      <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-4">
+        <div class="flex flex-col md:flex-row gap-4 items-stretch md:items-center justify-between">
+          
+          <!-- Category Filter dropdown -->
+          <div class="flex flex-wrap gap-2 items-center">
+            <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Tapis:</span>
+            <select id="filterCategorySelect" onchange="applyFilters()" class="text-xs border border-slate-300 rounded-lg px-3 py-2 bg-white focus:outline-none focus:border-brand-500">
+              <option value="all">Semua Kategori</option>
+            </select>
+            <select id="filterTypeSelect" onchange="applyFilters()" class="text-xs border border-slate-300 rounded-lg px-3 py-2 bg-white focus:outline-none focus:border-brand-500">
+              <option value="all">Semua Jenis Bahan</option>
+            </select>
+          </div>
+
+          <!-- Sorting -->
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Susun:</span>
+            <select id="sortBySelect" onchange="applyFilters()" class="text-xs border border-slate-300 rounded-lg px-3 py-2 bg-white focus:outline-none focus:border-brand-500">
+              <option value="newest">Terbaharu</option>
+              <option value="price-low">Harga: Rendah ke Tinggi</option>
+              <option value="price-high">Harga: Tinggi ke Rendah</option>
+              <option value="popular">Paling Popular</option>
+            </select>
+            <button onclick="resetFilters()" class="text-xs text-slate-500 hover:text-rose-600 border border-slate-200 px-2.5 py-2 rounded-lg transition-colors">
+              Reset
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Shop Grid -->
+      <div>
+        <div id="shopProductsCount" class="text-xs font-medium text-slate-500 mb-3">Memaparkan produk...</div>
+        <div id="shopProductsGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+          <!-- Populated by JS -->
+        </div>
+        
+        <!-- Empty State -->
+        <div id="shopEmptyState" class="hidden py-16 text-center space-y-3">
+          <i data-lucide="folder-search" class="w-12 h-12 text-slate-300 mx-auto"></i>
+          <h3 class="text-base font-bold text-slate-700">Tiada bahan ditemui</h3>
+          <p class="text-xs text-slate-500">Cuba ubah kata kunci carian atau tetapan tapisan anda.</p>
+          <button onclick="resetFilters()" class="text-xs font-bold bg-brand-600 text-white px-4 py-2 rounded-lg hover:bg-brand-700">
+            Set Semula Carian
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- VIEW 3: PRODUCT DETAIL -->
+    <div id="view-product-detail" class="view-section hidden space-y-8">
+      <button onclick="navTo('shop')" class="text-xs font-semibold text-slate-600 hover:text-brand-600 inline-flex items-center gap-1">
+        <i data-lucide="arrow-left" class="w-4 h-4"></i> Kembali ke Katalog
+      </button>
+
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden p-6 md:p-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          
+          <!-- Left: Media Preview -->
+          <div class="space-y-4">
+            <div class="aspect-square bg-slate-100 rounded-xl overflow-hidden border border-slate-200 flex items-center justify-center relative group">
+              <img id="detailImg" src="" alt="" class="w-full h-full object-cover">
+              <span id="detailTypeBadge" class="absolute top-3 left-3 bg-slate-900/80 backdrop-blur-md text-white text-[10px] font-bold px-2.5 py-1 rounded-md">
+                Type
+              </span>
+            </div>
+          </div>
+
+          <!-- Right: Metadata & Actions -->
+          <div class="space-y-6 flex flex-col justify-between">
+            <div class="space-y-3">
+              <div class="flex items-center justify-between">
+                <span id="detailCategory" class="text-xs font-bold text-brand-600 uppercase tracking-wider">Kategori</span>
+                <span id="detailStatus" class="text-[10px] bg-emerald-100 text-emerald-800 font-semibold px-2 py-0.5 rounded-full">Stok Sedia Ada (Digital)</span>
+              </div>
+              <h1 id="detailTitle" class="text-xl sm:text-2xl font-extrabold text-slate-900">Tajuk Produk</h1>
+              
+              <!-- Pricing -->
+              <div class="flex items-baseline gap-3 py-2 border-y border-slate-100">
+                <span id="detailPrice" class="text-2xl sm:text-3xl font-extrabold text-brand-600">RM 0.00</span>
+                <span id="detailOriginalPrice" class="text-sm text-slate-400 line-through hidden">RM 0.00</span>
+              </div>
+
+              <!-- Product Info Meta -->
+              <div class="space-y-2 text-xs text-slate-600">
+                <div class="flex items-center gap-2">
+                  <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500"></i>
+                  <span>Format Fail: PDF / Pautan Akses Interaktif</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <i data-lucide="zap" class="w-4 h-4 text-amber-500"></i>
+                  <span>Penghantaran Segera: Hantar Terus Melalui WhatsApp / E-mel</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <i data-lucide="shield-check" class="w-4 h-4 text-brand-600"></i>
+                  <span>Jaminan kualiti bahan pendidikan oleh Scha Digital</span>
+                </div>
+              </div>
+
+              <!-- Description -->
+              <div class="pt-4">
+                <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wider mb-2">Penerangan Bahan</h3>
+                <p id="detailDesc" class="text-sm text-slate-600 leading-relaxed whitespace-pre-line">Penerangan terperinci...</p>
+              </div>
+            </div>
+
+            <!-- CTA Actions -->
+            <div class="pt-6 border-t border-slate-100 space-y-3">
+              <div class="flex gap-3">
+                <button id="addToCartBtn" class="flex-1 border-2 border-brand-600 text-brand-700 hover:bg-brand-50 font-bold py-3 px-4 rounded-xl transition-colors flex items-center justify-center gap-2 text-sm">
+                  <i data-lucide="shopping-cart" class="w-4 h-4"></i>
+                  <span>Tambah ke Troli</span>
+                </button>
+                <button id="buyNowBtn" class="flex-1 bg-accent-500 hover:bg-accent-600 text-white font-bold py-3 px-4 rounded-xl shadow-md transition-colors flex items-center justify-center gap-2 text-sm">
+                  <i data-lucide="zap" class="w-4 h-4"></i>
+                  <span>Beli Sekarang</span>
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW 4: SHOPPING CART -->
+    <div id="view-cart" class="view-section hidden max-w-3xl mx-auto space-y-6">
+      <h1 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+        <i data-lucide="shopping-bag" class="w-6 h-6 text-brand-600"></i>
+        Troli Sopping Anda
+      </h1>
+
+      <div id="cartContent" class="space-y-4">
+        <!-- Cart Items List populated dynamically -->
+      </div>
+
+      <!-- Empty Cart State -->
+      <div id="cartEmptyState" class="hidden bg-white rounded-2xl border border-slate-200 p-12 text-center space-y-4">
+        <i data-lucide="shopping-cart" class="w-16 h-16 text-slate-300 mx-auto"></i>
+        <h2 class="text-lg font-bold text-slate-800">Troli anda masih kosong</h2>
+        <p class="text-xs text-slate-500 max-w-sm mx-auto">Sila pilih lembaran kerja atau bahan digital daripada kedai kami untuk diteruskan.</p>
+        <button onclick="navTo('shop')" class="bg-brand-600 text-white font-bold text-xs px-6 py-2.5 rounded-xl hover:bg-brand-700">
+          Mula Membeli-belah
+        </button>
+      </div>
+
+      <!-- Cart Summary Footer Card -->
+      <div id="cartSummaryCard" class="bg-white rounded-2xl border border-slate-200 p-6 space-y-4 shadow-sm">
+        <div class="flex justify-between items-center text-sm">
+          <span class="text-slate-600">Jumlah Item:</span>
+          <span id="cartTotalItemsCount" class="font-bold text-slate-800">0</span>
+        </div>
+        <div class="flex justify-between items-center text-base border-t border-slate-100 pt-3">
+          <span class="font-bold text-slate-900">Jumlah Keseluruhan:</span>
+          <span id="cartTotalPrice" class="font-extrabold text-xl text-brand-600">RM 0.00</span>
+        </div>
+        <button onclick="navTo('checkout')" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-3.5 rounded-xl shadow-md transition-all flex items-center justify-center gap-2 text-sm">
+          <span>Teruskan ke Checkout</span>
+          <i data-lucide="arrow-right" class="w-4 h-4"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- VIEW 5: CHECKOUT PAGE -->
+    <div id="view-checkout" class="view-section hidden max-w-2xl mx-auto space-y-6">
+      <button onclick="navTo('cart')" class="text-xs font-semibold text-slate-600 hover:text-brand-600 inline-flex items-center gap-1">
+        <i data-lucide="arrow-left" class="w-4 h-4"></i> Kembali ke Troli
+      </button>
+
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8 space-y-6">
+        <div class="border-b border-slate-100 pb-4">
+          <h1 class="text-xl font-bold text-slate-900">Checkout Pesanan</h1>
+          <p class="text-xs text-slate-500 mt-1">Lengkapkan nama anda untuk membuat pesanan rasmi melalui WhatsApp.</p>
+        </div>
+
+        <!-- Customer Input (Strictly Name required only as per master prompt) -->
+        <div class="space-y-4">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Nama Pelanggan <span class="text-rose-500">*</span></label>
+            <input 
+              type="text" 
+              id="customerNameInput" 
+              placeholder="Masukkan nama penuh anda" 
+              class="w-full px-4 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:bg-white focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/20"
+            >
+            <p id="nameError" class="text-[11px] text-rose-500 hidden mt-1">Sila masukkan nama anda sebelum meneruskan pesanan.</p>
+          </div>
+        </div>
+
+        <!-- Order Summary Readonly Card -->
+        <div class="bg-slate-50 rounded-xl p-4 border border-slate-200/80 space-y-3">
+          <h3 class="text-xs font-bold text-slate-700 uppercase tracking-wider">Ringkasan Pesanan (Auto-Generated)</h3>
+          
+          <div id="checkoutItemsList" class="space-y-2 text-xs border-b border-slate-200 pb-3">
+            <!-- Items injected by JS -->
+          </div>
+
+          <div class="flex justify-between items-center text-sm font-extrabold text-slate-900 pt-1">
+            <span>Jumlah Pembayaran:</span>
+            <span id="checkoutTotalPrice" class="text-brand-600 text-lg">RM 0.00</span>
+          </div>
+        </div>
+
+        <!-- Configured WhatsApp Submit Button -->
+        <div>
+          <button 
+            onclick="processWhatsAppCheckout()" 
+            id="waCheckoutBtn"
+            class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-4 rounded-xl shadow-lg hover:shadow-emerald-600/20 transition-all flex items-center justify-center gap-2.5 text-base"
+          >
+            <i data-lucide="message-circle" class="w-5 h-5"></i>
+            <span id="waBtnLabelText">Order Melalui WhatsApp</span>
+          </button>
+          <p class="text-[11px] text-slate-400 text-center mt-2">
+            Anda akan dihalakan terus ke aplikasi WhatsApp dengan draf mesej pesanan terperinci.
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- VIEW 6: ADMIN SELLER CENTER / DASHBOARD -->
+    <div id="view-admin" class="view-section hidden space-y-8">
+      
+      <!-- Admin Header -->
+      <div class="bg-slate-900 text-white rounded-2xl p-6 sm:p-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 shadow-md">
+        <div>
+          <span class="text-[10px] uppercase font-bold bg-brand-500 text-slate-900 px-2.5 py-0.5 rounded-full">Kawalan Pentadbir</span>
+          <h1 class="text-2xl font-extrabold mt-1">Seller Center Dashboard</h1>
+          <p class="text-xs text-slate-400">Urus produk, kategori, jenama & tetapan WhatsApp Hub.</p>
+        </div>
+        <button onclick="logoutAdmin()" class="bg-slate-800 hover:bg-rose-900/50 hover:text-rose-300 text-slate-300 text-xs font-bold px-4 py-2.5 rounded-xl border border-slate-700 transition-colors flex items-center gap-1.5">
+          <i data-lucide="log-out" class="w-4 h-4"></i>
+          Log Keluar
+        </button>
+      </div>
+
+      <!-- Admin Tabs -->
+      <div class="border-b border-slate-200 flex gap-2 overflow-x-auto no-scrollbar">
+        <button onclick="switchAdminTab('overview')" id="adminTabBtn-overview" class="admin-tab-btn py-2.5 px-4 text-xs font-bold border-b-2 border-brand-600 text-brand-600 whitespace-nowrap">
+          Gambaran Keseluruhan
+        </button>
+        <button onclick="switchAdminTab('products')" id="adminTabBtn-products" class="admin-tab-btn py-2.5 px-4 text-xs font-bold border-b-2 border-transparent text-slate-500 hover:text-slate-900 whitespace-nowrap">
+          Pengurusan Produk
+        </button>
+        <button onclick="switchAdminTab('categories')" id="adminTabBtn-categories" class="admin-tab-btn py-2.5 px-4 text-xs font-bold border-b-2 border-transparent text-slate-500 hover:text-slate-900 whitespace-nowrap">
+          Pengurusan Kategori
+        </button>
+        <button onclick="switchAdminTab('branding')" id="adminTabBtn-branding" class="admin-tab-btn py-2.5 px-4 text-xs font-bold border-b-2 border-transparent text-slate-500 hover:text-slate-900 whitespace-nowrap">
+          Branding & Banner
+        </button>
+        <button onclick="switchAdminTab('settings')" id="adminTabBtn-settings" class="admin-tab-btn py-2.5 px-4 text-xs font-bold border-b-2 border-transparent text-slate-500 hover:text-slate-900 whitespace-nowrap">
+          Tetapan WhatsApp & Kedai
+        </button>
+      </div>
+
+      <!-- ADMIN TAB 1: OVERVIEW -->
+      <div id="adminTab-overview" class="admin-tab-content space-y-6">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-1">
+            <span class="text-xs font-bold text-slate-400 uppercase">Jumlah Produk</span>
+            <div id="statTotalProducts" class="text-2xl font-extrabold text-slate-900">0</div>
+          </div>
+          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-1">
+            <span class="text-xs font-bold text-slate-400 uppercase">Produk Aktif</span>
+            <div id="statActiveProducts" class="text-2xl font-extrabold text-emerald-600">0</div>
+          </div>
+          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-1">
+            <span class="text-xs font-bold text-slate-400 uppercase">Jumlah Kategori</span>
+            <div id="statTotalCategories" class="text-2xl font-extrabold text-brand-600">0</div>
+          </div>
+          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-1">
+            <span class="text-xs font-bold text-slate-400 uppercase">Status Sistem</span>
+            <div class="text-xs font-bold text-emerald-700 bg-emerald-100 px-2 py-1 rounded-md inline-block">Online (LocalStore)</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ADMIN TAB 2: PRODUCTS MANAGEMENT -->
+      <div id="adminTab-products" class="admin-tab-content hidden space-y-6">
+        <div class="flex justify-between items-center">
+          <h2 class="text-base font-bold text-slate-900">Senarai Produk Katalog</h2>
+          <button onclick="openProductModal()" class="bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow transition-colors inline-flex items-center gap-1.5">
+            <i data-lucide="plus" class="w-4 h-4"></i> Tambah Produk Baharu
+          </button>
+        </div>
+
+        <!-- Products Table -->
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse text-xs">
+              <thead>
+                <tr class="bg-slate-50 border-b border-slate-200 text-slate-500 font-bold uppercase">
+                  <th class="p-3.5">Produk</th>
+                  <th class="p-3.5">Jenis</th>
+                  <th class="p-3.5">Kategori</th>
+                  <th class="p-3.5">Harga</th>
+                  <th class="p-3.5">Status</th>
+                  <th class="p-3.5 text-right">Tindakan</th>
+                </tr>
+              </thead>
+              <tbody id="adminProductsTableBody" class="divide-y divide-slate-100">
+                <!-- Rows injected by JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ADMIN TAB 3: CATEGORIES MANAGEMENT -->
+      <div id="adminTab-categories" class="admin-tab-content hidden space-y-6">
+        <div class="flex justify-between items-center">
+          <h2 class="text-base font-bold text-slate-900">Senarai Kategori Produk</h2>
+          <button onclick="openCategoryModal()" class="bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow transition-colors inline-flex items-center gap-1.5">
+            <i data-lucide="plus" class="w-4 h-4"></i> Tambah Kategori
+          </button>
+        </div>
+
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse text-xs">
+              <thead>
+                <tr class="bg-slate-50 border-b border-slate-200 text-slate-500 font-bold uppercase">
+                  <th class="p-3.5">Nama Kategori</th>
+                  <th class="p-3.5">Penerangan</th>
+                  <th class="p-3.5">Status</th>
+                  <th class="p-3.5 text-right">Tindakan</th>
+                </tr>
+              </thead>
+              <tbody id="adminCategoriesTableBody" class="divide-y divide-slate-100">
+                <!-- Rows injected by JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ADMIN TAB 4: BRANDING & BANNER -->
+      <div id="adminTab-branding" class="admin-tab-content hidden space-y-6">
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+          <h2 class="text-base font-bold text-slate-900">Tetapan Logo & Penjenamaan</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1">Nama Kedai</label>
+              <input type="text" id="settingStoreName" class="w-full px-3 py-2 border rounded-xl text-xs">
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1">URL Logo (Ikon/Gambar)</label>
+              <input type="text" id="settingStoreLogo" class="w-full px-3 py-2 border rounded-xl text-xs" placeholder="Biarkan kosong untuk mod teks default">
+            </div>
+          </div>
+
+          <hr class="border-slate-100">
+
+          <h2 class="text-base font-bold text-slate-900">Banner Utamapage (Hero)</h2>
+          <div class="space-y-4">
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1">Tajuk Banner Hero</label>
+              <input type="text" id="settingBannerTitle" class="w-full px-3 py-2 border rounded-xl text-xs">
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1">Sub-Penerangan Banner</label>
+              <textarea id="settingBannerDesc" rows="2" class="w-full px-3 py-2 border rounded-xl text-xs"></textarea>
+            </div>
+          </div>
+
+          <button onclick="saveBrandingSettings()" class="bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold px-5 py-2.5 rounded-xl">
+            Simpan Tetapan Branding
+          </button>
+        </div>
+      </div>
+
+      <!-- ADMIN TAB 5: WHATSAPP SETTINGS -->
+      <div id="adminTab-settings" class="admin-tab-content hidden space-y-6">
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+          <h2 class="text-base font-bold text-slate-900">Konfigurasi Pesanan WhatsApp</h2>
+          
+          <div class="space-y-4">
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1">Nombor WhatsApp Kedai (Format: 60123456789)</label>
+              <input type="text" id="settingWaNumber" class="w-full px-3 py-2 border rounded-xl text-xs" placeholder="60123456789">
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1">Label Butang Checkout WhatsApp</label>
+              <input type="text" id="settingWaButtonLabel" class="w-full px-3 py-2 border rounded-xl text-xs" placeholder="Order Melalui WhatsApp">
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1">Template Mesej Pesanan Dinamik</label>
+              <p class="text-[11px] text-slate-500 mb-1.5">Gunakan tag: <code>{STORE_NAME}</code>, <code>{CUSTOMER_NAME}</code>, <code>{ITEMS}</code>, <code>{TOTAL}</code></p>
+              <textarea id="settingWaTemplate" rows="6" class="w-full px-3 py-2 border rounded-xl text-xs font-mono"></textarea>
+            </div>
+          </div>
+
+          <button onclick="saveWaSettings()" class="bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold px-5 py-2.5 rounded-xl">
+            Simpan Konfigurasi WhatsApp
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-slate-900 text-slate-400 text-xs py-10 mt-12 border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="space-y-3">
+        <span class="font-extrabold text-base text-white block">Scha Digital Learning Hub</span>
+        <p class="leading-relaxed text-slate-400">
+          Pasaran bahan pendidikan digital dipercayai. Memudahkan pembelajaran anak-anak dengan lembaran kerja dan aplikasi berkualiti tinggi.
+        </p>
+      </div>
+      <div class="space-y-2">
+        <span class="font-bold text-white block uppercase tracking-wider text-[11px]">Bahan Digital</span>
+        <ul class="space-y-1.5">
+          <li>Worksheet PDF</li>
+          <li>E-Book Pendidikan</li>
+          <li>Aplikasi Pembelajaran</li>
+          <li>Bundle Lembaran Kerja</li>
+        </ul>
+      </div>
+      <div class="space-y-2">
+        <span class="font-bold text-white block uppercase tracking-wider text-[11px]">Bantuan & Sokongan</span>
+        <p>Penghantaran produk dilakukan secara manual/automatik selepas pengesahan pesanan melalui WhatsApp rasmi kedai.</p>
+        <p class="text-slate-500 text-[10px] pt-2">© 2026 Scha Digital Learning Hub. Hak Cipta Terpelihara.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- MODALS CONTAINER -->
+
+  <!-- 1. ADMIN AUTHENTICATION MODAL -->
+  <div id="adminAuthModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white w-full max-w-sm rounded-2xl p-6 space-y-4 shadow-2xl relative">
+      <button onclick="closeAdminModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <div class="text-center space-y-1">
+        <div class="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center mx-auto text-slate-800">
+          <i data-lucide="lock" class="w-6 h-6"></i>
+        </div>
+        <h3 class="text-base font-bold text-slate-900">Akses Seller Center</h3>
+        <p class="text-xs text-slate-500">Masukkan kata laluan pentadbir untuk mengurus kedai.</p>
+      </div>
+
+      <div class="space-y-3">
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Kata Laluan Admin</label>
+          <input type="password" id="adminPasswordInput" class="w-full px-3 py-2 border rounded-xl text-xs focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 outline-none" placeholder="••••••••">
+          <p id="adminAuthError" class="text-[11px] text-rose-500 hidden mt-1">Kata laluan tidak sah. (Default: admin123)</p>
+        </div>
+        <button onclick="loginAdmin()" class="w-full bg-slate-900 hover:bg-brand-600 text-white font-bold text-xs py-2.5 rounded-xl transition-colors">
+          Log Masuk
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. ADD/EDIT PRODUCT MODAL -->
+  <div id="productFormModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white w-full max-w-lg rounded-2xl p-6 space-y-4 shadow-2xl max-h-[90vh] overflow-y-auto relative">
+      <button onclick="closeProductModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <h3 id="productModalTitle" class="text-base font-bold text-slate-900">Tambah Produk Baharu</h3>
+
+      <form id="productForm" onsubmit="handleProductFormSubmit(event)" class="space-y-4 text-xs">
+        <input type="hidden" id="pId">
+
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Tajuk Produk *</label>
+          <input type="text" id="pTitle" required class="w-full px-3 py-2 border rounded-xl focus:outline-none focus:border-brand-500">
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Jenis Bahan *</label>
+            <select id="pType" required class="w-full px-3 py-2 border rounded-xl focus:outline-none focus:border-brand-500">
+              <option value="Worksheet PDF">Worksheet PDF</option>
+              <option value="E-book">E-book</option>
+              <option value="Educational Application">Educational Application</option>
+              <option value="Worksheet Bundle">Worksheet Bundle</option>
+              <option value="Educational Video">Educational Video</option>
+              <option value="Other Digital Product">Other Digital Product</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Kategori *</label>
+            <select id="pCategory" required class="w-full px-3 py-2 border rounded-xl focus:outline-none focus:border-brand-500">
+              <!-- Dynamically filled -->
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Harga (RM) *</label>
+            <input type="number" step="0.01" id="pPrice" required class="w-full px-3 py-2 border rounded-xl focus:outline-none focus:border-brand-500">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Harga Asal (Potongan - RM)</label>
+            <input type="number" step="0.01" id="pOriginalPrice" class="w-full px-3 py-2 border rounded-xl focus:outline-none focus:border-brand-500">
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">URL Gambar Preview</label>
+          <input type="text" id="pImg" class="w-full px-3 py-2 border rounded-xl focus:outline-none focus:border-brand-500" placeholder="https://via.placeholder.com/400">
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Penerangan Produk</label>
+          <textarea id="pDesc" rows="4" class="w-full px-3 py-2 border rounded-xl focus:outline-none focus:border-brand-500"></textarea>
+        </div>
+
+        <div class="flex items-center gap-4 pt-2">
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input type="checkbox" id="pStatus" checked class="rounded text-brand-600">
+            <span class="font-bold text-slate-700">Aktifkan Produk</span>
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input type="checkbox" id="pFeatured" class="rounded text-brand-600">
+            <span class="font-bold text-slate-700">Produk Pilihan (Featured)</span>
+          </label>
+        </div>
+
+        <div class="pt-4 flex justify-end gap-2">
+          <button type="button" onclick="closeProductModal()" class="px-4 py-2 border rounded-xl text-slate-600">Batal</button>
+          <button type="submit" class="px-5 py-2 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl">Simpan Produk</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 3. ADD/EDIT CATEGORY MODAL -->
+  <div id="categoryFormModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white w-full max-w-md rounded-2xl p-6 space-y-4 shadow-2xl relative">
+      <button onclick="closeCategoryModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <h3 id="categoryModalTitle" class="text-base font-bold text-slate-900">Tambah Kategori</h3>
+
+      <form id="categoryForm" onsubmit="handleCategoryFormSubmit(event)" class="space-y-4 text-xs">
+        <input type="hidden" id="cId">
+
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Nama Kategori *</label>
+          <input type="text" id="cName" required class="w-full px-3 py-2 border rounded-xl focus:outline-none focus:border-brand-500">
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Penerangan Ringkas</label>
+          <input type="text" id="cDesc" class="w-full px-3 py-2 border rounded-xl focus:outline-none focus:border-brand-500">
+        </div>
+
+        <div class="flex items-center gap-2 pt-2">
+          <input type="checkbox" id="cStatus" checked class="rounded text-brand-600">
+          <label for="cStatus" class="font-bold text-slate-700">Aktifkan Kategori</label>
+        </div>
+
+        <div class="pt-4 flex justify-end gap-2">
+          <button type="button" onclick="closeCategoryModal()" class="px-4 py-2 border rounded-xl text-slate-600">Batal</button>
+          <button type="submit" class="px-5 py-2 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl">Simpan Kategori</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- APPLICATION LOGIC (SINGLE-FILE JS ARCHITECTURE) -->
+  <script>
+    /* ==========================================================================
+       1. INITIAL STATE & PERSISTENT DATA SEEDING (LOCALSTORAGE)
+       ========================================================================== */
+    const STORAGE_KEY_PRODUCTS = "scha_hub_products_v1";
+    const STORAGE_KEY_CATEGORIES = "scha_hub_categories_v1";
+    const STORAGE_KEY_SETTINGS = "scha_hub_settings_v1";
+    const STORAGE_KEY_CART = "scha_hub_cart_v1";
+
+    const DEFAULT_CATEGORIES = [
+      { id: "cat-1", name: "Pra-Sekolah", desc: "Modul asas membaca, menulis & mengira (3-6 Tahun)", active: true },
+      { id: "cat-2", name: "Sekolah Rendah (Tahap 1)", desc: "Bahan aktiviti Tahun 1, 2 & 3", active: true },
+      { id: "cat-3", name: "Sekolah Rendah (Tahap 2)", desc: "Modul subjek teras Tahun 4, 5 & 6", active: true },
+      { id: "cat-4", name: "Bahasa Melayu & Inggeris", desc: "Latihan tatabahasa & pemahaman", active: true },
+      { id: "cat-5", name: "Matematik & Sains", desc: "Soalan pengukuhan konsep & formula", active: true },
+      { id: "cat-6", name: "Pendidikan Islam & Moral", desc: "Latihan tajwid, jawi & nilai murni", active: true }
+    ];
+
+    const DEFAULT_PRODUCTS = [
+      {
+        id: "prod-101",
+        title: "Bundle Lembaran Kerja Asas Membaca & Mengira Pra-Sekolah (PDF)",
+        type: "Worksheet Bundle",
+        category: "Pra-Sekolah",
+        price: 15.00,
+        originalPrice: 25.00,
+        img: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&auto=format&fit=crop&q=80",
+        desc: "Lengkap dengan 120+ muka surat modul aktiviti mewarna, mengenal huruf, dan nombor untuk kanak-kanak berumur 3 hingga 6 tahun.\n\n- Format PDF mesra cetak.\n- Terus muat turun.",
+        active: true,
+        featured: true,
+        createdDate: new Date().toISOString()
+      },
+      {
+        id: "prod-102",
+        title: "E-Book Modul Poket Latihan Tatabahasa Tahun 1-3",
+        type: "E-book",
+        category: "Bahasa Melayu & Inggeris",
+        price: 10.00,
+        originalPrice: 18.00,
+        img: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=600&auto=format&fit=crop&q=80",
+        desc: "Nota ringkas dan latihan interaktif mengandungi kata nama, kata kerja, dan kata adjektif berasaskan silibus terkini.",
+        active: true,
+        featured: true,
+        createdDate: new Date().toISOString()
+      },
+      {
+        id: "prod-103",
+        title: "Aplikasi Android/Web Interaktif Soal Jawab Matematik Pantas",
+        type: "Educational Application",
+        category: "Matematik & Sains",
+        price: 20.00,
+        originalPrice: 35.00,
+        img: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&auto=format&fit=crop&q=80",
+        desc: "Aplikasi latihan matematik berasaskan kuiz berasaskan masa. Sesuai digunakan di tablet atau telefon bimbit.",
+        active: true,
+        featured: true,
+        createdDate: new Date().toISOString()
+      },
+      {
+        id: "prod-104",
+        title: "Video Pembelajaran & Slaid Interaktif Sains Tahun 4 (Ekosistem)",
+        type: "Educational Video",
+        category: "Sekolah Rendah (Tahap 2)",
+        price: 12.00,
+        originalPrice: 20.00,
+        img: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&auto=format&fit=crop&q=80",
+        desc: "Siri video penerangan animasi 45 minit berserta modul slaid persembahan PowerPoint untuk kegunaan pengajaran guru.",
+        active: true,
+        featured: false,
+        createdDate: new Date().toISOString()
+      }
+    ];
+
+    const DEFAULT_SETTINGS = {
+      storeName: "Scha Digital Learning Hub",
+      logoUrl: "",
+      bannerTitle: "Tingkatkan Pembelajaran Anak Lebih Kreatif & Interaktif",
+      bannerDesc: "Akses pantas kepada ratusan modul lembaran kerja, e-book, dan aplikasi latihan sekolah rendah & pra-sekolah.",
+      waNumber: "60123456789",
+      waButtonLabel: "Order Melalui WhatsApp",
+      waTemplate: "Hello {STORE_NAME},\n\nSaya ingin membuat pesanan bagi bahan berikut:\n\nNama Pelanggan: {CUSTOMER_NAME}\n\nSenarai Pesanan:\n{ITEMS}\n\nJumlah Keseluruhan: {TOTAL}\n\nSila berikan maklumat akaun untuk pembayaran. Terima kasih!"
+    };
+
+    // State Variables
+    let products = JSON.parse(localStorage.getItem(STORAGE_KEY_PRODUCTS)) || DEFAULT_PRODUCTS;
+    let categories = JSON.parse(localStorage.getItem(STORAGE_KEY_CATEGORIES)) || DEFAULT_CATEGORIES;
+    let settings = JSON.parse(localStorage.getItem(STORAGE_KEY_SETTINGS)) || DEFAULT_SETTINGS;
+    let cart = JSON.parse(localStorage.getItem(STORAGE_KEY_CART)) || [];
+    let isAdminLoggedIn = false;
+    let currentDetailProductId = null;
+
+    // Filters state
+    let filterCategory = "all";
+    let filterType = "all";
+    let searchQuery = "";
+    let sortBy = "newest";
+
+    /* ==========================================================================
+       2. INITIALIZATION & ROUTING ENGINE
+       ========================================================================== */
+    document.addEventListener("DOMContentLoaded", () => {
+      // Save default seed data to storage if first run
+      if (!localStorage.getItem(STORAGE_KEY_PRODUCTS)) saveData(STORAGE_KEY_PRODUCTS, products);
+      if (!localStorage.getItem(STORAGE_KEY_CATEGORIES)) saveData(STORAGE_KEY_CATEGORIES, categories);
+      if (!localStorage.getItem(STORAGE_KEY_SETTINGS)) saveData(STORAGE_KEY_SETTINGS, settings);
+
+      // Render initial Lucide icons
+      lucide.createIcons();
+
+      // Apply Branding Settings to DOM
+      applyBrandingDOM();
+
+      // Populate Category Options in Modals & Filters
+      populateCategorySelects();
+
+      // Render Views
+      renderHomeView();
+      renderShopView();
+      updateCartUI();
+
+      // Handle direct hash navigation
+      handleHashNavigation();
+      window.addEventListener("hashchange", handleHashNavigation);
+    });
+
+    function saveData(key, value) {
+      localStorage.setItem(key, JSON.stringify(value));
+    }
+
+    function handleHashNavigation() {
+      const hash = window.location.hash.replace("#", "") || "home";
+      if (hash.startsWith("product/")) {
+        const pId = hash.split("/")[1];
+        showProductDetail(pId);
+      } else {
+        navTo(hash, false);
+      }
+    }
+
+    function navTo(viewId, updateHash = true) {
+      if (updateHash) {
+        window.location.hash = viewId;
+      }
+      
+      // Hide all view sections
+      document.querySelectorAll(".view-section").forEach(el => el.classList.add("hidden"));
+
+      // Show target view
+      const targetView = document.getElementById(`view-${viewId}`);
+      if (targetView) {
+        targetView.classList.remove("hidden");
+      } else {
+        document.getElementById("view-home").classList.remove("hidden");
+      }
+
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    /* ==========================================================================
+       3. DOM RENDERERS (MARKETPLACE / CUSTOMER)
+       ========================================================================== */
+    function applyBrandingDOM() {
+      document.getElementById("brandNameDisplay").innerText = settings.storeName || "Scha Digital";
+      document.getElementById("bannerTitle").innerText = settings.bannerTitle;
+      document.getElementById("bannerDesc").innerText = settings.bannerDesc;
+      document.getElementById("waBtnLabelText").innerText = settings.waButtonLabel || "Order Melalui WhatsApp";
+
+      // Populate Settings inputs in Admin
+      document.getElementById("settingStoreName").value = settings.storeName;
+      document.getElementById("settingStoreLogo").value = settings.logoUrl;
+      document.getElementById("settingBannerTitle").value = settings.bannerTitle;
+      document.getElementById("settingBannerDesc").value = settings.bannerDesc;
+      document.getElementById("settingWaNumber").value = settings.waNumber;
+      document.getElementById("settingWaButtonLabel").value = settings.waButtonLabel;
+      document.getElementById("settingWaTemplate").value = settings.waTemplate;
+    }
+
+    function renderHomeView() {
+      // Render Types Horizontal Pills
+      const types = ["Worksheet PDF", "E-book", "Educational Application", "Worksheet Bundle", "Educational Video"];
+      const typePills = document.getElementById("typePills");
+      typePills.innerHTML = types.map(t => `
+        <button onclick="filterByTypeFromHome('${t}')" class="bg-white hover:bg-brand-50 border border-slate-200 text-slate-700 text-xs font-bold px-4 py-2 rounded-xl whitespace-nowrap shadow-sm transition-colors shrink-0">
+          ${t}
+        </button>
+      `).join("");
+
+      // Render Categories Grid
+      const activeCategories = categories.filter(c => c.active);
+      const categoriesGrid = document.getElementById("homeCategoriesGrid");
+      categoriesGrid.innerHTML = activeCategories.map(c => `
+        <div onclick="filterByCategoryFromHome('${c.name}')" class="bg-white p-4 rounded-xl border border-slate-200/80 hover:border-brand-500 hover:shadow-md cursor-pointer transition-all text-center space-y-2 group">
+          <div class="w-10 h-10 bg-brand-50 rounded-xl flex items-center justify-center mx-auto text-brand-600 group-hover:bg-brand-600 group-hover:text-white transition-colors">
+            <i data-lucide="book-open" class="w-5 h-5"></i>
+          </div>
+          <h3 class="text-xs font-bold text-slate-800 line-clamp-1">${c.name}</h3>
+        </div>
+      `).join("");
+
+      // Render Featured Products Grid
+      const featured = products.filter(p => p.active && p.featured);
+      const featuredGrid = document.getElementById("featuredProductsGrid");
+      featuredGrid.innerHTML = featured.map(p => createProductCardHTML(p)).join("");
+
+      lucide.createIcons();
+    }
+
+    function createProductCardHTML(product) {
+      return `
+        <div class="bg-white rounded-2xl border border-slate-200/80 overflow-hidden hover:shadow-lg hover:border-slate-300 transition-all flex flex-col justify-between group">
+          <div>
+            <!-- Image & Badge -->
+            <div class="aspect-square bg-slate-100 relative overflow-hidden cursor-pointer" onclick="navigateToDetail('${product.id}')">
+              <img src="${product.img || 'https://via.placeholder.com/400'}" alt="${product.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+              <span class="absolute top-2 left-2 bg-slate-900/80 backdrop-blur-md text-white text-[9px] font-bold px-2 py-0.5 rounded-md">
+                ${product.type}
+              </span>
+            </div>
+
+            <!-- Content -->
+            <div class="p-3.5 space-y-1.5">
+              <span class="text-[10px] font-bold text-brand-600 uppercase tracking-wider block">${product.category}</span>
+              <h3 onclick="navigateToDetail('${product.id}')" class="text-xs font-bold text-slate-900 line-clamp-2 cursor-pointer hover:text-brand-600 transition-colors">
+                ${product.title}
+              </h3>
+            </div>
+          </div>
+
+          <!-- Bottom Price & Cart CTA -->
+          <div class="p-3.5 pt-0 flex items-center justify-between gap-2 border-t border-slate-50 mt-2">
+            <div>
+              <span class="text-sm font-extrabold text-brand-600">RM ${product.price.toFixed(2)}</span>
+              ${product.originalPrice ? `<span class="text-[10px] text-slate-400 line-through block">RM ${product.originalPrice.toFixed(2)}</span>` : ''}
+            </div>
+            <button onclick="addToCart('${product.id}')" class="bg-slate-100 hover:bg-brand-600 hover:text-white text-slate-800 p-2 rounded-xl transition-colors shadow-sm" title="Tambah ke Troli">
+              <i data-lucide="shopping-cart" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderShopView() {
+      let filtered = products.filter(p => p.active);
+
+      // Category filter
+      if (filterCategory !== "all") {
+        filtered = filtered.filter(p => p.category === filterCategory);
+      }
+
+      // Type filter
+      if (filterType !== "all") {
+        filtered = filtered.filter(p => p.type === filterType);
+      }
+
+      // Search query
+      if (searchQuery.trim() !== "") {
+        const q = searchQuery.toLowerCase();
+        filtered = filtered.filter(p => p.title.toLowerCase().includes(q) || p.desc.toLowerCase().includes(q));
+      }
+
+      // Sorting
+      if (sortBy === "price-low") {
+        filtered.sort((a, b) => a.price - b.price);
+      } else if (sortBy === "price-high") {
+        filtered.sort((a, b) => b.price - a.price);
+      } else if (sortBy === "popular") {
+        filtered.sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
+      } else {
+        // newest
+        filtered.sort((a, b) => new Date(b.createdDate || 0) - new Date(a.createdDate || 0));
+      }
+
+      const grid = document.getElementById("shopProductsGrid");
+      const emptyState = document.getElementById("shopEmptyState");
+      const countDisplay = document.getElementById("shopProductsCount");
+
+      countDisplay.innerText = `Memaparkan ${filtered.length} daripada ${products.filter(p => p.active).length} bahan digital`;
+
+      if (filtered.length === 0) {
+        grid.innerHTML = "";
+        emptyState.classList.remove("hidden");
+      } else {
+        emptyState.classList.add("hidden");
+        grid.innerHTML = filtered.map(p => createProductCardHTML(p)).join("");
+      }
+
+      lucide.createIcons();
+    }
+
+    function showProductDetail(pId) {
+      const product = products.find(p => p.id === pId);
+      if (!product) {
+        navTo("shop");
+        return;
+      }
+
+      currentDetailProductId = pId;
+
+      document.getElementById("detailImg").src = product.img || "https://via.placeholder.com/400";
+      document.getElementById("detailTypeBadge").innerText = product.type;
+      document.getElementById("detailCategory").innerText = product.category;
+      document.getElementById("detailTitle").innerText = product.title;
+      document.getElementById("detailPrice").innerText = `RM ${product.price.toFixed(2)}`;
+      
+      const origEl = document.getElementById("detailOriginalPrice");
+      if (product.originalPrice) {
+        origEl.innerText = `RM ${product.originalPrice.toFixed(2)}`;
+        origEl.classList.remove("hidden");
+      } else {
+        origEl.classList.add("hidden");
+      }
+
+      document.getElementById("detailDesc").innerText = product.desc || "Tiada penerangan tambahan.";
+
+      // CTA Buttons setup
+      document.getElementById("addToCartBtn").onclick = () => addToCart(product.id);
+      document.getElementById("buyNowBtn").onclick = () => {
+        addToCart(product.id);
+        navTo("cart");
+      };
+
+      navTo("product-detail", false);
+      window.location.hash = `product/${pId}`;
+    }
+
+    function navigateToDetail(pId) {
+      showProductDetail(pId);
+    }
+
+    /* Filter Handlers */
+    function handleSearchInput(e) {
+      searchQuery = e.target.value;
+      renderShopView();
+      if (window.location.hash !== "#shop") navTo("shop");
+    }
+
+    function applyFilters() {
+      filterCategory = document.getElementById("filterCategorySelect").value;
+      filterType = document.getElementById("filterTypeSelect").value;
+      sortBy = document.getElementById("sortBySelect").value;
+      renderShopView();
+    }
+
+    function resetFilters() {
+      filterCategory = "all";
+      filterType = "all";
+      searchQuery = "";
+      sortBy = "newest";
+      document.getElementById("filterCategorySelect").value = "all";
+      document.getElementById("filterTypeSelect").value = "all";
+      document.getElementById("sortBySelect").value = "newest";
+      document.getElementById("globalSearchInput").value = "";
+      renderShopView();
+    }
+
+    function filterByCategoryFromHome(catName) {
+      filterCategory = catName;
+      document.getElementById("filterCategorySelect").value = catName;
+      navTo("shop");
+      renderShopView();
+    }
+
+    function filterByTypeFromHome(typeName) {
+      filterType = typeName;
+      document.getElementById("filterTypeSelect").value = typeName;
+      navTo("shop");
+      renderShopView();
+    }
+
+    function populateCategorySelects() {
+      const activeCats = categories.filter(c => c.active);
+      const filterSelect = document.getElementById("filterCategorySelect");
+      const formSelect = document.getElementById("pCategory");
+
+      const optionsHTML = activeCats.map(c => `<option value="${c.name}">${c.name}</option>`).join("");
+      
+      filterSelect.innerHTML = `<option value="all">Semua Kategori</option>` + optionsHTML;
+      if (formSelect) formSelect.innerHTML = optionsHTML;
+    }
+
+    /* ==========================================================================
+       4. SHOPPING CART SYSTEM
+       ========================================================================== */
+    function addToCart(pId) {
+      const product = products.find(p => p.id === pId);
+      if (!product) return;
+
+      const existingIndex = cart.findIndex(item => item.id === pId);
+      if (existingIndex > -1) {
+        cart[existingIndex].qty += 1;
+      } else {
+        cart.push({
+          id: product.id,
+          title: product.title,
+          price: product.price,
+          img: product.img,
+          qty: 1
+        });
+      }
+
+      saveData(STORAGE_KEY_CART, cart);
+      updateCartUI();
+
+      // Show brief notification/toast alert
+      alert(`"${product.title}" telah ditambah ke troli!`);
+    }
+
+    function updateCartQuantity(pId, delta) {
+      const index = cart.findIndex(i => i.id === pId);
+      if (index === -1) return;
+
+      cart[index].qty += delta;
+      if (cart[index].qty <= 0) {
+        cart.splice(index, 1);
+      }
+
+      saveData(STORAGE_KEY_CART, cart);
+      updateCartUI();
+    }
+
+    function removeFromCart(pId) {
+      cart = cart.filter(i => i.id !== pId);
+      saveData(STORAGE_KEY_CART, cart);
+      updateCartUI();
+    }
+
+    function updateCartUI() {
+      const badge = document.getElementById("cartBadge");
+      const totalCount = cart.reduce((sum, i) => sum + i.qty, 0);
+      
+      if (totalCount > 0) {
+        badge.innerText = totalCount;
+        badge.classList.remove("hidden");
+      } else {
+        badge.classList.add("hidden");
+      }
+
+      // Render Cart view list
+      const cartContainer = document.getElementById("cartContent");
+      const emptyState = document.getElementById("cartEmptyState");
+      const summaryCard = document.getElementById("cartSummaryCard");
+
+      if (cart.length === 0) {
+        cartContainer.innerHTML = "";
+        emptyState.classList.remove("hidden");
+        summaryCard.classList.add("hidden");
+      } else {
+        emptyState.classList.add("hidden");
+        summaryCard.classList.remove("hidden");
+
+        cartContainer.innerHTML = cart.map(item => `
+          <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+              <img src="${item.img || 'https://via.placeholder.com/100'}" class="w-16 h-16 rounded-xl object-cover border border-slate-100">
+              <div>
+                <h4 class="text-xs font-bold text-slate-900 line-clamp-1">${item.title}</h4>
+                <span class="text-xs font-extrabold text-brand-600 block mt-0.5">RM ${item.price.toFixed(2)}</span>
+              </div>
+            </div>
+
+            <!-- Qty controls & delete -->
+            <div class="flex items-center gap-3">
+              <div class="flex items-center border border-slate-200 rounded-lg">
+                <button onclick="updateCartQuantity('${item.id}', -1)" class="px-2.5 py-1 text-slate-600 hover:bg-slate-100 font-bold text-xs">-</button>
+                <span class="px-3 text-xs font-bold text-slate-800">${item.qty}</span>
+                <button onclick="updateCartQuantity('${item.id}', 1)" class="px-2.5 py-1 text-slate-600 hover:bg-slate-100 font-bold text-xs">+</button>
+              </div>
+              <button onclick="removeFromCart('${item.id}')" class="text-slate-400 hover:text-rose-600 p-1">
+                <i data-lucide="trash-2" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </div>
+        `).join("");
+
+        const subtotal = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
+        document.getElementById("cartTotalItemsCount").innerText = totalCount;
+        document.getElementById("cartTotalPrice").innerText = `RM ${subtotal.toFixed(2)}`;
+      }
+
+      // Render Checkout View summary list
+      renderCheckoutView();
+      lucide.createIcons();
+    }
+
+    /* ==========================================================================
+       5. CHECKOUT & WHATSAPP GENERATOR
+       ========================================================================== */
+    function renderCheckoutView() {
+      const container = document.getElementById("checkoutItemsList");
+      const totalPriceEl = document.getElementById("checkoutTotalPrice");
+
+      if (cart.length === 0) {
+        container.innerHTML = `<p class="text-slate-400 text-center py-2">Tiada produk untuk dicounter.</p>`;
+        totalPriceEl.innerText = "RM 0.00";
+        return;
+      }
+
+      container.innerHTML = cart.map(i => `
+        <div class="flex justify-between items-center text-xs">
+          <span class="text-slate-700 font-medium">${i.qty}x ${i.title}</span>
+          <span class="font-bold text-slate-900">RM ${(i.price * i.qty).toFixed(2)}</span>
+        </div>
+      `).join("");
+
+      const subtotal = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
+      totalPriceEl.innerText = `RM ${subtotal.toFixed(2)}`;
+    }
+
+    function processWhatsAppCheckout() {
+      const nameInput = document.getElementById("customerNameInput");
+      const nameError = document.getElementById("nameError");
+      const customerName = nameInput.value.trim();
+
+      if (!customerName) {
+        nameError.classList.remove("hidden");
+        nameInput.focus();
+        return;
+      }
+      nameError.classList.add("hidden");
+
+      if (cart.length === 0) {
+        alert("Troli anda kosong.");
+        return;
+      }
+
+      // Format order items list text
+      const itemsListText = cart.map((item, idx) => `${idx + 1}. ${item.title} (x${item.qty}) - RM ${(item.price * item.qty).toFixed(2)}`).join("\n");
+      const totalAmount = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
+
+      // Interpolate WhatsApp template variables
+      let message = settings.waTemplate || DEFAULT_SETTINGS.waTemplate;
+      message = message.replace(/{STORE_NAME}/g, settings.storeName || "Scha Digital Learning Hub");
+      message = message.replace(/{CUSTOMER_NAME}/g, customerName);
+      message = message.replace(/{ITEMS}/g, itemsListText);
+      message = message.replace(/{TOTAL}/g, `RM ${totalAmount.toFixed(2)}`);
+
+      // Clean WhatsApp phone number (remove +, spaces, dashes)
+      const cleanPhone = (settings.waNumber || "60123456789").replace(/[^0-9]/g, "");
+
+      // Open WhatsApp Web/App with URL Encoding
+      const encodedMsg = encodeURIComponent(message);
+      const waURL = `https://wa.me/${cleanPhone}?text=${encodedMsg}`;
+
+      window.open(waURL, "_blank");
+    }
+
+    /* ==========================================================================
+       6. ADMIN / SELLER CENTER MANAGEMENT
+       ========================================================================== */
+    function openAdminModal() {
+      if (isAdminLoggedIn) {
+        navTo("admin");
+      } else {
+        document.getElementById("adminAuthModal").classList.remove("hidden");
+      }
+    }
+
+    function closeAdminModal() {
+      document.getElementById("adminAuthModal").classList.add("hidden");
+    }
+
+    function loginAdmin() {
+      const pwd = document.getElementById("adminPasswordInput").value;
+      const errorEl = document.getElementById("adminAuthError");
+
+      if (pwd === "admin123" || pwd === "admin") {
+        isAdminLoggedIn = true;
+        errorEl.classList.add("hidden");
+        closeAdminModal();
+        renderAdminDashboard();
+        navTo("admin");
+      } else {
+        errorEl.classList.remove("hidden");
+      }
+    }
+
+    function logoutAdmin() {
+      isAdminLoggedIn = false;
+      navTo("home");
+    }
+
+    function switchAdminTab(tabKey) {
+      document.querySelectorAll(".admin-tab-content").forEach(el => el.classList.add("hidden"));
+      document.querySelectorAll(".admin-tab-btn").forEach(btn => {
+        btn.classList.remove("border-brand-600", "text-brand-600");
+        btn.classList.add("border-transparent", "text-slate-500");
+      });
+
+      document.getElementById(`adminTab-${tabKey}`).classList.remove("hidden");
+      const activeBtn = document.getElementById(`adminTabBtn-${tabKey}`);
+      activeBtn.classList.remove("border-transparent", "text-slate-500");
+      activeBtn.classList.add("border-brand-600", "text-brand-600");
+    }
+
+    function renderAdminDashboard() {
+      // Statistics
+      document.getElementById("statTotalProducts").innerText = products.length;
+      document.getElementById("statActiveProducts").innerText = products.filter(p => p.active).length;
+      document.getElementById("statTotalCategories").innerText = categories.length;
+
+      // Products Table
+      const prodTableBody = document.getElementById("adminProductsTableBody");
+      prodTableBody.innerHTML = products.map(p => `
+        <tr class="hover:bg-slate-50">
+          <td class="p-3.5 flex items-center gap-2">
+            <img src="${p.img || 'https://via.placeholder.com/50'}" class="w-8 h-8 rounded-md object-cover">
+            <span class="font-bold text-slate-800 line-clamp-1">${p.title}</span>
+          </td>
+          <td class="p-3.5 text-slate-600">${p.type}</td>
+          <td class="p-3.5 text-slate-600">${p.category}</td>
+          <td class="p-3.5 font-bold text-slate-900">RM ${p.price.toFixed(2)}</td>
+          <td class="p-3.5">
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${p.active ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-500'}">
+              ${p.active ? 'Aktif' : 'Nyahaktif'}
+            </span>
+          </td>
+          <td class="p-3.5 text-right space-x-2">
+            <button onclick="editProduct('${p.id}')" class="text-brand-600 font-bold hover:underline">Edit</button>
+            <button onclick="deleteProduct('${p.id}')" class="text-rose-600 font-bold hover:underline">Padam</button>
+          </td>
+        </tr>
+      `).join("");
+
+      // Categories Table
+      const catTableBody = document.getElementById("adminCategoriesTableBody");
+      catTableBody.innerHTML = categories.map(c => `
+        <tr class="hover:bg-slate-50">
+          <td class="p-3.5 font-bold text-slate-800">${c.name}</td>
+          <td class="p-3.5 text-slate-600 line-clamp-1">${c.desc || '-'}</td>
+          <td class="p-3.5">
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${c.active ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-500'}">
+              ${c.active ? 'Aktif' : 'Nyahaktif'}
+            </span>
+          </td>
+          <td class="p-3.5 text-right space-x-2">
+            <button onclick="editCategory('${c.id}')" class="text-brand-600 font-bold hover:underline">Edit</button>
+            <button onclick="deleteCategory('${c.id}')" class="text-rose-600 font-bold hover:underline">Padam</button>
+          </td>
+        </tr>
+      `).join("");
+
+      lucide.createIcons();
+    }
+
+    /* Product CRUD */
+    function openProductModal(pId = null) {
+      populateCategorySelects();
+      const modal = document.getElementById("productFormModal");
+      const titleEl = document.getElementById("productModalTitle");
+
+      if (pId) {
+        const p = products.find(prod => prod.id === pId);
+        if (!p) return;
+
+        titleEl.innerText = "Edit Produk";
+        document.getElementById("pId").value = p.id;
+        document.getElementById("pTitle").value = p.title;
+        document.getElementById("pType").value = p.type;
+        document.getElementById("pCategory").value = p.category;
+        document.getElementById("pPrice").value = p.price;
+        document.getElementById("pOriginalPrice").value = p.originalPrice || "";
+        document.getElementById("pImg").value = p.img || "";
+        document.getElementById("pDesc").value = p.desc || "";
+        document.getElementById("pStatus").checked = p.active;
+        document.getElementById("pFeatured").checked = p.featured || false;
+      } else {
+        titleEl.innerText = "Tambah Produk Baharu";
+        document.getElementById("productForm").reset();
+        document.getElementById("pId").value = "";
+      }
+
+      modal.classList.remove("hidden");
+    }
+
+    function closeProductModal() {
+      document.getElementById("productFormModal").classList.add("hidden");
+    }
+
+    function handleProductFormSubmit(e) {
+      e.preventDefault();
+
+      const id = document.getElementById("pId").value;
+      const productData = {
+        id: id || "prod-" + Date.now(),
+        title: document.getElementById("pTitle").value,
+        type: document.getElementById("pType").value,
+        category: document.getElementById("pCategory").value,
+        price: parseFloat(document.getElementById("pPrice").value),
+        originalPrice: document.getElementById("pOriginalPrice").value ? parseFloat(document.getElementById("pOriginalPrice").value) : null,
+        img: document.getElementById("pImg").value,
+        desc: document.getElementById("pDesc").value,
+        active: document.getElementById("pStatus").checked,
+        featured: document.getElementById("pFeatured").checked,
+        createdDate: new Date().toISOString()
+      };
+
+      if (id) {
+        const index = products.findIndex(p => p.id === id);
+        if (index > -1) products[index] = productData;
+      } else {
+        products.push(productData);
+      }
+
+      saveData(STORAGE_KEY_PRODUCTS, products);
+      closeProductModal();
+      renderAdminDashboard();
+      renderHomeView();
+      renderShopView();
+      alert("Produk berjaya disimpan!");
+    }
+
+    function editProduct(pId) {
+      openProductModal(pId);
+    }
+
+    function deleteProduct(pId) {
+      if (confirm("Adakah anda pasti ingin memadam produk ini?")) {
+        products = products.filter(p => p.id !== pId);
+        saveData(STORAGE_KEY_PRODUCTS, products);
+        renderAdminDashboard();
+        renderHomeView();
+        renderShopView();
+      }
+    }
+
+    /* Category CRUD */
+    function openCategoryModal(cId = null) {
+      const modal = document.getElementById("categoryFormModal");
+      const titleEl = document.getElementById("categoryModalTitle");
+
+      if (cId) {
+        const c = categories.find(cat => cat.id === cId);
+        if (!c) return;
+
+        titleEl.innerText = "Edit Kategori";
+        document.getElementById("cId").value = c.id;
+        document.getElementById("cName").value = c.name;
+        document.getElementById("cDesc").value = c.desc || "";
+        document.getElementById("cStatus").checked = c.active;
+      } else {
+        titleEl.innerText = "Tambah Kategori";
+        document.getElementById("categoryForm").reset();
+        document.getElementById("cId").value = "";
+      }
+
+      modal.classList.remove("hidden");
+    }
+
+    function closeCategoryModal() {
+      document.getElementById("categoryFormModal").classList.add("hidden");
+    }
+
+    function handleCategoryFormSubmit(e) {
+      e.preventDefault();
+
+      const id = document.getElementById("cId").value;
+      const catData = {
+        id: id || "cat-" + Date.now(),
+        name: document.getElementById("cName").value,
+        desc: document.getElementById("cDesc").value,
+        active: document.getElementById("cStatus").checked
+      };
+
+      if (id) {
+        const index = categories.findIndex(c => c.id === id);
+        if (index > -1) categories[index] = catData;
+      } else {
+        categories.push(catData);
+      }
+
+      saveData(STORAGE_KEY_CATEGORIES, categories);
+      closeCategoryModal();
+      populateCategorySelects();
+      renderAdminDashboard();
+      renderHomeView();
+      alert("Kategori berjaya disimpan!");
+    }
+
+    function editCategory(cId) {
+      openCategoryModal(cId);
+    }
+
+    function deleteCategory(cId) {
+      if (confirm("Adakah anda pasti ingin memadam kategori ini?")) {
+        categories = categories.filter(c => c.id !== cId);
+        saveData(STORAGE_KEY_CATEGORIES, categories);
+        populateCategorySelects();
+        renderAdminDashboard();
+        renderHomeView();
+      }
+    }
+
+    /* Store Branding & WhatsApp Settings */
+    function saveBrandingSettings() {
+      settings.storeName = document.getElementById("settingStoreName").value;
+      settings.logoUrl = document.getElementById("settingStoreLogo").value;
+      settings.bannerTitle = document.getElementById("settingBannerTitle").value;
+      settings.bannerDesc = document.getElementById("settingBannerDesc").value;
+
+      saveData(STORAGE_KEY_SETTINGS, settings);
+      applyBrandingDOM();
+      alert("Tetapan branding berjaya disimpan!");
+    }
+
+    function saveWaSettings() {
+      settings.waNumber = document.getElementById("settingWaNumber").value;
+      settings.waButtonLabel = document.getElementById("settingWaButtonLabel").value;
+      settings.waTemplate = document.getElementById("settingWaTemplate").value;
+
+      saveData(STORAGE_KEY_SETTINGS, settings);
+      applyBrandingDOM();
+      alert("Tetapan WhatsApp berjaya disimpan!");
+    }
+  </script>
+</body>
+</html>
