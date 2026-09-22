@@ -58,9 +58,8 @@
 </head>
 <body class="text-slate-800 flex flex-col min-h-screen antialiased">
 
-  <!-- TOP HEADER & NAVIGATION (KHUSUS PENGGUNA / CUSTOMER - TIADA BUTTON SELLER CENTER) -->
+  <!-- TOP HEADER & NAVIGATION -->
   <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-purple-100 shadow-sm">
-    <!-- Top Banner -->
     <div class="bg-gradient-to-r from-pastel-pinkDark via-pastel-purplePrimary to-pastel-greenDark text-white text-xs py-2 px-4 text-center font-semibold tracking-wide">
       🌸 Hub Pembelajaran Digital Soft & Modern | Penghantaran Pantas via WhatsApp / E-mel
     </div>
@@ -125,10 +124,8 @@
   <!-- MAIN CONTENT CONTAINER -->
   <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
     
-    <!-- VIEW 1: HOME PAGE (Laman Utama dengan Pautan Log In/Sign Up Seller) -->
+    <!-- VIEW 1: HOME PAGE -->
     <div id="view-home" class="view-section space-y-12">
-      
-      <!-- Hero Banner -->
       <div id="heroBanner" class="relative rounded-3xl overflow-hidden bg-hero-card text-white p-8 sm:p-12 shadow-xl shadow-purple-100 flex flex-col md:flex-row items-center justify-between gap-8">
         <div class="space-y-5 max-w-xl text-center md:text-left z-10">
           <span class="inline-flex items-center gap-1.5 bg-white/20 backdrop-blur-md px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider text-white border border-white/30">
@@ -155,7 +152,6 @@
             <span class="text-xs text-purple-200 mt-1">Muat Turun Serta Merta</span>
           </div>
 
-          <!-- Pilihan Sign Up & Log In Seller Center di Bahagian Home (Seller Sahaja) -->
           <div class="bg-slate-900/80 backdrop-blur-md p-3.5 rounded-2xl border border-white/10 w-full max-w-xs text-center space-y-2">
             <span class="text-[11px] text-purple-200 font-semibold block">Bahagian Penjual (Seller Center)</span>
             <div class="flex gap-2 justify-center">
@@ -167,17 +163,6 @@
               </button>
             </div>
           </div>
-        </div>
-      </div>
-
-      <!-- Product Types Scroll Bar -->
-      <div>
-        <h2 class="text-sm font-bold text-slate-800 uppercase tracking-wider mb-4 flex items-center gap-2">
-          <i data-lucide="layers" class="w-4 h-4 text-pastel-purplePrimary"></i>
-          Jenis Bahan Digital
-        </h2>
-        <div id="typePills" class="flex gap-3 overflow-x-auto pb-2 no-scrollbar">
-          <!-- Populated by JS -->
         </div>
       </div>
 
@@ -215,23 +200,16 @@
           <!-- Populated by JS -->
         </div>
       </div>
-
     </div>
 
-    <!-- VIEW 2: SHOP / MARKETPLACE CATALOG (KHUSUS PELANGGAN - TIADA SELLER BUTTON) -->
+    <!-- VIEW 2: SHOP / MARKETPLACE CATALOG -->
     <div id="view-shop" class="view-section hidden space-y-6">
-      
-      <!-- Filter Bar -->
       <div class="bg-white p-5 rounded-3xl border border-slate-200/80 shadow-sm space-y-4">
         <div class="flex flex-col md:flex-row gap-4 items-stretch md:items-center justify-between">
-          
           <div class="flex flex-wrap gap-3 items-center">
-            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Tapis:</span>
+            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Tapis Kategori:</span>
             <select id="filterCategorySelect" onchange="applyFilters()" class="text-xs font-semibold border border-slate-200 rounded-xl px-3.5 py-2.5 bg-slate-50 focus:bg-white focus:outline-none focus:border-pastel-purplePrimary">
               <option value="all">Semua Kategori</option>
-            </select>
-            <select id="filterTypeSelect" onchange="applyFilters()" class="text-xs font-semibold border border-slate-200 rounded-xl px-3.5 py-2.5 bg-slate-50 focus:bg-white focus:outline-none focus:border-pastel-purplePrimary">
-              <option value="all">Semua Jenis Bahan</option>
             </select>
           </div>
 
@@ -247,11 +225,9 @@
               Reset
             </button>
           </div>
-
         </div>
       </div>
 
-      <!-- Shop Grid -->
       <div>
         <div id="shopProductsCount" class="text-xs font-semibold text-slate-500 mb-4">Memaparkan produk...</div>
         <div id="shopProductsGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -267,7 +243,6 @@
           </button>
         </div>
       </div>
-
     </div>
 
     <!-- VIEW 3: PRODUCT DETAIL -->
@@ -282,10 +257,9 @@
           <div class="space-y-4">
             <div class="aspect-square bg-slate-50 rounded-2xl overflow-hidden border border-slate-200/80 flex items-center justify-center relative">
               <img id="detailImg" src="" alt="" class="w-full h-full object-cover">
-              <span id="detailTypeBadge" class="absolute top-4 left-4 bg-slate-900/80 backdrop-blur-md text-white text-[10px] font-extrabold px-3 py-1 rounded-lg uppercase tracking-wider">
-                Type
-              </span>
             </div>
+            <!-- Sub Media Gallery Preview -->
+            <div id="detailGalleryContainer" class="flex gap-2 overflow-x-auto pb-2 no-scrollbar"></div>
           </div>
 
           <div class="space-y-6 flex flex-col justify-between">
@@ -491,9 +465,8 @@
               <thead>
                 <tr class="bg-slate-50 border-b border-slate-200 text-slate-500 font-bold uppercase">
                   <th class="p-4">Produk</th>
-                  <th class="p-4">Jenis</th>
                   <th class="p-4">Kategori</th>
-                  <th class="p-4">Harga</th>
+                  <th class="p-4">Harga Akhir</th>
                   <th class="p-4">Status</th>
                   <th class="p-4 text-right">Tindakan</th>
                 </tr>
@@ -596,7 +569,7 @@
 
   </main>
 
-  <!-- FOOTER WITH SELLER ACCESS LINK -->
+  <!-- FOOTER -->
   <footer class="bg-slate-900 text-slate-400 text-xs py-12 mt-16 border-t border-slate-800">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-8">
       <div class="space-y-3">
@@ -629,7 +602,7 @@
 
   <!-- MODALS CONTAINER -->
 
-  <!-- 1. SELLER / ADMIN AUTH MODAL (DENGAN TAB LOG IN & SIGN UP) -->
+  <!-- 1. SELLER AUTH MODAL -->
   <div id="adminAuthModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
     <div class="bg-white w-full max-w-sm rounded-3xl p-7 space-y-5 shadow-2xl relative border border-slate-100">
       <button onclick="closeAdminModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-600">
@@ -644,7 +617,6 @@
         <p class="text-xs text-slate-500">Akses khusus untuk pentadbir & penjual kedai.</p>
       </div>
 
-      <!-- Tab Switcher: Log In / Sign Up -->
       <div class="flex border-b border-slate-100 text-xs font-bold text-center">
         <button id="authTabLoginBtn" onclick="switchAuthMode('login')" class="flex-1 py-2 border-b-2 border-pastel-purplePrimary text-pastel-purplePrimary">
           Log In
@@ -654,7 +626,6 @@
         </button>
       </div>
 
-      <!-- Form Log In Seller -->
       <div id="sellerLoginForm" class="space-y-4">
         <div>
           <label class="block text-xs font-bold text-slate-700 mb-1">E-mel / Username</label>
@@ -669,7 +640,6 @@
         </button>
       </div>
 
-      <!-- Form Sign Up Seller -->
       <div id="sellerSignupForm" class="space-y-3 hidden">
         <div>
           <label class="block text-xs font-bold text-slate-700 mb-1">Nama Kedai / Penjual</label>
@@ -687,37 +657,26 @@
           Daftar Akaun Seller
         </button>
       </div>
-
     </div>
   </div>
 
-  <!-- 2. ADD/EDIT PRODUCT MODAL -->
+  <!-- 2. ADD/EDIT PRODUCT MODAL (KEMAS KINI DENGAN HARGA PROMO OPTIONAL & MUAT NAIK MEDIA 6 GAMBAR + 1 VIDEO) -->
   <div id="productFormModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
-    <div class="bg-white w-full max-w-lg rounded-3xl p-7 space-y-4 shadow-2xl max-h-[90vh] overflow-y-auto relative border border-slate-100">
+    <div class="bg-white w-full max-w-2xl rounded-3xl p-7 space-y-4 shadow-2xl max-h-[90vh] overflow-y-auto relative border border-slate-100">
       <button onclick="closeProductModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-600">
         <i data-lucide="x" class="w-5 h-5"></i>
       </button>
 
       <h3 id="productModalTitle" class="text-lg font-extrabold text-slate-900">Tambah Produk Baharu</h3>
 
-      <form id="productForm" onsubmit="handleProductFormSubmit(event)" class="space-y-4 text-xs">
+      <form id="productForm" onsubmit="handleProductFormSubmit(event)" class="space-y-5 text-xs">
         <input type="hidden" id="pId">
 
-        <div>
-          <label class="block font-bold text-slate-700 mb-1">Tajuk Produk *</label>
-          <input type="text" id="pTitle" required class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl focus:outline-none focus:border-pastel-purplePrimary">
-        </div>
-
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="block font-bold text-slate-700 mb-1">Jenis Bahan *</label>
-            <select id="pType" required class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl focus:outline-none focus:border-pastel-purplePrimary">
-              <option value="Worksheet PDF">Worksheet PDF</option>
-              <option value="E-book">E-book</option>
-              <option value="Educational Application">Educational Application</option>
-              <option value="Worksheet Bundle">Worksheet Bundle</option>
-              <option value="Educational Video">Educational Video</option>
-            </select>
+        <!-- Tajuk & Kategori -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div class="sm:col-span-2">
+            <label class="block font-bold text-slate-700 mb-1">Tajuk Produk *</label>
+            <input type="text" id="pTitle" required class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl focus:outline-none focus:border-pastel-purplePrimary" placeholder="Contoh: Lembaran Kerja Matematik">
           </div>
           <div>
             <label class="block font-bold text-slate-700 mb-1">Kategori *</label>
@@ -725,28 +684,87 @@
           </div>
         </div>
 
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="block font-bold text-slate-700 mb-1">Harga (RM) *</label>
-            <input type="number" step="0.01" id="pPrice" required class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl focus:outline-none focus:border-pastel-purplePrimary">
+        <!-- Bahagian Harga & Harga Promo (Optional) -->
+        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200/80 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-slate-800 text-xs">Penetapan Harga & Promo</span>
+            <span class="text-[10px] text-slate-500 font-medium">Harga Promo adalah Optional</span>
           </div>
-          <div>
-            <label class="block font-bold text-slate-700 mb-1">Harga Asal (Potongan - RM)</label>
-            <input type="number" step="0.01" id="pOriginalPrice" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl focus:outline-none focus:border-pastel-purplePrimary">
+          
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">Harga Asas / Asal (RM) *</label>
+              <input type="number" step="0.01" id="pBasePrice" required oninput="calculatePromoPrice()" class="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl focus:outline-none focus:border-pastel-purplePrimary" placeholder="0.00">
+            </div>
+
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">Jenis Promo (Pilihan)</label>
+              <div class="flex gap-2">
+                <button type="button" id="promoTypeRMBtn" onclick="setPromoType('RM')" class="flex-1 py-2 font-bold rounded-xl border border-pastel-purplePrimary bg-pastel-purplePrimary text-white transition-all text-center">
+                  RM
+                </button>
+                <button type="button" id="promoTypePctBtn" onclick="setPromoType('PCT')" class="flex-1 py-2 font-bold rounded-xl border border-slate-200 bg-white text-slate-600 transition-all text-center">
+                  Peratus (%)
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+            <div>
+              <label id="promoValueLabel" class="block font-bold text-slate-700 mb-1">Nilai Promo (RM)</label>
+              <input type="number" step="0.01" id="pPromoValue" oninput="calculatePromoPrice()" class="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl focus:outline-none focus:border-pastel-purplePrimary" placeholder="Contoh: 5.00 atau 10">
+            </div>
+
+            <div>
+              <label class="block font-bold text-emerald-700 mb-1">Harga Akhir Dijual (RM)</label>
+              <input type="number" step="0.01" id="pPrice" readonly class="w-full px-3.5 py-2.5 bg-emerald-50/50 border border-emerald-200 text-emerald-900 font-extrabold rounded-xl focus:outline-none cursor-not-allowed" placeholder="0.00">
+            </div>
           </div>
         </div>
 
-        <div>
-          <label class="block font-bold text-slate-700 mb-1">URL Gambar Preview</label>
-          <input type="text" id="pImg" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl focus:outline-none focus:border-pastel-purplePrimary" placeholder="https://via.placeholder.com/400">
+        <!-- Ruangan Upload Gambar (6 Gambar - PNG/JPEG) -->
+        <div class="space-y-2">
+          <label class="block font-bold text-slate-700">
+            Muat Naik Gambar Produk <span class="text-slate-400 font-normal">(Maksimum 6 gambar, Format: PNG, JPEG)</span>
+          </label>
+          <input type="file" id="pImagesInput" accept="image/png, image/jpeg" multiple onchange="handleImageUpload(event)" class="hidden">
+          <button type="button" onclick="document.getElementById('pImagesInput').click()" class="w-full py-3 px-4 border-2 border-dashed border-slate-200 rounded-2xl hover:border-pastel-purplePrimary hover:bg-purple-50/50 transition-colors flex items-center justify-center gap-2 text-slate-600 font-semibold">
+            <i data-lucide="image" class="w-4 h-4 text-pastel-purplePrimary"></i>
+            <span>Pilih Gambar (PNG / JPEG)</span>
+          </button>
+          
+          <div id="imagePreviewContainer" class="grid grid-cols-3 sm:grid-cols-6 gap-2 pt-2"></div>
         </div>
 
+        <!-- Ruangan Upload Video (1 Video - MP4) -->
+        <div class="space-y-2">
+          <label class="block font-bold text-slate-700">
+            Muat Naik Video Produk <span class="text-slate-400 font-normal">(Maksimum 1 video, Format: MP4)</span>
+          </label>
+          <input type="file" id="pVideoInput" accept="video/mp4" onchange="handleVideoUpload(event)" class="hidden">
+          <button type="button" onclick="document.getElementById('pVideoInput').click()" class="w-full py-3 px-4 border-2 border-dashed border-slate-200 rounded-2xl hover:border-pastel-purplePrimary hover:bg-purple-50/50 transition-colors flex items-center justify-center gap-2 text-slate-600 font-semibold">
+            <i data-lucide="video" class="w-4 h-4 text-pastel-purplePrimary"></i>
+            <span>Pilih Video (MP4)</span>
+          </button>
+
+          <div id="videoPreviewContainer" class="pt-2 hidden">
+            <div class="relative rounded-2xl overflow-hidden border border-slate-200 bg-black aspect-video max-w-xs">
+              <video id="videoPreview" controls class="w-full h-full object-contain"></video>
+              <button type="button" onclick="removeUploadedVideo()" class="absolute top-2 right-2 bg-rose-600 text-white rounded-full p-1 hover:bg-rose-700">
+                <i data-lucide="x" class="w-3.5 h-3.5"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Penerangan Produk -->
         <div>
           <label class="block font-bold text-slate-700 mb-1">Penerangan Produk</label>
-          <textarea id="pDesc" rows="4" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl focus:outline-none focus:border-pastel-purplePrimary"></textarea>
+          <textarea id="pDesc" rows="3" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl focus:outline-none focus:border-pastel-purplePrimary" placeholder="Masukkan perincian bahan digital..."></textarea>
         </div>
 
-        <div class="flex items-center gap-4 pt-2">
+        <div class="flex items-center gap-4 pt-1">
           <label class="flex items-center gap-2 cursor-pointer">
             <input type="checkbox" id="pStatus" checked class="rounded text-pastel-purplePrimary">
             <span class="font-bold text-slate-700">Aktifkan Produk</span>
@@ -757,9 +775,9 @@
           </label>
         </div>
 
-        <div class="pt-4 flex justify-end gap-2">
-          <button type="button" onclick="closeProductModal()" class="px-4 py-2 border rounded-xl text-slate-600">Batal</button>
-          <button type="submit" class="px-5 py-2 bg-pastel-purplePrimary text-white font-bold rounded-xl hover:bg-pastel-purpleDark">Simpan Produk</button>
+        <div class="pt-4 flex justify-end gap-2 border-t border-slate-100">
+          <button type="button" onclick="closeProductModal()" class="px-4 py-2 border rounded-xl text-slate-600 font-semibold">Batal</button>
+          <button type="submit" class="px-5 py-2 bg-pastel-purplePrimary text-white font-bold rounded-xl hover:bg-pastel-purpleDark shadow-md">Simpan Produk</button>
         </div>
       </form>
     </div>
@@ -802,7 +820,7 @@
 
   <!-- APPLICATION LOGIC -->
   <script>
-    const STORAGE_KEY_PRODUCTS = "scha_hub_products_v1";
+    const STORAGE_KEY_PRODUCTS = "scha_hub_products_v2";
     const STORAGE_KEY_CATEGORIES = "scha_hub_categories_v1";
     const STORAGE_KEY_SETTINGS = "scha_hub_settings_v1";
     const STORAGE_KEY_CART = "scha_hub_cart_v1";
@@ -820,11 +838,13 @@
       {
         id: "prod-101",
         title: "Bundle Lembaran Kerja Asas Membaca & Mengira Pra-Sekolah (PDF)",
-        type: "Worksheet Bundle",
         category: "Pra-Sekolah",
+        basePrice: 25.00,
+        promoType: "RM",
+        promoValue: 10.00,
         price: 15.00,
-        originalPrice: 25.00,
-        img: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&auto=format&fit=crop&q=80",
+        images: ["https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&auto=format&fit=crop&q=80"],
+        video: "",
         desc: "Lengkap dengan 120+ muka surat modul aktiviti mewarna, mengenal huruf, dan nombor untuk kanak-kanak berumur 3 hingga 6 tahun.\n\n- Format PDF mesra cetak.\n- Terus muat turun.",
         active: true,
         featured: true,
@@ -833,40 +853,16 @@
       {
         id: "prod-102",
         title: "E-Book Modul Poket Latihan Tatabahasa Tahun 1-3",
-        type: "E-book",
         category: "Bahasa Melayu & Inggeris",
-        price: 10.00,
-        originalPrice: 18.00,
-        img: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=600&auto=format&fit=crop&q=80",
+        basePrice: 18.00,
+        promoType: "PCT",
+        promoValue: 20,
+        price: 14.40,
+        images: ["https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=600&auto=format&fit=crop&q=80"],
+        video: "",
         desc: "Nota ringkas dan latihan interaktif mengandungi kata nama, kata kerja, dan kata adjektif berasaskan silibus terkini.",
         active: true,
         featured: true,
-        createdDate: new Date().toISOString()
-      },
-      {
-        id: "prod-103",
-        title: "Aplikasi Android/Web Interaktif Soal Jawab Matematik Pantas",
-        type: "Educational Application",
-        category: "Matematik & Sains",
-        price: 20.00,
-        originalPrice: 35.00,
-        img: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&auto=format&fit=crop&q=80",
-        desc: "Aplikasi latihan matematik berasaskan kuiz berasaskan masa. Sesuai digunakan di tablet atau telefon bimbit.",
-        active: true,
-        featured: true,
-        createdDate: new Date().toISOString()
-      },
-      {
-        id: "prod-104",
-        title: "Video Pembelajaran & Slaid Interaktif Sains Tahun 4 (Ekosistem)",
-        type: "Educational Video",
-        category: "Sekolah Rendah (Tahap 2)",
-        price: 12.00,
-        originalPrice: 20.00,
-        img: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&auto=format&fit=crop&q=80",
-        desc: "Siri video penerangan animasi 45 minit berserta modul slaid persembahan PowerPoint untuk kegunaan pengajaran guru.",
-        active: true,
-        featured: false,
         createdDate: new Date().toISOString()
       }
     ];
@@ -885,11 +881,14 @@
     let categories = JSON.parse(localStorage.getItem(STORAGE_KEY_CATEGORIES)) || DEFAULT_CATEGORIES;
     let settings = JSON.parse(localStorage.getItem(STORAGE_KEY_SETTINGS)) || DEFAULT_SETTINGS;
     let cart = JSON.parse(localStorage.getItem(STORAGE_KEY_CART)) || [];
+    
     let isAdminLoggedIn = false;
     let currentDetailProductId = null;
+    let currentPromoType = "RM"; // "RM" atau "PCT"
+    let uploadedImages = []; // Menyimpan DataURL gambar (Maks 6)
+    let uploadedVideo = "";  // Menyimpan DataURL video (Maks 1)
 
     let filterCategory = "all";
-    let filterType = "all";
     let searchQuery = "";
     let sortBy = "newest";
 
@@ -956,23 +955,6 @@
     }
 
     function renderHomeView() {
-      const types = ["Worksheet PDF", "E-book", "Educational Application", "Worksheet Bundle", "Educational Video"];
-      const typePills = document.getElementById("typePills");
-      
-      const pastelColors = [
-        "bg-pastel-pink border-pink-200 text-slate-800",
-        "bg-pastel-purple border-teal-200 text-slate-800",
-        "bg-pastel-red border-red-200 text-slate-800",
-        "bg-pastel-green border-emerald-200 text-slate-800",
-        "bg-pastel-purpleBg border-purple-200 text-slate-800"
-      ];
-
-      typePills.innerHTML = types.map((t, i) => `
-        <button onclick="filterByTypeFromHome('${t}')" class="${pastelColors[i % pastelColors.length]} hover:opacity-80 border text-xs font-bold px-4 py-2.5 rounded-2xl whitespace-nowrap shadow-sm transition-all shrink-0">
-          ${t}
-        </button>
-      `).join("");
-
       const activeCategories = categories.filter(c => c.active);
       const categoriesGrid = document.getElementById("homeCategoriesGrid");
       categoriesGrid.innerHTML = activeCategories.map(c => `
@@ -992,14 +974,14 @@
     }
 
     function createProductCardHTML(product) {
+      const mainImg = product.images && product.images.length > 0 ? product.images[0] : 'https://via.placeholder.com/400';
+      const hasDiscount = product.basePrice && product.basePrice > product.price;
+
       return `
         <div class="bg-white rounded-3xl border border-slate-200/80 overflow-hidden hover:shadow-xl hover:shadow-purple-50 hover:border-slate-300 transition-all flex flex-col justify-between group">
           <div>
             <div class="aspect-square bg-slate-50 relative overflow-hidden cursor-pointer" onclick="navigateToDetail('${product.id}')">
-              <img src="${product.img || 'https://via.placeholder.com/400'}" alt="${product.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-              <span class="absolute top-3 left-3 bg-slate-900/80 backdrop-blur-md text-white text-[9px] font-extrabold px-2.5 py-1 rounded-lg uppercase tracking-wider">
-                ${product.type}
-              </span>
+              <img src="${mainImg}" alt="${product.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
             </div>
 
             <div class="p-4 space-y-2">
@@ -1013,7 +995,7 @@
           <div class="p-4 pt-0 flex items-center justify-between gap-2 border-t border-slate-50 mt-2">
             <div>
               <span class="text-base font-extrabold text-pastel-purplePrimary">RM ${product.price.toFixed(2)}</span>
-              ${product.originalPrice ? `<span class="text-[10px] text-slate-400 line-through block font-semibold">RM ${product.originalPrice.toFixed(2)}</span>` : ''}
+              ${hasDiscount ? `<span class="text-[10px] text-slate-400 line-through block font-semibold">RM ${product.basePrice.toFixed(2)}</span>` : ''}
             </div>
             <button onclick="addToCart('${product.id}')" class="bg-slate-100 hover:bg-pastel-purplePrimary hover:text-white text-slate-800 p-2.5 rounded-2xl transition-all shadow-sm" title="Tambah ke Troli">
               <i data-lucide="shopping-bag" class="w-4 h-4"></i>
@@ -1028,10 +1010,6 @@
 
       if (filterCategory !== "all") {
         filtered = filtered.filter(p => p.category === filterCategory);
-      }
-
-      if (filterType !== "all") {
-        filtered = filtered.filter(p => p.type === filterType);
       }
 
       if (searchQuery.trim() !== "") {
@@ -1075,18 +1053,41 @@
 
       currentDetailProductId = pId;
 
-      document.getElementById("detailImg").src = product.img || "https://via.placeholder.com/400";
-      document.getElementById("detailTypeBadge").innerText = product.type;
+      const mainImg = product.images && product.images.length > 0 ? product.images[0] : "https://via.placeholder.com/400";
+      document.getElementById("detailImg").src = mainImg;
       document.getElementById("detailCategory").innerText = product.category;
       document.getElementById("detailTitle").innerText = product.title;
       document.getElementById("detailPrice").innerText = `RM ${product.price.toFixed(2)}`;
       
       const origEl = document.getElementById("detailOriginalPrice");
-      if (product.originalPrice) {
-        origEl.innerText = `RM ${product.originalPrice.toFixed(2)}`;
+      if (product.basePrice && product.basePrice > product.price) {
+        origEl.innerText = `RM ${product.basePrice.toFixed(2)}`;
         origEl.classList.remove("hidden");
       } else {
         origEl.classList.add("hidden");
+      }
+
+      // Render Sub Gallery Preview
+      const galleryContainer = document.getElementById("detailGalleryContainer");
+      galleryContainer.innerHTML = "";
+      
+      if (product.images && product.images.length > 0) {
+        product.images.forEach(imgUrl => {
+          const imgBtn = document.createElement("button");
+          imgBtn.className = "w-14 h-14 rounded-xl border border-slate-200 overflow-hidden shrink-0 focus:border-pastel-purplePrimary";
+          imgBtn.onclick = () => { document.getElementById("detailImg").src = imgUrl; };
+          imgBtn.innerHTML = `<img src="${imgUrl}" class="w-full h-full object-cover">`;
+          galleryContainer.appendChild(imgBtn);
+        });
+      }
+
+      if (product.video) {
+        const vidBadge = document.createElement("div");
+        vidBadge.className = "w-14 h-14 rounded-xl border border-purple-300 bg-purple-50 flex items-center justify-center shrink-0 text-pastel-purplePrimary cursor-pointer";
+        vidBadge.title = "Mainkan Video";
+        vidBadge.onclick = () => alert("Sila muat turun atau tonton sampel video.");
+        vidBadge.innerHTML = `<i data-lucide="video" class="w-6 h-6"></i>`;
+        galleryContainer.appendChild(vidBadge);
       }
 
       document.getElementById("detailDesc").innerText = product.desc || "Tiada penerangan tambahan.";
@@ -1099,6 +1100,7 @@
 
       navTo("product-detail", false);
       window.location.hash = `product/${pId}`;
+      lucide.createIcons();
     }
 
     function navigateToDetail(pId) {
@@ -1113,18 +1115,15 @@
 
     function applyFilters() {
       filterCategory = document.getElementById("filterCategorySelect").value;
-      filterType = document.getElementById("filterTypeSelect").value;
       sortBy = document.getElementById("sortBySelect").value;
       renderShopView();
     }
 
     function resetFilters() {
       filterCategory = "all";
-      filterType = "all";
       searchQuery = "";
       sortBy = "newest";
       document.getElementById("filterCategorySelect").value = "all";
-      document.getElementById("filterTypeSelect").value = "all";
       document.getElementById("sortBySelect").value = "newest";
       document.getElementById("globalSearchInput").value = "";
       renderShopView();
@@ -1133,13 +1132,6 @@
     function filterByCategoryFromHome(catName) {
       filterCategory = catName;
       document.getElementById("filterCategorySelect").value = catName;
-      navTo("shop");
-      renderShopView();
-    }
-
-    function filterByTypeFromHome(typeName) {
-      filterType = typeName;
-      document.getElementById("filterTypeSelect").value = typeName;
       navTo("shop");
       renderShopView();
     }
@@ -1160,6 +1152,8 @@
       if (!product) return;
 
       const existingIndex = cart.findIndex(item => item.id === pId);
+      const mainImg = product.images && product.images.length > 0 ? product.images[0] : 'https://via.placeholder.com/100';
+
       if (existingIndex > -1) {
         cart[existingIndex].qty += 1;
       } else {
@@ -1167,7 +1161,7 @@
           id: product.id,
           title: product.title,
           price: product.price,
-          img: product.img,
+          img: mainImg,
           qty: 1
         });
       }
@@ -1398,26 +1392,28 @@
       document.getElementById("statTotalCategories").innerText = categories.length;
 
       const prodTableBody = document.getElementById("adminProductsTableBody");
-      prodTableBody.innerHTML = products.map(p => `
-        <tr class="hover:bg-slate-50">
-          <td class="p-4 flex items-center gap-3">
-            <img src="${p.img || 'https://via.placeholder.com/50'}" class="w-9 h-9 rounded-xl object-cover">
-            <span class="font-bold text-slate-800 line-clamp-1">${p.title}</span>
-          </td>
-          <td class="p-4 text-slate-600">${p.type}</td>
-          <td class="p-4 text-slate-600">${p.category}</td>
-          <td class="p-4 font-bold text-slate-900">RM ${p.price.toFixed(2)}</td>
-          <td class="p-4">
-            <span class="px-2.5 py-1 rounded-full text-[10px] font-bold ${p.active ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-500'}">
-              ${p.active ? 'Aktif' : 'Nyahaktif'}
-            </span>
-          </td>
-          <td class="p-4 text-right space-x-2">
-            <button onclick="editProduct('${p.id}')" class="text-pastel-purplePrimary font-bold hover:underline">Edit</button>
-            <button onclick="deleteProduct('${p.id}')" class="text-rose-600 font-bold hover:underline">Padam</button>
-          </td>
-        </tr>
-      `).join("");
+      prodTableBody.innerHTML = products.map(p => {
+        const thumb = p.images && p.images.length > 0 ? p.images[0] : 'https://via.placeholder.com/50';
+        return `
+          <tr class="hover:bg-slate-50">
+            <td class="p-4 flex items-center gap-3">
+              <img src="${thumb}" class="w-9 h-9 rounded-xl object-cover">
+              <span class="font-bold text-slate-800 line-clamp-1">${p.title}</span>
+            </td>
+            <td class="p-4 text-slate-600">${p.category}</td>
+            <td class="p-4 font-bold text-slate-900">RM ${p.price.toFixed(2)}</td>
+            <td class="p-4">
+              <span class="px-2.5 py-1 rounded-full text-[10px] font-bold ${p.active ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-500'}">
+                ${p.active ? 'Aktif' : 'Nyahaktif'}
+              </span>
+            </td>
+            <td class="p-4 text-right space-x-2">
+              <button onclick="editProduct('${p.id}')" class="text-pastel-purplePrimary font-bold hover:underline">Edit</button>
+              <button onclick="deleteProduct('${p.id}')" class="text-rose-600 font-bold hover:underline">Padam</button>
+            </td>
+          </tr>
+        `;
+      }).join("");
 
       const catTableBody = document.getElementById("adminCategoriesTableBody");
       catTableBody.innerHTML = categories.map(c => `
@@ -1439,10 +1435,125 @@
       lucide.createIcons();
     }
 
+    // FUNGSI HARGA PROMO (RM / PERATUS) & AUTO CALCULATE
+    function setPromoType(type) {
+      currentPromoType = type;
+      const btnRM = document.getElementById("promoTypeRMBtn");
+      const btnPCT = document.getElementById("promoTypePctBtn");
+      const label = document.getElementById("promoValueLabel");
+
+      if (type === "RM") {
+        btnRM.className = "flex-1 py-2 font-bold rounded-xl border border-pastel-purplePrimary bg-pastel-purplePrimary text-white transition-all text-center";
+        btnPCT.className = "flex-1 py-2 font-bold rounded-xl border border-slate-200 bg-white text-slate-600 transition-all text-center";
+        label.innerText = "Nilai Promo (RM)";
+      } else {
+        btnPCT.className = "flex-1 py-2 font-bold rounded-xl border border-pastel-purplePrimary bg-pastel-purplePrimary text-white transition-all text-center";
+        btnRM.className = "flex-1 py-2 font-bold rounded-xl border border-slate-200 bg-white text-slate-600 transition-all text-center";
+        label.innerText = "Nilai Promo (%)";
+      }
+
+      calculatePromoPrice();
+    }
+
+    function calculatePromoPrice() {
+      const basePrice = parseFloat(document.getElementById("pBasePrice").value) || 0;
+      const promoValue = parseFloat(document.getElementById("pPromoValue").value) || 0;
+      let finalPrice = basePrice;
+
+      if (basePrice > 0 && promoValue > 0) {
+        if (currentPromoType === "RM") {
+          finalPrice = Math.max(0, basePrice - promoValue);
+        } else if (currentPromoType === "PCT") {
+          const discountAmt = (basePrice * promoValue) / 100;
+          finalPrice = Math.max(0, basePrice - discountAmt);
+        }
+      }
+
+      document.getElementById("pPrice").value = finalPrice.toFixed(2);
+    }
+
+    // FUNGSI UPLOAD GAMBAR (6 PNG/JPEG) & VIDEO (1 MP4)
+    function handleImageUpload(e) {
+      const files = Array.from(e.target.files);
+      const validFiles = files.filter(f => f.type === "image/png" || f.type === "image/jpeg");
+
+      if (uploadedImages.length + validFiles.length > 6) {
+        alert("Anda hanya boleh memuat naik maksimum 6 gambar sahaja.");
+        return;
+      }
+
+      validFiles.forEach(file => {
+        const reader = new FileReader();
+        reader.onload = function(evt) {
+          uploadedImages.push(evt.target.result);
+          renderImagePreviews();
+        }
+        reader.readAsDataURL(file);
+      });
+    }
+
+    function renderImagePreviews() {
+      const container = document.getElementById("imagePreviewContainer");
+      container.innerHTML = uploadedImages.map((imgSrc, idx) => `
+        <div class="relative group aspect-square rounded-xl overflow-hidden border border-slate-200 bg-slate-100">
+          <img src="${imgSrc}" class="w-full h-full object-cover">
+          <button type="button" onclick="removeUploadedImage(${idx})" class="absolute top-1 right-1 bg-rose-600 text-white rounded-full p-1 hover:bg-rose-700 transition-colors">
+            <i data-lucide="x" class="w-3 h-3"></i>
+          </button>
+        </div>
+      `).join("");
+      lucide.createIcons();
+    }
+
+    function removeUploadedImage(idx) {
+      uploadedImages.splice(idx, 1);
+      renderImagePreviews();
+    }
+
+    function handleVideoUpload(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      if (file.type !== "video/mp4") {
+        alert("Sila muat naik fail video dalam format MP4 sahaja.");
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        uploadedVideo = evt.target.result;
+        renderVideoPreview();
+      }
+      reader.readAsDataURL(file);
+    }
+
+    function renderVideoPreview() {
+      const container = document.getElementById("videoPreviewContainer");
+      const videoEl = document.getElementById("videoPreview");
+
+      if (uploadedVideo) {
+        videoEl.src = uploadedVideo;
+        container.classList.remove("hidden");
+      } else {
+        videoEl.src = "";
+        container.classList.add("hidden");
+      }
+      lucide.createIcons();
+    }
+
+    function removeUploadedVideo() {
+      uploadedVideo = "";
+      document.getElementById("pVideoInput").value = "";
+      renderVideoPreview();
+    }
+
     function openProductModal(pId = null) {
       populateCategorySelects();
       const modal = document.getElementById("productFormModal");
       const titleEl = document.getElementById("productModalTitle");
+
+      uploadedImages = [];
+      uploadedVideo = "";
 
       if (pId) {
         const p = products.find(prod => prod.id === pId);
@@ -1451,20 +1562,28 @@
         titleEl.innerText = "Edit Produk";
         document.getElementById("pId").value = p.id;
         document.getElementById("pTitle").value = p.title;
-        document.getElementById("pType").value = p.type;
         document.getElementById("pCategory").value = p.category;
-        document.getElementById("pPrice").value = p.price;
-        document.getElementById("pOriginalPrice").value = p.originalPrice || "";
-        document.getElementById("pImg").value = p.img || "";
+        document.getElementById("pBasePrice").value = p.basePrice || p.price;
+        document.getElementById("pPromoValue").value = p.promoValue || "";
+        document.getElementById("pPrice").value = p.price.toFixed(2);
         document.getElementById("pDesc").value = p.desc || "";
         document.getElementById("pStatus").checked = p.active;
         document.getElementById("pFeatured").checked = p.featured || false;
+
+        setPromoType(p.promoType || "RM");
+
+        if (p.images) uploadedImages = [...p.images];
+        if (p.video) uploadedVideo = p.video;
+
       } else {
         titleEl.innerText = "Tambah Produk Baharu";
         document.getElementById("productForm").reset();
         document.getElementById("pId").value = "";
+        setPromoType("RM");
       }
 
+      renderImagePreviews();
+      renderVideoPreview();
       modal.classList.remove("hidden");
     }
 
@@ -1476,14 +1595,20 @@
       e.preventDefault();
 
       const id = document.getElementById("pId").value;
+      const basePrice = parseFloat(document.getElementById("pBasePrice").value) || 0;
+      const promoVal = parseFloat(document.getElementById("pPromoValue").value) || 0;
+      const finalPrice = parseFloat(document.getElementById("pPrice").value) || basePrice;
+
       const productData = {
         id: id || "prod-" + Date.now(),
         title: document.getElementById("pTitle").value,
-        type: document.getElementById("pType").value,
         category: document.getElementById("pCategory").value,
-        price: parseFloat(document.getElementById("pPrice").value),
-        originalPrice: document.getElementById("pOriginalPrice").value ? parseFloat(document.getElementById("pOriginalPrice").value) : null,
-        img: document.getElementById("pImg").value,
+        basePrice: basePrice,
+        promoType: currentPromoType,
+        promoValue: promoVal,
+        price: finalPrice,
+        images: uploadedImages.length > 0 ? uploadedImages : ["https://via.placeholder.com/400"],
+        video: uploadedVideo,
         desc: document.getElementById("pDesc").value,
         active: document.getElementById("pStatus").checked,
         featured: document.getElementById("pFeatured").checked,
