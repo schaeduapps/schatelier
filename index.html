@@ -177,9 +177,7 @@
             Lihat Semua <i data-lucide="chevron-right" class="w-3 h-3"></i>
           </button>
         </div>
-        <div id="homeCategoriesGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
-          <!-- Populated by JS -->
-        </div>
+        <div id="homeCategoriesGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4"></div>
       </div>
 
       <!-- Featured Products -->
@@ -196,9 +194,7 @@
             Lihat Katalog Kedai
           </button>
         </div>
-        <div id="featuredProductsGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
-          <!-- Populated by JS -->
-        </div>
+        <div id="featuredProductsGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6"></div>
       </div>
     </div>
 
@@ -230,9 +226,7 @@
 
       <div>
         <div id="shopProductsCount" class="text-xs font-semibold text-slate-500 mb-4">Memaparkan produk...</div>
-        <div id="shopProductsGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
-          <!-- Populated by JS -->
-        </div>
+        <div id="shopProductsGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6"></div>
         
         <div id="shopEmptyState" class="hidden py-16 text-center space-y-3">
           <i data-lucide="folder-search" class="w-12 h-12 text-slate-300 mx-auto"></i>
@@ -253,12 +247,10 @@
 
       <div class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden p-6 md:p-8">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-          
           <div class="space-y-4">
             <div class="aspect-square bg-slate-50 rounded-2xl overflow-hidden border border-slate-200/80 flex items-center justify-center relative">
               <img id="detailImg" src="" alt="" class="w-full h-full object-cover">
             </div>
-            <!-- Sub Media Gallery Preview -->
             <div id="detailGalleryContainer" class="flex gap-2 overflow-x-auto pb-2 no-scrollbar"></div>
           </div>
 
@@ -304,9 +296,7 @@
                 </button>
               </div>
             </div>
-
           </div>
-
         </div>
       </div>
     </div>
@@ -389,14 +379,11 @@
             <span id="waBtnLabelText">Order Melalui WhatsApp</span>
           </button>
         </div>
-
       </div>
     </div>
 
     <!-- VIEW 6: ADMIN SELLER CENTER / DASHBOARD -->
     <div id="view-admin" class="view-section hidden space-y-8">
-      
-      <!-- Admin Header -->
       <div class="bg-slate-900 text-white rounded-3xl p-6 sm:p-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 shadow-xl">
         <div>
           <span class="text-[10px] uppercase font-extrabold bg-pastel-pinkDark text-white px-3 py-1 rounded-full">Kawalan Pentadbir</span>
@@ -409,7 +396,6 @@
         </button>
       </div>
 
-      <!-- Admin Tabs -->
       <div class="border-b border-slate-200 flex gap-2 overflow-x-auto no-scrollbar">
         <button onclick="switchAdminTab('overview')" id="adminTabBtn-overview" class="admin-tab-btn py-3 px-5 text-xs font-bold border-b-2 border-pastel-purplePrimary text-pastel-purplePrimary whitespace-nowrap">
           Gambaran Keseluruhan
@@ -428,7 +414,6 @@
         </button>
       </div>
 
-      <!-- ADMIN TAB 1: OVERVIEW -->
       <div id="adminTab-overview" class="admin-tab-content space-y-6">
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-5">
           <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-1">
@@ -450,7 +435,6 @@
         </div>
       </div>
 
-      <!-- ADMIN TAB 2: PRODUCTS MANAGEMENT -->
       <div id="adminTab-products" class="admin-tab-content hidden space-y-6">
         <div class="flex justify-between items-center">
           <h2 class="text-lg font-bold text-slate-900">Senarai Produk Katalog</h2>
@@ -477,7 +461,6 @@
         </div>
       </div>
 
-      <!-- ADMIN TAB 3: CATEGORIES MANAGEMENT -->
       <div id="adminTab-categories" class="admin-tab-content hidden space-y-6">
         <div class="flex justify-between items-center">
           <h2 class="text-lg font-bold text-slate-900">Senarai Kategori Produk</h2>
@@ -503,7 +486,6 @@
         </div>
       </div>
 
-      <!-- ADMIN TAB 4: BRANDING & BANNER -->
       <div id="adminTab-branding" class="admin-tab-content hidden space-y-6">
         <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-6">
           <h2 class="text-base font-bold text-slate-900">Tetapan Logo & Penjenamaan</h2>
@@ -538,7 +520,6 @@
         </div>
       </div>
 
-      <!-- ADMIN TAB 5: WHATSAPP SETTINGS -->
       <div id="adminTab-settings" class="admin-tab-content hidden space-y-6">
         <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-6">
           <h2 class="text-base font-bold text-slate-900">Konfigurasi Pesanan WhatsApp</h2>
@@ -564,9 +545,7 @@
           </button>
         </div>
       </div>
-
     </div>
-
   </main>
 
   <!-- FOOTER -->
@@ -601,8 +580,6 @@
   </footer>
 
   <!-- MODALS CONTAINER -->
-
-  <!-- 1. SELLER AUTH MODAL -->
   <div id="adminAuthModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
     <div class="bg-white w-full max-w-sm rounded-3xl p-7 space-y-5 shadow-2xl relative border border-slate-100">
       <button onclick="closeAdminModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-600">
@@ -660,7 +637,6 @@
     </div>
   </div>
 
-  <!-- 2. ADD/EDIT PRODUCT MODAL -->
   <div id="productFormModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
     <div class="bg-white w-full max-w-2xl rounded-3xl p-7 space-y-4 shadow-2xl max-h-[90vh] overflow-y-auto relative border border-slate-100">
       <button onclick="closeProductModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-600">
@@ -672,7 +648,6 @@
       <form id="productForm" onsubmit="handleProductFormSubmit(event)" class="space-y-5 text-xs">
         <input type="hidden" id="pId">
 
-        <!-- Tajuk & Kategori -->
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
           <div class="sm:col-span-2">
             <label class="block font-bold text-slate-700 mb-1">Tajuk Produk *</label>
@@ -684,7 +659,6 @@
           </div>
         </div>
 
-        <!-- Bahagian Harga & Harga Promo -->
         <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200/80 space-y-3">
           <div class="flex items-center justify-between">
             <span class="font-bold text-slate-800 text-xs">Penetapan Harga & Promo</span>
@@ -723,7 +697,6 @@
           </div>
         </div>
 
-        <!-- Ruangan Upload Gambar -->
         <div class="space-y-2">
           <label class="block font-bold text-slate-700">
             Muat Naik Gambar Produk <span class="text-slate-400 font-normal">(Maksimum 6 gambar, Format: PNG, JPEG)</span>
@@ -737,7 +710,6 @@
           <div id="imagePreviewContainer" class="grid grid-cols-3 sm:grid-cols-6 gap-2 pt-2"></div>
         </div>
 
-        <!-- Ruangan Upload Video -->
         <div class="space-y-2">
           <label class="block font-bold text-slate-700">
             Muat Naik Video Produk <span class="text-slate-400 font-normal">(Maksimum 1 video, Format: MP4)</span>
@@ -758,7 +730,6 @@
           </div>
         </div>
 
-        <!-- Penerangan Produk -->
         <div>
           <label class="block font-bold text-slate-700 mb-1">Penerangan Produk</label>
           <textarea id="pDesc" rows="3" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl focus:outline-none focus:border-pastel-purplePrimary" placeholder="Masukkan perincian bahan digital..."></textarea>
@@ -783,7 +754,6 @@
     </div>
   </div>
 
-  <!-- 3. ADD/EDIT CATEGORY MODAL -->
   <div id="categoryFormModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
     <div class="bg-white w-full max-w-md rounded-3xl p-7 space-y-4 shadow-2xl relative border border-slate-100">
       <button onclick="closeCategoryModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-600">
@@ -818,25 +788,22 @@
     </div>
   </div>
 
-  <!-- FIREBASE INTEGRATION ENGINE (REALTIME SYNC ACROSS DEVICES) -->
+  <!-- FIREBASE ENGINE (DAPATKAN URL SEBENAR DARI SCREENSHOT SANGAT PENTING) -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getDatabase, ref, onValue, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-    // GANTIKAN KONFIGURASI DI BAWAH DENGAN CONFIG FIREBASE ANDA
+    // URL Firebase Berdasarkan Screenshot Anda
     const firebaseConfig = {
-      apiKey: "AIzaSyYourApiKeyHere",
-      authDomain: "your-app.firebaseapp.com",
-      databaseURL: "https://your-app-default-rtdb.firebaseio.com",
-      projectId: "your-app",
-      storageBucket: "your-app.appspot.com",
-      messagingSenderId: "123456789",
-      appId: "1:123456789:web:abc123def456"
+      databaseURL: "https://scha-atelier-default-rtdb.firebaseio.com"
     };
 
-    // Inisialisasi Firebase Database
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
+
+    const STORAGE_KEY_PRODUCTS = "scha_products_local";
+    const STORAGE_KEY_CATEGORIES = "scha_categories_local";
+    const STORAGE_KEY_SETTINGS = "scha_settings_local";
 
     const DEFAULT_CATEGORIES = [
       { id: "cat-1", name: "Pra-Sekolah", desc: "Modul asas membaca, menulis & mengira (3-6 Tahun)", active: true },
@@ -845,24 +812,6 @@
       { id: "cat-4", name: "Bahasa Melayu & Inggeris", desc: "Latihan tatabahasa & pemahaman", active: true },
       { id: "cat-5", name: "Matematik & Sains", desc: "Soalan pengukuhan konsep & formula", active: true },
       { id: "cat-6", name: "Pendidikan Islam & Moral", desc: "Latihan tajwid, jawi & nilai murni", active: true }
-    ];
-
-    const DEFAULT_PRODUCTS = [
-      {
-        id: "prod-101",
-        title: "Bundle Lembaran Kerja Asas Membaca & Mengira Pra-Sekolah (PDF)",
-        category: "Pra-Sekolah",
-        basePrice: 25.00,
-        promoType: "RM",
-        promoValue: 10.00,
-        price: 15.00,
-        images: ["https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&auto=format&fit=crop&q=80"],
-        video: "",
-        desc: "Lengkap dengan 120+ muka surat modul aktiviti mewarna, mengenal huruf, dan nombor untuk kanak-kanak berumur 3 hingga 6 tahun.\n\n- Format PDF mesra cetak.\n- Terus muat turun.",
-        active: true,
-        featured: true,
-        createdDate: new Date().toISOString()
-      }
     ];
 
     const DEFAULT_SETTINGS = {
@@ -875,31 +824,47 @@
       waTemplate: "Hello {STORE_NAME},\n\nSaya ingin membuat pesanan bagi bahan berikut:\n\nNama Pelanggan: {CUSTOMER_NAME}\n\nSenarai Pesanan:\n{ITEMS}\n\nJumlah Keseluruhan: {TOTAL}\n\nSila berikan maklumat akaun untuk pembayaran. Terima kasih!"
     };
 
-    // SINKRONISASI DATA MASA-NYA (REALTIME SYNC DARI FIREBASE)
+    // FUNGSI SINKRONISASI PINTAR (MEMASTIKAN DATA TIDAK PADAM/TERKOSONG)
     onValue(ref(db, 'scha_store'), (snapshot) => {
       const data = snapshot.val();
-      if (data) {
-        window.products = data.products || [];
-        window.categories = data.categories || [];
+
+      if (data && data.products && data.products.length > 0) {
+        window.products = data.products;
+        window.categories = data.categories || DEFAULT_CATEGORIES;
         window.settings = data.settings || DEFAULT_SETTINGS;
+
+        // Simpan salinan ke simpanan tempatan peranti
+        localStorage.setItem(STORAGE_KEY_PRODUCTS, JSON.stringify(window.products));
+        localStorage.setItem(STORAGE_KEY_CATEGORIES, JSON.stringify(window.categories));
+        localStorage.setItem(STORAGE_KEY_SETTINGS, JSON.stringify(window.settings));
       } else {
-        // Jika Firebase kosong, upload data laluan asal (Initial seed)
-        window.products = DEFAULT_PRODUCTS;
-        window.categories = DEFAULT_CATEGORIES;
-        window.settings = DEFAULT_SETTINGS;
-        window.syncToCloud();
+        // Ambil salinan simpanan tempatan jika cloud kosong
+        const localProds = JSON.parse(localStorage.getItem(STORAGE_KEY_PRODUCTS));
+        const localCats = JSON.parse(localStorage.getItem(STORAGE_KEY_CATEGORIES));
+        const localSets = JSON.parse(localStorage.getItem(STORAGE_KEY_SETTINGS));
+
+        if (localProds && localProds.length > 0) {
+          window.products = localProds;
+          window.categories = localCats || DEFAULT_CATEGORIES;
+          window.settings = localSets || DEFAULT_SETTINGS;
+          window.syncToCloud(); // Auto muat naik semula data asal anda ke cloud
+        } else {
+          window.products = [];
+          window.categories = DEFAULT_CATEGORIES;
+          window.settings = DEFAULT_SETTINGS;
+        }
       }
 
-      window.applyBrandingDOM();
-      window.populateCategorySelects();
-      window.renderHomeView();
-      window.renderShopView();
-      window.updateCartUI();
-      if(window.isAdminLoggedIn) window.renderAdminDashboard();
+      window.refreshAllUI();
     });
 
-    // Fungsi menyimpan data secara terus ke Cloud Firebase
     window.syncToCloud = function() {
+      // Simpan ke simpanan tempatan dahulu
+      localStorage.setItem(STORAGE_KEY_PRODUCTS, JSON.stringify(window.products));
+      localStorage.setItem(STORAGE_KEY_CATEGORIES, JSON.stringify(window.categories));
+      localStorage.setItem(STORAGE_KEY_SETTINGS, JSON.stringify(window.settings));
+
+      // Hantar terus ke Firebase Cloud
       set(ref(db, 'scha_store'), {
         products: window.products || [],
         categories: window.categories || [],
@@ -912,12 +877,11 @@
   <script>
     const STORAGE_KEY_CART = "scha_hub_cart_v1";
 
-    // Variables di-bind secara global
-    window.products = [];
-    window.categories = [];
-    window.settings = {};
+    window.products = JSON.parse(localStorage.getItem("scha_products_local")) || [];
+    window.categories = JSON.parse(localStorage.getItem("scha_categories_local")) || [];
+    window.settings = JSON.parse(localStorage.getItem("scha_settings_local")) || {};
     let cart = JSON.parse(localStorage.getItem(STORAGE_KEY_CART)) || [];
-    
+
     window.isAdminLoggedIn = false;
     let currentDetailProductId = null;
     let currentPromoType = "RM"; 
@@ -932,7 +896,18 @@
       lucide.createIcons();
       handleHashNavigation();
       window.addEventListener("hashchange", handleHashNavigation);
+      window.refreshAllUI();
     });
+
+    function windowRefreshAllUI() {
+      applyBrandingDOM();
+      populateCategorySelects();
+      renderHomeView();
+      renderShopView();
+      updateCartUI();
+      if(window.isAdminLoggedIn) renderAdminDashboard();
+    }
+    window.refreshAllUI = windowRefreshAllUI;
 
     function saveData(key, value) {
       localStorage.setItem(key, JSON.stringify(value));
@@ -949,10 +924,7 @@
     }
 
     function navTo(viewId, updateHash = true) {
-      if (updateHash) {
-        window.location.hash = viewId;
-      }
-      
+      if (updateHash) window.location.hash = viewId;
       document.querySelectorAll(".view-section").forEach(el => el.classList.add("hidden"));
 
       const targetView = document.getElementById(`view-${viewId}`);
@@ -961,7 +933,6 @@
       } else {
         document.getElementById("view-home").classList.remove("hidden");
       }
-
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
@@ -996,7 +967,6 @@
       const featured = products.filter(p => p.active && p.featured);
       const featuredGrid = document.getElementById("featuredProductsGrid");
       featuredGrid.innerHTML = featured.map(p => createProductCardHTML(p)).join("");
-
       lucide.createIcons();
     }
 
@@ -1079,8 +1049,8 @@
       }
 
       currentDetailProductId = pId;
-
       const mainImg = product.images && product.images.length > 0 ? product.images[0] : "https://via.placeholder.com/400";
+      
       document.getElementById("detailImg").src = mainImg;
       document.getElementById("detailCategory").innerText = product.category;
       document.getElementById("detailTitle").innerText = product.title;
@@ -1107,17 +1077,7 @@
         });
       }
 
-      if (product.video) {
-        const vidBadge = document.createElement("div");
-        vidBadge.className = "w-14 h-14 rounded-xl border border-purple-300 bg-purple-50 flex items-center justify-center shrink-0 text-pastel-purplePrimary cursor-pointer";
-        vidBadge.title = "Mainkan Video";
-        vidBadge.onclick = () => alert("Sila muat turun atau tonton sampel video.");
-        vidBadge.innerHTML = `<i data-lucide="video" class="w-6 h-6"></i>`;
-        galleryContainer.appendChild(vidBadge);
-      }
-
       document.getElementById("detailDesc").innerText = product.desc || "Tiada penerangan tambahan.";
-
       document.getElementById("addToCartBtn").onclick = () => addToCart(product.id);
       document.getElementById("buyNowBtn").onclick = () => {
         addToCart(product.id);
@@ -1168,7 +1128,6 @@
       const formSelect = document.getElementById("pCategory");
 
       const optionsHTML = activeCats.map(c => `<option value="${c.name}">${c.name}</option>`).join("");
-      
       filterSelect.innerHTML = `<option value="all">Semua Kategori</option>` + optionsHTML;
       if (formSelect) formSelect.innerHTML = optionsHTML;
     }
@@ -1202,9 +1161,7 @@
       if (index === -1) return;
 
       cart[index].qty += delta;
-      if (cart[index].qty <= 0) {
-        cart.splice(index, 1);
-      }
+      if (cart[index].qty <= 0) cart.splice(index, 1);
 
       saveData(STORAGE_KEY_CART, cart);
       updateCartUI();
@@ -1594,7 +1551,6 @@
         document.getElementById("pFeatured").checked = p.featured || false;
 
         setPromoType(p.promoType || "RM");
-
         if (p.images) uploadedImages = [...p.images];
         if (p.video) uploadedVideo = p.video;
 
@@ -1647,12 +1603,10 @@
 
       window.syncToCloud();
       closeProductModal();
-      alert("Produk berjaya disimpan dan disinkronkan ke semua peranti!");
+      alert("Produk berjaya disimpan dan disinkronkan!");
     }
 
-    function editProduct(pId) {
-      openProductModal(pId);
-    }
+    function editProduct(pId) { openProductModal(pId); }
 
     function deleteProduct(pId) {
       if (confirm("Adakah anda pasti ingin memadam produk ini?")) {
@@ -1710,9 +1664,7 @@
       alert("Kategori berjaya disimpan dan disinkronkan!");
     }
 
-    function editCategory(cId) {
-      openCategoryModal(cId);
-    }
+    function editCategory(cId) { openCategoryModal(cId); }
 
     function deleteCategory(cId) {
       if (confirm("Adakah anda pasti ingin memadam kategori ini?")) {
@@ -1728,7 +1680,7 @@
       settings.bannerDesc = document.getElementById("settingBannerDesc").value;
 
       window.syncToCloud();
-      alert("Tetapan branding berjaya disimpan ke pangkalan data!");
+      alert("Tetapan branding berjaya disimpan!");
     }
 
     function saveWaSettings() {
@@ -1737,7 +1689,7 @@
       settings.waTemplate = document.getElementById("settingWaTemplate").value;
 
       window.syncToCloud();
-      alert("Tetapan WhatsApp berjaya disimpan ke pangkalan data!");
+      alert("Tetapan WhatsApp berjaya disimpan!");
     }
   </script>
 </body>
