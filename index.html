@@ -55,7 +55,7 @@
 </head>
 <body class="text-slate-800 flex flex-col min-h-screen antialiased pb-16 md:pb-0">
 
-  <!-- TOP HEADER & NAVIGATION (DESKTOP & MOBILE) -->
+  <!-- TOP HEADER & NAVIGATION -->
   <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-purple-100 shadow-sm">
     <div class="bg-gradient-to-r from-pastel-pinkDark via-pastel-purplePrimary to-pastel-greenDark text-white text-[11px] sm:text-xs py-1.5 px-4 text-center font-semibold tracking-wide">
       🌸 Hub Pembelajaran Digital Soft & Modern | Penghantaran Pantas via WhatsApp
@@ -101,7 +101,7 @@
             <span class="cartBadge absolute -top-1 -right-1 bg-pastel-redDark text-white text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center border-2 border-white hidden shadow-sm">0</span>
           </button>
 
-          <!-- Admin Button (Hanya Muncul Jika Bukan Katalog Pengunjung Sahaja) -->
+          <!-- Admin Button -->
           <button id="navAdminBtn" onclick="openAdminModal('login')" class="seller-only-element hidden text-xs font-bold text-white bg-slate-900 hover:bg-pastel-purplePrimary px-4 py-2.5 rounded-2xl transition-all shadow-sm flex items-center gap-1.5">
             <i data-lucide="store" class="w-4 h-4"></i>
             <span>Seller Center</span>
@@ -163,7 +163,6 @@
             <span class="text-[10px] sm:text-xs text-purple-200 mt-1">Muat Turun Serta Merta</span>
           </div>
 
-          <!-- Pautan Akses Penjual Sahaja -->
           <div class="seller-only-element hidden bg-slate-900/80 backdrop-blur-md p-3.5 rounded-2xl border border-white/10 w-full max-w-xs text-center space-y-2">
             <span class="text-[11px] text-purple-200 font-semibold block">Bahagian Penjual (Seller Center)</span>
             <div class="flex gap-2 justify-center">
@@ -298,11 +297,11 @@
 
             <div class="pt-4 sm:pt-6 border-t border-slate-100 space-y-3">
               <div class="flex gap-3">
-                <button id="addToCartBtn" class="flex-1 border-2 border-pastel-purplePrimary text-pastel-purplePrimary hover:bg-purple-50 font-bold py-3 sm:py-3.5 px-3 rounded-2xl transition-all flex items-center justify-center gap-2 text-xs sm:text-sm">
+                <button id="addToCartBtn" onclick="handleDetailAddToCart()" class="flex-1 border-2 border-pastel-purplePrimary text-pastel-purplePrimary hover:bg-purple-50 font-bold py-3 sm:py-3.5 px-3 rounded-2xl transition-all flex items-center justify-center gap-2 text-xs sm:text-sm">
                   <i data-lucide="shopping-bag" class="w-4 h-4"></i>
                   <span>Tambah ke Troli</span>
                 </button>
-                <button id="buyNowBtn" class="flex-1 bg-gradient-to-r from-pastel-purplePrimary to-pastel-redDark text-white font-bold py-3 sm:py-3.5 px-3 rounded-2xl shadow-lg transition-all flex items-center justify-center gap-2 text-xs sm:text-sm">
+                <button id="buyNowBtn" onclick="handleDetailBuyNow()" class="flex-1 bg-gradient-to-r from-pastel-purplePrimary to-pastel-redDark text-white font-bold py-3 sm:py-3.5 px-3 rounded-2xl shadow-lg transition-all flex items-center justify-center gap-2 text-xs sm:text-sm">
                   <i data-lucide="zap" class="w-4 h-4"></i>
                   <span>Beli Sekarang</span>
                 </button>
@@ -560,7 +559,7 @@
     </div>
   </main>
 
-  <!-- MOBILE BOTTOM NAVIGATION (KHAS UNTUK VIEW MOBILE) -->
+  <!-- MOBILE BOTTOM NAVIGATION -->
   <div class="md:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-200 z-40 py-2 px-6 flex justify-around items-center shadow-lg">
     <button onclick="navTo('home')" class="flex flex-col items-center text-slate-600 hover:text-pastel-purplePrimary">
       <i data-lucide="home" class="w-5 h-5"></i>
@@ -908,7 +907,7 @@
     let sellerAccounts = JSON.parse(localStorage.getItem(STORAGE_KEY_SELLER_ACCOUNTS)) || [];
 
     window.isAdminLoggedIn = false;
-    let isCatalogOnlyView = false; // Penanda mod kedai/katalog sahaja untuk pembeli
+    let isCatalogOnlyView = false;
 
     let currentDetailProductId = null;
     let currentPromoType = "RM"; 
@@ -941,11 +940,8 @@
       localStorage.setItem(key, JSON.stringify(value));
     }
 
-    /* MENENTUKAN MOOD VIEW (PELANGGAN vs PENJUAL) */
     function checkSellerVisibility() {
       const sellerElements = document.querySelectorAll('.seller-only-element');
-      
-      // Jika pautan dikongsi mengandungi #shop atau #product atau isCatalogOnlyView = true, sembunyikan Seller Center
       if (isCatalogOnlyView) {
         sellerElements.forEach(el => el.classList.add('hidden'));
       } else {
@@ -956,7 +952,6 @@
     function handleHashNavigation() {
       const hash = window.location.hash.replace("#", "") || "home";
 
-      // Jika URL adalah #shop atau merujuk terus ke produk (#product/id), aktifkan Mod Katalog Sahaja
       if (hash === "shop" || hash.startsWith("product/")) {
         isCatalogOnlyView = true;
       }
@@ -1125,15 +1120,23 @@
       }
 
       document.getElementById("detailDesc").innerText = product.desc || "Tiada penerangan tambahan.";
-      document.getElementById("addToCartBtn").onclick = () => addToCart(product.id);
-      document.getElementById("buyNowBtn").onclick = () => {
-        addToCart(product.id);
-        navTo("cart");
-      };
 
       navTo("product-detail", false);
       window.location.hash = `product/${pId}`;
       lucide.createIcons();
+    }
+
+    function handleDetailAddToCart() {
+      if (currentDetailProductId) {
+        addToCart(currentDetailProductId);
+      }
+    }
+
+    function handleDetailBuyNow() {
+      if (currentDetailProductId) {
+        addToCart(currentDetailProductId);
+        navTo("cart");
+      }
     }
 
     function navigateToDetail(pId) {
@@ -1367,7 +1370,6 @@
       }
     }
 
-    /* SISTEM LOG IN DENGAN AKAUN BERDAFTAR (FUNGSI DEFAULT ADMIN123 DIBUANG SEPENUHNYA) */
     function loginAdmin() {
       const emailInput = document.getElementById("adminUsernameInput").value.trim().toLowerCase();
       const pwdInput = document.getElementById("adminPasswordInput").value;
@@ -1386,7 +1388,6 @@
       }
     }
 
-    /* SISTEM SIGN UP SELLER DINAMIK */
     function signupAdmin() {
       const storeName = document.getElementById("signupStoreName").value.trim();
       const email = document.getElementById("signupEmail").value.trim().toLowerCase();
