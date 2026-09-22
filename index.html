@@ -90,12 +90,6 @@
             <i data-lucide="shopping-cart" class="w-6 h-6"></i>
             <span id="cartBadge" class="absolute -top-1 -right-1 bg-accent-500 text-white text-[10px] font-extrabold w-5 h-5 rounded-full flex items-center justify-center border-2 border-white hidden">0</span>
           </button>
-
-          <!-- Admin Portal Access -->
-          <button onclick="openAdminModal()" class="flex items-center gap-1.5 text-xs font-semibold bg-slate-900 text-white px-3 py-2 rounded-lg hover:bg-brand-700 transition-colors">
-            <i data-lucide="shield-check" class="w-4 h-4"></i>
-            <span class="hidden sm:inline">Seller Center</span>
-          </button>
         </div>
       </div>
 
@@ -378,7 +372,7 @@
           <p class="text-xs text-slate-500 mt-1">Lengkapkan nama anda untuk membuat pesanan rasmi melalui WhatsApp.</p>
         </div>
 
-        <!-- Customer Input (Strictly Name required only as per master prompt) -->
+        <!-- Customer Input -->
         <div class="space-y-4">
           <div>
             <label class="block text-xs font-bold text-slate-700 mb-1">Nama Pelanggan <span class="text-rose-500">*</span></label>
@@ -427,179 +421,241 @@
     <!-- VIEW 6: ADMIN SELLER CENTER / DASHBOARD -->
     <div id="view-admin" class="view-section hidden space-y-8">
       
-      <!-- Admin Header -->
-      <div class="bg-slate-900 text-white rounded-2xl p-6 sm:p-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 shadow-md">
-        <div>
-          <span class="text-[10px] uppercase font-bold bg-brand-500 text-slate-900 px-2.5 py-0.5 rounded-full">Kawalan Pentadbir</span>
-          <h1 class="text-2xl font-extrabold mt-1">Seller Center Dashboard</h1>
-          <p class="text-xs text-slate-400">Urus produk, kategori, jenama & tetapan WhatsApp Hub.</p>
+      <!-- SELLER AUTHENTICATION VIEW (IF NOT LOGGED IN) -->
+      <div id="sellerAuthSection" class="max-w-md mx-auto bg-white rounded-2xl p-6 sm:p-8 shadow-xl border border-slate-200 space-y-6">
+        <div class="text-center space-y-2">
+          <div class="w-12 h-12 bg-slate-900 text-white rounded-2xl flex items-center justify-center mx-auto shadow-md">
+            <i data-lucide="store" class="w-6 h-6"></i>
+          </div>
+          <h2 class="text-xl font-bold text-slate-900">Seller Center Portal</h2>
+          <p class="text-xs text-slate-500">Sila log masuk atau mendaftar akaun peniaga anda.</p>
         </div>
-        <button onclick="logoutAdmin()" class="bg-slate-800 hover:bg-rose-900/50 hover:text-rose-300 text-slate-300 text-xs font-bold px-4 py-2.5 rounded-xl border border-slate-700 transition-colors flex items-center gap-1.5">
-          <i data-lucide="log-out" class="w-4 h-4"></i>
-          Log Keluar
-        </button>
-      </div>
 
-      <!-- Admin Tabs -->
-      <div class="border-b border-slate-200 flex gap-2 overflow-x-auto no-scrollbar">
-        <button onclick="switchAdminTab('overview')" id="adminTabBtn-overview" class="admin-tab-btn py-2.5 px-4 text-xs font-bold border-b-2 border-brand-600 text-brand-600 whitespace-nowrap">
-          Gambaran Keseluruhan
-        </button>
-        <button onclick="switchAdminTab('products')" id="adminTabBtn-products" class="admin-tab-btn py-2.5 px-4 text-xs font-bold border-b-2 border-transparent text-slate-500 hover:text-slate-900 whitespace-nowrap">
-          Pengurusan Produk
-        </button>
-        <button onclick="switchAdminTab('categories')" id="adminTabBtn-categories" class="admin-tab-btn py-2.5 px-4 text-xs font-bold border-b-2 border-transparent text-slate-500 hover:text-slate-900 whitespace-nowrap">
-          Pengurusan Kategori
-        </button>
-        <button onclick="switchAdminTab('branding')" id="adminTabBtn-branding" class="admin-tab-btn py-2.5 px-4 text-xs font-bold border-b-2 border-transparent text-slate-500 hover:text-slate-900 whitespace-nowrap">
-          Branding & Banner
-        </button>
-        <button onclick="switchAdminTab('settings')" id="adminTabBtn-settings" class="admin-tab-btn py-2.5 px-4 text-xs font-bold border-b-2 border-transparent text-slate-500 hover:text-slate-900 whitespace-nowrap">
-          Tetapan WhatsApp & Kedai
-        </button>
-      </div>
-
-      <!-- ADMIN TAB 1: OVERVIEW -->
-      <div id="adminTab-overview" class="admin-tab-content space-y-6">
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-1">
-            <span class="text-xs font-bold text-slate-400 uppercase">Jumlah Produk</span>
-            <div id="statTotalProducts" class="text-2xl font-extrabold text-slate-900">0</div>
-          </div>
-          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-1">
-            <span class="text-xs font-bold text-slate-400 uppercase">Produk Aktif</span>
-            <div id="statActiveProducts" class="text-2xl font-extrabold text-emerald-600">0</div>
-          </div>
-          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-1">
-            <span class="text-xs font-bold text-slate-400 uppercase">Jumlah Kategori</span>
-            <div id="statTotalCategories" class="text-2xl font-extrabold text-brand-600">0</div>
-          </div>
-          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-1">
-            <span class="text-xs font-bold text-slate-400 uppercase">Status Sistem</span>
-            <div class="text-xs font-bold text-emerald-700 bg-emerald-100 px-2 py-1 rounded-md inline-block">Online (LocalStore)</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- ADMIN TAB 2: PRODUCTS MANAGEMENT -->
-      <div id="adminTab-products" class="admin-tab-content hidden space-y-6">
-        <div class="flex justify-between items-center">
-          <h2 class="text-base font-bold text-slate-900">Senarai Produk Katalog</h2>
-          <button onclick="openProductModal()" class="bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow transition-colors inline-flex items-center gap-1.5">
-            <i data-lucide="plus" class="w-4 h-4"></i> Tambah Produk Baharu
+        <!-- Auth Tabs (Log In vs Sign Up) -->
+        <div class="flex border-b border-slate-200">
+          <button id="authTabLoginBtn" onclick="switchSellerAuthTab('login')" class="flex-1 py-2 text-xs font-bold border-b-2 border-brand-600 text-brand-600">
+            Log Masuk
+          </button>
+          <button id="authTabSignupBtn" onclick="switchSellerAuthTab('signup')" class="flex-1 py-2 text-xs font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-700">
+            Daftar Seller
           </button>
         </div>
 
-        <!-- Products Table -->
-        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-          <div class="overflow-x-auto">
-            <table class="w-full text-left border-collapse text-xs">
-              <thead>
-                <tr class="bg-slate-50 border-b border-slate-200 text-slate-500 font-bold uppercase">
-                  <th class="p-3.5">Produk</th>
-                  <th class="p-3.5">Jenis</th>
-                  <th class="p-3.5">Kategori</th>
-                  <th class="p-3.5">Harga</th>
-                  <th class="p-3.5">Status</th>
-                  <th class="p-3.5 text-right">Tindakan</th>
-                </tr>
-              </thead>
-              <tbody id="adminProductsTableBody" class="divide-y divide-slate-100">
-                <!-- Rows injected by JS -->
-              </tbody>
-            </table>
+        <!-- LOGIN FORM -->
+        <form id="sellerLoginForm" onsubmit="handleSellerLogin(event)" class="space-y-4">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">E-mel Seller</label>
+            <input type="email" id="loginSellerEmail" required class="w-full px-3 py-2 border border-slate-300 rounded-xl text-xs focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 outline-none" placeholder="seller@schadigital.com">
           </div>
-        </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Kata Laluan</label>
+            <input type="password" id="loginSellerPassword" required class="w-full px-3 py-2 border border-slate-300 rounded-xl text-xs focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 outline-none" placeholder="••••••••">
+          </div>
+          <p id="sellerLoginError" class="text-[11px] text-rose-500 hidden"></p>
+          <button type="submit" class="w-full bg-slate-900 hover:bg-brand-600 text-white font-bold text-xs py-3 rounded-xl transition-colors shadow">
+            Log Masuk Seller
+          </button>
+        </form>
+
+        <!-- SIGN UP FORM -->
+        <form id="sellerSignupForm" onsubmit="handleSellerSignup(event)" class="space-y-4 hidden">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Nama Kedai / Penjual</label>
+            <input type="text" id="signupSellerName" required class="w-full px-3 py-2 border border-slate-300 rounded-xl text-xs focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 outline-none" placeholder="Kedai Edu Scha">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">E-mel</label>
+            <input type="email" id="signupSellerEmail" required class="w-full px-3 py-2 border border-slate-300 rounded-xl text-xs focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 outline-none" placeholder="seller@schadigital.com">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Cipta Kata Laluan</label>
+            <input type="password" id="signupSellerPassword" required minlength="4" class="w-full px-3 py-2 border border-slate-300 rounded-xl text-xs focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 outline-none" placeholder="••••••••">
+          </div>
+          <p id="sellerSignupError" class="text-[11px] text-rose-500 hidden"></p>
+          <button type="submit" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs py-3 rounded-xl transition-colors shadow">
+            Daftar Akaun Seller
+          </button>
+        </form>
       </div>
 
-      <!-- ADMIN TAB 3: CATEGORIES MANAGEMENT -->
-      <div id="adminTab-categories" class="admin-tab-content hidden space-y-6">
-        <div class="flex justify-between items-center">
-          <h2 class="text-base font-bold text-slate-900">Senarai Kategori Produk</h2>
-          <button onclick="openCategoryModal()" class="bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow transition-colors inline-flex items-center gap-1.5">
-            <i data-lucide="plus" class="w-4 h-4"></i> Tambah Kategori
+      <!-- SELLER DASHBOARD CONTENT (VISIBLE AFTER LOG IN) -->
+      <div id="sellerDashboardSection" class="hidden space-y-8">
+        
+        <!-- Admin Header -->
+        <div class="bg-slate-900 text-white rounded-2xl p-6 sm:p-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 shadow-md">
+          <div>
+            <span class="text-[10px] uppercase font-bold bg-brand-500 text-slate-900 px-2.5 py-0.5 rounded-full">Kawalan Pentadbir</span>
+            <h1 class="text-2xl font-extrabold mt-1">Seller Center Dashboard</h1>
+            <p class="text-xs text-slate-400">Log masuk sebagai: <span id="currentSellerEmailDisplay" class="text-brand-400 font-bold"></span></p>
+          </div>
+          <button onclick="logoutSeller()" class="bg-slate-800 hover:bg-rose-900/50 hover:text-rose-300 text-slate-300 text-xs font-bold px-4 py-2.5 rounded-xl border border-slate-700 transition-colors flex items-center gap-1.5">
+            <i data-lucide="log-out" class="w-4 h-4"></i>
+            Log Keluar
           </button>
         </div>
 
-        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-          <div class="overflow-x-auto">
-            <table class="w-full text-left border-collapse text-xs">
-              <thead>
-                <tr class="bg-slate-50 border-b border-slate-200 text-slate-500 font-bold uppercase">
-                  <th class="p-3.5">Nama Kategori</th>
-                  <th class="p-3.5">Penerangan</th>
-                  <th class="p-3.5">Status</th>
-                  <th class="p-3.5 text-right">Tindakan</th>
-                </tr>
-              </thead>
-              <tbody id="adminCategoriesTableBody" class="divide-y divide-slate-100">
-                <!-- Rows injected by JS -->
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-
-      <!-- ADMIN TAB 4: BRANDING & BANNER -->
-      <div id="adminTab-branding" class="admin-tab-content hidden space-y-6">
-        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-6">
-          <h2 class="text-base font-bold text-slate-900">Tetapan Logo & Penjenamaan</h2>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label class="block text-xs font-bold text-slate-700 mb-1">Nama Kedai</label>
-              <input type="text" id="settingStoreName" class="w-full px-3 py-2 border rounded-xl text-xs">
-            </div>
-            <div>
-              <label class="block text-xs font-bold text-slate-700 mb-1">URL Logo (Ikon/Gambar)</label>
-              <input type="text" id="settingStoreLogo" class="w-full px-3 py-2 border rounded-xl text-xs" placeholder="Biarkan kosong untuk mod teks default">
-            </div>
-          </div>
-
-          <hr class="border-slate-100">
-
-          <h2 class="text-base font-bold text-slate-900">Banner Utamapage (Hero)</h2>
-          <div class="space-y-4">
-            <div>
-              <label class="block text-xs font-bold text-slate-700 mb-1">Tajuk Banner Hero</label>
-              <input type="text" id="settingBannerTitle" class="w-full px-3 py-2 border rounded-xl text-xs">
-            </div>
-            <div>
-              <label class="block text-xs font-bold text-slate-700 mb-1">Sub-Penerangan Banner</label>
-              <textarea id="settingBannerDesc" rows="2" class="w-full px-3 py-2 border rounded-xl text-xs"></textarea>
-            </div>
-          </div>
-
-          <button onclick="saveBrandingSettings()" class="bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold px-5 py-2.5 rounded-xl">
-            Simpan Tetapan Branding
+        <!-- Admin Tabs -->
+        <div class="border-b border-slate-200 flex gap-2 overflow-x-auto no-scrollbar">
+          <button onclick="switchAdminTab('overview')" id="adminTabBtn-overview" class="admin-tab-btn py-2.5 px-4 text-xs font-bold border-b-2 border-brand-600 text-brand-600 whitespace-nowrap">
+            Gambaran Keseluruhan
+          </button>
+          <button onclick="switchAdminTab('products')" id="adminTabBtn-products" class="admin-tab-btn py-2.5 px-4 text-xs font-bold border-b-2 border-transparent text-slate-500 hover:text-slate-900 whitespace-nowrap">
+            Pengurusan Produk
+          </button>
+          <button onclick="switchAdminTab('categories')" id="adminTabBtn-categories" class="admin-tab-btn py-2.5 px-4 text-xs font-bold border-b-2 border-transparent text-slate-500 hover:text-slate-900 whitespace-nowrap">
+            Pengurusan Kategori
+          </button>
+          <button onclick="switchAdminTab('branding')" id="adminTabBtn-branding" class="admin-tab-btn py-2.5 px-4 text-xs font-bold border-b-2 border-transparent text-slate-500 hover:text-slate-900 whitespace-nowrap">
+            Branding & Banner
+          </button>
+          <button onclick="switchAdminTab('settings')" id="adminTabBtn-settings" class="admin-tab-btn py-2.5 px-4 text-xs font-bold border-b-2 border-transparent text-slate-500 hover:text-slate-900 whitespace-nowrap">
+            Tetapan WhatsApp & Kedai
           </button>
         </div>
-      </div>
 
-      <!-- ADMIN TAB 5: WHATSAPP SETTINGS -->
-      <div id="adminTab-settings" class="admin-tab-content hidden space-y-6">
-        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-6">
-          <h2 class="text-base font-bold text-slate-900">Konfigurasi Pesanan WhatsApp</h2>
-          
-          <div class="space-y-4">
-            <div>
-              <label class="block text-xs font-bold text-slate-700 mb-1">Nombor WhatsApp Kedai (Format: 60123456789)</label>
-              <input type="text" id="settingWaNumber" class="w-full px-3 py-2 border rounded-xl text-xs" placeholder="60123456789">
+        <!-- ADMIN TAB 1: OVERVIEW -->
+        <div id="adminTab-overview" class="admin-tab-content space-y-6">
+          <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-1">
+              <span class="text-xs font-bold text-slate-400 uppercase">Jumlah Produk</span>
+              <div id="statTotalProducts" class="text-2xl font-extrabold text-slate-900">0</div>
             </div>
-            <div>
-              <label class="block text-xs font-bold text-slate-700 mb-1">Label Butang Checkout WhatsApp</label>
-              <input type="text" id="settingWaButtonLabel" class="w-full px-3 py-2 border rounded-xl text-xs" placeholder="Order Melalui WhatsApp">
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-1">
+              <span class="text-xs font-bold text-slate-400 uppercase">Produk Aktif</span>
+              <div id="statActiveProducts" class="text-2xl font-extrabold text-emerald-600">0</div>
             </div>
-            <div>
-              <label class="block text-xs font-bold text-slate-700 mb-1">Template Mesej Pesanan Dinamik</label>
-              <p class="text-[11px] text-slate-500 mb-1.5">Gunakan tag: <code>{STORE_NAME}</code>, <code>{CUSTOMER_NAME}</code>, <code>{ITEMS}</code>, <code>{TOTAL}</code></p>
-              <textarea id="settingWaTemplate" rows="6" class="w-full px-3 py-2 border rounded-xl text-xs font-mono"></textarea>
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-1">
+              <span class="text-xs font-bold text-slate-400 uppercase">Jumlah Kategori</span>
+              <div id="statTotalCategories" class="text-2xl font-extrabold text-brand-600">0</div>
+            </div>
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-1">
+              <span class="text-xs font-bold text-slate-400 uppercase">Status Sistem</span>
+              <div class="text-xs font-bold text-emerald-700 bg-emerald-100 px-2 py-1 rounded-md inline-block">Online (LocalStore)</div>
             </div>
           </div>
-
-          <button onclick="saveWaSettings()" class="bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold px-5 py-2.5 rounded-xl">
-            Simpan Konfigurasi WhatsApp
-          </button>
         </div>
+
+        <!-- ADMIN TAB 2: PRODUCTS MANAGEMENT -->
+        <div id="adminTab-products" class="admin-tab-content hidden space-y-6">
+          <div class="flex justify-between items-center">
+            <h2 class="text-base font-bold text-slate-900">Senarai Produk Katalog</h2>
+            <button onclick="openProductModal()" class="bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow transition-colors inline-flex items-center gap-1.5">
+              <i data-lucide="plus" class="w-4 h-4"></i> Tambah Produk Baharu
+            </button>
+          </div>
+
+          <!-- Products Table -->
+          <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left border-collapse text-xs">
+                <thead>
+                  <tr class="bg-slate-50 border-b border-slate-200 text-slate-500 font-bold uppercase">
+                    <th class="p-3.5">Produk</th>
+                    <th class="p-3.5">Jenis</th>
+                    <th class="p-3.5">Kategori</th>
+                    <th class="p-3.5">Harga</th>
+                    <th class="p-3.5">Status</th>
+                    <th class="p-3.5 text-right">Tindakan</th>
+                  </tr>
+                </thead>
+                <tbody id="adminProductsTableBody" class="divide-y divide-slate-100">
+                  <!-- Rows injected by JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ADMIN TAB 3: CATEGORIES MANAGEMENT -->
+        <div id="adminTab-categories" class="admin-tab-content hidden space-y-6">
+          <div class="flex justify-between items-center">
+            <h2 class="text-base font-bold text-slate-900">Senarai Kategori Produk</h2>
+            <button onclick="openCategoryModal()" class="bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow transition-colors inline-flex items-center gap-1.5">
+              <i data-lucide="plus" class="w-4 h-4"></i> Tambah Kategori
+            </button>
+          </div>
+
+          <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left border-collapse text-xs">
+                <thead>
+                  <tr class="bg-slate-50 border-b border-slate-200 text-slate-500 font-bold uppercase">
+                    <th class="p-3.5">Nama Kategori</th>
+                    <th class="p-3.5">Penerangan</th>
+                    <th class="p-3.5">Status</th>
+                    <th class="p-3.5 text-right">Tindakan</th>
+                  </tr>
+                </thead>
+                <tbody id="adminCategoriesTableBody" class="divide-y divide-slate-100">
+                  <!-- Rows injected by JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ADMIN TAB 4: BRANDING & BANNER -->
+        <div id="adminTab-branding" class="admin-tab-content hidden space-y-6">
+          <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+            <h2 class="text-base font-bold text-slate-900">Tetapan Logo & Penjenamaan</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1">Nama Kedai</label>
+                <input type="text" id="settingStoreName" class="w-full px-3 py-2 border rounded-xl text-xs">
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1">URL Logo (Ikon/Gambar)</label>
+                <input type="text" id="settingStoreLogo" class="w-full px-3 py-2 border rounded-xl text-xs" placeholder="Biarkan kosong untuk mod teks default">
+              </div>
+            </div>
+
+            <hr class="border-slate-100">
+
+            <h2 class="text-base font-bold text-slate-900">Banner Utamapage (Hero)</h2>
+            <div class="space-y-4">
+              <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1">Tajuk Banner Hero</label>
+                <input type="text" id="settingBannerTitle" class="w-full px-3 py-2 border rounded-xl text-xs">
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1">Sub-Penerangan Banner</label>
+                <textarea id="settingBannerDesc" rows="2" class="w-full px-3 py-2 border rounded-xl text-xs"></textarea>
+              </div>
+            </div>
+
+            <button onclick="saveBrandingSettings()" class="bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold px-5 py-2.5 rounded-xl">
+              Simpan Tetapan Branding
+            </button>
+          </div>
+        </div>
+
+        <!-- ADMIN TAB 5: WHATSAPP SETTINGS -->
+        <div id="adminTab-settings" class="admin-tab-content hidden space-y-6">
+          <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+            <h2 class="text-base font-bold text-slate-900">Konfigurasi Pesanan WhatsApp</h2>
+            
+            <div class="space-y-4">
+              <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1">Nombor WhatsApp Kedai (Format: 60123456789)</label>
+                <input type="text" id="settingWaNumber" class="w-full px-3 py-2 border rounded-xl text-xs" placeholder="60123456789">
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1">Label Butang Checkout WhatsApp</label>
+                <input type="text" id="settingWaButtonLabel" class="w-full px-3 py-2 border rounded-xl text-xs" placeholder="Order Melalui WhatsApp">
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1">Template Mesej Pesanan Dinamik</label>
+                <p class="text-[11px] text-slate-500 mb-1.5">Gunakan tag: <code>{STORE_NAME}</code>, <code>{CUSTOMER_NAME}</code>, <code>{ITEMS}</code>, <code>{TOTAL}</code></p>
+                <textarea id="settingWaTemplate" rows="6" class="w-full px-3 py-2 border rounded-xl text-xs font-mono"></textarea>
+              </div>
+            </div>
+
+            <button onclick="saveWaSettings()" class="bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold px-5 py-2.5 rounded-xl">
+              Simpan Konfigurasi WhatsApp
+            </button>
+          </div>
+        </div>
+
       </div>
 
     </div>
@@ -634,35 +690,7 @@
 
   <!-- MODALS CONTAINER -->
 
-  <!-- 1. ADMIN AUTHENTICATION MODAL -->
-  <div id="adminAuthModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-    <div class="bg-white w-full max-w-sm rounded-2xl p-6 space-y-4 shadow-2xl relative">
-      <button onclick="closeAdminModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">
-        <i data-lucide="x" class="w-5 h-5"></i>
-      </button>
-
-      <div class="text-center space-y-1">
-        <div class="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center mx-auto text-slate-800">
-          <i data-lucide="lock" class="w-6 h-6"></i>
-        </div>
-        <h3 class="text-base font-bold text-slate-900">Akses Seller Center</h3>
-        <p class="text-xs text-slate-500">Masukkan kata laluan pentadbir untuk mengurus kedai.</p>
-      </div>
-
-      <div class="space-y-3">
-        <div>
-          <label class="block text-xs font-bold text-slate-700 mb-1">Kata Laluan Admin</label>
-          <input type="password" id="adminPasswordInput" class="w-full px-3 py-2 border rounded-xl text-xs focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 outline-none" placeholder="••••••••">
-          <p id="adminAuthError" class="text-[11px] text-rose-500 hidden mt-1">Kata laluan tidak sah. (Default: admin123)</p>
-        </div>
-        <button onclick="loginAdmin()" class="w-full bg-slate-900 hover:bg-brand-600 text-white font-bold text-xs py-2.5 rounded-xl transition-colors">
-          Log Masuk
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- 2. ADD/EDIT PRODUCT MODAL -->
+  <!-- 1. ADD/EDIT PRODUCT MODAL -->
   <div id="productFormModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
     <div class="bg-white w-full max-w-lg rounded-2xl p-6 space-y-4 shadow-2xl max-h-[90vh] overflow-y-auto relative">
       <button onclick="closeProductModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">
@@ -739,7 +767,7 @@
     </div>
   </div>
 
-  <!-- 3. ADD/EDIT CATEGORY MODAL -->
+  <!-- 2. ADD/EDIT CATEGORY MODAL -->
   <div id="categoryFormModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
     <div class="bg-white w-full max-w-md rounded-2xl p-6 space-y-4 shadow-2xl relative">
       <button onclick="closeCategoryModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">
@@ -783,6 +811,12 @@
     const STORAGE_KEY_CATEGORIES = "scha_hub_categories_v1";
     const STORAGE_KEY_SETTINGS = "scha_hub_settings_v1";
     const STORAGE_KEY_CART = "scha_hub_cart_v1";
+    const STORAGE_KEY_SELLERS = "scha_hub_sellers_v1";
+    const STORAGE_KEY_ACTIVE_SELLER = "scha_hub_active_seller_v1";
+
+    const DEFAULT_SELLERS = [
+      { name: "Admin Utama", email: "admin@schadigital.com", password: "admin" }
+    ];
 
     const DEFAULT_CATEGORIES = [
       { id: "cat-1", name: "Pra-Sekolah", desc: "Modul asas membaca, menulis & mengira (3-6 Tahun)", active: true },
@@ -863,7 +897,9 @@
     let categories = JSON.parse(localStorage.getItem(STORAGE_KEY_CATEGORIES)) || DEFAULT_CATEGORIES;
     let settings = JSON.parse(localStorage.getItem(STORAGE_KEY_SETTINGS)) || DEFAULT_SETTINGS;
     let cart = JSON.parse(localStorage.getItem(STORAGE_KEY_CART)) || [];
-    let isAdminLoggedIn = false;
+    let sellers = JSON.parse(localStorage.getItem(STORAGE_KEY_SELLERS)) || DEFAULT_SELLERS;
+    let activeSeller = JSON.parse(localStorage.getItem(STORAGE_KEY_ACTIVE_SELLER)) || null;
+
     let currentDetailProductId = null;
 
     // Filters state
@@ -880,6 +916,7 @@
       if (!localStorage.getItem(STORAGE_KEY_PRODUCTS)) saveData(STORAGE_KEY_PRODUCTS, products);
       if (!localStorage.getItem(STORAGE_KEY_CATEGORIES)) saveData(STORAGE_KEY_CATEGORIES, categories);
       if (!localStorage.getItem(STORAGE_KEY_SETTINGS)) saveData(STORAGE_KEY_SETTINGS, settings);
+      if (!localStorage.getItem(STORAGE_KEY_SELLERS)) saveData(STORAGE_KEY_SELLERS, sellers);
 
       // Render initial Lucide icons
       lucide.createIcons();
@@ -894,6 +931,9 @@
       renderHomeView();
       renderShopView();
       updateCartUI();
+
+      // Initialize Seller UI state
+      checkSellerAuthStatus();
 
       // Handle direct hash navigation
       handleHashNavigation();
@@ -934,7 +974,99 @@
     }
 
     /* ==========================================================================
-       3. DOM RENDERERS (MARKETPLACE / CUSTOMER)
+       3. SELLER AUTHENTICATION & PERSISTENT SESSION
+       ========================================================================== */
+    function checkSellerAuthStatus() {
+      const authSection = document.getElementById("sellerAuthSection");
+      const dashSection = document.getElementById("sellerDashboardSection");
+
+      if (activeSeller) {
+        authSection.classList.add("hidden");
+        dashSection.classList.remove("hidden");
+        document.getElementById("currentSellerEmailDisplay").innerText = activeSeller.email;
+        renderAdminDashboard();
+      } else {
+        authSection.classList.remove("hidden");
+        dashSection.classList.add("hidden");
+      }
+    }
+
+    function switchSellerAuthTab(tab) {
+      const loginForm = document.getElementById("sellerLoginForm");
+      const signupForm = document.getElementById("sellerSignupForm");
+      const loginBtn = document.getElementById("authTabLoginBtn");
+      const signupBtn = document.getElementById("authTabSignupBtn");
+
+      document.getElementById("sellerLoginError").classList.add("hidden");
+      document.getElementById("sellerSignupError").classList.add("hidden");
+
+      if (tab === 'login') {
+        loginForm.classList.remove("hidden");
+        signupForm.classList.add("hidden");
+        loginBtn.className = "flex-1 py-2 text-xs font-bold border-b-2 border-brand-600 text-brand-600";
+        signupBtn.className = "flex-1 py-2 text-xs font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-700";
+      } else {
+        signupForm.classList.remove("hidden");
+        loginForm.classList.add("hidden");
+        signupBtn.className = "flex-1 py-2 text-xs font-bold border-b-2 border-brand-600 text-brand-600";
+        loginBtn.className = "flex-1 py-2 text-xs font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-700";
+      }
+    }
+
+    function handleSellerLogin(e) {
+      e.preventDefault();
+      const email = document.getElementById("loginSellerEmail").value.trim().toLowerCase();
+      const password = document.getElementById("loginSellerPassword").value;
+      const errorEl = document.getElementById("sellerLoginError");
+
+      const foundSeller = sellers.find(s => s.email.toLowerCase() === email && s.password === password);
+
+      if (foundSeller) {
+        activeSeller = foundSeller;
+        saveData(STORAGE_KEY_ACTIVE_SELLER, activeSeller);
+        errorEl.classList.add("hidden");
+        checkSellerAuthStatus();
+      } else {
+        errorEl.innerText = "E-mel atau kata laluan tidak sah.";
+        errorEl.classList.remove("hidden");
+      }
+    }
+
+    function handleSellerSignup(e) {
+      e.preventDefault();
+      const name = document.getElementById("signupSellerName").value.trim();
+      const email = document.getElementById("signupSellerEmail").value.trim().toLowerCase();
+      const password = document.getElementById("signupSellerPassword").value;
+      const errorEl = document.getElementById("sellerSignupError");
+
+      const existingSeller = sellers.find(s => s.email.toLowerCase() === email);
+      if (existingSeller) {
+        errorEl.innerText = "E-mel ini telah pun terdaftar.";
+        errorEl.classList.remove("hidden");
+        return;
+      }
+
+      const newSeller = { name, email, password };
+      sellers.push(newSeller);
+      saveData(STORAGE_KEY_SELLERS, sellers);
+
+      // Auto login after sign up
+      activeSeller = newSeller;
+      saveData(STORAGE_KEY_ACTIVE_SELLER, activeSeller);
+
+      errorEl.classList.add("hidden");
+      checkSellerAuthStatus();
+      alert("Pendaftaran akaun seller berjaya!");
+    }
+
+    function logoutSeller() {
+      activeSeller = null;
+      localStorage.removeItem(STORAGE_KEY_ACTIVE_SELLER);
+      checkSellerAuthStatus();
+    }
+
+    /* ==========================================================================
+       4. DOM RENDERERS (MARKETPLACE / CUSTOMER)
        ========================================================================== */
     function applyBrandingDOM() {
       document.getElementById("brandNameDisplay").innerText = settings.storeName || "Scha Digital";
@@ -1157,7 +1289,7 @@
     }
 
     /* ==========================================================================
-       4. SHOPPING CART SYSTEM
+       5. SHOPPING CART SYSTEM
        ========================================================================== */
     function addToCart(pId) {
       const product = products.find(p => p.id === pId);
@@ -1179,7 +1311,6 @@
       saveData(STORAGE_KEY_CART, cart);
       updateCartUI();
 
-      // Show brief notification/toast alert
       alert(`"${product.title}" telah ditambah ke troli!`);
     }
 
@@ -1213,7 +1344,6 @@
         badge.classList.add("hidden");
       }
 
-      // Render Cart view list
       const cartContainer = document.getElementById("cartContent");
       const emptyState = document.getElementById("cartEmptyState");
       const summaryCard = document.getElementById("cartSummaryCard");
@@ -1236,7 +1366,6 @@
               </div>
             </div>
 
-            <!-- Qty controls & delete -->
             <div class="flex items-center gap-3">
               <div class="flex items-center border border-slate-200 rounded-lg">
                 <button onclick="updateCartQuantity('${item.id}', -1)" class="px-2.5 py-1 text-slate-600 hover:bg-slate-100 font-bold text-xs">-</button>
@@ -1255,13 +1384,12 @@
         document.getElementById("cartTotalPrice").innerText = `RM ${subtotal.toFixed(2)}`;
       }
 
-      // Render Checkout View summary list
       renderCheckoutView();
       lucide.createIcons();
     }
 
     /* ==========================================================================
-       5. CHECKOUT & WHATSAPP GENERATOR
+       6. CHECKOUT & WHATSAPP GENERATOR
        ========================================================================== */
     function renderCheckoutView() {
       const container = document.getElementById("checkoutItemsList");
@@ -1301,21 +1429,17 @@
         return;
       }
 
-      // Format order items list text
       const itemsListText = cart.map((item, idx) => `${idx + 1}. ${item.title} (x${item.qty}) - RM ${(item.price * item.qty).toFixed(2)}`).join("\n");
       const totalAmount = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
 
-      // Interpolate WhatsApp template variables
       let message = settings.waTemplate || DEFAULT_SETTINGS.waTemplate;
       message = message.replace(/{STORE_NAME}/g, settings.storeName || "Scha Digital Learning Hub");
       message = message.replace(/{CUSTOMER_NAME}/g, customerName);
       message = message.replace(/{ITEMS}/g, itemsListText);
       message = message.replace(/{TOTAL}/g, `RM ${totalAmount.toFixed(2)}`);
 
-      // Clean WhatsApp phone number (remove +, spaces, dashes)
       const cleanPhone = (settings.waNumber || "60123456789").replace(/[^0-9]/g, "");
 
-      // Open WhatsApp Web/App with URL Encoding
       const encodedMsg = encodeURIComponent(message);
       const waURL = `https://wa.me/${cleanPhone}?text=${encodedMsg}`;
 
@@ -1323,40 +1447,8 @@
     }
 
     /* ==========================================================================
-       6. ADMIN / SELLER CENTER MANAGEMENT
+       7. ADMIN / SELLER CENTER MANAGEMENT
        ========================================================================== */
-    function openAdminModal() {
-      if (isAdminLoggedIn) {
-        navTo("admin");
-      } else {
-        document.getElementById("adminAuthModal").classList.remove("hidden");
-      }
-    }
-
-    function closeAdminModal() {
-      document.getElementById("adminAuthModal").classList.add("hidden");
-    }
-
-    function loginAdmin() {
-      const pwd = document.getElementById("adminPasswordInput").value;
-      const errorEl = document.getElementById("adminAuthError");
-
-      if (pwd === "admin123" || pwd === "admin") {
-        isAdminLoggedIn = true;
-        errorEl.classList.add("hidden");
-        closeAdminModal();
-        renderAdminDashboard();
-        navTo("admin");
-      } else {
-        errorEl.classList.remove("hidden");
-      }
-    }
-
-    function logoutAdmin() {
-      isAdminLoggedIn = false;
-      navTo("home");
-    }
-
     function switchAdminTab(tabKey) {
       document.querySelectorAll(".admin-tab-content").forEach(el => el.classList.add("hidden"));
       document.querySelectorAll(".admin-tab-btn").forEach(btn => {
@@ -1540,7 +1632,7 @@
       };
 
       if (id) {
-        const index = categories.findIndex(c => c.id === id);
+        const index = categories.findIndex(c => c.id === cId);
         if (index > -1) categories[index] = catData;
       } else {
         categories.push(catData);
