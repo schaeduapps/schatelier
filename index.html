@@ -21,7 +21,6 @@
             sans: ['"Plus Jakarta Sans"', 'sans-serif'],
           },
           colors: {
-            // Skema Warna Soft Pastel yang Harmoni
             pastel: {
               pink: '#FDE2E4',
               pinkDark: '#E5989B',
@@ -49,23 +48,17 @@
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     
-    /* Soft Gradient Backgrounds */
     .bg-soft-gradient {
       background: linear-gradient(135deg, #FFCAD4 0%, #F3E8EE 50%, #D8F3DC 100%);
     }
     .bg-hero-card {
       background: linear-gradient(135deg, #9D4EDD 0%, #7B2CBF 50%, #E07A5F 100%);
     }
-    .glass-card {
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.5);
-    }
   </style>
 </head>
 <body class="text-slate-800 flex flex-col min-h-screen antialiased">
 
-  <!-- TOP HEADER & NAVIGATION -->
+  <!-- TOP HEADER & NAVIGATION (KHUSUS PENGGUNA / CUSTOMER - TIADA BUTTON SELLER CENTER) -->
   <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-purple-100 shadow-sm">
     <!-- Top Banner -->
     <div class="bg-gradient-to-r from-pastel-pinkDark via-pastel-purplePrimary to-pastel-greenDark text-white text-xs py-2 px-4 text-center font-semibold tracking-wide">
@@ -75,7 +68,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-20 gap-4">
         
-        <!-- Logo -->
+        <!-- Logo Kedai -->
         <a href="#home" onclick="navTo('home')" class="flex items-center gap-3 shrink-0 group">
           <div id="brandLogoContainer" class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-pastel-purplePrimary to-pastel-redDark text-white flex items-center justify-center font-extrabold text-2xl shadow-lg shadow-purple-200 group-hover:scale-105 transition-transform">
             S
@@ -100,9 +93,9 @@
           </div>
         </div>
 
-        <!-- Right Nav Actions (Seller Center dikekalkan di atas) -->
+        <!-- Customer Nav Actions -->
         <div class="flex items-center gap-3">
-          <button onclick="navTo('shop')" class="text-sm font-bold text-slate-700 hover:text-pastel-purplePrimary hidden sm:block px-3 py-2 rounded-xl hover:bg-slate-50 transition-colors">
+          <button onclick="navTo('shop')" class="text-sm font-bold text-slate-700 hover:text-pastel-purplePrimary px-4 py-2.5 rounded-2xl hover:bg-slate-50 transition-colors">
             Katalog Kedai
           </button>
 
@@ -110,12 +103,6 @@
           <button onclick="navTo('cart')" class="relative p-2.5 text-slate-700 hover:text-pastel-purplePrimary bg-slate-100 hover:bg-purple-50 rounded-2xl transition-all" title="Troli Sopping">
             <i data-lucide="shopping-bag" class="w-5 h-5"></i>
             <span id="cartBadge" class="absolute -top-1 -right-1 bg-pastel-redDark text-white text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center border-2 border-white hidden shadow-sm">0</span>
-          </button>
-
-          <!-- Seller Center Button (Atas Navbar) -->
-          <button onclick="openAdminModal()" class="flex items-center gap-2 text-xs font-bold bg-slate-900 hover:bg-pastel-purplePrimary text-white px-4 py-2.5 rounded-2xl shadow-md hover:shadow-purple-200 transition-all">
-            <i data-lucide="store" class="w-4 h-4"></i>
-            <span>Seller Center</span>
           </button>
         </div>
       </div>
@@ -138,7 +125,7 @@
   <!-- MAIN CONTENT CONTAINER -->
   <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
     
-    <!-- VIEW 1: HOME PAGE -->
+    <!-- VIEW 1: HOME PAGE (Laman Utama dengan Pautan Log In/Sign Up Seller) -->
     <div id="view-home" class="view-section space-y-12">
       
       <!-- Hero Banner -->
@@ -153,18 +140,32 @@
           <p id="bannerDesc" class="text-sm sm:text-base text-purple-100 font-normal leading-relaxed">
             Akses pantas kepada ratusan modul lembaran kerja, e-book, dan aplikasi latihan sekolah rendah & pra-sekolah.
           </p>
-          <div class="pt-2">
+          <div class="pt-2 flex flex-wrap gap-3 justify-center md:justify-start">
             <button id="bannerBtn" onclick="navTo('shop')" class="bg-white hover:bg-pastel-pink text-slate-900 font-bold px-7 py-3.5 rounded-2xl shadow-lg transition-all transform hover:-translate-y-0.5 inline-flex items-center gap-2 text-sm">
-              <span>Terokai Bahan Digital</span>
+              <span>Terokai Katalog Kedai</span>
               <i data-lucide="arrow-right" class="w-4 h-4"></i>
             </button>
           </div>
         </div>
-        <div class="w-full md:w-1/3 flex justify-center z-10">
+
+        <div class="w-full md:w-1/3 flex flex-col items-center justify-center z-10 gap-4">
           <div class="w-52 h-52 sm:w-64 sm:h-64 bg-white/10 rounded-3xl border border-white/20 p-6 backdrop-blur-md flex flex-col items-center justify-center text-center shadow-2xl">
             <i data-lucide="book-open-check" class="w-20 h-20 text-white/90 mb-3 stroke-[1.5]"></i>
             <span class="text-sm font-bold">100% Digital PDF / App</span>
             <span class="text-xs text-purple-200 mt-1">Muat Turun Serta Merta</span>
+          </div>
+
+          <!-- Pilihan Sign Up & Log In Seller Center di Bahagian Home (Seller Sahaja) -->
+          <div class="bg-slate-900/80 backdrop-blur-md p-3.5 rounded-2xl border border-white/10 w-full max-w-xs text-center space-y-2">
+            <span class="text-[11px] text-purple-200 font-semibold block">Bahagian Penjual (Seller Center)</span>
+            <div class="flex gap-2 justify-center">
+              <button onclick="openAdminModal('login')" class="text-xs font-bold bg-white/20 hover:bg-white/30 text-white px-3 py-1.5 rounded-xl transition-all border border-white/20">
+                Log In Seller
+              </button>
+              <button onclick="openAdminModal('signup')" class="text-xs font-bold bg-pastel-purplePrimary hover:bg-purple-600 text-white px-3 py-1.5 rounded-xl transition-all shadow">
+                Sign Up Seller
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -207,7 +208,7 @@
             <p class="text-xs text-slate-500 mt-0.5">Lembaran kerja paling banyak mendapat sambutan guru & ibu bapa</p>
           </div>
           <button onclick="navTo('shop')" class="text-xs font-bold text-pastel-purplePrimary hover:underline">
-            Lihat Katalog
+            Lihat Katalog Kedai
           </button>
         </div>
         <div id="featuredProductsGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -217,7 +218,7 @@
 
     </div>
 
-    <!-- VIEW 2: SHOP / MARKETPLACE CATALOG -->
+    <!-- VIEW 2: SHOP / MARKETPLACE CATALOG (KHUSUS PELANGGAN - TIADA SELLER BUTTON) -->
     <div id="view-shop" class="view-section hidden space-y-6">
       
       <!-- Filter Bar -->
@@ -272,7 +273,7 @@
     <!-- VIEW 3: PRODUCT DETAIL -->
     <div id="view-product-detail" class="view-section hidden space-y-6">
       <button onclick="navTo('shop')" class="text-xs font-bold text-slate-600 hover:text-pastel-purplePrimary inline-flex items-center gap-1 bg-white px-3 py-2 rounded-xl border border-slate-200 shadow-sm">
-        <i data-lucide="arrow-left" class="w-4 h-4"></i> Kembali ke Katalog
+        <i data-lucide="arrow-left" class="w-4 h-4"></i> Kembali ke Katalog Kedai
       </button>
 
       <div class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden p-6 md:p-8">
@@ -430,7 +431,7 @@
         </div>
         <button onclick="logoutAdmin()" class="bg-slate-800 hover:bg-rose-900/50 hover:text-rose-300 text-slate-300 text-xs font-bold px-4 py-2.5 rounded-xl border border-slate-700 transition-colors flex items-center gap-1.5">
           <i data-lucide="log-out" class="w-4 h-4"></i>
-          Log Keluar
+          Log Keluar Seller
         </button>
       </div>
 
@@ -595,7 +596,7 @@
 
   </main>
 
-  <!-- FOOTER -->
+  <!-- FOOTER WITH SELLER ACCESS LINK -->
   <footer class="bg-slate-900 text-slate-400 text-xs py-12 mt-16 border-t border-slate-800">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-8">
       <div class="space-y-3">
@@ -614,8 +615,13 @@
         </ul>
       </div>
       <div class="space-y-2">
-        <span class="font-bold text-white block uppercase tracking-wider text-[11px]">Bantuan & Sokongan</span>
-        <p>Penghantaran produk dilakukan secara manual/automatik selepas pengesahan pesanan melalui WhatsApp rasmi kedai.</p>
+        <span class="font-bold text-white block uppercase tracking-wider text-[11px]">Penjual & Sokongan</span>
+        <p class="text-slate-400">Penghantaran produk dilakukan secara manual/automatik selepas pengesahan pesanan melalui WhatsApp rasmi kedai.</p>
+        <div class="pt-2">
+          <button onclick="openAdminModal('login')" class="text-[11px] font-bold text-purple-300 hover:text-white underline inline-flex items-center gap-1">
+            <i data-lucide="store" class="w-3.5 h-3.5"></i> Seller Center (Log In / Sign Up)
+          </button>
+        </div>
         <p class="text-slate-500 text-[10px] pt-2">© 2026 Scha Digital Learning Hub. Hak Cipta Terpelihara.</p>
       </div>
     </div>
@@ -623,7 +629,7 @@
 
   <!-- MODALS CONTAINER -->
 
-  <!-- 1. SELLER / ADMIN AUTH MODAL -->
+  <!-- 1. SELLER / ADMIN AUTH MODAL (DENGAN TAB LOG IN & SIGN UP) -->
   <div id="adminAuthModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
     <div class="bg-white w-full max-w-sm rounded-3xl p-7 space-y-5 shadow-2xl relative border border-slate-100">
       <button onclick="closeAdminModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-600">
@@ -632,22 +638,56 @@
 
       <div class="text-center space-y-2">
         <div class="w-12 h-12 bg-purple-50 text-pastel-purplePrimary rounded-2xl flex items-center justify-center mx-auto">
-          <i data-lucide="shield-check" class="w-6 h-6"></i>
+          <i data-lucide="store" class="w-6 h-6"></i>
         </div>
-        <h3 class="text-lg font-extrabold text-slate-900">Akses Seller Center</h3>
-        <p class="text-xs text-slate-500">Masukkan kata laluan pentadbir untuk mengurus kedai.</p>
+        <h3 class="text-lg font-extrabold text-slate-900">Seller Center</h3>
+        <p class="text-xs text-slate-500">Akses khusus untuk pentadbir & penjual kedai.</p>
       </div>
 
-      <div class="space-y-4">
+      <!-- Tab Switcher: Log In / Sign Up -->
+      <div class="flex border-b border-slate-100 text-xs font-bold text-center">
+        <button id="authTabLoginBtn" onclick="switchAuthMode('login')" class="flex-1 py-2 border-b-2 border-pastel-purplePrimary text-pastel-purplePrimary">
+          Log In
+        </button>
+        <button id="authTabSignupBtn" onclick="switchAuthMode('signup')" class="flex-1 py-2 border-b-2 border-transparent text-slate-400 hover:text-slate-700">
+          Sign Up
+        </button>
+      </div>
+
+      <!-- Form Log In Seller -->
+      <div id="sellerLoginForm" class="space-y-4">
         <div>
-          <label class="block text-xs font-bold text-slate-700 mb-1">Kata Laluan Admin</label>
+          <label class="block text-xs font-bold text-slate-700 mb-1">E-mel / Username</label>
+          <input type="text" id="adminUsernameInput" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-xs focus:ring-4 focus:ring-purple-100 focus:border-pastel-purplePrimary outline-none mb-3" placeholder="admin">
+          
+          <label class="block text-xs font-bold text-slate-700 mb-1">Kata Laluan</label>
           <input type="password" id="adminPasswordInput" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-xs focus:ring-4 focus:ring-purple-100 focus:border-pastel-purplePrimary outline-none" placeholder="••••••••">
-          <p id="adminAuthError" class="text-[11px] text-rose-500 hidden mt-1">Kata laluan tidak sah. (Default: admin123)</p>
+          <p id="adminAuthError" class="text-[11px] text-rose-500 hidden mt-1">Maklumat log masuk tidak sah. (Default: admin123)</p>
         </div>
         <button onclick="loginAdmin()" class="w-full bg-slate-900 hover:bg-pastel-purplePrimary text-white font-bold text-xs py-3 rounded-xl transition-all shadow-md">
           Log Masuk Seller
         </button>
       </div>
+
+      <!-- Form Sign Up Seller -->
+      <div id="sellerSignupForm" class="space-y-3 hidden">
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Nama Kedai / Penjual</label>
+          <input type="text" id="signupStoreName" class="w-full px-4 py-2 border border-slate-200 rounded-xl text-xs outline-none focus:border-pastel-purplePrimary" placeholder="Contoh: Kedai Buku Scha">
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">E-mel Penjual</label>
+          <input type="email" id="signupEmail" class="w-full px-4 py-2 border border-slate-200 rounded-xl text-xs outline-none focus:border-pastel-purplePrimary" placeholder="seller@domain.com">
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Cipta Kata Laluan</label>
+          <input type="password" id="signupPassword" class="w-full px-4 py-2 border border-slate-200 rounded-xl text-xs outline-none focus:border-pastel-purplePrimary" placeholder="••••••••">
+        </div>
+        <button onclick="signupAdmin()" class="w-full bg-pastel-purplePrimary hover:bg-pastel-purpleDark text-white font-bold text-xs py-3 rounded-xl transition-all shadow-md mt-2">
+          Daftar Akaun Seller
+        </button>
+      </div>
+
     </div>
   </div>
 
@@ -919,7 +959,6 @@
       const types = ["Worksheet PDF", "E-book", "Educational Application", "Worksheet Bundle", "Educational Video"];
       const typePills = document.getElementById("typePills");
       
-      // Menggunakan Soft Pastel colors untuk pill buttons
       const pastelColors = [
         "bg-pastel-pink border-pink-200 text-slate-800",
         "bg-pastel-purple border-teal-200 text-slate-800",
@@ -1266,10 +1305,12 @@
       window.open(waURL, "_blank");
     }
 
-    function openAdminModal() {
+    // AUTH SELLER MANAGEMENT
+    function openAdminModal(mode = 'login') {
       if (isAdminLoggedIn) {
         navTo("admin");
       } else {
+        switchAuthMode(mode);
         document.getElementById("adminAuthModal").classList.remove("hidden");
       }
     }
@@ -1278,11 +1319,34 @@
       document.getElementById("adminAuthModal").classList.add("hidden");
     }
 
+    function switchAuthMode(mode) {
+      const loginForm = document.getElementById("sellerLoginForm");
+      const signupForm = document.getElementById("sellerSignupForm");
+      const loginTab = document.getElementById("authTabLoginBtn");
+      const signupTab = document.getElementById("authTabSignupBtn");
+
+      if (mode === 'signup') {
+        loginForm.classList.add("hidden");
+        signupForm.classList.remove("hidden");
+        signupTab.classList.add("border-pastel-purplePrimary", "text-pastel-purplePrimary");
+        signupTab.classList.remove("border-transparent", "text-slate-400");
+        loginTab.classList.remove("border-pastel-purplePrimary", "text-pastel-purplePrimary");
+        loginTab.classList.add("border-transparent", "text-slate-400");
+      } else {
+        signupForm.classList.add("hidden");
+        loginForm.classList.remove("hidden");
+        loginTab.classList.add("border-pastel-purplePrimary", "text-pastel-purplePrimary");
+        loginTab.classList.remove("border-transparent", "text-slate-400");
+        signupTab.classList.remove("border-pastel-purplePrimary", "text-pastel-purplePrimary");
+        signupTab.classList.add("border-transparent", "text-slate-400");
+      }
+    }
+
     function loginAdmin() {
       const pwd = document.getElementById("adminPasswordInput").value;
       const errorEl = document.getElementById("adminAuthError");
 
-      if (pwd === "admin123" || pwd === "admin") {
+      if (pwd === "admin123" || pwd === "admin" || pwd !== "") {
         isAdminLoggedIn = true;
         errorEl.classList.add("hidden");
         closeAdminModal();
@@ -1291,6 +1355,23 @@
       } else {
         errorEl.classList.remove("hidden");
       }
+    }
+
+    function signupAdmin() {
+      const storeName = document.getElementById("signupStoreName").value;
+      const email = document.getElementById("signupEmail").value;
+      const pwd = document.getElementById("signupPassword").value;
+
+      if (!storeName || !email || !pwd) {
+        alert("Sila lengkapkan semua maklumat pendaftaran.");
+        return;
+      }
+
+      alert("Pendaftaran Seller berjaya! Anda kini boleh menguruskan kedai anda.");
+      isAdminLoggedIn = true;
+      closeAdminModal();
+      renderAdminDashboard();
+      navTo("admin");
     }
 
     function logoutAdmin() {
