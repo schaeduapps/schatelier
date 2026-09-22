@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SCHA Digital Learning Hub - Marketplace Bahan Pendidikan Digital Premium</title>
+  <title>SCHA Digital Learning Hub - Marketplace Bahan Pendidikan Digital</title>
   <meta name="description" content="Pusat sehenti bahan pendidikan digital: Lembaran Kerja, E-Book, Aplikasi & Video Pembelajaran.">
   
   <!-- Tailwind CSS CDN -->
@@ -48,37 +48,34 @@
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     
-    .bg-soft-gradient {
-      background: linear-gradient(135deg, #FFCAD4 0%, #F3E8EE 50%, #D8F3DC 100%);
-    }
     .bg-hero-card {
       background: linear-gradient(135deg, #9D4EDD 0%, #7B2CBF 50%, #E07A5F 100%);
     }
   </style>
 </head>
-<body class="text-slate-800 flex flex-col min-h-screen antialiased">
+<body class="text-slate-800 flex flex-col min-h-screen antialiased pb-16 md:pb-0">
 
-  <!-- TOP HEADER & NAVIGATION -->
+  <!-- TOP HEADER & NAVIGATION (DESKTOP & MOBILE) -->
   <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-purple-100 shadow-sm">
-    <div class="bg-gradient-to-r from-pastel-pinkDark via-pastel-purplePrimary to-pastel-greenDark text-white text-xs py-2 px-4 text-center font-semibold tracking-wide">
-      🌸 Hub Pembelajaran Digital Soft & Modern | Penghantaran Pantas via WhatsApp / E-mel
+    <div class="bg-gradient-to-r from-pastel-pinkDark via-pastel-purplePrimary to-pastel-greenDark text-white text-[11px] sm:text-xs py-1.5 px-4 text-center font-semibold tracking-wide">
+      🌸 Hub Pembelajaran Digital Soft & Modern | Penghantaran Pantas via WhatsApp
     </div>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-20 gap-4">
+      <div class="flex items-center justify-between h-16 sm:h-20 gap-4">
         
         <!-- Logo Kedai -->
-        <a href="#home" onclick="navTo('home')" class="flex items-center gap-3 shrink-0 group">
-          <div id="brandLogoContainer" class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-pastel-purplePrimary to-pastel-redDark text-white flex items-center justify-center font-extrabold text-2xl shadow-lg shadow-purple-200 group-hover:scale-105 transition-transform">
+        <a href="#home" onclick="navTo('home')" class="flex items-center gap-2.5 sm:gap-3 shrink-0 group">
+          <div id="brandLogoContainer" class="w-9 h-9 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-tr from-pastel-purplePrimary to-pastel-redDark text-white flex items-center justify-center font-extrabold text-xl sm:text-2xl shadow-lg shadow-purple-200 group-hover:scale-105 transition-transform">
             S
           </div>
           <div>
-            <span id="brandNameDisplay" class="font-extrabold text-xl tracking-tight text-slate-900 block leading-none">Scha Digital</span>
-            <span class="text-[11px] uppercase font-bold text-pastel-purplePrimary tracking-widest mt-1 block">Learning Hub</span>
+            <span id="brandNameDisplay" class="font-extrabold text-base sm:text-xl tracking-tight text-slate-900 block leading-none">Scha Digital</span>
+            <span class="text-[10px] sm:text-[11px] uppercase font-bold text-pastel-purplePrimary tracking-widest mt-0.5 sm:mt-1 block">Learning Hub</span>
           </div>
         </a>
 
-        <!-- Search Bar -->
+        <!-- Carian Desktop -->
         <div class="flex-1 max-w-xl mx-4 hidden md:block">
           <div class="relative">
             <input 
@@ -92,8 +89,8 @@
           </div>
         </div>
 
-        <!-- Customer Nav Actions -->
-        <div class="flex items-center gap-3">
+        <!-- Desktop Nav Actions -->
+        <div class="hidden md:flex items-center gap-3">
           <button onclick="navTo('shop')" class="text-sm font-bold text-slate-700 hover:text-pastel-purplePrimary px-4 py-2.5 rounded-2xl hover:bg-slate-50 transition-colors">
             Katalog Kedai
           </button>
@@ -101,44 +98,58 @@
           <!-- Cart Button -->
           <button onclick="navTo('cart')" class="relative p-2.5 text-slate-700 hover:text-pastel-purplePrimary bg-slate-100 hover:bg-purple-50 rounded-2xl transition-all" title="Troli Sopping">
             <i data-lucide="shopping-bag" class="w-5 h-5"></i>
-            <span id="cartBadge" class="absolute -top-1 -right-1 bg-pastel-redDark text-white text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center border-2 border-white hidden shadow-sm">0</span>
+            <span class="cartBadge absolute -top-1 -right-1 bg-pastel-redDark text-white text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center border-2 border-white hidden shadow-sm">0</span>
+          </button>
+
+          <!-- Admin Button (Hanya Muncul Jika Bukan Katalog Pengunjung Sahaja) -->
+          <button id="navAdminBtn" onclick="openAdminModal('login')" class="seller-only-element hidden text-xs font-bold text-white bg-slate-900 hover:bg-pastel-purplePrimary px-4 py-2.5 rounded-2xl transition-all shadow-sm flex items-center gap-1.5">
+            <i data-lucide="store" class="w-4 h-4"></i>
+            <span>Seller Center</span>
+          </button>
+        </div>
+
+        <!-- Cart Quick Access Mobile -->
+        <div class="flex md:hidden items-center gap-2">
+          <button onclick="navTo('cart')" class="relative p-2 text-slate-700 bg-slate-100 rounded-xl">
+            <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+            <span class="cartBadge absolute -top-1 -right-1 bg-pastel-redDark text-white text-[9px] font-black w-4 h-4 rounded-full flex items-center justify-center border border-white hidden">0</span>
           </button>
         </div>
       </div>
 
-      <!-- Mobile Search Bar -->
-      <div class="pb-4 md:hidden">
+      <!-- Carian Mobile Site -->
+      <div class="pb-3 md:hidden">
         <div class="relative">
           <input 
             type="text" 
-            placeholder="Cari bahan pembelajaran..." 
+            placeholder="Cari bahan..." 
             oninput="handleSearchInput(event)"
-            class="w-full pl-10 pr-4 py-2 bg-slate-100 border border-slate-200 rounded-xl text-sm focus:bg-white focus:border-pastel-purplePrimary focus:outline-none"
+            class="w-full pl-9 pr-4 py-2 bg-slate-100 border border-slate-200 rounded-xl text-xs focus:bg-white focus:border-pastel-purplePrimary focus:outline-none"
           >
-          <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-2.5"></i>
+          <i data-lucide="search" class="w-3.5 h-3.5 text-slate-400 absolute left-3 top-2.5"></i>
         </div>
       </div>
     </div>
   </header>
 
   <!-- MAIN CONTENT CONTAINER -->
-  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
     
     <!-- VIEW 1: HOME PAGE -->
-    <div id="view-home" class="view-section space-y-12">
-      <div id="heroBanner" class="relative rounded-3xl overflow-hidden bg-hero-card text-white p-8 sm:p-12 shadow-xl shadow-purple-100 flex flex-col md:flex-row items-center justify-between gap-8">
-        <div class="space-y-5 max-w-xl text-center md:text-left z-10">
-          <span class="inline-flex items-center gap-1.5 bg-white/20 backdrop-blur-md px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider text-white border border-white/30">
+    <div id="view-home" class="view-section space-y-8 sm:space-y-12">
+      <div id="heroBanner" class="relative rounded-3xl overflow-hidden bg-hero-card text-white p-6 sm:p-12 shadow-xl shadow-purple-100 flex flex-col md:flex-row items-center justify-between gap-6 sm:gap-8">
+        <div class="space-y-4 sm:space-y-5 max-w-xl text-center md:text-left z-10">
+          <span class="inline-flex items-center gap-1.5 bg-white/20 backdrop-blur-md px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wider text-white border border-white/30">
             <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> Koleksi Digital Premium
           </span>
-          <h1 id="bannerTitle" class="text-3xl sm:text-5xl font-extrabold leading-tight tracking-tight">
+          <h1 id="bannerTitle" class="text-2xl sm:text-5xl font-extrabold leading-tight tracking-tight">
             Tingkatkan Pembelajaran Anak Lebih Kreatif
           </h1>
-          <p id="bannerDesc" class="text-sm sm:text-base text-purple-100 font-normal leading-relaxed">
+          <p id="bannerDesc" class="text-xs sm:text-base text-purple-100 font-normal leading-relaxed">
             Akses pantas kepada ratusan modul lembaran kerja, e-book, dan aplikasi latihan sekolah rendah & pra-sekolah.
           </p>
           <div class="pt-2 flex flex-wrap gap-3 justify-center md:justify-start">
-            <button id="bannerBtn" onclick="navTo('shop')" class="bg-white hover:bg-pastel-pink text-slate-900 font-bold px-7 py-3.5 rounded-2xl shadow-lg transition-all transform hover:-translate-y-0.5 inline-flex items-center gap-2 text-sm">
+            <button id="bannerBtn" onclick="navTo('shop')" class="bg-white hover:bg-pastel-pink text-slate-900 font-bold px-6 py-3 rounded-2xl shadow-lg transition-all text-xs sm:text-sm inline-flex items-center gap-2">
               <span>Terokai Katalog Kedai</span>
               <i data-lucide="arrow-right" class="w-4 h-4"></i>
             </button>
@@ -146,13 +157,14 @@
         </div>
 
         <div class="w-full md:w-1/3 flex flex-col items-center justify-center z-10 gap-4">
-          <div class="w-52 h-52 sm:w-64 sm:h-64 bg-white/10 rounded-3xl border border-white/20 p-6 backdrop-blur-md flex flex-col items-center justify-center text-center shadow-2xl">
-            <i data-lucide="book-open-check" class="w-20 h-20 text-white/90 mb-3 stroke-[1.5]"></i>
-            <span class="text-sm font-bold">100% Digital PDF / App</span>
-            <span class="text-xs text-purple-200 mt-1">Muat Turun Serta Merta</span>
+          <div class="w-full max-w-[200px] sm:w-64 sm:h-64 bg-white/10 rounded-3xl border border-white/20 p-5 backdrop-blur-md flex flex-col items-center justify-center text-center shadow-2xl">
+            <i data-lucide="book-open-check" class="w-12 h-12 sm:w-20 sm:h-20 text-white/90 mb-2 sm:mb-3 stroke-[1.5]"></i>
+            <span class="text-xs sm:text-sm font-bold">100% Digital PDF / App</span>
+            <span class="text-[10px] sm:text-xs text-purple-200 mt-1">Muat Turun Serta Merta</span>
           </div>
 
-          <div class="bg-slate-900/80 backdrop-blur-md p-3.5 rounded-2xl border border-white/10 w-full max-w-xs text-center space-y-2">
+          <!-- Pautan Akses Penjual Sahaja -->
+          <div class="seller-only-element hidden bg-slate-900/80 backdrop-blur-md p-3.5 rounded-2xl border border-white/10 w-full max-w-xs text-center space-y-2">
             <span class="text-[11px] text-purple-200 font-semibold block">Bahagian Penjual (Seller Center)</span>
             <div class="flex gap-2 justify-center">
               <button onclick="openAdminModal('login')" class="text-xs font-bold bg-white/20 hover:bg-white/30 text-white px-3 py-1.5 rounded-xl transition-all border border-white/20">
@@ -168,56 +180,56 @@
 
       <!-- Categories Section -->
       <div>
-        <div class="flex items-center justify-between mb-5">
-          <h2 class="text-lg font-extrabold text-slate-900 flex items-center gap-2">
-            <i data-lucide="grid" class="w-5 h-5 text-pastel-redDark"></i>
+        <div class="flex items-center justify-between mb-4 sm:mb-5">
+          <h2 class="text-base sm:text-lg font-extrabold text-slate-900 flex items-center gap-2">
+            <i data-lucide="grid" class="w-4 h-4 sm:w-5 sm:h-5 text-pastel-redDark"></i>
             Kategori Pilihan
           </h2>
           <button onclick="navTo('shop')" class="text-xs font-bold text-pastel-purplePrimary hover:underline flex items-center gap-1">
             Lihat Semua <i data-lucide="chevron-right" class="w-3 h-3"></i>
           </button>
         </div>
-        <div id="homeCategoriesGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4"></div>
+        <div id="homeCategoriesGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 sm:gap-4"></div>
       </div>
 
       <!-- Featured Products -->
       <div>
-        <div class="flex items-center justify-between mb-6">
+        <div class="flex items-center justify-between mb-4 sm:mb-6">
           <div>
-            <h2 class="text-xl font-extrabold text-slate-900 flex items-center gap-2">
-              <i data-lucide="star" class="w-5 h-5 text-amber-400 fill-amber-400"></i>
+            <h2 class="text-lg sm:text-xl font-extrabold text-slate-900 flex items-center gap-2">
+              <i data-lucide="star" class="w-4 h-4 sm:w-5 sm:h-5 text-amber-400 fill-amber-400"></i>
               Bahan Popular & Utama
             </h2>
-            <p class="text-xs text-slate-500 mt-0.5">Lembaran kerja paling banyak mendapat sambutan guru & ibu bapa</p>
+            <p class="text-[11px] sm:text-xs text-slate-500 mt-0.5">Lembaran kerja paling banyak mendapat sambutan guru & ibu bapa</p>
           </div>
           <button onclick="navTo('shop')" class="text-xs font-bold text-pastel-purplePrimary hover:underline">
             Lihat Katalog Kedai
           </button>
         </div>
-        <div id="featuredProductsGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6"></div>
+        <div id="featuredProductsGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6"></div>
       </div>
     </div>
 
     <!-- VIEW 2: SHOP / MARKETPLACE CATALOG -->
     <div id="view-shop" class="view-section hidden space-y-6">
-      <div class="bg-white p-5 rounded-3xl border border-slate-200/80 shadow-sm space-y-4">
-        <div class="flex flex-col md:flex-row gap-4 items-stretch md:items-center justify-between">
-          <div class="flex flex-wrap gap-3 items-center">
+      <div class="bg-white p-4 sm:p-5 rounded-3xl border border-slate-200/80 shadow-sm space-y-4">
+        <div class="flex flex-col md:flex-row gap-3 sm:gap-4 items-stretch md:items-center justify-between">
+          <div class="flex flex-wrap gap-2 sm:gap-3 items-center">
             <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Tapis Kategori:</span>
-            <select id="filterCategorySelect" onchange="applyFilters()" class="text-xs font-semibold border border-slate-200 rounded-xl px-3.5 py-2.5 bg-slate-50 focus:bg-white focus:outline-none focus:border-pastel-purplePrimary">
+            <select id="filterCategorySelect" onchange="applyFilters()" class="text-xs font-semibold border border-slate-200 rounded-xl px-3 py-2 bg-slate-50 focus:bg-white focus:outline-none focus:border-pastel-purplePrimary">
               <option value="all">Semua Kategori</option>
             </select>
           </div>
 
           <div class="flex items-center gap-2">
             <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Susun:</span>
-            <select id="sortBySelect" onchange="applyFilters()" class="text-xs font-semibold border border-slate-200 rounded-xl px-3.5 py-2.5 bg-slate-50 focus:bg-white focus:outline-none focus:border-pastel-purplePrimary">
+            <select id="sortBySelect" onchange="applyFilters()" class="text-xs font-semibold border border-slate-200 rounded-xl px-3 py-2 bg-slate-50 focus:bg-white focus:outline-none focus:border-pastel-purplePrimary">
               <option value="newest">Terbaharu</option>
               <option value="price-low">Harga: Rendah ke Tinggi</option>
               <option value="price-high">Harga: Tinggi ke Rendah</option>
               <option value="popular">Paling Popular</option>
             </select>
-            <button onclick="resetFilters()" class="text-xs font-bold text-slate-500 hover:text-rose-600 border border-slate-200 px-3 py-2.5 rounded-xl transition-colors">
+            <button onclick="resetFilters()" class="text-xs font-bold text-slate-500 hover:text-rose-600 border border-slate-200 px-3 py-2 rounded-xl transition-colors">
               Reset
             </button>
           </div>
@@ -226,7 +238,7 @@
 
       <div>
         <div id="shopProductsCount" class="text-xs font-semibold text-slate-500 mb-4">Memaparkan produk...</div>
-        <div id="shopProductsGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6"></div>
+        <div id="shopProductsGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6"></div>
         
         <div id="shopEmptyState" class="hidden py-16 text-center space-y-3">
           <i data-lucide="folder-search" class="w-12 h-12 text-slate-300 mx-auto"></i>
@@ -245,8 +257,8 @@
         <i data-lucide="arrow-left" class="w-4 h-4"></i> Kembali ke Katalog Kedai
       </button>
 
-      <div class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden p-6 md:p-8">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden p-5 sm:p-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
           <div class="space-y-4">
             <div class="aspect-square bg-slate-50 rounded-2xl overflow-hidden border border-slate-200/80 flex items-center justify-center relative">
               <img id="detailImg" src="" alt="" class="w-full h-full object-cover">
@@ -254,20 +266,20 @@
             <div id="detailGalleryContainer" class="flex gap-2 overflow-x-auto pb-2 no-scrollbar"></div>
           </div>
 
-          <div class="space-y-6 flex flex-col justify-between">
-            <div class="space-y-4">
+          <div class="space-y-5 sm:space-y-6 flex flex-col justify-between">
+            <div class="space-y-3 sm:space-y-4">
               <div class="flex items-center justify-between">
                 <span id="detailCategory" class="text-xs font-extrabold text-pastel-purplePrimary uppercase tracking-wider">Kategori</span>
                 <span id="detailStatus" class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-2.5 py-1 rounded-full">Stok Digital Sedia Ada</span>
               </div>
-              <h1 id="detailTitle" class="text-2xl sm:text-3xl font-extrabold text-slate-900 leading-tight">Tajuk Produk</h1>
+              <h1 id="detailTitle" class="text-xl sm:text-3xl font-extrabold text-slate-900 leading-tight">Tajuk Produk</h1>
               
               <div class="flex items-baseline gap-3 py-3 border-y border-slate-100">
-                <span id="detailPrice" class="text-3xl font-black text-pastel-purplePrimary">RM 0.00</span>
-                <span id="detailOriginalPrice" class="text-sm text-slate-400 line-through font-semibold hidden">RM 0.00</span>
+                <span id="detailPrice" class="text-2xl sm:text-3xl font-black text-pastel-purplePrimary">RM 0.00</span>
+                <span id="detailOriginalPrice" class="text-xs sm:text-sm text-slate-400 line-through font-semibold hidden">RM 0.00</span>
               </div>
 
-              <div class="space-y-2.5 text-xs text-slate-600">
+              <div class="space-y-2 text-xs text-slate-600">
                 <div class="flex items-center gap-2">
                   <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500"></i>
                   <span>Format Fail: PDF / Pautan Akses Interaktif</span>
@@ -280,17 +292,17 @@
 
               <div class="pt-2">
                 <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wider mb-2">Penerangan Bahan</h3>
-                <p id="detailDesc" class="text-sm text-slate-600 leading-relaxed whitespace-pre-line">Penerangan terperinci...</p>
+                <p id="detailDesc" class="text-xs sm:text-sm text-slate-600 leading-relaxed whitespace-pre-line">Penerangan terperinci...</p>
               </div>
             </div>
 
-            <div class="pt-6 border-t border-slate-100 space-y-3">
+            <div class="pt-4 sm:pt-6 border-t border-slate-100 space-y-3">
               <div class="flex gap-3">
-                <button id="addToCartBtn" class="flex-1 border-2 border-pastel-purplePrimary text-pastel-purplePrimary hover:bg-purple-50 font-bold py-3.5 px-4 rounded-2xl transition-all flex items-center justify-center gap-2 text-sm">
+                <button id="addToCartBtn" class="flex-1 border-2 border-pastel-purplePrimary text-pastel-purplePrimary hover:bg-purple-50 font-bold py-3 sm:py-3.5 px-3 rounded-2xl transition-all flex items-center justify-center gap-2 text-xs sm:text-sm">
                   <i data-lucide="shopping-bag" class="w-4 h-4"></i>
                   <span>Tambah ke Troli</span>
                 </button>
-                <button id="buyNowBtn" class="flex-1 bg-gradient-to-r from-pastel-purplePrimary to-pastel-redDark text-white font-bold py-3.5 px-4 rounded-2xl shadow-lg transition-all flex items-center justify-center gap-2 text-sm">
+                <button id="buyNowBtn" class="flex-1 bg-gradient-to-r from-pastel-purplePrimary to-pastel-redDark text-white font-bold py-3 sm:py-3.5 px-3 rounded-2xl shadow-lg transition-all flex items-center justify-center gap-2 text-xs sm:text-sm">
                   <i data-lucide="zap" class="w-4 h-4"></i>
                   <span>Beli Sekarang</span>
                 </button>
@@ -303,32 +315,32 @@
 
     <!-- VIEW 4: SHOPPING CART -->
     <div id="view-cart" class="view-section hidden max-w-3xl mx-auto space-y-6">
-      <h1 class="text-2xl font-extrabold text-slate-900 flex items-center gap-2">
+      <h1 class="text-xl sm:text-2xl font-extrabold text-slate-900 flex items-center gap-2">
         <i data-lucide="shopping-bag" class="w-6 h-6 text-pastel-purplePrimary"></i>
         Troli Sopping Anda
       </h1>
 
-      <div id="cartContent" class="space-y-4"></div>
+      <div id="cartContent" class="space-y-3 sm:space-y-4"></div>
 
-      <div id="cartEmptyState" class="hidden bg-white rounded-3xl border border-slate-200 p-12 text-center space-y-4">
-        <i data-lucide="shopping-bag" class="w-16 h-16 text-slate-300 mx-auto"></i>
-        <h2 class="text-lg font-bold text-slate-800">Troli anda masih kosong</h2>
+      <div id="cartEmptyState" class="hidden bg-white rounded-3xl border border-slate-200 p-8 sm:p-12 text-center space-y-4">
+        <i data-lucide="shopping-bag" class="w-12 h-12 sm:w-16 sm:h-16 text-slate-300 mx-auto"></i>
+        <h2 class="text-base sm:text-lg font-bold text-slate-800">Troli anda masih kosong</h2>
         <p class="text-xs text-slate-500 max-w-sm mx-auto">Sila pilih lembaran kerja atau bahan digital daripada kedai kami.</p>
         <button onclick="navTo('shop')" class="bg-pastel-purplePrimary text-white font-bold text-xs px-6 py-3 rounded-xl hover:bg-pastel-purpleDark">
           Mula Membeli-belah
         </button>
       </div>
 
-      <div id="cartSummaryCard" class="bg-white rounded-3xl border border-slate-200 p-6 space-y-4 shadow-sm">
-        <div class="flex justify-between items-center text-sm">
+      <div id="cartSummaryCard" class="bg-white rounded-3xl border border-slate-200 p-5 sm:p-6 space-y-4 shadow-sm">
+        <div class="flex justify-between items-center text-xs sm:text-sm">
           <span class="text-slate-600 font-medium">Jumlah Item:</span>
           <span id="cartTotalItemsCount" class="font-bold text-slate-800">0</span>
         </div>
-        <div class="flex justify-between items-center text-base border-t border-slate-100 pt-3">
+        <div class="flex justify-between items-center text-sm sm:text-base border-t border-slate-100 pt-3">
           <span class="font-bold text-slate-900">Jumlah Keseluruhan:</span>
-          <span id="cartTotalPrice" class="font-extrabold text-2xl text-pastel-purplePrimary">RM 0.00</span>
+          <span id="cartTotalPrice" class="font-extrabold text-xl sm:text-2xl text-pastel-purplePrimary">RM 0.00</span>
         </div>
-        <button onclick="navTo('checkout')" class="w-full bg-slate-900 hover:bg-pastel-purplePrimary text-white font-bold py-4 rounded-2xl shadow-lg transition-all flex items-center justify-center gap-2 text-sm">
+        <button onclick="navTo('checkout')" class="w-full bg-slate-900 hover:bg-pastel-purplePrimary text-white font-bold py-3.5 rounded-2xl shadow-lg transition-all flex items-center justify-center gap-2 text-xs sm:text-sm">
           <span>Teruskan ke Checkout</span>
           <i data-lucide="arrow-right" class="w-4 h-4"></i>
         </button>
@@ -341,9 +353,9 @@
         <i data-lucide="arrow-left" class="w-4 h-4"></i> Kembali ke Troli
       </button>
 
-      <div class="bg-white rounded-3xl border border-slate-200 shadow-sm p-6 sm:p-8 space-y-6">
+      <div class="bg-white rounded-3xl border border-slate-200 shadow-sm p-5 sm:p-8 space-y-6">
         <div class="border-b border-slate-100 pb-4">
-          <h1 class="text-2xl font-extrabold text-slate-900">Checkout Pesanan</h1>
+          <h1 class="text-xl sm:text-2xl font-extrabold text-slate-900">Checkout Pesanan</h1>
           <p class="text-xs text-slate-500 mt-1">Lengkapkan nama anda untuk membuat pesanan rasmi melalui WhatsApp.</p>
         </div>
 
@@ -365,7 +377,7 @@
           <div id="checkoutItemsList" class="space-y-2 text-xs border-b border-slate-200 pb-3"></div>
           <div class="flex justify-between items-center text-sm font-extrabold text-slate-900 pt-1">
             <span>Jumlah Pembayaran:</span>
-            <span id="checkoutTotalPrice" class="text-pastel-purplePrimary text-xl">RM 0.00</span>
+            <span id="checkoutTotalPrice" class="text-pastel-purplePrimary text-lg sm:text-xl">RM 0.00</span>
           </div>
         </div>
 
@@ -373,7 +385,7 @@
           <button 
             onclick="processWhatsAppCheckout()" 
             id="waCheckoutBtn"
-            class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-4 rounded-2xl shadow-lg transition-all flex items-center justify-center gap-2 text-base"
+            class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3.5 rounded-2xl shadow-lg transition-all flex items-center justify-center gap-2 text-sm sm:text-base"
           >
             <i data-lucide="message-circle" class="w-5 h-5"></i>
             <span id="waBtnLabelText">Order Melalui WhatsApp</span>
@@ -415,31 +427,31 @@
       </div>
 
       <div id="adminTab-overview" class="admin-tab-content space-y-6">
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-5">
-          <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-1">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+          <div class="bg-white p-5 sm:p-6 rounded-3xl border border-slate-200 shadow-sm space-y-1">
             <span class="text-xs font-bold text-slate-400 uppercase">Jumlah Produk</span>
-            <div id="statTotalProducts" class="text-3xl font-black text-slate-900">0</div>
+            <div id="statTotalProducts" class="text-2xl sm:text-3xl font-black text-slate-900">0</div>
           </div>
-          <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-1">
+          <div class="bg-white p-5 sm:p-6 rounded-3xl border border-slate-200 shadow-sm space-y-1">
             <span class="text-xs font-bold text-slate-400 uppercase">Produk Aktif</span>
-            <div id="statActiveProducts" class="text-3xl font-black text-emerald-600">0</div>
+            <div id="statActiveProducts" class="text-2xl sm:text-3xl font-black text-emerald-600">0</div>
           </div>
-          <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-1">
+          <div class="bg-white p-5 sm:p-6 rounded-3xl border border-slate-200 shadow-sm space-y-1">
             <span class="text-xs font-bold text-slate-400 uppercase">Jumlah Kategori</span>
-            <div id="statTotalCategories" class="text-3xl font-black text-pastel-purplePrimary">0</div>
+            <div id="statTotalCategories" class="text-2xl sm:text-3xl font-black text-pastel-purplePrimary">0</div>
           </div>
-          <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-1">
+          <div class="bg-white p-5 sm:p-6 rounded-3xl border border-slate-200 shadow-sm space-y-1">
             <span class="text-xs font-bold text-slate-400 uppercase">Status Sistem</span>
-            <div class="text-xs font-bold text-emerald-700 bg-emerald-100 px-2.5 py-1 rounded-md inline-block mt-1">Firebase Realtime Sync</div>
+            <div class="text-[11px] font-bold text-emerald-700 bg-emerald-100 px-2.5 py-1 rounded-md inline-block mt-1">Firebase Realtime Sync</div>
           </div>
         </div>
       </div>
 
       <div id="adminTab-products" class="admin-tab-content hidden space-y-6">
         <div class="flex justify-between items-center">
-          <h2 class="text-lg font-bold text-slate-900">Senarai Produk Katalog</h2>
+          <h2 class="text-base sm:text-lg font-bold text-slate-900">Senarai Produk Katalog</h2>
           <button onclick="openProductModal()" class="bg-pastel-purplePrimary hover:bg-pastel-purpleDark text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow transition-colors inline-flex items-center gap-1.5">
-            <i data-lucide="plus" class="w-4 h-4"></i> Tambah Produk Baharu
+            <i data-lucide="plus" class="w-4 h-4"></i> Tambah Produk
           </button>
         </div>
 
@@ -463,7 +475,7 @@
 
       <div id="adminTab-categories" class="admin-tab-content hidden space-y-6">
         <div class="flex justify-between items-center">
-          <h2 class="text-lg font-bold text-slate-900">Senarai Kategori Produk</h2>
+          <h2 class="text-base sm:text-lg font-bold text-slate-900">Senarai Kategori Produk</h2>
           <button onclick="openCategoryModal()" class="bg-pastel-purplePrimary hover:bg-pastel-purpleDark text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow transition-colors inline-flex items-center gap-1.5">
             <i data-lucide="plus" class="w-4 h-4"></i> Tambah Kategori
           </button>
@@ -548,6 +560,23 @@
     </div>
   </main>
 
+  <!-- MOBILE BOTTOM NAVIGATION (KHAS UNTUK VIEW MOBILE) -->
+  <div class="md:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-200 z-40 py-2 px-6 flex justify-around items-center shadow-lg">
+    <button onclick="navTo('home')" class="flex flex-col items-center text-slate-600 hover:text-pastel-purplePrimary">
+      <i data-lucide="home" class="w-5 h-5"></i>
+      <span class="text-[10px] font-bold mt-0.5">Utama</span>
+    </button>
+    <button onclick="navTo('shop')" class="flex flex-col items-center text-slate-600 hover:text-pastel-purplePrimary">
+      <i data-lucide="grid" class="w-5 h-5"></i>
+      <span class="text-[10px] font-bold mt-0.5">Katalog</span>
+    </button>
+    <button onclick="navTo('cart')" class="flex flex-col items-center text-slate-600 hover:text-pastel-purplePrimary relative">
+      <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+      <span class="text-[10px] font-bold mt-0.5">Troli</span>
+      <span class="cartBadge absolute -top-1 -right-2 bg-pastel-redDark text-white text-[9px] font-black w-4 h-4 rounded-full flex items-center justify-center border border-white hidden">0</span>
+    </button>
+  </div>
+
   <!-- FOOTER -->
   <footer class="bg-slate-900 text-slate-400 text-xs py-12 mt-16 border-t border-slate-800">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -569,7 +598,7 @@
       <div class="space-y-2">
         <span class="font-bold text-white block uppercase tracking-wider text-[11px]">Penjual & Sokongan</span>
         <p class="text-slate-400">Penghantaran produk dilakukan secara manual/automatik selepas pengesahan pesanan melalui WhatsApp rasmi kedai.</p>
-        <div class="pt-2">
+        <div class="pt-2 seller-only-element hidden">
           <button onclick="openAdminModal('login')" class="text-[11px] font-bold text-purple-300 hover:text-white underline inline-flex items-center gap-1">
             <i data-lucide="store" class="w-3.5 h-3.5"></i> Seller Center (Log In / Sign Up)
           </button>
@@ -605,12 +634,12 @@
 
       <div id="sellerLoginForm" class="space-y-4">
         <div>
-          <label class="block text-xs font-bold text-slate-700 mb-1">E-mel / Username</label>
-          <input type="text" id="adminUsernameInput" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-xs focus:ring-4 focus:ring-purple-100 focus:border-pastel-purplePrimary outline-none mb-3" placeholder="admin">
+          <label class="block text-xs font-bold text-slate-700 mb-1">E-mel Penjual</label>
+          <input type="email" id="adminUsernameInput" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-xs focus:ring-4 focus:ring-purple-100 focus:border-pastel-purplePrimary outline-none mb-3" placeholder="seller@domain.com">
           
           <label class="block text-xs font-bold text-slate-700 mb-1">Kata Laluan</label>
           <input type="password" id="adminPasswordInput" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-xs focus:ring-4 focus:ring-purple-100 focus:border-pastel-purplePrimary outline-none" placeholder="••••••••">
-          <p id="adminAuthError" class="text-[11px] text-rose-500 hidden mt-1">Maklumat log masuk tidak sah. (Default: admin123)</p>
+          <p id="adminAuthError" class="text-[11px] text-rose-500 hidden mt-1">E-mel atau kata laluan tidak sah.</p>
         </div>
         <button onclick="loginAdmin()" class="w-full bg-slate-900 hover:bg-pastel-purplePrimary text-white font-bold text-xs py-3 rounded-xl transition-all shadow-md">
           Log Masuk Seller
@@ -638,14 +667,14 @@
   </div>
 
   <div id="productFormModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
-    <div class="bg-white w-full max-w-2xl rounded-3xl p-7 space-y-4 shadow-2xl max-h-[90vh] overflow-y-auto relative border border-slate-100">
+    <div class="bg-white w-full max-w-2xl rounded-3xl p-6 sm:p-7 space-y-4 shadow-2xl max-h-[90vh] overflow-y-auto relative border border-slate-100">
       <button onclick="closeProductModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-600">
         <i data-lucide="x" class="w-5 h-5"></i>
       </button>
 
       <h3 id="productModalTitle" class="text-lg font-extrabold text-slate-900">Tambah Produk Baharu</h3>
 
-      <form id="productForm" onsubmit="handleProductFormSubmit(event)" class="space-y-5 text-xs">
+      <form id="productForm" onsubmit="handleProductFormSubmit(event)" class="space-y-4 text-xs">
         <input type="hidden" id="pId">
 
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -699,12 +728,12 @@
 
         <div class="space-y-2">
           <label class="block font-bold text-slate-700">
-            Muat Naik Gambar Produk <span class="text-slate-400 font-normal">(Maksimum 6 gambar, Format: PNG, JPEG)</span>
+            Muat Naik Gambar Produk <span class="text-slate-400 font-normal">(Maksimum 6 gambar, PNG/JPEG)</span>
           </label>
           <input type="file" id="pImagesInput" accept="image/png, image/jpeg" multiple onchange="handleImageUpload(event)" class="hidden">
           <button type="button" onclick="document.getElementById('pImagesInput').click()" class="w-full py-3 px-4 border-2 border-dashed border-slate-200 rounded-2xl hover:border-pastel-purplePrimary hover:bg-purple-50/50 transition-colors flex items-center justify-center gap-2 text-slate-600 font-semibold">
             <i data-lucide="image" class="w-4 h-4 text-pastel-purplePrimary"></i>
-            <span>Pilih Gambar (PNG / JPEG)</span>
+            <span>Pilih Gambar</span>
           </button>
           
           <div id="imagePreviewContainer" class="grid grid-cols-3 sm:grid-cols-6 gap-2 pt-2"></div>
@@ -712,12 +741,12 @@
 
         <div class="space-y-2">
           <label class="block font-bold text-slate-700">
-            Muat Naik Video Produk <span class="text-slate-400 font-normal">(Maksimum 1 video, Format: MP4)</span>
+            Muat Naik Video Produk <span class="text-slate-400 font-normal">(Maksimum 1 video, MP4)</span>
           </label>
           <input type="file" id="pVideoInput" accept="video/mp4" onchange="handleVideoUpload(event)" class="hidden">
           <button type="button" onclick="document.getElementById('pVideoInput').click()" class="w-full py-3 px-4 border-2 border-dashed border-slate-200 rounded-2xl hover:border-pastel-purplePrimary hover:bg-purple-50/50 transition-colors flex items-center justify-center gap-2 text-slate-600 font-semibold">
             <i data-lucide="video" class="w-4 h-4 text-pastel-purplePrimary"></i>
-            <span>Pilih Video (MP4)</span>
+            <span>Pilih Video</span>
           </button>
 
           <div id="videoPreviewContainer" class="pt-2 hidden">
@@ -788,12 +817,11 @@
     </div>
   </div>
 
-  <!-- FIREBASE ENGINE (DAPATKAN URL SEBENAR DARI SCREENSHOT SANGAT PENTING) -->
+  <!-- FIREBASE ENGINE -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getDatabase, ref, onValue, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-    // URL Firebase Berdasarkan Screenshot Anda
     const firebaseConfig = {
       databaseURL: "https://scha-atelier-default-rtdb.firebaseio.com"
     };
@@ -824,7 +852,6 @@
       waTemplate: "Hello {STORE_NAME},\n\nSaya ingin membuat pesanan bagi bahan berikut:\n\nNama Pelanggan: {CUSTOMER_NAME}\n\nSenarai Pesanan:\n{ITEMS}\n\nJumlah Keseluruhan: {TOTAL}\n\nSila berikan maklumat akaun untuk pembayaran. Terima kasih!"
     };
 
-    // FUNGSI SINKRONISASI PINTAR (MEMASTIKAN DATA TIDAK PADAM/TERKOSONG)
     onValue(ref(db, 'scha_store'), (snapshot) => {
       const data = snapshot.val();
 
@@ -833,12 +860,10 @@
         window.categories = data.categories || DEFAULT_CATEGORIES;
         window.settings = data.settings || DEFAULT_SETTINGS;
 
-        // Simpan salinan ke simpanan tempatan peranti
         localStorage.setItem(STORAGE_KEY_PRODUCTS, JSON.stringify(window.products));
         localStorage.setItem(STORAGE_KEY_CATEGORIES, JSON.stringify(window.categories));
         localStorage.setItem(STORAGE_KEY_SETTINGS, JSON.stringify(window.settings));
       } else {
-        // Ambil salinan simpanan tempatan jika cloud kosong
         const localProds = JSON.parse(localStorage.getItem(STORAGE_KEY_PRODUCTS));
         const localCats = JSON.parse(localStorage.getItem(STORAGE_KEY_CATEGORIES));
         const localSets = JSON.parse(localStorage.getItem(STORAGE_KEY_SETTINGS));
@@ -847,7 +872,7 @@
           window.products = localProds;
           window.categories = localCats || DEFAULT_CATEGORIES;
           window.settings = localSets || DEFAULT_SETTINGS;
-          window.syncToCloud(); // Auto muat naik semula data asal anda ke cloud
+          window.syncToCloud();
         } else {
           window.products = [];
           window.categories = DEFAULT_CATEGORIES;
@@ -859,12 +884,10 @@
     });
 
     window.syncToCloud = function() {
-      // Simpan ke simpanan tempatan dahulu
       localStorage.setItem(STORAGE_KEY_PRODUCTS, JSON.stringify(window.products));
       localStorage.setItem(STORAGE_KEY_CATEGORIES, JSON.stringify(window.categories));
       localStorage.setItem(STORAGE_KEY_SETTINGS, JSON.stringify(window.settings));
 
-      // Hantar terus ke Firebase Cloud
       set(ref(db, 'scha_store'), {
         products: window.products || [],
         categories: window.categories || [],
@@ -876,13 +899,17 @@
   <!-- APPLICATION LOGIC -->
   <script>
     const STORAGE_KEY_CART = "scha_hub_cart_v1";
+    const STORAGE_KEY_SELLER_ACCOUNTS = "scha_seller_accounts_v1";
 
     window.products = JSON.parse(localStorage.getItem("scha_products_local")) || [];
     window.categories = JSON.parse(localStorage.getItem("scha_categories_local")) || [];
     window.settings = JSON.parse(localStorage.getItem("scha_settings_local")) || {};
     let cart = JSON.parse(localStorage.getItem(STORAGE_KEY_CART)) || [];
+    let sellerAccounts = JSON.parse(localStorage.getItem(STORAGE_KEY_SELLER_ACCOUNTS)) || [];
 
     window.isAdminLoggedIn = false;
+    let isCatalogOnlyView = false; // Penanda mod kedai/katalog sahaja untuk pembeli
+
     let currentDetailProductId = null;
     let currentPromoType = "RM"; 
     let uploadedImages = []; 
@@ -905,6 +932,7 @@
       renderHomeView();
       renderShopView();
       updateCartUI();
+      checkSellerVisibility();
       if(window.isAdminLoggedIn) renderAdminDashboard();
     }
     window.refreshAllUI = windowRefreshAllUI;
@@ -913,14 +941,33 @@
       localStorage.setItem(key, JSON.stringify(value));
     }
 
+    /* MENENTUKAN MOOD VIEW (PELANGGAN vs PENJUAL) */
+    function checkSellerVisibility() {
+      const sellerElements = document.querySelectorAll('.seller-only-element');
+      
+      // Jika pautan dikongsi mengandungi #shop atau #product atau isCatalogOnlyView = true, sembunyikan Seller Center
+      if (isCatalogOnlyView) {
+        sellerElements.forEach(el => el.classList.add('hidden'));
+      } else {
+        sellerElements.forEach(el => el.classList.remove('hidden'));
+      }
+    }
+
     function handleHashNavigation() {
       const hash = window.location.hash.replace("#", "") || "home";
+
+      // Jika URL adalah #shop atau merujuk terus ke produk (#product/id), aktifkan Mod Katalog Sahaja
+      if (hash === "shop" || hash.startsWith("product/")) {
+        isCatalogOnlyView = true;
+      }
+
       if (hash.startsWith("product/")) {
         const pId = hash.split("/")[1];
         showProductDetail(pId);
       } else {
         navTo(hash, false);
       }
+      checkSellerVisibility();
     }
 
     function navTo(viewId, updateHash = true) {
@@ -956,9 +1003,9 @@
       const activeCategories = categories.filter(c => c.active);
       const categoriesGrid = document.getElementById("homeCategoriesGrid");
       categoriesGrid.innerHTML = activeCategories.map(c => `
-        <div onclick="filterByCategoryFromHome('${c.name}')" class="bg-white p-5 rounded-3xl border border-slate-200/80 hover:border-pastel-purplePrimary hover:shadow-xl hover:shadow-purple-50 cursor-pointer transition-all text-center space-y-3 group">
-          <div class="w-12 h-12 bg-pastel-purpleBg rounded-2xl flex items-center justify-center mx-auto text-pastel-purplePrimary group-hover:bg-pastel-purplePrimary group-hover:text-white transition-colors">
-            <i data-lucide="book-open" class="w-6 h-6"></i>
+        <div onclick="filterByCategoryFromHome('${c.name}')" class="bg-white p-4 sm:p-5 rounded-3xl border border-slate-200/80 hover:border-pastel-purplePrimary hover:shadow-xl hover:shadow-purple-50 cursor-pointer transition-all text-center space-y-2.5 sm:space-y-3 group">
+          <div class="w-10 h-10 sm:w-12 sm:h-12 bg-pastel-purpleBg rounded-2xl flex items-center justify-center mx-auto text-pastel-purplePrimary group-hover:bg-pastel-purplePrimary group-hover:text-white transition-colors">
+            <i data-lucide="book-open" class="w-5 h-5 sm:w-6 sm:h-6"></i>
           </div>
           <h3 class="text-xs font-bold text-slate-800 line-clamp-1">${c.name}</h3>
         </div>
@@ -981,21 +1028,21 @@
               <img src="${mainImg}" alt="${product.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
             </div>
 
-            <div class="p-4 space-y-2">
-              <span class="text-[10px] font-extrabold text-pastel-purplePrimary uppercase tracking-wider block">${product.category}</span>
+            <div class="p-3 sm:p-4 space-y-1 sm:space-y-2">
+              <span class="text-[9px] sm:text-[10px] font-extrabold text-pastel-purplePrimary uppercase tracking-wider block">${product.category}</span>
               <h3 onclick="navigateToDetail('${product.id}')" class="text-xs font-bold text-slate-900 line-clamp-2 cursor-pointer hover:text-pastel-purplePrimary transition-colors leading-snug">
                 ${product.title}
               </h3>
             </div>
           </div>
 
-          <div class="p-4 pt-0 flex items-center justify-between gap-2 border-t border-slate-50 mt-2">
+          <div class="p-3 sm:p-4 pt-0 flex items-center justify-between gap-1 sm:gap-2 border-t border-slate-50 mt-2">
             <div>
-              <span class="text-base font-extrabold text-pastel-purplePrimary">RM ${parseFloat(product.price).toFixed(2)}</span>
-              ${hasDiscount ? `<span class="text-[10px] text-slate-400 line-through block font-semibold">RM ${parseFloat(product.basePrice).toFixed(2)}</span>` : ''}
+              <span class="text-sm sm:text-base font-extrabold text-pastel-purplePrimary">RM ${parseFloat(product.price).toFixed(2)}</span>
+              ${hasDiscount ? `<span class="text-[9px] sm:text-[10px] text-slate-400 line-through block font-semibold">RM ${parseFloat(product.basePrice).toFixed(2)}</span>` : ''}
             </div>
-            <button onclick="addToCart('${product.id}')" class="bg-slate-100 hover:bg-pastel-purplePrimary hover:text-white text-slate-800 p-2.5 rounded-2xl transition-all shadow-sm" title="Tambah ke Troli">
-              <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+            <button onclick="addToCart('${product.id}')" class="bg-slate-100 hover:bg-pastel-purplePrimary hover:text-white text-slate-800 p-2 sm:p-2.5 rounded-xl sm:rounded-2xl transition-all shadow-sm" title="Tambah ke Troli">
+              <i data-lucide="shopping-bag" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
             </button>
           </div>
         </div>
@@ -1070,7 +1117,7 @@
       if (product.images && product.images.length > 0) {
         product.images.forEach(imgUrl => {
           const imgBtn = document.createElement("button");
-          imgBtn.className = "w-14 h-14 rounded-xl border border-slate-200 overflow-hidden shrink-0 focus:border-pastel-purplePrimary";
+          imgBtn.className = "w-12 h-12 sm:w-14 sm:h-14 rounded-xl border border-slate-200 overflow-hidden shrink-0 focus:border-pastel-purplePrimary";
           imgBtn.onclick = () => { document.getElementById("detailImg").src = imgUrl; };
           imgBtn.innerHTML = `<img src="${imgUrl}" class="w-full h-full object-cover">`;
           galleryContainer.appendChild(imgBtn);
@@ -1174,15 +1221,17 @@
     }
 
     function updateCartUI() {
-      const badge = document.getElementById("cartBadge");
+      const badges = document.querySelectorAll(".cartBadge");
       const totalCount = cart.reduce((sum, i) => sum + i.qty, 0);
       
-      if (totalCount > 0) {
-        badge.innerText = totalCount;
-        badge.classList.remove("hidden");
-      } else {
-        badge.classList.add("hidden");
-      }
+      badges.forEach(badge => {
+        if (totalCount > 0) {
+          badge.innerText = totalCount;
+          badge.classList.remove("hidden");
+        } else {
+          badge.classList.add("hidden");
+        }
+      });
 
       const cartContainer = document.getElementById("cartContent");
       const emptyState = document.getElementById("cartEmptyState");
@@ -1197,20 +1246,20 @@
         summaryCard.classList.remove("hidden");
 
         cartContainer.innerHTML = cart.map(item => `
-          <div class="bg-white p-4 rounded-3xl border border-slate-200/80 shadow-sm flex items-center justify-between gap-4">
+          <div class="bg-white p-3 sm:p-4 rounded-3xl border border-slate-200/80 shadow-sm flex items-center justify-between gap-3">
             <div class="flex items-center gap-3">
-              <img src="${item.img || 'https://via.placeholder.com/100'}" class="w-16 h-16 rounded-2xl object-cover border border-slate-100">
+              <img src="${item.img || 'https://via.placeholder.com/100'}" class="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl object-cover border border-slate-100">
               <div>
                 <h4 class="text-xs font-bold text-slate-900 line-clamp-1">${item.title}</h4>
                 <span class="text-xs font-extrabold text-pastel-purplePrimary block mt-0.5">RM ${parseFloat(item.price).toFixed(2)}</span>
               </div>
             </div>
 
-            <div class="flex items-center gap-3">
+            <div class="flex items-center gap-2 sm:gap-3">
               <div class="flex items-center border border-slate-200 rounded-xl">
-                <button onclick="updateCartQuantity('${item.id}', -1)" class="px-2.5 py-1 text-slate-600 hover:bg-slate-100 font-bold text-xs">-</button>
-                <span class="px-3 text-xs font-bold text-slate-800">${item.qty}</span>
-                <button onclick="updateCartQuantity('${item.id}', 1)" class="px-2.5 py-1 text-slate-600 hover:bg-slate-100 font-bold text-xs">+</button>
+                <button onclick="updateCartQuantity('${item.id}', -1)" class="px-2 py-0.5 text-slate-600 hover:bg-slate-100 font-bold text-xs">-</button>
+                <span class="px-2.5 text-xs font-bold text-slate-800">${item.qty}</span>
+                <button onclick="updateCartQuantity('${item.id}', 1)" class="px-2 py-0.5 text-slate-600 hover:bg-slate-100 font-bold text-xs">+</button>
               </div>
               <button onclick="removeFromCart('${item.id}')" class="text-slate-400 hover:text-rose-600 p-1">
                 <i data-lucide="trash-2" class="w-4 h-4"></i>
@@ -1318,11 +1367,15 @@
       }
     }
 
+    /* SISTEM LOG IN DENGAN AKAUN BERDAFTAR (FUNGSI DEFAULT ADMIN123 DIBUANG SEPENUHNYA) */
     function loginAdmin() {
-      const pwd = document.getElementById("adminPasswordInput").value;
+      const emailInput = document.getElementById("adminUsernameInput").value.trim().toLowerCase();
+      const pwdInput = document.getElementById("adminPasswordInput").value;
       const errorEl = document.getElementById("adminAuthError");
 
-      if (pwd === "admin123" || pwd === "admin" || pwd !== "") {
+      const matchedAccount = sellerAccounts.find(acc => acc.email.toLowerCase() === emailInput && acc.pwd === pwdInput);
+
+      if (matchedAccount) {
         isAdminLoggedIn = true;
         errorEl.classList.add("hidden");
         closeAdminModal();
@@ -1333,9 +1386,10 @@
       }
     }
 
+    /* SISTEM SIGN UP SELLER DINAMIK */
     function signupAdmin() {
-      const storeName = document.getElementById("signupStoreName").value;
-      const email = document.getElementById("signupEmail").value;
+      const storeName = document.getElementById("signupStoreName").value.trim();
+      const email = document.getElementById("signupEmail").value.trim().toLowerCase();
       const pwd = document.getElementById("signupPassword").value;
 
       if (!storeName || !email || !pwd) {
@@ -1343,11 +1397,26 @@
         return;
       }
 
-      alert("Pendaftaran Seller berjaya! Anda kini boleh menguruskan kedai anda.");
-      isAdminLoggedIn = true;
-      closeAdminModal();
-      renderAdminDashboard();
-      navTo("admin");
+      if (pwd.length < 6) {
+        alert("Kata laluan hendaklah sekurang-kurangnya 6 aksara.");
+        return;
+      }
+
+      const existingAcc = sellerAccounts.find(acc => acc.email === email);
+      if (existingAcc) {
+        alert("E-mel ini telah pun didaftarkan sebagai seller.");
+        return;
+      }
+
+      sellerAccounts.push({ storeName, email, pwd });
+      saveData(STORAGE_KEY_SELLER_ACCOUNTS, sellerAccounts);
+
+      settings.storeName = storeName;
+      window.syncToCloud();
+
+      alert("Pendaftaran Seller berjaya! Sila log masuk dengan akaun anda.");
+      switchAuthMode("login");
+      document.getElementById("adminUsernameInput").value = email;
     }
 
     function logoutAdmin() {
