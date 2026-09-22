@@ -1684,3 +1684,242 @@
   </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Seller Center - SCHA Digital Hub</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+    body {
+      background-color: #f4f6f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+    .card {
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 400px;
+    }
+    h2 {
+      margin-top: 0;
+      color: #333;
+      text-align: center;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: #555;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #007bff;
+      border: none;
+      color: white;
+      font-size: 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .toggle-text {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 14px;
+    }
+    .toggle-text a {
+      color: #007bff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .hidden {
+      display: none;
+    }
+    /* Dashboard Seller Styling */
+    .dashboard {
+      text-align: center;
+    }
+    .btn-logout {
+      background-color: #dc3545;
+    }
+    .btn-logout:hover {
+      background-color: #bd2130;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <!-- PANEL LOG IN SELLER -->
+    <div id="login-panel">
+      <h2>Seller Log In</h2>
+      <form id="login-form">
+        <div class="form-group">
+          <label>E-mel Penjual</label>
+          <input type="email" id="login-email" required placeholder="seller@domain.com">
+        </div>
+        <div class="form-group">
+          <label>Kata Laluan</label>
+          <input type="password" id="login-password" required placeholder="******">
+        </div>
+        <button type="submit">Log Masuk</button>
+      </form>
+      <div class="toggle-text">
+        Belum ada akaun penjual? <a href="#" id="show-signup">Daftar Sini</a>
+      </div>
+    </div>
+
+    <!-- PANEL SIGN UP SELLER -->
+    <div id="signup-panel" class="hidden">
+      <h2>Daftar Seller Baharu</h2>
+      <form id="signup-form">
+        <div class="form-group">
+          <label>Nama Kedai / Penjual</label>
+          <input type="text" id="signup-name" required placeholder="SCHA Store">
+        </div>
+        <div class="form-group">
+          <label>E-mel</label>
+          <input type="email" id="signup-email" required placeholder="seller@domain.com">
+        </div>
+        <div class="form-group">
+          <label>Kata Laluan</label>
+          <input type="password" id="signup-password" required placeholder="******">
+        </div>
+        <button type="submit">Daftar Akaun</button>
+      </form>
+      <div class="toggle-text">
+        Sudah mendaftar? <a href="#" id="show-login">Log Masuk Sini</a>
+      </div>
+    </div>
+
+    <!-- PANEL DASHBOARD SELLER (Dipaparkan selepas Log In) -->
+    <div id="dashboard-panel" class="dashboard hidden">
+      <h2>Seller Center Dashboard</h2>
+      <p>Selamat datang, <span id="seller-display-name"></span>!</p>
+      <p>Status: <strong>Aktif (Sesi Kekal)</strong></p>
+      <hr>
+      <button class="btn-logout" id="logout-btn">Log Keluar</button>
+    </div>
+  </div>
+
+  <script>
+    // Menyimpan elemen-elemen DOM
+    const loginPanel = document.getElementById('login-panel');
+    const signupPanel = document.getElementById('signup-panel');
+    const dashboardPanel = document.getElementById('dashboard-panel');
+    
+    const showSignup = document.getElementById('show-signup');
+    const showLogin = document.getElementById('show-login');
+    
+    const loginForm = document.getElementById('login-form');
+    const signupForm = document.getElementById('signup-form');
+    const logoutBtn = document.getElementById('logout-btn');
+
+    // 1. Semak status sesi apabila halaman dibuka
+    window.addEventListener('DOMContentLoaded', () => {
+      const isSellerLoggedIn = localStorage.getItem('seller_logged_in');
+      const sellerName = localStorage.getItem('seller_name');
+
+      if (isSellerLoggedIn === 'true') {
+        renderDashboard(sellerName);
+      }
+    });
+
+    // 2. Tukar antara paparan Log In dan Sign Up
+    showSignup.addEventListener('click', (e) => {
+      e.preventDefault();
+      loginPanel.classList.add('hidden');
+      signupPanel.classList.remove('hidden');
+    });
+
+    showLogin.addEventListener('click', (e) => {
+      e.preventDefault();
+      signupPanel.classList.add('hidden');
+      loginPanel.classList.remove('hidden');
+    });
+
+    // 3. Fungsi Pendaftaran (Sign Up)
+    signupForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('signup-name').value;
+      const email = document.getElementById('signup-email').value;
+      const password = document.getElementById('signup-password').value;
+
+      // Simpan maklumat pendaftaran sementara (Penggunaan asas)
+      localStorage.setItem('registered_seller_email', email);
+      localStorage.setItem('registered_seller_password', password);
+      localStorage.setItem('registered_seller_name', name);
+
+      alert('Pendaftaran berjaya! Sila log masuk ke akaun anda.');
+      signupPanel.classList.add('hidden');
+      loginPanel.classList.remove('hidden');
+      signupForm.reset();
+    });
+
+    // 4. Fungsi Log Masuk (Log In) + Mengekalkan Sesi
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = document.getElementById('login-email').value;
+      const password = document.getElementById('login-password').value;
+
+      const storedEmail = localStorage.getItem('registered_seller_email');
+      const storedPassword = localStorage.getItem('registered_seller_password');
+      const storedName = localStorage.getItem('registered_seller_name') || 'Penjual';
+
+      // Semakan pengesahan ringkas
+      if (email === storedEmail && password === storedPassword) {
+        // Simpan status sesi supaya kekal log masuk walaupun browser ditutup
+        localStorage.setItem('seller_logged_in', 'true');
+        localStorage.setItem('seller_name', storedName);
+
+        renderDashboard(storedName);
+        loginForm.reset();
+      } else {
+        alert('E-mel atau kata laluan tidak sah. Sila cuba lagi.');
+      }
+    });
+
+    // 5. Fungsi Log Keluar (Log Out)
+    logoutBtn.addEventListener('click', () => {
+      // Padam status sesi
+      localStorage.removeItem('seller_logged_in');
+      localStorage.removeItem('seller_name');
+
+      // Kembalikan ke paparan Log In
+      dashboardPanel.classList.add('hidden');
+      loginPanel.classList.remove('hidden');
+    });
+
+    // Fungsi pembantu untuk memaparkan Dashboard
+    function renderDashboard(name) {
+      document.getElementById('seller-display-name').innerText = name;
+      loginPanel.classList.add('hidden');
+      signupPanel.classList.add('hidden');
+      dashboardPanel.classList.remove('hidden');
+    }
+  </script>
+</body>
+</html>
