@@ -752,7 +752,7 @@
             <div class="relative rounded-2xl overflow-hidden border border-slate-200 bg-black aspect-video max-w-xs">
               <video id="videoPreview" controls class="w-full h-full object-contain"></video>
               <button type="button" onclick="removeUploadedVideo()" class="absolute top-2 right-2 bg-rose-600 text-white rounded-full p-1 hover:bg-rose-700">
-                <i data-lucide="x" class="w-3.5 h-3.5"></i>
+                <i data-lucide="x" class="w-3 h-3.5"></i>
               </button>
             </div>
           </div>
@@ -816,86 +816,7 @@
     </div>
   </div>
 
-  <!-- FIREBASE ENGINE -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getDatabase, ref, onValue, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
-
-    const firebaseConfig = {
-      databaseURL: "https://scha-atelier-default-rtdb.firebaseio.com"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app);
-
-    const STORAGE_KEY_PRODUCTS = "scha_products_local";
-    const STORAGE_KEY_CATEGORIES = "scha_categories_local";
-    const STORAGE_KEY_SETTINGS = "scha_settings_local";
-
-    const DEFAULT_CATEGORIES = [
-      { id: "cat-1", name: "Pra-Sekolah", desc: "Modul asas membaca, menulis & mengira (3-6 Tahun)", active: true },
-      { id: "cat-2", name: "Sekolah Rendah (Tahap 1)", desc: "Bahan aktiviti Tahun 1, 2 & 3", active: true },
-      { id: "cat-3", name: "Sekolah Rendah (Tahap 2)", desc: "Modul subjek teras Tahun 4, 5 & 6", active: true },
-      { id: "cat-4", name: "Bahasa Melayu & Inggeris", desc: "Latihan tatabahasa & pemahaman", active: true },
-      { id: "cat-5", name: "Matematik & Sains", desc: "Soalan pengukuhan konsep & formula", active: true },
-      { id: "cat-6", name: "Pendidikan Islam & Moral", desc: "Latihan tajwid, jawi & nilai murni", active: true }
-    ];
-
-    const DEFAULT_SETTINGS = {
-      storeName: "Scha Digital Learning Hub",
-      logoUrl: "",
-      bannerTitle: "Tingkatkan Pembelajaran Anak Lebih Kreatif",
-      bannerDesc: "Akses pantas kepada ratusan modul lembaran kerja, e-book, dan aplikasi latihan sekolah rendah & pra-sekolah.",
-      waNumber: "60123456789",
-      waButtonLabel: "Order Melalui WhatsApp",
-      waTemplate: "Hello {STORE_NAME},\n\nSaya ingin membuat pesanan bagi bahan berikut:\n\nNama Pelanggan: {CUSTOMER_NAME}\n\nSenarai Pesanan:\n{ITEMS}\n\nJumlah Keseluruhan: {TOTAL}\n\nSila berikan maklumat akaun untuk pembayaran. Terima kasih!"
-    };
-
-    onValue(ref(db, 'scha_store'), (snapshot) => {
-      const data = snapshot.val();
-
-      if (data && data.products && data.products.length > 0) {
-        window.products = data.products;
-        window.categories = data.categories || DEFAULT_CATEGORIES;
-        window.settings = data.settings || DEFAULT_SETTINGS;
-
-        localStorage.setItem(STORAGE_KEY_PRODUCTS, JSON.stringify(window.products));
-        localStorage.setItem(STORAGE_KEY_CATEGORIES, JSON.stringify(window.categories));
-        localStorage.setItem(STORAGE_KEY_SETTINGS, JSON.stringify(window.settings));
-      } else {
-        const localProds = JSON.parse(localStorage.getItem(STORAGE_KEY_PRODUCTS));
-        const localCats = JSON.parse(localStorage.getItem(STORAGE_KEY_CATEGORIES));
-        const localSets = JSON.parse(localStorage.getItem(STORAGE_KEY_SETTINGS));
-
-        if (localProds && localProds.length > 0) {
-          window.products = localProds;
-          window.categories = localCats || DEFAULT_CATEGORIES;
-          window.settings = localSets || DEFAULT_SETTINGS;
-          window.syncToCloud();
-        } else {
-          window.products = [];
-          window.categories = DEFAULT_CATEGORIES;
-          window.settings = DEFAULT_SETTINGS;
-        }
-      }
-
-      window.refreshAllUI();
-    });
-
-    window.syncToCloud = function() {
-      localStorage.setItem(STORAGE_KEY_PRODUCTS, JSON.stringify(window.products));
-      localStorage.setItem(STORAGE_KEY_CATEGORIES, JSON.stringify(window.categories));
-      localStorage.setItem(STORAGE_KEY_SETTINGS, JSON.stringify(window.settings));
-
-      set(ref(db, 'scha_store'), {
-        products: window.products || [],
-        categories: window.categories || [],
-        settings: window.settings || DEFAULT_SETTINGS
-      });
-    };
-  </script>
-
-  <!-- APPLICATION LOGIC -->
+  <!-- APPLICATION LOGIC & STATE -->
   <script>
     const STORAGE_KEY_CART = "scha_hub_cart_v1";
     const STORAGE_KEY_SELLER_ACCOUNTS = "scha_seller_accounts_v1";
@@ -918,14 +839,8 @@
     let searchQuery = "";
     let sortBy = "newest";
 
-    document.addEventListener("DOMContentLoaded", () => {
-      lucide.createIcons();
-      handleHashNavigation();
-      window.addEventListener("hashchange", handleHashNavigation);
-      window.refreshAllUI();
-    });
-
-    function windowRefreshAllUI() {
+    // Global Functions Isytihar Awal
+    window.refreshAllUI = function() {
       applyBrandingDOM();
       populateCategorySelects();
       renderHomeView();
@@ -933,8 +848,14 @@
       updateCartUI();
       checkSellerVisibility();
       if(window.isAdminLoggedIn) renderAdminDashboard();
-    }
-    window.refreshAllUI = windowRefreshAllUI;
+    };
+
+    document.addEventListener("DOMContentLoaded", () => {
+      lucide.createIcons();
+      handleHashNavigation();
+      window.addEventListener("hashchange", handleHashNavigation);
+      window.refreshAllUI();
+    });
 
     function saveData(key, value) {
       localStorage.setItem(key, JSON.stringify(value));
@@ -979,23 +900,23 @@
     }
 
     function applyBrandingDOM() {
-      if(!settings.storeName) return;
-      document.getElementById("brandNameDisplay").innerText = settings.storeName || "Scha Digital";
-      document.getElementById("bannerTitle").innerText = settings.bannerTitle || "";
-      document.getElementById("bannerDesc").innerText = settings.bannerDesc || "";
-      document.getElementById("waBtnLabelText").innerText = settings.waButtonLabel || "Order Melalui WhatsApp";
+      if(!window.settings.storeName) return;
+      document.getElementById("brandNameDisplay").innerText = window.settings.storeName || "Scha Digital";
+      document.getElementById("bannerTitle").innerText = window.settings.bannerTitle || "";
+      document.getElementById("bannerDesc").innerText = window.settings.bannerDesc || "";
+      document.getElementById("waBtnLabelText").innerText = window.settings.waButtonLabel || "Order Melalui WhatsApp";
 
-      document.getElementById("settingStoreName").value = settings.storeName || "";
-      document.getElementById("settingStoreLogo").value = settings.logoUrl || "";
-      document.getElementById("settingBannerTitle").value = settings.bannerTitle || "";
-      document.getElementById("settingBannerDesc").value = settings.bannerDesc || "";
-      document.getElementById("settingWaNumber").value = settings.waNumber || "";
-      document.getElementById("settingWaButtonLabel").value = settings.waButtonLabel || "";
-      document.getElementById("settingWaTemplate").value = settings.waTemplate || "";
+      document.getElementById("settingStoreName").value = window.settings.storeName || "";
+      document.getElementById("settingStoreLogo").value = window.settings.logoUrl || "";
+      document.getElementById("settingBannerTitle").value = window.settings.bannerTitle || "";
+      document.getElementById("settingBannerDesc").value = window.settings.bannerDesc || "";
+      document.getElementById("settingWaNumber").value = window.settings.waNumber || "";
+      document.getElementById("settingWaButtonLabel").value = window.settings.waButtonLabel || "";
+      document.getElementById("settingWaTemplate").value = window.settings.waTemplate || "";
     }
 
     function renderHomeView() {
-      const activeCategories = categories.filter(c => c.active);
+      const activeCategories = window.categories.filter(c => c.active);
       const categoriesGrid = document.getElementById("homeCategoriesGrid");
       categoriesGrid.innerHTML = activeCategories.map(c => `
         <div onclick="filterByCategoryFromHome('${c.name}')" class="bg-white p-4 sm:p-5 rounded-3xl border border-slate-200/80 hover:border-pastel-purplePrimary hover:shadow-xl hover:shadow-purple-50 cursor-pointer transition-all text-center space-y-2.5 sm:space-y-3 group">
@@ -1006,7 +927,7 @@
         </div>
       `).join("");
 
-      const featured = products.filter(p => p.active && p.featured);
+      const featured = window.products.filter(p => p.active && p.featured);
       const featuredGrid = document.getElementById("featuredProductsGrid");
       featuredGrid.innerHTML = featured.map(p => createProductCardHTML(p)).join("");
       lucide.createIcons();
@@ -1045,7 +966,7 @@
     }
 
     function renderShopView() {
-      let filtered = products.filter(p => p.active);
+      let filtered = window.products.filter(p => p.active);
 
       if (filterCategory !== "all") {
         filtered = filtered.filter(p => p.category === filterCategory);
@@ -1053,7 +974,7 @@
 
       if (searchQuery.trim() !== "") {
         const q = searchQuery.toLowerCase();
-        filtered = filtered.filter(p => p.title.toLowerCase().includes(q) || p.desc.toLowerCase().includes(q));
+        filtered = filtered.filter(p => p.title.toLowerCase().includes(q) || (p.desc && p.desc.toLowerCase().includes(q)));
       }
 
       if (sortBy === "price-low") {
@@ -1070,7 +991,7 @@
       const emptyState = document.getElementById("shopEmptyState");
       const countDisplay = document.getElementById("shopProductsCount");
 
-      countDisplay.innerText = `Memaparkan ${filtered.length} daripada ${products.filter(p => p.active).length} bahan digital`;
+      countDisplay.innerText = `Memaparkan ${filtered.length} daripada ${window.products.filter(p => p.active).length} bahan digital`;
 
       if (filtered.length === 0) {
         grid.innerHTML = "";
@@ -1084,7 +1005,7 @@
     }
 
     function showProductDetail(pId) {
-      const product = products.find(p => p.id === pId);
+      const product = window.products.find(p => p.id === pId);
       if (!product) {
         navTo("shop");
         return;
@@ -1173,7 +1094,7 @@
     }
 
     function populateCategorySelects() {
-      const activeCats = categories.filter(c => c.active);
+      const activeCats = window.categories.filter(c => c.active);
       const filterSelect = document.getElementById("filterCategorySelect");
       const formSelect = document.getElementById("pCategory");
 
@@ -1183,7 +1104,7 @@
     }
 
     function addToCart(pId) {
-      const product = products.find(p => p.id === pId);
+      const product = window.products.find(p => p.id === pId);
       if (!product) return;
 
       const existingIndex = cart.findIndex(item => item.id === pId);
@@ -1321,13 +1242,13 @@
       const itemsListText = cart.map((item, idx) => `${idx + 1}. ${item.title} (x${item.qty}) - RM ${(item.price * item.qty).toFixed(2)}`).join("\n");
       const totalAmount = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
 
-      let message = settings.waTemplate || "Hello";
-      message = message.replace(/{STORE_NAME}/g, settings.storeName || "Scha Digital Learning Hub");
+      let message = window.settings.waTemplate || "Hello";
+      message = message.replace(/{STORE_NAME}/g, window.settings.storeName || "Scha Digital Learning Hub");
       message = message.replace(/{CUSTOMER_NAME}/g, customerName);
       message = message.replace(/{ITEMS}/g, itemsListText);
       message = message.replace(/{TOTAL}/g, `RM ${totalAmount.toFixed(2)}`);
 
-      const cleanPhone = (settings.waNumber || "60123456789").replace(/[^0-9]/g, "");
+      const cleanPhone = (window.settings.waNumber || "60123456789").replace(/[^0-9]/g, "");
       const encodedMsg = encodeURIComponent(message);
       const waURL = `https://wa.me/${cleanPhone}?text=${encodedMsg}`;
 
@@ -1335,7 +1256,7 @@
     }
 
     function openAdminModal(mode = 'login') {
-      if (isAdminLoggedIn) {
+      if (window.isAdminLoggedIn) {
         navTo("admin");
       } else {
         switchAuthMode(mode);
@@ -1378,7 +1299,7 @@
       const matchedAccount = sellerAccounts.find(acc => acc.email.toLowerCase() === emailInput && acc.pwd === pwdInput);
 
       if (matchedAccount) {
-        isAdminLoggedIn = true;
+        window.isAdminLoggedIn = true;
         errorEl.classList.add("hidden");
         closeAdminModal();
         renderAdminDashboard();
@@ -1412,8 +1333,8 @@
       sellerAccounts.push({ storeName, email, pwd });
       saveData(STORAGE_KEY_SELLER_ACCOUNTS, sellerAccounts);
 
-      settings.storeName = storeName;
-      window.syncToCloud();
+      window.settings.storeName = storeName;
+      if (typeof window.syncToCloud === 'function') window.syncToCloud();
 
       alert("Pendaftaran Seller berjaya! Sila log masuk dengan akaun anda.");
       switchAuthMode("login");
@@ -1421,7 +1342,7 @@
     }
 
     function logoutAdmin() {
-      isAdminLoggedIn = false;
+      window.isAdminLoggedIn = false;
       navTo("home");
     }
 
@@ -1439,12 +1360,12 @@
     }
 
     function renderAdminDashboard() {
-      document.getElementById("statTotalProducts").innerText = products.length;
-      document.getElementById("statActiveProducts").innerText = products.filter(p => p.active).length;
-      document.getElementById("statTotalCategories").innerText = categories.length;
+      document.getElementById("statTotalProducts").innerText = window.products.length;
+      document.getElementById("statActiveProducts").innerText = window.products.filter(p => p.active).length;
+      document.getElementById("statTotalCategories").innerText = window.categories.length;
 
       const prodTableBody = document.getElementById("adminProductsTableBody");
-      prodTableBody.innerHTML = products.map(p => {
+      prodTableBody.innerHTML = window.products.map(p => {
         const thumb = p.images && p.images.length > 0 ? p.images[0] : 'https://via.placeholder.com/50';
         return `
           <tr class="hover:bg-slate-50">
@@ -1468,7 +1389,7 @@
       }).join("");
 
       const catTableBody = document.getElementById("adminCategoriesTableBody");
-      catTableBody.innerHTML = categories.map(c => `
+      catTableBody.innerHTML = window.categories.map(c => `
         <tr class="hover:bg-slate-50">
           <td class="p-4 font-bold text-slate-800">${c.name}</td>
           <td class="p-4 text-slate-600 line-clamp-1">${c.desc || '-'}</td>
@@ -1606,7 +1527,7 @@
       uploadedVideo = "";
 
       if (pId) {
-        const p = products.find(prod => prod.id === pId);
+        const p = window.products.find(prod => prod.id === pId);
         if (!p) return;
 
         titleEl.innerText = "Edit Produk";
@@ -1665,13 +1586,13 @@
       };
 
       if (id) {
-        const index = products.findIndex(p => p.id === id);
-        if (index > -1) products[index] = productData;
+        const index = window.products.findIndex(p => p.id === id);
+        if (index > -1) window.products[index] = productData;
       } else {
-        products.push(productData);
+        window.products.push(productData);
       }
 
-      window.syncToCloud();
+      if (typeof window.syncToCloud === 'function') window.syncToCloud();
       closeProductModal();
       alert("Produk berjaya disimpan dan disinkronkan!");
     }
@@ -1680,8 +1601,8 @@
 
     function deleteProduct(pId) {
       if (confirm("Adakah anda pasti ingin memadam produk ini?")) {
-        products = products.filter(p => p.id !== pId);
-        window.syncToCloud();
+        window.products = window.products.filter(p => p.id !== pId);
+        if (typeof window.syncToCloud === 'function') window.syncToCloud();
       }
     }
 
@@ -1690,7 +1611,7 @@
       const titleEl = document.getElementById("categoryModalTitle");
 
       if (cId) {
-        const c = categories.find(cat => cat.id === cId);
+        const c = window.categories.find(cat => cat.id === cId);
         if (!c) return;
 
         titleEl.innerText = "Edit Kategori";
@@ -1723,13 +1644,13 @@
       };
 
       if (id) {
-        const index = categories.findIndex(c => c.id === id);
-        if (index > -1) categories[index] = catData;
+        const index = window.categories.findIndex(c => c.id === id);
+        if (index > -1) window.categories[index] = catData;
       } else {
-        categories.push(catData);
+        window.categories.push(catData);
       }
 
-      window.syncToCloud();
+      if (typeof window.syncToCloud === 'function') window.syncToCloud();
       closeCategoryModal();
       alert("Kategori berjaya disimpan dan disinkronkan!");
     }
@@ -1738,29 +1659,110 @@
 
     function deleteCategory(cId) {
       if (confirm("Adakah anda pasti ingin memadam kategori ini?")) {
-        categories = categories.filter(c => c.id !== cId);
-        window.syncToCloud();
+        window.categories = window.categories.filter(c => c.id !== cId);
+        if (typeof window.syncToCloud === 'function') window.syncToCloud();
       }
     }
 
     function saveBrandingSettings() {
-      settings.storeName = document.getElementById("settingStoreName").value;
-      settings.logoUrl = document.getElementById("settingStoreLogo").value;
-      settings.bannerTitle = document.getElementById("settingBannerTitle").value;
-      settings.bannerDesc = document.getElementById("settingBannerDesc").value;
+      window.settings.storeName = document.getElementById("settingStoreName").value;
+      window.settings.logoUrl = document.getElementById("settingStoreLogo").value;
+      window.settings.bannerTitle = document.getElementById("settingBannerTitle").value;
+      window.settings.bannerDesc = document.getElementById("settingBannerDesc").value;
 
-      window.syncToCloud();
+      if (typeof window.syncToCloud === 'function') window.syncToCloud();
       alert("Tetapan branding berjaya disimpan!");
     }
 
     function saveWaSettings() {
-      settings.waNumber = document.getElementById("settingWaNumber").value;
-      settings.waButtonLabel = document.getElementById("settingWaButtonLabel").value;
-      settings.waTemplate = document.getElementById("settingWaTemplate").value;
+      window.settings.waNumber = document.getElementById("settingWaNumber").value;
+      window.settings.waButtonLabel = document.getElementById("settingWaButtonLabel").value;
+      window.settings.waTemplate = document.getElementById("settingWaTemplate").value;
 
-      window.syncToCloud();
+      if (typeof window.syncToCloud === 'function') window.syncToCloud();
       alert("Tetapan WhatsApp berjaya disimpan!");
     }
+  </script>
+
+  <!-- FIREBASE ENGINE (MOVED AT THE END FOR COMPATIBILITY) -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getDatabase, ref, onValue, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+    const firebaseConfig = {
+      databaseURL: "https://scha-atelier-default-rtdb.firebaseio.com"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    const STORAGE_KEY_PRODUCTS = "scha_products_local";
+    const STORAGE_KEY_CATEGORIES = "scha_categories_local";
+    const STORAGE_KEY_SETTINGS = "scha_settings_local";
+
+    const DEFAULT_CATEGORIES = [
+      { id: "cat-1", name: "Pra-Sekolah", desc: "Modul asas membaca, menulis & mengira (3-6 Tahun)", active: true },
+      { id: "cat-2", name: "Sekolah Rendah (Tahap 1)", desc: "Bahan aktiviti Tahun 1, 2 & 3", active: true },
+      { id: "cat-3", name: "Sekolah Rendah (Tahap 2)", desc: "Modul subjek teras Tahun 4, 5 & 6", active: true },
+      { id: "cat-4", name: "Bahasa Melayu & Inggeris", desc: "Latihan tatabahasa & pemahaman", active: true },
+      { id: "cat-5", name: "Matematik & Sains", desc: "Soalan pengukuhan konsep & formula", active: true },
+      { id: "cat-6", name: "Pendidikan Islam & Moral", desc: "Latihan tajwid, jawi & nilai murni", active: true }
+    ];
+
+    const DEFAULT_SETTINGS = {
+      storeName: "Scha Digital Learning Hub",
+      logoUrl: "",
+      bannerTitle: "Tingkatkan Pembelajaran Anak Lebih Kreatif",
+      bannerDesc: "Akses pantas kepada ratusan modul lembaran kerja, e-book, dan aplikasi latihan sekolah rendah & pra-sekolah.",
+      waNumber: "60123456789",
+      waButtonLabel: "Order Melalui WhatsApp",
+      waTemplate: "Hello {STORE_NAME},\n\nSaya ingin membuat pesanan bagi bahan berikut:\n\nNama Pelanggan: {CUSTOMER_NAME}\n\nSenarai Pesanan:\n{ITEMS}\n\nJumlah Keseluruhan: {TOTAL}\n\nSila berikan maklumat akaun untuk pembayaran. Terima kasih!"
+    };
+
+    onValue(ref(db, 'scha_store'), (snapshot) => {
+      const data = snapshot.val();
+
+      if (data && data.products && data.products.length > 0) {
+        window.products = data.products;
+        window.categories = data.categories || DEFAULT_CATEGORIES;
+        window.settings = data.settings || DEFAULT_SETTINGS;
+
+        localStorage.setItem(STORAGE_KEY_PRODUCTS, JSON.stringify(window.products));
+        localStorage.setItem(STORAGE_KEY_CATEGORIES, JSON.stringify(window.categories));
+        localStorage.setItem(STORAGE_KEY_SETTINGS, JSON.stringify(window.settings));
+      } else {
+        const localProds = JSON.parse(localStorage.getItem(STORAGE_KEY_PRODUCTS));
+        const localCats = JSON.parse(localStorage.getItem(STORAGE_KEY_CATEGORIES));
+        const localSets = JSON.parse(localStorage.getItem(STORAGE_KEY_SETTINGS));
+
+        if (localProds && localProds.length > 0) {
+          window.products = localProds;
+          window.categories = localCats || DEFAULT_CATEGORIES;
+          window.settings = localSets || DEFAULT_SETTINGS;
+          window.syncToCloud();
+        } else {
+          window.products = [];
+          window.categories = DEFAULT_CATEGORIES;
+          window.settings = DEFAULT_SETTINGS;
+        }
+      }
+
+      if (typeof window.refreshAllUI === 'function') {
+        window.refreshAllUI();
+      }
+    });
+
+    window.syncToCloud = function() {
+      localStorage.setItem(STORAGE_KEY_PRODUCTS, JSON.stringify(window.products));
+      localStorage.setItem(STORAGE_KEY_CATEGORIES, JSON.stringify(window.categories));
+      localStorage.setItem(STORAGE_KEY_SETTINGS, JSON.stringify(window.settings));
+
+      set(ref(db, 'scha_store'), {
+        products: window.products || [],
+        categories: window.categories || [],
+        settings: window.settings || DEFAULT_SETTINGS
+      });
+    };
   </script>
 </body>
 </html>
