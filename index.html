@@ -102,9 +102,9 @@
           </button>
 
           <!-- Admin Button -->
-          <button id="navAdminBtn" onclick="openAdminModal('login')" class="seller-only-element hidden text-xs font-bold text-white bg-slate-900 hover:bg-pastel-purplePrimary px-4 py-2.5 rounded-2xl transition-all shadow-sm flex items-center gap-1.5">
+          <button id="navAdminBtn" onclick="openAdminModal('login')" class="seller-only-element text-xs font-bold text-white bg-slate-900 hover:bg-pastel-purplePrimary px-4 py-2.5 rounded-2xl transition-all shadow-sm flex items-center gap-1.5">
             <i data-lucide="store" class="w-4 h-4"></i>
-            <span>Seller Center</span>
+            <span id="navAdminText">Seller Center</span>
           </button>
         </div>
 
@@ -163,7 +163,7 @@
             <span class="text-[10px] sm:text-xs text-purple-200 mt-1">Muat Turun Serta Merta</span>
           </div>
 
-          <div class="seller-only-element hidden bg-slate-900/80 backdrop-blur-md p-3.5 rounded-2xl border border-white/10 w-full max-w-xs text-center space-y-2">
+          <div class="seller-only-element bg-slate-900/80 backdrop-blur-md p-3.5 rounded-2xl border border-white/10 w-full max-w-xs text-center space-y-2">
             <span class="text-[11px] text-purple-200 font-semibold block">Bahagian Penjual (Seller Center)</span>
             <div class="flex gap-2 justify-center">
               <button onclick="openAdminModal('login')" class="text-xs font-bold bg-white/20 hover:bg-white/30 text-white px-3 py-1.5 rounded-xl transition-all border border-white/20">
@@ -597,7 +597,7 @@
       <div class="space-y-2">
         <span class="font-bold text-white block uppercase tracking-wider text-[11px]">Penjual & Sokongan</span>
         <p class="text-slate-400">Penghantaran produk dilakukan secara manual/automatik selepas pengesahan pesanan melalui WhatsApp rasmi kedai.</p>
-        <div class="pt-2 seller-only-element hidden">
+        <div class="pt-2 seller-only-element">
           <button onclick="openAdminModal('login')" class="text-[11px] font-bold text-purple-300 hover:text-white underline inline-flex items-center gap-1">
             <i data-lucide="store" class="w-3.5 h-3.5"></i> Seller Center (Log In / Sign Up)
           </button>
@@ -820,16 +820,21 @@
   <script>
     const STORAGE_KEY_CART = "scha_hub_cart_v1";
     const STORAGE_KEY_SELLER_ACCOUNTS = "scha_seller_accounts_v1";
+    const STORAGE_KEY_SELLER_SESSION = "scha_seller_session_v1";
 
     window.products = JSON.parse(localStorage.getItem("scha_products_local")) || [];
     window.categories = JSON.parse(localStorage.getItem("scha_categories_local")) || [];
     window.settings = JSON.parse(localStorage.getItem("scha_settings_local")) || {};
     let cart = JSON.parse(localStorage.getItem(STORAGE_KEY_CART)) || [];
-    let sellerAccounts = JSON.parse(localStorage.getItem(STORAGE_KEY_SELLER_ACCOUNTS)) || [];
+    let sellerAccounts = JSON.parse(localStorage.getItem(STORAGE_KEY_SELLER_ACCOUNTS)) || [
+      { storeName: "Scha Digital", email: "seller@domain.com", pwd: "password" }
+    ];
 
-    window.isAdminLoggedIn = false;
+    // Semak sesi log masuk penjual daripada localStorage
+    const savedSession = JSON.parse(localStorage.getItem(STORAGE_KEY_SELLER_SESSION));
+    window.isAdminLoggedIn = !!(savedSession && savedSession.isLoggedIn);
+
     let isCatalogOnlyView = false;
-
     let currentDetailProductId = null;
     let currentPromoType = "RM"; 
     let uploadedImages = []; 
@@ -847,6 +852,7 @@
       renderShopView();
       updateCartUI();
       checkSellerVisibility();
+      updateAdminNavButton();
       if(window.isAdminLoggedIn) renderAdminDashboard();
     };
 
@@ -870,11 +876,25 @@
       }
     }
 
+    function updateAdminNavButton() {
+      const navText = document.getElementById("navAdminText");
+      if (navText) {
+        navText.innerText = window.isAdminLoggedIn ? "Dashboard Seller" : "Seller Center";
+      }
+    }
+
     function handleHashNavigation() {
       const hash = window.location.hash.replace("#", "") || "home";
 
       if (hash === "shop" || hash.startsWith("product/")) {
         isCatalogOnlyView = true;
+      } else {
+        isCatalogOnlyView = false;
+      }
+
+      if (hash === "admin" && !window.isAdminLoggedIn) {
+        openAdminModal('login');
+        return;
       }
 
       if (hash.startsWith("product/")) {
@@ -887,6 +907,11 @@
     }
 
     function navTo(viewId, updateHash = true) {
+      if (viewId === "admin" && !window.isAdminLoggedIn) {
+        openAdminModal('login');
+        return;
+      }
+
       if (updateHash) window.location.hash = viewId;
       document.querySelectorAll(".view-section").forEach(el => el.classList.add("hidden"));
 
@@ -900,10 +925,10 @@
     }
 
     function applyBrandingDOM() {
-      if(!window.settings.storeName) return;
+      if(!window.settings) return;
       document.getElementById("brandNameDisplay").innerText = window.settings.storeName || "Scha Digital";
-      document.getElementById("bannerTitle").innerText = window.settings.bannerTitle || "";
-      document.getElementById("bannerDesc").innerText = window.settings.bannerDesc || "";
+      document.getElementById("bannerTitle").innerText = window.settings.bannerTitle || "Tingkatkan Pembelajaran Anak Lebih Kreatif";
+      document.getElementById("bannerDesc").innerText = window.settings.bannerDesc || "Akses pantas kepada ratusan modul lembaran kerja, e-book, dan aplikasi latihan sekolah rendah & pra-sekolah.";
       document.getElementById("waBtnLabelText").innerText = window.settings.waButtonLabel || "Order Melalui WhatsApp";
 
       document.getElementById("settingStoreName").value = window.settings.storeName || "";
@@ -1300,8 +1325,11 @@
 
       if (matchedAccount) {
         window.isAdminLoggedIn = true;
+        saveData(STORAGE_KEY_SELLER_SESSION, { isLoggedIn: true, email: matchedAccount.email, storeName: matchedAccount.storeName });
+        
         errorEl.classList.add("hidden");
         closeAdminModal();
+        updateAdminNavButton();
         renderAdminDashboard();
         navTo("admin");
       } else {
@@ -1343,6 +1371,8 @@
 
     function logoutAdmin() {
       window.isAdminLoggedIn = false;
+      localStorage.removeItem(STORAGE_KEY_SELLER_SESSION);
+      updateAdminNavButton();
       navTo("home");
     }
 
@@ -1593,8 +1623,9 @@
       }
 
       if (typeof window.syncToCloud === 'function') window.syncToCloud();
+      window.refreshAllUI();
       closeProductModal();
-      alert("Produk berjaya disimpan dan disinkronkan!");
+      alert("Produk berjaya disimpan!");
     }
 
     function editProduct(pId) { openProductModal(pId); }
@@ -1603,6 +1634,7 @@
       if (confirm("Adakah anda pasti ingin memadam produk ini?")) {
         window.products = window.products.filter(p => p.id !== pId);
         if (typeof window.syncToCloud === 'function') window.syncToCloud();
+        window.refreshAllUI();
       }
     }
 
@@ -1651,8 +1683,9 @@
       }
 
       if (typeof window.syncToCloud === 'function') window.syncToCloud();
+      window.refreshAllUI();
       closeCategoryModal();
-      alert("Kategori berjaya disimpan dan disinkronkan!");
+      alert("Kategori berjaya disimpan!");
     }
 
     function editCategory(cId) { openCategoryModal(cId); }
@@ -1661,6 +1694,7 @@
       if (confirm("Adakah anda pasti ingin memadam kategori ini?")) {
         window.categories = window.categories.filter(c => c.id !== cId);
         if (typeof window.syncToCloud === 'function') window.syncToCloud();
+        window.refreshAllUI();
       }
     }
 
@@ -1671,6 +1705,7 @@
       window.settings.bannerDesc = document.getElementById("settingBannerDesc").value;
 
       if (typeof window.syncToCloud === 'function') window.syncToCloud();
+      window.refreshAllUI();
       alert("Tetapan branding berjaya disimpan!");
     }
 
@@ -1680,6 +1715,7 @@
       window.settings.waTemplate = document.getElementById("settingWaTemplate").value;
 
       if (typeof window.syncToCloud === 'function') window.syncToCloud();
+      window.refreshAllUI();
       alert("Tetapan WhatsApp berjaya disimpan!");
     }
   </script>
@@ -1689,7 +1725,6 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getDatabase, ref, onValue, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-    // Konfigurasi Lengkap Firebase
     const firebaseConfig = {
       apiKey: "AIzaSyB-BXNUZuSnYM28nOpSlrVoXvYySGaFinA",
       authDomain: "scha-atelier.firebaseapp.com",
@@ -1700,8 +1735,13 @@
       appId: "1:811727214140:web:d6b2553a04316c3f2f9539"
     };
 
-    const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app);
+    let db;
+    try {
+      const app = initializeApp(firebaseConfig);
+      db = getDatabase(app);
+    } catch (err) {
+      console.warn("Firebase gagal dimuatkan, menggunakan mod storan tempatan.", err);
+    }
 
     const STORAGE_KEY_PRODUCTS = "scha_products_local";
     const STORAGE_KEY_CATEGORIES = "scha_categories_local";
@@ -1726,51 +1766,41 @@
       waTemplate: "Hello {STORE_NAME},\n\nSaya ingin membuat pesanan bagi bahan berikut:\n\nNama Pelanggan: {CUSTOMER_NAME}\n\nSenarai Pesanan:\n{ITEMS}\n\nJumlah Keseluruhan: {TOTAL}\n\nSila berikan maklumat akaun untuk pembayaran. Terima kasih!"
     };
 
-    // Pendengar Real-time Firebase Realtime Database
-    onValue(ref(db, 'scha_store'), (snapshot) => {
-      const data = snapshot.val();
+    if (db) {
+      onValue(ref(db, 'scha_store'), (snapshot) => {
+        const data = snapshot.val();
 
-      if (data && data.products && data.products.length > 0) {
-        window.products = data.products;
-        window.categories = data.categories || DEFAULT_CATEGORIES;
-        window.settings = data.settings || DEFAULT_SETTINGS;
+        if (data) {
+          if (data.products && data.products.length > 0) window.products = data.products;
+          if (data.categories && data.categories.length > 0) window.categories = data.categories;
+          if (data.settings) window.settings = data.settings;
 
-        localStorage.setItem(STORAGE_KEY_PRODUCTS, JSON.stringify(window.products));
-        localStorage.setItem(STORAGE_KEY_CATEGORIES, JSON.stringify(window.categories));
-        localStorage.setItem(STORAGE_KEY_SETTINGS, JSON.stringify(window.settings));
-      } else {
-        const localProds = JSON.parse(localStorage.getItem(STORAGE_KEY_PRODUCTS));
-        const localCats = JSON.parse(localStorage.getItem(STORAGE_KEY_CATEGORIES));
-        const localSets = JSON.parse(localStorage.getItem(STORAGE_KEY_SETTINGS));
-
-        if (localProds && localProds.length > 0) {
-          window.products = localProds;
-          window.categories = localCats || DEFAULT_CATEGORIES;
-          window.settings = localSets || DEFAULT_SETTINGS;
-          window.syncToCloud();
+          localStorage.setItem(STORAGE_KEY_PRODUCTS, JSON.stringify(window.products));
+          localStorage.setItem(STORAGE_KEY_CATEGORIES, JSON.stringify(window.categories));
+          localStorage.setItem(STORAGE_KEY_SETTINGS, JSON.stringify(window.settings));
         } else {
-          window.products = [];
-          window.categories = DEFAULT_CATEGORIES;
-          window.settings = DEFAULT_SETTINGS;
+          window.syncToCloud();
         }
-      }
 
-      if (typeof window.refreshAllUI === 'function') {
-        window.refreshAllUI();
-      }
-    });
+        if (typeof window.refreshAllUI === 'function') {
+          window.refreshAllUI();
+        }
+      });
+    }
 
-    // Fungsi Muat Naik Data ke Firebase
+    // Fungsi Sinkronisasi Data ke LocalStorage & Cloud
     window.syncToCloud = function() {
       localStorage.setItem(STORAGE_KEY_PRODUCTS, JSON.stringify(window.products));
       localStorage.setItem(STORAGE_KEY_CATEGORIES, JSON.stringify(window.categories));
       localStorage.setItem(STORAGE_KEY_SETTINGS, JSON.stringify(window.settings));
 
-      set(ref(db, 'scha_store'), {
-        products: window.products || [],
-        categories: window.categories || [],
-        settings: window.settings || DEFAULT_SETTINGS
-      });
+      if (db) {
+        set(ref(db, 'scha_store'), {
+          products: window.products || [],
+          categories: window.categories || [],
+          settings: window.settings || DEFAULT_SETTINGS
+        }).catch(err => console.error("Ralat simpan ke Firebase:", err));
+      }
     };
   </script>
 </body>
