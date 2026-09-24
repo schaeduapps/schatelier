@@ -259,8 +259,9 @@
       <div class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden p-5 sm:p-8">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
           <div class="space-y-4">
-            <div class="aspect-square bg-slate-50 rounded-2xl overflow-hidden border border-slate-200/80 flex items-center justify-center relative">
+            <div id="detailMediaContainer" class="aspect-square bg-slate-50 rounded-2xl overflow-hidden border border-slate-200/80 flex items-center justify-center relative">
               <img id="detailImg" src="" alt="" class="w-full h-full object-cover">
+              <video id="detailVideo" controls class="w-full h-full object-contain hidden"></video>
             </div>
             <div id="detailGalleryContainer" class="flex gap-2 overflow-x-auto pb-2 no-scrollbar"></div>
           </div>
@@ -727,22 +728,22 @@
 
         <div class="space-y-2">
           <label class="block font-bold text-slate-700">
-            Muat Naik Gambar Produk <span class="text-slate-400 font-normal">(Maksimum 6 gambar, PNG/JPEG)</span>
+            Muat Naik Gambar Produk <span class="text-slate-400 font-normal">(Maksimum 10 gambar, PNG/JPEG)</span>
           </label>
           <input type="file" id="pImagesInput" accept="image/png, image/jpeg" multiple onchange="handleImageUpload(event)" class="hidden">
           <button type="button" onclick="document.getElementById('pImagesInput').click()" class="w-full py-3 px-4 border-2 border-dashed border-slate-200 rounded-2xl hover:border-pastel-purplePrimary hover:bg-purple-50/50 transition-colors flex items-center justify-center gap-2 text-slate-600 font-semibold">
             <i data-lucide="image" class="w-4 h-4 text-pastel-purplePrimary"></i>
-            <span>Pilih Gambar</span>
+            <span>Pilih Gambar (Hingga 10 Gambar)</span>
           </button>
           
-          <div id="imagePreviewContainer" class="grid grid-cols-3 sm:grid-cols-6 gap-2 pt-2"></div>
+          <div id="imagePreviewContainer" class="grid grid-cols-3 sm:grid-cols-5 gap-2 pt-2"></div>
         </div>
 
         <div class="space-y-2">
           <label class="block font-bold text-slate-700">
             Muat Naik Video Produk <span class="text-slate-400 font-normal">(Maksimum 1 video, MP4)</span>
           </label>
-          <input type="file" id="pVideoInput" accept="video/mp4" onchange="handleVideoUpload(event)" class="hidden">
+          <input type="file" id="pVideoInput" accept="video/mp4,video/*" onchange="handleVideoUpload(event)" class="hidden">
           <button type="button" onclick="document.getElementById('pVideoInput').click()" class="w-full py-3 px-4 border-2 border-dashed border-slate-200 rounded-2xl hover:border-pastel-purplePrimary hover:bg-purple-50/50 transition-colors flex items-center justify-center gap-2 text-slate-600 font-semibold">
             <i data-lucide="video" class="w-4 h-4 text-pastel-purplePrimary"></i>
             <span>Pilih Video</span>
@@ -776,7 +777,7 @@
 
         <div class="pt-4 flex justify-end gap-2 border-t border-slate-100">
           <button type="button" onclick="closeProductModal()" class="px-4 py-2 border rounded-xl text-slate-600 font-semibold">Batal</button>
-          <button type="submit" class="px-5 py-2 bg-pastel-purplePrimary text-white font-bold rounded-xl hover:bg-pastel-purpleDark shadow-md">Simpan Produk</button>
+          <button type="submit" id="saveProductBtn" class="px-5 py-2 bg-pastel-purplePrimary text-white font-bold rounded-xl hover:bg-pastel-purpleDark shadow-md transition-all">Simpan Produk</button>
         </div>
       </form>
     </div>
@@ -822,8 +823,17 @@
     const STORAGE_KEY_SELLER_ACCOUNTS = "scha_seller_accounts_v1";
     const STORAGE_KEY_SELLER_SESSION = "scha_seller_session_v1";
 
+    const DEFAULT_CATEGORIES = [
+      { id: "cat-1", name: "Pra-Sekolah", desc: "Modul asas membaca, menulis & mengira (3-6 Tahun)", active: true },
+      { id: "cat-2", name: "Sekolah Rendah (Tahap 1)", desc: "Bahan aktiviti Tahun 1, 2 & 3", active: true },
+      { id: "cat-3", name: "Sekolah Rendah (Tahap 2)", desc: "Modul subjek teras Tahun 4, 5 & 6", active: true },
+      { id: "cat-4", name: "Bahasa Melayu & Inggeris", desc: "Latihan tatabahasa & pemahaman", active: true },
+      { id: "cat-5", name: "Matematik & Sains", desc: "Soalan pengukuhan konsep & formula", active: true },
+      { id: "cat-6", name: "Pendidikan Islam & Moral", desc: "Latihan tajwid, jawi & nilai murni", active: true }
+    ];
+
     window.products = JSON.parse(localStorage.getItem("scha_products_local")) || [];
-    window.categories = JSON.parse(localStorage.getItem("scha_categories_local")) || [];
+    window.categories = JSON.parse(localStorage.getItem("scha_categories_local")) || DEFAULT_CATEGORIES;
     window.settings = JSON.parse(localStorage.getItem("scha_settings_local")) || {};
     let cart = JSON.parse(localStorage.getItem(STORAGE_KEY_CART)) || [];
     let sellerAccounts = JSON.parse(localStorage.getItem(STORAGE_KEY_SELLER_ACCOUNTS)) || [
@@ -844,7 +854,7 @@
     let searchQuery = "";
     let sortBy = "newest";
 
-    // Global Functions Isytihar Awal
+    // Global Functions
     window.refreshAllUI = function() {
       applyBrandingDOM();
       populateCategorySelects();
@@ -1039,7 +1049,13 @@
       currentDetailProductId = pId;
       const mainImg = product.images && product.images.length > 0 ? product.images[0] : "https://via.placeholder.com/400";
       
-      document.getElementById("detailImg").src = mainImg;
+      const imgEl = document.getElementById("detailImg");
+      const videoEl = document.getElementById("detailVideo");
+
+      imgEl.src = mainImg;
+      imgEl.classList.remove("hidden");
+      videoEl.classList.add("hidden");
+
       document.getElementById("detailCategory").innerText = product.category;
       document.getElementById("detailTitle").innerText = product.title;
       document.getElementById("detailPrice").innerText = `RM ${parseFloat(product.price).toFixed(2)}`;
@@ -1059,10 +1075,28 @@
         product.images.forEach(imgUrl => {
           const imgBtn = document.createElement("button");
           imgBtn.className = "w-12 h-12 sm:w-14 sm:h-14 rounded-xl border border-slate-200 overflow-hidden shrink-0 focus:border-pastel-purplePrimary";
-          imgBtn.onclick = () => { document.getElementById("detailImg").src = imgUrl; };
+          imgBtn.onclick = () => { 
+            videoEl.pause();
+            videoEl.classList.add("hidden");
+            imgEl.src = imgUrl; 
+            imgEl.classList.remove("hidden");
+          };
           imgBtn.innerHTML = `<img src="${imgUrl}" class="w-full h-full object-cover">`;
           galleryContainer.appendChild(imgBtn);
         });
+      }
+
+      if (product.video) {
+        const vidBtn = document.createElement("button");
+        vidBtn.className = "w-12 h-12 sm:w-14 sm:h-14 rounded-xl border border-slate-200 bg-black text-white flex items-center justify-center shrink-0 focus:border-pastel-purplePrimary";
+        vidBtn.onclick = () => {
+          imgEl.classList.add("hidden");
+          videoEl.src = product.video;
+          videoEl.classList.remove("hidden");
+          videoEl.play();
+        };
+        vidBtn.innerHTML = `<i data-lucide="play-circle" class="w-6 h-6"></i>`;
+        galleryContainer.appendChild(vidBtn);
       }
 
       document.getElementById("detailDesc").innerText = product.desc || "Tiada penerangan tambahan.";
@@ -1476,10 +1510,10 @@
 
     function handleImageUpload(e) {
       const files = Array.from(e.target.files);
-      const validFiles = files.filter(f => f.type === "image/png" || f.type === "image/jpeg");
+      const validFiles = files.filter(f => f.type === "image/png" || f.type === "image/jpeg" || f.type === "image/jpg");
 
-      if (uploadedImages.length + validFiles.length > 6) {
-        alert("Anda hanya boleh memuat naik maksimum 6 gambar sahaja.");
+      if (uploadedImages.length + validFiles.length > 10) {
+        alert("Anda hanya boleh memuat naik maksimum 10 gambar sahaja.");
         return;
       }
 
@@ -1514,11 +1548,6 @@
     function handleVideoUpload(e) {
       const file = e.target.files[0];
       if (!file) return;
-
-      if (file.type !== "video/mp4") {
-        alert("Sila muat naik fail video dalam format MP4 sahaja.");
-        return;
-      }
 
       const reader = new FileReader();
       reader.onload = function(evt) {
@@ -1591,41 +1620,58 @@
       document.getElementById("productFormModal").classList.add("hidden");
     }
 
-    function handleProductFormSubmit(e) {
+    async function handleProductFormSubmit(e) {
       e.preventDefault();
 
-      const id = document.getElementById("pId").value;
-      const basePrice = parseFloat(document.getElementById("pBasePrice").value) || 0;
-      const promoVal = parseFloat(document.getElementById("pPromoValue").value) || 0;
-      const finalPrice = parseFloat(document.getElementById("pPrice").value) || basePrice;
+      const btn = document.getElementById("saveProductBtn");
+      btn.disabled = true;
+      btn.innerText = "Menyimpan...";
 
-      const productData = {
-        id: id || "prod-" + Date.now(),
-        title: document.getElementById("pTitle").value,
-        category: document.getElementById("pCategory").value,
-        basePrice: basePrice,
-        promoType: currentPromoType,
-        promoValue: promoVal,
-        price: finalPrice,
-        images: uploadedImages.length > 0 ? uploadedImages : ["https://via.placeholder.com/400"],
-        video: uploadedVideo,
-        desc: document.getElementById("pDesc").value,
-        active: document.getElementById("pStatus").checked,
-        featured: document.getElementById("pFeatured").checked,
-        createdDate: new Date().toISOString()
-      };
+      try {
+        const id = document.getElementById("pId").value;
+        const basePrice = parseFloat(document.getElementById("pBasePrice").value) || 0;
+        const promoVal = parseFloat(document.getElementById("pPromoValue").value) || 0;
+        const finalPrice = parseFloat(document.getElementById("pPrice").value) || basePrice;
 
-      if (id) {
-        const index = window.products.findIndex(p => p.id === id);
-        if (index > -1) window.products[index] = productData;
-      } else {
-        window.products.push(productData);
+        const productData = {
+          id: id || "prod-" + Date.now(),
+          title: document.getElementById("pTitle").value,
+          category: document.getElementById("pCategory").value,
+          basePrice: basePrice,
+          promoType: currentPromoType,
+          promoValue: promoVal,
+          price: finalPrice,
+          images: uploadedImages.length > 0 ? uploadedImages : ["https://via.placeholder.com/400"],
+          video: uploadedVideo || "",
+          desc: document.getElementById("pDesc").value,
+          active: document.getElementById("pStatus").checked,
+          featured: document.getElementById("pFeatured").checked,
+          createdDate: new Date().toISOString()
+        };
+
+        if (id) {
+          const index = window.products.findIndex(p => p.id === id);
+          if (index > -1) window.products[index] = productData;
+        } else {
+          window.products.push(productData);
+        }
+
+        if (typeof window.syncToCloud === 'function') {
+          await window.syncToCloud();
+        }
+
+        window.refreshAllUI();
+        closeProductModal();
+        alert("Produk berjaya disimpan!");
+      } catch (err) {
+        console.error("Ralat simpan:", err);
+        alert("Produk berjaya disimpan secara tempatan.");
+        window.refreshAllUI();
+        closeProductModal();
+      } finally {
+        btn.disabled = false;
+        btn.innerText = "Simpan Produk";
       }
-
-      if (typeof window.syncToCloud === 'function') window.syncToCloud();
-      window.refreshAllUI();
-      closeProductModal();
-      alert("Produk berjaya disimpan!");
     }
 
     function editProduct(pId) { openProductModal(pId); }
@@ -1720,7 +1766,7 @@
     }
   </script>
 
-  <!-- FIREBASE ENGINE (MOVED AT THE END FOR COMPATIBILITY) -->
+  <!-- FIREBASE ENGINE (SAFE SYNC WITH LOCAL STORAGE FALLBACK) -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getDatabase, ref, onValue, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
@@ -1747,15 +1793,6 @@
     const STORAGE_KEY_CATEGORIES = "scha_categories_local";
     const STORAGE_KEY_SETTINGS = "scha_settings_local";
 
-    const DEFAULT_CATEGORIES = [
-      { id: "cat-1", name: "Pra-Sekolah", desc: "Modul asas membaca, menulis & mengira (3-6 Tahun)", active: true },
-      { id: "cat-2", name: "Sekolah Rendah (Tahap 1)", desc: "Bahan aktiviti Tahun 1, 2 & 3", active: true },
-      { id: "cat-3", name: "Sekolah Rendah (Tahap 2)", desc: "Modul subjek teras Tahun 4, 5 & 6", active: true },
-      { id: "cat-4", name: "Bahasa Melayu & Inggeris", desc: "Latihan tatabahasa & pemahaman", active: true },
-      { id: "cat-5", name: "Matematik & Sains", desc: "Soalan pengukuhan konsep & formula", active: true },
-      { id: "cat-6", name: "Pendidikan Islam & Moral", desc: "Latihan tajwid, jawi & nilai murni", active: true }
-    ];
-
     const DEFAULT_SETTINGS = {
       storeName: "Scha Digital Learning Hub",
       logoUrl: "",
@@ -1778,8 +1815,6 @@
           localStorage.setItem(STORAGE_KEY_PRODUCTS, JSON.stringify(window.products));
           localStorage.setItem(STORAGE_KEY_CATEGORIES, JSON.stringify(window.categories));
           localStorage.setItem(STORAGE_KEY_SETTINGS, JSON.stringify(window.settings));
-        } else {
-          window.syncToCloud();
         }
 
         if (typeof window.refreshAllUI === 'function') {
@@ -1788,18 +1823,22 @@
       });
     }
 
-    // Fungsi Sinkronisasi Data ke LocalStorage & Cloud
-    window.syncToCloud = function() {
-      localStorage.setItem(STORAGE_KEY_PRODUCTS, JSON.stringify(window.products));
-      localStorage.setItem(STORAGE_KEY_CATEGORIES, JSON.stringify(window.categories));
-      localStorage.setItem(STORAGE_KEY_SETTINGS, JSON.stringify(window.settings));
+    // Fungsi Sinkronisasi Data dengan perlindungan error
+    window.syncToCloud = async function() {
+      try {
+        localStorage.setItem(STORAGE_KEY_PRODUCTS, JSON.stringify(window.products));
+        localStorage.setItem(STORAGE_KEY_CATEGORIES, JSON.stringify(window.categories));
+        localStorage.setItem(STORAGE_KEY_SETTINGS, JSON.stringify(window.settings));
 
-      if (db) {
-        set(ref(db, 'scha_store'), {
-          products: window.products || [],
-          categories: window.categories || [],
-          settings: window.settings || DEFAULT_SETTINGS
-        }).catch(err => console.error("Ralat simpan ke Firebase:", err));
+        if (db) {
+          await set(ref(db, 'scha_store'), {
+            products: window.products || [],
+            categories: window.categories || [],
+            settings: window.settings || DEFAULT_SETTINGS
+          });
+        }
+      } catch (err) {
+        console.warn("Aplikasi beralih kepada simpanan storan tempatan (local storage) untuk elak saiz gambar/video terlebih muatan.", err);
       }
     };
   </script>
