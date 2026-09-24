@@ -1286,7 +1286,7 @@
         loginForm.classList.remove("hidden");
         loginTab.classList.add("border-pastel-purplePrimary", "text-pastel-purplePrimary");
         loginTab.classList.remove("border-transparent", "text-slate-400");
-        signupTab.classList.remove("border-pastel-purplePrimary", "text-pastel-purplePrimary");
+        signupTab.classList.remove("border-transparent", "text-slate-400");
         signupTab.classList.add("border-transparent", "text-slate-400");
       }
     }
@@ -1689,8 +1689,15 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getDatabase, ref, onValue, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
+    // Konfigurasi Lengkap Firebase
     const firebaseConfig = {
-      databaseURL: "https://scha-atelier-default-rtdb.firebaseio.com"
+      apiKey: "AIzaSyB-BXNUZuSnYM28nOpSlrVoXvYySGaFinA",
+      authDomain: "scha-atelier.firebaseapp.com",
+      databaseURL: "https://scha-atelier-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "scha-atelier",
+      storageBucket: "scha-atelier.firebasestorage.app",
+      messagingSenderId: "811727214140",
+      appId: "1:811727214140:web:d6b2553a04316c3f2f9539"
     };
 
     const app = initializeApp(firebaseConfig);
@@ -1719,6 +1726,7 @@
       waTemplate: "Hello {STORE_NAME},\n\nSaya ingin membuat pesanan bagi bahan berikut:\n\nNama Pelanggan: {CUSTOMER_NAME}\n\nSenarai Pesanan:\n{ITEMS}\n\nJumlah Keseluruhan: {TOTAL}\n\nSila berikan maklumat akaun untuk pembayaran. Terima kasih!"
     };
 
+    // Pendengar Real-time Firebase Realtime Database
     onValue(ref(db, 'scha_store'), (snapshot) => {
       const data = snapshot.val();
 
@@ -1752,6 +1760,7 @@
       }
     });
 
+    // Fungsi Muat Naik Data ke Firebase
     window.syncToCloud = function() {
       localStorage.setItem(STORAGE_KEY_PRODUCTS, JSON.stringify(window.products));
       localStorage.setItem(STORAGE_KEY_CATEGORIES, JSON.stringify(window.categories));
