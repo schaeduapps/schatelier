@@ -258,7 +258,7 @@
       </div>
     </div>
 
-    <!-- VIEW 3: PRODUCT DETAIL (KEMASKINI: Gambar Full Center & SLIDER) -->
+    <!-- VIEW 3: PRODUCT DETAIL (KEMASKINI: Gambar Boleh Klik untuk Popup Lightbox Carousel) -->
     <div id="view-product-detail" class="view-section hidden space-y-6">
       <button onclick="navTo('shop')" class="text-xs font-bold text-slate-600 hover:text-pastel-purplePrimary inline-flex items-center gap-1 bg-white px-3 py-2 rounded-xl border border-slate-200 shadow-sm">
         <i data-lucide="arrow-left" class="w-4 h-4"></i> Kembali ke Katalog Kedai
@@ -271,7 +271,7 @@
           <div class="space-y-4">
             <div class="relative group">
               <!-- Slider Container -->
-              <div id="detailSlider" class="aspect-square bg-slate-100/60 rounded-3xl border border-slate-200 overflow-x-auto flex snap-x-mandatory scroll-smooth no-scrollbar relative">
+              <div id="detailSlider" class="aspect-square bg-slate-100/60 rounded-3xl border border-slate-200 overflow-x-auto flex snap-x-mandatory scroll-smooth no-scrollbar relative cursor-pointer" title="Klik untuk besarkan & slide gambar">
                 <!-- Dynamic Slides injected via JavaScript -->
               </div>
 
@@ -282,6 +282,11 @@
               <button onclick="slideNext()" class="absolute right-3 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-slate-800 p-2 rounded-full shadow-md backdrop-blur-sm transition-all hidden sm:flex items-center justify-center">
                 <i data-lucide="chevron-right" class="w-5 h-5"></i>
               </button>
+              
+              <div class="absolute bottom-3 right-3 bg-black/60 backdrop-blur-md text-white text-[10px] px-2.5 py-1 rounded-full flex items-center gap-1 pointer-events-none">
+                <i data-lucide="maximize-2" class="w-3 h-3"></i>
+                <span>Klik untuk tonton skrin penuh</span>
+              </div>
             </div>
 
             <!-- Thumbnail Navigation -->
@@ -631,6 +636,29 @@
     </div>
   </footer>
 
+  <!-- MODAL: IMAGE LIGHTBOX VIEWER (FUNGSI BARU: Boleh klik & slide skrin penuh macam Shopee/Carousell) -->
+  <div id="imageLightboxModal" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex items-center justify-center hidden">
+    <!-- Close Button -->
+    <button onclick="closeLightboxModal()" class="absolute top-4 right-4 text-white/80 hover:text-white bg-slate-800/60 p-2.5 rounded-full z-10 transition-colors">
+      <i data-lucide="x" class="w-6 h-6"></i>
+    </button>
+
+    <!-- Prev Button -->
+    <button onclick="lightboxPrev()" class="absolute left-3 top-1/2 -translate-y-1/2 text-white bg-slate-800/60 hover:bg-slate-800 p-3 rounded-full z-10 transition-colors">
+      <i data-lucide="chevron-left" class="w-6 h-6"></i>
+    </button>
+
+    <!-- Lightbox Carousel Viewport -->
+    <div id="lightboxSlider" class="w-full h-full flex snap-x-mandatory scroll-smooth overflow-x-auto no-scrollbar items-center">
+      <!-- Fullscreen images generated dynamically -->
+    </div>
+
+    <!-- Next Button -->
+    <button onclick="lightboxNext()" class="absolute right-3 top-1/2 -translate-y-1/2 text-white bg-slate-800/60 hover:bg-slate-800 p-3 rounded-full z-10 transition-colors">
+      <i data-lucide="chevron-right" class="w-6 h-6"></i>
+    </button>
+  </div>
+
   <!-- MODALS CONTAINER -->
   <div id="adminAuthModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
     <div class="bg-white w-full max-w-sm rounded-3xl p-7 space-y-5 shadow-2xl relative border border-slate-100">
@@ -689,7 +717,7 @@
     </div>
   </div>
 
-  <!-- PRODUCT FORM MODAL (KEMASKINI: Input gambar boleh akses semua album & galeri) -->
+  <!-- PRODUCT FORM MODAL -->
   <div id="productFormModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
     <div class="bg-white w-full max-w-2xl rounded-3xl p-6 sm:p-7 space-y-4 shadow-2xl max-h-[90vh] overflow-y-auto relative border border-slate-100">
       <button onclick="closeProductModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-600">
@@ -754,7 +782,6 @@
           <label class="block font-bold text-slate-700">
             Muat Naik Gambar Produk <span class="text-slate-400 font-normal">(Pilih dari Galeri/Album, maks 10 gambar)</span>
           </label>
-          <!-- Accept image/* membolehkan akses galeri sepenuhnya -->
           <input type="file" id="pImagesInput" accept="image/*" multiple onchange="handleImageUpload(event)" class="hidden">
           <button type="button" onclick="document.getElementById('pImagesInput').click()" class="w-full py-3 px-4 border-2 border-dashed border-slate-200 rounded-2xl hover:border-pastel-purplePrimary hover:bg-purple-50/50 transition-colors flex items-center justify-center gap-2 text-slate-600 font-semibold">
             <i data-lucide="image" class="w-4 h-4 text-pastel-purplePrimary"></i>
@@ -1006,7 +1033,6 @@
       lucide.createIcons();
     }
 
-    /* KEMASKINI: Kad Produk dengan Gambar Center & Full (object-contain) */
     function createProductCardHTML(product) {
       const mainImg = product.images && product.images.length > 0 ? product.images[0] : 'https://via.placeholder.com/400';
       const hasDiscount = product.basePrice && product.basePrice > product.price;
@@ -1078,7 +1104,7 @@
       lucide.createIcons();
     }
 
-    /* KEMASKINI PENUH: Memaparkan Gambar Center, Full (object-contain) & Boleh Slide */
+    /* KEMASKINI: Paparan Detail Produk dengan Gambar Boleh Klik ke Skrin Penuh (Lightbox Carousel) */
     function showProductDetail(pId) {
       const product = window.products.find(p => p.id === pId);
       if (!product) {
@@ -1109,25 +1135,26 @@
 
       if (product.images && product.images.length > 0) {
         product.images.forEach((imgUrl, index) => {
-          mediaItems.push({ type: 'image', url: imgUrl, id: `slide-img-${index}` });
+          mediaItems.push({ type: 'image', url: imgUrl, id: `slide-img-${index}`, index: index });
         });
       } else {
-        mediaItems.push({ type: 'image', url: 'https://via.placeholder.com/400', id: 'slide-img-0' });
+        mediaItems.push({ type: 'image', url: 'https://via.placeholder.com/400', id: 'slide-img-0', index: 0 });
       }
 
       if (product.video) {
-        mediaItems.push({ type: 'video', url: product.video, id: `slide-video-0` });
+        mediaItems.push({ type: 'video', url: product.video, id: `slide-video-0`, index: mediaItems.length });
       }
 
       // Bina Slide & Thumbnail
-      mediaItems.forEach((item, index) => {
+      mediaItems.forEach((item) => {
         // Slide Element
         const slideDiv = document.createElement("div");
         slideDiv.id = item.id;
         slideDiv.className = "w-full h-full flex-shrink-0 snap-center-item flex items-center justify-center p-2 sm:p-4";
 
         if (item.type === 'image') {
-          slideDiv.innerHTML = `<img src="${item.url}" alt="${product.title}" class="w-full h-full object-contain">`;
+          // Boleh diklik untuk buka Lightbox Carousel
+          slideDiv.innerHTML = `<img src="${item.url}" alt="${product.title}" class="w-full h-full object-contain cursor-zoom-in" onclick="openLightboxModal(${item.index})">`;
         } else if (item.type === 'video') {
           slideDiv.innerHTML = `<video controls class="w-full h-full object-contain rounded-2xl"><source src="${item.url}"></video>`;
         }
@@ -1155,7 +1182,47 @@
       lucide.createIcons();
     }
 
-    // Fungsi Kawalan Slide Next & Prev
+    /* FUNGSI BARU: LIGHTBOX IMAGE VIEWER & CAROUSEL (Full Screen macam Shopee/Carousell) */
+    function openLightboxModal(startIndex = 0) {
+      const product = window.products.find(p => p.id === currentDetailProductId);
+      if (!product || !product.images || product.images.length === 0) return;
+
+      const lightboxSlider = document.getElementById("lightboxSlider");
+      lightboxSlider.innerHTML = "";
+
+      product.images.forEach((imgUrl, index) => {
+        const slide = document.createElement("div");
+        slide.id = `lightbox-item-${index}`;
+        slide.className = "w-full h-full flex-shrink-0 snap-center-item flex items-center justify-center p-4 sm:p-8";
+        slide.innerHTML = `<img src="${imgUrl}" class="max-w-full max-h-full object-contain select-none">`;
+        lightboxSlider.appendChild(slide);
+      });
+
+      const modal = document.getElementById("imageLightboxModal");
+      modal.classList.remove("hidden");
+
+      setTimeout(() => {
+        const target = document.getElementById(`lightbox-item-${startIndex}`);
+        if (target) target.scrollIntoView({ block: 'nearest', inline: 'center' });
+      }, 50);
+
+      lucide.createIcons();
+    }
+
+    function closeLightboxModal() {
+      document.getElementById("imageLightboxModal").classList.add("hidden");
+    }
+
+    function lightboxNext() {
+      const slider = document.getElementById("lightboxSlider");
+      slider.scrollBy({ left: slider.clientWidth, behavior: 'smooth' });
+    }
+
+    function lightboxPrev() {
+      const slider = document.getElementById("lightboxSlider");
+      slider.scrollBy({ left: -slider.clientWidth, behavior: 'smooth' });
+    }
+
     function slideNext() {
       const slider = document.getElementById("detailSlider");
       slider.scrollBy({ left: slider.clientWidth, behavior: 'smooth' });
@@ -1596,7 +1663,6 @@
       });
     }
 
-    /* KEMASKINI: Muat naik gambar galeri menerima pelbagai format gambar */
     async function handleImageUpload(e) {
       const files = Array.from(e.target.files);
       if (files.length === 0) return;
@@ -1858,7 +1924,7 @@
     }
   </script>
 
-  <!-- FIREBASE ENGINE (SAFE SYNC WITH LOCAL STORAGE FALLBACK) -->
+  <!-- FIREBASE ENGINE -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getDatabase, ref, onValue, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
@@ -1905,14 +1971,11 @@
       });
     }
 
-    // Fungsi Sinkronisasi Data (Storan Tempatan Diutamakan dahulu)
     window.syncToCloud = async function() {
-      // 1. Sentiasa simpan ke LocalStorage terlebih dahulu
       localStorage.setItem(STORAGE_KEY_PRODUCTS, JSON.stringify(window.products));
       localStorage.setItem(STORAGE_KEY_CATEGORIES, JSON.stringify(window.categories));
       localStorage.setItem(STORAGE_KEY_SETTINGS, JSON.stringify(window.settings));
 
-      // 2. Cuba kemas kini ke Firebase secara latar belakang
       if (db) {
         try {
           await set(ref(db, 'scha_store'), {
