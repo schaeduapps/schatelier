@@ -51,6 +51,14 @@
     .bg-hero-card {
       background: linear-gradient(135deg, #9D4EDD 0%, #7B2CBF 50%, #E07A5F 100%);
     }
+
+    /* Slider Smooth Scroll */
+    .snap-x-mandatory {
+      scroll-snap-type: x mandatory;
+    }
+    .snap-center-item {
+      scroll-snap-align: center;
+    }
   </style>
 </head>
 <body class="text-slate-800 flex flex-col min-h-screen antialiased pb-16 md:pb-0">
@@ -250,7 +258,7 @@
       </div>
     </div>
 
-    <!-- VIEW 3: PRODUCT DETAIL -->
+    <!-- VIEW 3: PRODUCT DETAIL (KEMASKINI: Gambar Full Center & SLIDER) -->
     <div id="view-product-detail" class="view-section hidden space-y-6">
       <button onclick="navTo('shop')" class="text-xs font-bold text-slate-600 hover:text-pastel-purplePrimary inline-flex items-center gap-1 bg-white px-3 py-2 rounded-xl border border-slate-200 shadow-sm">
         <i data-lucide="arrow-left" class="w-4 h-4"></i> Kembali ke Katalog Kedai
@@ -258,14 +266,29 @@
 
       <div class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden p-5 sm:p-8">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+          
+          <!-- Product Media & Slider Container -->
           <div class="space-y-4">
-            <div id="detailMediaContainer" class="aspect-square bg-slate-50 rounded-2xl overflow-hidden border border-slate-200/80 flex items-center justify-center relative">
-              <img id="detailImg" src="" alt="" class="w-full h-full object-cover">
-              <video id="detailVideo" controls class="w-full h-full object-contain hidden"></video>
+            <div class="relative group">
+              <!-- Slider Container -->
+              <div id="detailSlider" class="aspect-square bg-slate-100/60 rounded-3xl border border-slate-200 overflow-x-auto flex snap-x-mandatory scroll-smooth no-scrollbar relative">
+                <!-- Dynamic Slides injected via JavaScript -->
+              </div>
+
+              <!-- Slider Navigation Buttons -->
+              <button onclick="slidePrev()" class="absolute left-3 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-slate-800 p-2 rounded-full shadow-md backdrop-blur-sm transition-all hidden sm:flex items-center justify-center">
+                <i data-lucide="chevron-left" class="w-5 h-5"></i>
+              </button>
+              <button onclick="slideNext()" class="absolute right-3 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-slate-800 p-2 rounded-full shadow-md backdrop-blur-sm transition-all hidden sm:flex items-center justify-center">
+                <i data-lucide="chevron-right" class="w-5 h-5"></i>
+              </button>
             </div>
-            <div id="detailGalleryContainer" class="flex gap-2 overflow-x-auto pb-2 no-scrollbar"></div>
+
+            <!-- Thumbnail Navigation -->
+            <div id="detailGalleryContainer" class="flex gap-2.5 overflow-x-auto pb-2 no-scrollbar"></div>
           </div>
 
+          <!-- Product Info -->
           <div class="space-y-5 sm:space-y-6 flex flex-col justify-between">
             <div class="space-y-3 sm:space-y-4">
               <div class="flex items-center justify-between">
@@ -666,6 +689,7 @@
     </div>
   </div>
 
+  <!-- PRODUCT FORM MODAL (KEMASKINI: Input gambar boleh akses semua album & galeri) -->
   <div id="productFormModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
     <div class="bg-white w-full max-w-2xl rounded-3xl p-6 sm:p-7 space-y-4 shadow-2xl max-h-[90vh] overflow-y-auto relative border border-slate-100">
       <button onclick="closeProductModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-600">
@@ -728,12 +752,13 @@
 
         <div class="space-y-2">
           <label class="block font-bold text-slate-700">
-            Muat Naik Gambar Produk <span class="text-slate-400 font-normal">(Maksimum 10 gambar, PNG/JPEG)</span>
+            Muat Naik Gambar Produk <span class="text-slate-400 font-normal">(Pilih dari Galeri/Album, maks 10 gambar)</span>
           </label>
-          <input type="file" id="pImagesInput" accept="image/png, image/jpeg" multiple onchange="handleImageUpload(event)" class="hidden">
+          <!-- Accept image/* membolehkan akses galeri sepenuhnya -->
+          <input type="file" id="pImagesInput" accept="image/*" multiple onchange="handleImageUpload(event)" class="hidden">
           <button type="button" onclick="document.getElementById('pImagesInput').click()" class="w-full py-3 px-4 border-2 border-dashed border-slate-200 rounded-2xl hover:border-pastel-purplePrimary hover:bg-purple-50/50 transition-colors flex items-center justify-center gap-2 text-slate-600 font-semibold">
             <i data-lucide="image" class="w-4 h-4 text-pastel-purplePrimary"></i>
-            <span>Pilih Gambar (Hingga 10 Gambar)</span>
+            <span>Buka Galeri & Pilih Gambar</span>
           </button>
           
           <div id="imagePreviewContainer" class="grid grid-cols-3 sm:grid-cols-5 gap-2 pt-2"></div>
@@ -741,9 +766,9 @@
 
         <div class="space-y-2">
           <label class="block font-bold text-slate-700">
-            Muat Naik Video Produk <span class="text-slate-400 font-normal">(Maksimum 1 video, MP4)</span>
+            Muat Naik Video Produk <span class="text-slate-400 font-normal">(Maksimum 1 video)</span>
           </label>
-          <input type="file" id="pVideoInput" accept="video/mp4,video/*" onchange="handleVideoUpload(event)" class="hidden">
+          <input type="file" id="pVideoInput" accept="video/*" onchange="handleVideoUpload(event)" class="hidden">
           <button type="button" onclick="document.getElementById('pVideoInput').click()" class="w-full py-3 px-4 border-2 border-dashed border-slate-200 rounded-2xl hover:border-pastel-purplePrimary hover:bg-purple-50/50 transition-colors flex items-center justify-center gap-2 text-slate-600 font-semibold">
             <i data-lucide="video" class="w-4 h-4 text-pastel-purplePrimary"></i>
             <span>Pilih Video</span>
@@ -981,6 +1006,7 @@
       lucide.createIcons();
     }
 
+    /* KEMASKINI: Kad Produk dengan Gambar Center & Full (object-contain) */
     function createProductCardHTML(product) {
       const mainImg = product.images && product.images.length > 0 ? product.images[0] : 'https://via.placeholder.com/400';
       const hasDiscount = product.basePrice && product.basePrice > product.price;
@@ -988,8 +1014,8 @@
       return `
         <div class="bg-white rounded-3xl border border-slate-200/80 overflow-hidden hover:shadow-xl hover:shadow-purple-50 hover:border-slate-300 transition-all flex flex-col justify-between group">
           <div>
-            <div class="aspect-square bg-slate-50 relative overflow-hidden cursor-pointer" onclick="navigateToDetail('${product.id}')">
-              <img src="${mainImg}" alt="${product.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+            <div class="aspect-square bg-slate-100/50 p-2 relative overflow-hidden cursor-pointer flex items-center justify-center" onclick="navigateToDetail('${product.id}')">
+              <img src="${mainImg}" alt="${product.title}" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300">
             </div>
 
             <div class="p-3 sm:p-4 space-y-1 sm:space-y-2">
@@ -1052,6 +1078,7 @@
       lucide.createIcons();
     }
 
+    /* KEMASKINI PENUH: Memaparkan Gambar Center, Full (object-contain) & Boleh Slide */
     function showProductDetail(pId) {
       const product = window.products.find(p => p.id === pId);
       if (!product) {
@@ -1060,14 +1087,6 @@
       }
 
       currentDetailProductId = pId;
-      const mainImg = product.images && product.images.length > 0 ? product.images[0] : "https://via.placeholder.com/400";
-      
-      const imgEl = document.getElementById("detailImg");
-      const videoEl = document.getElementById("detailVideo");
-
-      imgEl.src = mainImg;
-      imgEl.classList.remove("hidden");
-      videoEl.classList.add("hidden");
 
       document.getElementById("detailCategory").innerText = product.category;
       document.getElementById("detailTitle").innerText = product.title;
@@ -1081,42 +1100,70 @@
         origEl.classList.add("hidden");
       }
 
+      const slider = document.getElementById("detailSlider");
       const galleryContainer = document.getElementById("detailGalleryContainer");
+      slider.innerHTML = "";
       galleryContainer.innerHTML = "";
-      
+
+      const mediaItems = [];
+
       if (product.images && product.images.length > 0) {
-        product.images.forEach(imgUrl => {
-          const imgBtn = document.createElement("button");
-          imgBtn.className = "w-12 h-12 sm:w-14 sm:h-14 rounded-xl border border-slate-200 overflow-hidden shrink-0 focus:border-pastel-purplePrimary";
-          imgBtn.onclick = () => { 
-            videoEl.pause();
-            videoEl.classList.add("hidden");
-            imgEl.src = imgUrl; 
-            imgEl.classList.remove("hidden");
-          };
-          imgBtn.innerHTML = `<img src="${imgUrl}" class="w-full h-full object-cover">`;
-          galleryContainer.appendChild(imgBtn);
+        product.images.forEach((imgUrl, index) => {
+          mediaItems.push({ type: 'image', url: imgUrl, id: `slide-img-${index}` });
         });
+      } else {
+        mediaItems.push({ type: 'image', url: 'https://via.placeholder.com/400', id: 'slide-img-0' });
       }
 
       if (product.video) {
-        const vidBtn = document.createElement("button");
-        vidBtn.className = "w-12 h-12 sm:w-14 sm:h-14 rounded-xl border border-slate-200 bg-black text-white flex items-center justify-center shrink-0 focus:border-pastel-purplePrimary";
-        vidBtn.onclick = () => {
-          imgEl.classList.add("hidden");
-          videoEl.src = product.video;
-          videoEl.classList.remove("hidden");
-          videoEl.play();
-        };
-        vidBtn.innerHTML = `<i data-lucide="play-circle" class="w-6 h-6"></i>`;
-        galleryContainer.appendChild(vidBtn);
+        mediaItems.push({ type: 'video', url: product.video, id: `slide-video-0` });
       }
+
+      // Bina Slide & Thumbnail
+      mediaItems.forEach((item, index) => {
+        // Slide Element
+        const slideDiv = document.createElement("div");
+        slideDiv.id = item.id;
+        slideDiv.className = "w-full h-full flex-shrink-0 snap-center-item flex items-center justify-center p-2 sm:p-4";
+
+        if (item.type === 'image') {
+          slideDiv.innerHTML = `<img src="${item.url}" alt="${product.title}" class="w-full h-full object-contain">`;
+        } else if (item.type === 'video') {
+          slideDiv.innerHTML = `<video controls class="w-full h-full object-contain rounded-2xl"><source src="${item.url}"></video>`;
+        }
+        slider.appendChild(slideDiv);
+
+        // Thumbnail Element
+        const thumbBtn = document.createElement("button");
+        thumbBtn.className = "w-12 h-12 sm:w-14 sm:h-14 rounded-xl border border-slate-200 overflow-hidden shrink-0 focus:border-pastel-purplePrimary bg-slate-50 flex items-center justify-center";
+        thumbBtn.onclick = () => {
+          document.getElementById(item.id).scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        };
+
+        if (item.type === 'image') {
+          thumbBtn.innerHTML = `<img src="${item.url}" class="w-full h-full object-cover">`;
+        } else {
+          thumbBtn.innerHTML = `<i data-lucide="play-circle" class="w-6 h-6 text-slate-700"></i>`;
+        }
+        galleryContainer.appendChild(thumbBtn);
+      });
 
       document.getElementById("detailDesc").innerText = product.desc || "Tiada penerangan tambahan.";
 
       navTo("product-detail", false);
       window.location.hash = `product/${pId}`;
       lucide.createIcons();
+    }
+
+    // Fungsi Kawalan Slide Next & Prev
+    function slideNext() {
+      const slider = document.getElementById("detailSlider");
+      slider.scrollBy({ left: slider.clientWidth, behavior: 'smooth' });
+    }
+
+    function slidePrev() {
+      const slider = document.getElementById("detailSlider");
+      slider.scrollBy({ left: -slider.clientWidth, behavior: 'smooth' });
     }
 
     function handleDetailAddToCart() {
@@ -1244,7 +1291,7 @@
         cartContainer.innerHTML = cart.map(item => `
           <div class="bg-white p-3 sm:p-4 rounded-3xl border border-slate-200/80 shadow-sm flex items-center justify-between gap-3">
             <div class="flex items-center gap-3">
-              <img src="${item.img || 'https://via.placeholder.com/100'}" class="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl object-cover border border-slate-100">
+              <img src="${item.img || 'https://via.placeholder.com/100'}" class="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl object-contain border border-slate-100 bg-slate-50">
               <div>
                 <h4 class="text-xs font-bold text-slate-900 line-clamp-1">${item.title}</h4>
                 <span class="text-xs font-extrabold text-pastel-purplePrimary block mt-0.5">RM ${parseFloat(item.price).toFixed(2)}</span>
@@ -1447,7 +1494,7 @@
         return `
           <tr class="hover:bg-slate-50">
             <td class="p-4 flex items-center gap-3">
-              <img src="${thumb}" class="w-9 h-9 rounded-xl object-cover">
+              <img src="${thumb}" class="w-9 h-9 rounded-xl object-contain bg-slate-100">
               <span class="font-bold text-slate-800 line-clamp-1">${p.title}</span>
             </td>
             <td class="p-4 text-slate-600">${p.category}</td>
@@ -1521,8 +1568,8 @@
       document.getElementById("pPrice").value = finalPrice.toFixed(2);
     }
 
-    // Fungsi pemampatan gambar automatik
-    function compressImage(file, maxWidth = 600, quality = 0.7) {
+    // Pemampatan Gambar Automatik
+    function compressImage(file, maxWidth = 800, quality = 0.8) {
       return new Promise((resolve) => {
         const reader = new FileReader();
         reader.onload = function(evt) {
@@ -1549,18 +1596,21 @@
       });
     }
 
+    /* KEMASKINI: Muat naik gambar galeri menerima pelbagai format gambar */
     async function handleImageUpload(e) {
       const files = Array.from(e.target.files);
-      const validFiles = files.filter(f => f.type === "image/png" || f.type === "image/jpeg" || f.type === "image/jpg");
+      if (files.length === 0) return;
 
-      if (uploadedImages.length + validFiles.length > 10) {
+      if (uploadedImages.length + files.length > 10) {
         alert("Anda hanya boleh memuat naik maksimum 10 gambar sahaja.");
         return;
       }
 
-      for (const file of validFiles) {
-        const compressedBase64 = await compressImage(file, 600, 0.7);
-        uploadedImages.push(compressedBase64);
+      for (const file of files) {
+        if (file.type.startsWith("image/")) {
+          const compressedBase64 = await compressImage(file, 800, 0.8);
+          uploadedImages.push(compressedBase64);
+        }
       }
       renderImagePreviews();
     }
@@ -1568,8 +1618,8 @@
     function renderImagePreviews() {
       const container = document.getElementById("imagePreviewContainer");
       container.innerHTML = uploadedImages.map((imgSrc, idx) => `
-        <div class="relative group aspect-square rounded-xl overflow-hidden border border-slate-200 bg-slate-100">
-          <img src="${imgSrc}" class="w-full h-full object-cover">
+        <div class="relative group aspect-square rounded-xl overflow-hidden border border-slate-200 bg-slate-100 p-1">
+          <img src="${imgSrc}" class="w-full h-full object-contain">
           <button type="button" onclick="removeUploadedImage(${idx})" class="absolute top-1 right-1 bg-rose-600 text-white rounded-full p-1 hover:bg-rose-700 transition-colors">
             <i data-lucide="x" class="w-3 h-3"></i>
           </button>
@@ -1587,8 +1637,8 @@
       const file = e.target.files[0];
       if (!file) return;
 
-      if (file.size > 2 * 1024 * 1024) {
-        alert("Saiz video agak besar. Sila muat naik video yang kurang daripada 2MB.");
+      if (file.size > 5 * 1024 * 1024) {
+        alert("Saiz video agak besar. Sila muat naik video yang kurang daripada 5MB.");
       }
 
       const reader = new FileReader();
