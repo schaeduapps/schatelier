@@ -430,7 +430,7 @@
     <div id="view-admin" class="view-section hidden">
       <div class="flex flex-col lg:flex-row gap-6 items-start">
         
-        <!-- SIDEBAR ADMIN SEBELAH KIRI (SUSUNAN ATAS KE BAWAH DENGAN SOKONGAN MOBILE & DESKTOP) -->
+        <!-- SIDEBAR ADMIN SEBELAH KIRI -->
         <aside class="w-full lg:w-64 bg-slate-900 text-slate-300 rounded-3xl p-5 shrink-0 flex flex-col justify-between lg:min-h-[600px] shadow-xl">
           <div class="space-y-6 w-full">
             <div class="border-b border-slate-800 pb-4">
@@ -439,7 +439,7 @@
               <p class="text-[11px] text-slate-400 mt-1">Akaun: <span id="syncUserDisplay" class="text-pastel-pink font-bold">Log In</span></p>
             </div>
 
-            <!-- MENU SIDEBAR - SUSUNAN SEMUA BUTTON DARI ATAS KE BAWAH (MENEGAK) -->
+            <!-- MENU SIDEBAR -->
             <nav class="flex flex-col gap-2 w-full">
               <button onclick="switchAdminTab('sales')" id="adminTabBtn-sales" class="admin-tab-btn flex items-center gap-2.5 px-3.5 py-2.5 rounded-2xl text-xs font-bold transition-all w-full text-left bg-pastel-purplePrimary text-white shadow-md">
                 <i data-lucide="dollar-sign" class="w-4 h-4"></i> Sales Tracker
@@ -468,7 +468,7 @@
             </nav>
           </div>
 
-          <!-- BUTTON LOG IN / SIGN UP & LOGOUT BAHAGIAN BAWAH SIDEBAR -->
+          <!-- BUTTON AUTH -->
           <div class="pt-4 lg:pt-6 border-t border-slate-800 space-y-2 mt-4 lg:mt-6 w-full">
             <div id="sidebarAuthButtons" class="space-y-2">
               <button onclick="openAdminModal('login')" class="w-full bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold py-2.5 rounded-xl border border-slate-700 transition-all flex items-center justify-center gap-2">
@@ -485,10 +485,10 @@
           </div>
         </aside>
 
-        <!-- KANDUNGAN UTAMA ADMIN (KANAN SIDEBAR) -->
+        <!-- KANDUNGAN UTAMA ADMIN -->
         <div class="flex-1 w-full space-y-6">
           
-          <!-- SALES TRACKER / ADD SALE -->
+          <!-- SALES TRACKER -->
           <div id="adminTab-sales" class="admin-tab-content space-y-6">
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div class="bg-white/90 backdrop-blur-md p-5 rounded-3xl border border-white/80 shadow-sm space-y-1">
@@ -505,7 +505,7 @@
               </div>
             </div>
 
-            <!-- Form Rekod Jualan (Add Sale) -->
+            <!-- Form Add Sale -->
             <div class="bg-white/90 backdrop-blur-md p-6 rounded-3xl border border-white/80 shadow-sm space-y-4">
               <h2 class="text-base font-bold text-slate-900 flex items-center gap-2">
                 <i data-lucide="plus-circle" class="w-5 h-5 text-pastel-purplePrimary"></i>
@@ -738,7 +738,7 @@
     </div>
   </main>
 
-  <!-- MOBILE BOTTOM NAVIGATION (TELAH DIKEMAS KINI KEPADA: UTAMA - KATALOG - ADMIN) -->
+  <!-- MOBILE BOTTOM NAVIGATION -->
   <div class="md:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-200 z-40 py-2.5 px-6 flex justify-around items-center shadow-lg">
     <button onclick="navTo('home')" class="flex flex-col items-center text-slate-600 hover:text-pastel-purplePrimary transition-colors">
       <i data-lucide="home" class="w-5 h-5"></i>
@@ -1002,7 +1002,7 @@
     const STORAGE_KEY_LAST_VIEW = "scha_last_active_view";
     const STORAGE_KEY_LAST_ADMIN_TAB = "scha_last_admin_tab";
 
-    const INACTIVITY_LIMIT_MS = 2 * 60 * 60 * 1000; // 2 Jam dalam milisaat
+    const INACTIVITY_LIMIT_MS = 2 * 60 * 60 * 1000;
 
     const DEFAULT_CATEGORIES = [
       { id: "cat-1", name: "Pra-Sekolah", desc: "Modul asas membaca, menulis & mengira (3-6 Tahun)", active: true },
@@ -1035,7 +1035,6 @@
       { storeName: "Scha Digital", email: "seller@domain.com", pwd: "password" }
     ];
 
-    // SEMAK LOG IN & MASA TIDAK AKTIF 2 JAM SECARA AUTOMATIK
     function checkSessionTimeout() {
       const savedSession = JSON.parse(localStorage.getItem(STORAGE_KEY_SELLER_SESSION));
       if (savedSession && savedSession.isLoggedIn) {
@@ -1043,10 +1042,9 @@
         const currentTime = Date.now();
 
         if (currentTime - lastActive > INACTIVITY_LIMIT_MS) {
-          logoutAdmin(true); // Auto logout secara senyap/tanpa perlu beritahu jika lebih 2 jam
+          logoutAdmin(true);
           return false;
         } else {
-          // Kemaskini semula cap masa jika aktif
           savedSession.lastActiveTime = currentTime;
           localStorage.setItem(STORAGE_KEY_SELLER_SESSION, JSON.stringify(savedSession));
           window.isAdminLoggedIn = true;
@@ -1058,7 +1056,6 @@
       }
     }
 
-    // Kemaskini cap masa pergerakan/aktiviti pengguna
     function updateActivityTime() {
       if (window.isAdminLoggedIn) {
         const savedSession = JSON.parse(localStorage.getItem(STORAGE_KEY_SELLER_SESSION));
@@ -1069,7 +1066,6 @@
       }
     }
 
-    // Pendengar aktiviti skrin untuk memperbaharui timer 2 jam secara automatik
     ['click', 'mousemove', 'keypress', 'scroll', 'touchstart'].forEach(evt => {
       window.addEventListener(evt, updateActivityTime, { passive: true });
     });
@@ -1084,7 +1080,6 @@
     let sortBy = "newest";
     let salesChartInstance = null;
 
-    // Global Functions
     window.refreshAllUI = function() {
       checkSessionTimeout();
       applyBrandingDOM();
@@ -1844,15 +1839,14 @@
       for (let i = 6; i >= 0; i--) {
         const d = new Date();
         d.setDate(d.getDate() - i);
-        const dayStr = d.toISOString().split('T')[0];
+        const dateStr = d.toISOString().split('T')[0];
         const dayLabel = d.toLocaleDateString('ms-MY', { weekday: 'short', day: 'numeric' });
-        
-        const sum = window.salesHistory
-          .filter(s => s.date.startsWith(dayStr))
-          .reduce((acc, s) => acc + s.amount, 0);
-
         days.push(dayLabel);
-        totals.push(sum);
+
+        const dayTotal = window.salesHistory
+          .filter(s => s.date.startsWith(dateStr))
+          .reduce((sum, s) => sum + s.amount, 0);
+        totals.push(dayTotal);
       }
 
       salesChartInstance = new Chart(ctx, {
@@ -1860,46 +1854,48 @@
         data: {
           labels: days,
           datasets: [{
-            label: 'Sales (RM)',
+            label: 'Jualan (RM)',
             data: totals,
             borderColor: '#9D4EDD',
             backgroundColor: 'rgba(157, 78, 221, 0.1)',
             fill: true,
-            tension: 0.3
+            tension: 0.3,
+            pointBackgroundColor: '#7B2CBF'
           }]
         },
         options: {
           responsive: true,
           maintainAspectRatio: false,
           plugins: { legend: { display: false } },
-          scales: { y: { beginAtZero: true } }
+          scales: {
+            y: { beginAtZero: true }
+          }
         }
       });
     }
 
     function downloadSalesCSV() {
       if (window.salesHistory.length === 0) {
-        alert("Tiada rekod jualan untuk dieksport.");
+        alert("Tiada data jualan untuk dieksport.");
         return;
       }
 
-      let csv = "ID Jualan,Tarikh,Nama Pelanggan,Item,Amaun (RM)\n";
+      let csvContent = "data:text/csv;charset=utf-8,ID,Tarikh,Pelanggan,Produk,Jumlah (RM)\n";
       window.salesHistory.forEach(s => {
-        csv += `"${s.id}","${s.date}","${s.customer}","${s.items}","${s.amount}"\n`;
+        const row = `"${s.id}","${s.date}","${s.customer}","${s.items.replace(/"/g, '""')}",${s.amount}`;
+        csvContent += row + "\n";
       });
 
-      const blob = new Blob([csv], { type: 'text/csv' });
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.setAttribute('hidden', '');
-      a.setAttribute('href', url);
-      a.setAttribute('download', `Sales_Report_${new Date().toISOString().split('T')[0]}.csv`);
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", `Laporan_Jualan_${new Date().toISOString().split('T')[0]}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     }
 
-    // AUTH MODAL FUNCTIONS
+    // MODAL & AUTH HANDLING
     function openAdminModal(mode = 'login') {
       switchAuthMode(mode);
       document.getElementById("adminAuthModal").classList.remove("hidden");
@@ -1912,107 +1908,105 @@
     function switchAuthMode(mode) {
       const loginForm = document.getElementById("sellerLoginForm");
       const signupForm = document.getElementById("sellerSignupForm");
-      const loginBtn = document.getElementById("authTabLoginBtn");
-      const signupBtn = document.getElementById("authTabSignupBtn");
+      const tabLogin = document.getElementById("authTabLoginBtn");
+      const tabSignup = document.getElementById("authTabSignupBtn");
 
       if (mode === 'login') {
         loginForm.classList.remove("hidden");
         signupForm.classList.add("hidden");
-        loginBtn.className = "flex-1 py-2 border-b-2 border-pastel-purplePrimary text-pastel-purplePrimary font-bold";
-        signupBtn.className = "flex-1 py-2 border-b-2 border-transparent text-slate-400 hover:text-slate-700 font-bold";
+        tabLogin.className = "flex-1 py-2 border-b-2 border-pastel-purplePrimary text-pastel-purplePrimary font-bold";
+        tabSignup.className = "flex-1 py-2 border-b-2 border-transparent text-slate-400 hover:text-slate-700 font-bold";
       } else {
         loginForm.classList.add("hidden");
         signupForm.classList.remove("hidden");
-        signupBtn.className = "flex-1 py-2 border-b-2 border-pastel-purplePrimary text-pastel-purplePrimary font-bold";
-        loginBtn.className = "flex-1 py-2 border-b-2 border-transparent text-slate-400 hover:text-slate-700 font-bold";
+        tabSignup.className = "flex-1 py-2 border-b-2 border-pastel-purplePrimary text-pastel-purplePrimary font-bold";
+        tabLogin.className = "flex-1 py-2 border-b-2 border-transparent text-slate-400 hover:text-slate-700 font-bold font-bold";
       }
     }
 
     function loginAdmin() {
       const email = document.getElementById("adminUsernameInput").value.trim();
       const pwd = document.getElementById("adminPasswordInput").value.trim();
-      const err = document.getElementById("adminAuthError");
+      const errEl = document.getElementById("adminAuthError");
 
-      const acc = sellerAccounts.find(a => a.email === email && a.pwd === pwd);
-      if (acc || (email === "seller@domain.com" && pwd === "password")) {
-        err.classList.add("hidden");
+      const account = sellerAccounts.find(a => a.email.toLowerCase() === email.toLowerCase() && a.pwd === pwd);
+      if (account || (email === "seller@domain.com" && pwd === "password")) {
+        errEl.classList.add("hidden");
         window.isAdminLoggedIn = true;
-
-        const sessionData = {
+        
+        const session = {
           isLoggedIn: true,
           email: email,
-          lastActiveTime: Date.now() // Cap masa sesi automatik
+          lastActiveTime: Date.now()
         };
-        localStorage.setItem(STORAGE_KEY_SELLER_SESSION, JSON.stringify(sessionData));
+        localStorage.setItem(STORAGE_KEY_SELLER_SESSION, JSON.stringify(session));
 
         closeAdminModal();
         window.refreshAllUI();
         navTo("admin");
       } else {
-        err.classList.remove("hidden");
+        errEl.classList.remove("hidden");
       }
     }
 
     function signupAdmin() {
-      const storeName = document.getElementById("signupStoreName").value.trim();
+      const store = document.getElementById("signupStoreName").value.trim();
       const email = document.getElementById("signupEmail").value.trim();
       const pwd = document.getElementById("signupPassword").value.trim();
 
-      if (!storeName || !email || !pwd) {
-        alert("Sila lengkapkan maklumat pendaftaran.");
+      if (!store || !email || !pwd) {
+        alert("Sila lengkapkan semua medan pendaftaran.");
         return;
       }
 
-      sellerAccounts.push({ storeName, email, pwd });
+      sellerAccounts.push({ storeName: store, email, pwd });
       saveData(STORAGE_KEY_SELLER_ACCOUNTS, sellerAccounts);
 
-      window.settings.storeName = storeName;
+      window.settings.storeName = store;
       window.settings.email = email;
       saveData(STORAGE_KEY_SETTINGS, window.settings);
 
-      alert("Pendaftaran berjaya! Sila log masuk.");
-      switchAuthMode("login");
+      alert("Akaun penjual berjaya dicipta! Sila log masuk.");
+      switchAuthMode('login');
+      document.getElementById("adminUsernameInput").value = email;
     }
 
-    function logoutAdmin(isSilent = false) {
+    function logoutAdmin(silent = false) {
       window.isAdminLoggedIn = false;
       localStorage.removeItem(STORAGE_KEY_SELLER_SESSION);
       window.refreshAllUI();
+      if (!silent) alert("Anda telah log keluar.");
       navTo("home");
-      if (!isSilent) {
-        alert("Anda telah log keluar daripada sistem Admin.");
-      }
     }
 
-    // PRODUCT MODAL HANDLERS
+    // PENGURUSAN PRODUK & PROMO LOGIK (DIBAIKI)
     function openProductModal(pId = null) {
+      populateCategorySelects();
       uploadedImages = [];
-      document.getElementById("productForm").reset();
-      document.getElementById("pId").value = "";
-      document.getElementById("imagePreviewContainer").innerHTML = "";
-      setPromoType('RM');
+      const form = document.getElementById("productForm");
+      form.reset();
 
       if (pId) {
-        const p = window.products.find(item => item.id === pId);
-        if (p) {
-          document.getElementById("pId").value = p.id;
-          document.getElementById("pTitle").value = p.title;
-          document.getElementById("pCategory").value = p.category;
-          document.getElementById("pBasePrice").value = p.basePrice || p.price;
-          document.getElementById("pPromoValue").value = p.promoValue || "";
-          document.getElementById("pPrice").value = p.price;
-          document.getElementById("pDesc").value = p.desc || "";
-          document.getElementById("pStatus").checked = p.active;
-          document.getElementById("pFeatured").checked = p.featured;
-
-          if (p.promoType) setPromoType(p.promoType);
-          if (p.images) {
-            uploadedImages = [...p.images];
-            renderImagePreviews();
-          }
+        const prod = window.products.find(p => p.id === pId);
+        if (prod) {
+          document.getElementById("pId").value = prod.id;
+          document.getElementById("pTitle").value = prod.title;
+          document.getElementById("pCategory").value = prod.category;
+          document.getElementById("pBasePrice").value = prod.basePrice || prod.price;
+          document.getElementById("pPrice").value = prod.price;
+          document.getElementById("pDesc").value = prod.desc || "";
+          document.getElementById("pStatus").checked = prod.active;
+          document.getElementById("pFeatured").checked = prod.featured || false;
+          
+          uploadedImages = prod.images ? [...prod.images] : [];
+          document.getElementById("productModalTitle").innerText = "Kemaskini Produk";
         }
+      } else {
+        document.getElementById("pId").value = "";
+        document.getElementById("productModalTitle").innerText = "Tambah Produk Baharu";
       }
 
+      renderImagePreviews();
       document.getElementById("productFormModal").classList.remove("hidden");
     }
 
@@ -2026,7 +2020,7 @@
       const pctBtn = document.getElementById("promoTypePctBtn");
       const label = document.getElementById("promoValueLabel");
 
-      if (type === 'RM') {
+      if (type === "RM") {
         rmBtn.className = "flex-1 py-2 font-bold rounded-xl border border-pastel-purplePrimary bg-pastel-purplePrimary text-white transition-all text-center";
         pctBtn.className = "flex-1 py-2 font-bold rounded-xl border border-slate-200 bg-white text-slate-600 transition-all text-center";
         label.innerText = "Nilai Promo (RM)";
@@ -2035,7 +2029,6 @@
         rmBtn.className = "flex-1 py-2 font-bold rounded-xl border border-slate-200 bg-white text-slate-600 transition-all text-center";
         label.innerText = "Nilai Promo (%)";
       }
-
       calculatePromoPrice();
     }
 
@@ -2045,7 +2038,7 @@
       let finalPrice = basePrice;
 
       if (promoVal > 0) {
-        if (currentPromoType === 'RM') {
+        if (currentPromoType === "RM") {
           finalPrice = Math.max(0, basePrice - promoVal);
         } else {
           finalPrice = Math.max(0, basePrice - (basePrice * (promoVal / 100)));
@@ -2072,12 +2065,17 @@
       });
     }
 
+    function removeUploadedImage(idx) {
+      uploadedImages.splice(idx, 1);
+      renderImagePreviews();
+    }
+
     function renderImagePreviews() {
       const container = document.getElementById("imagePreviewContainer");
-      container.innerHTML = uploadedImages.map((img, idx) => `
-        <div class="relative group rounded-xl overflow-hidden aspect-square border border-slate-200 bg-slate-100">
-          <img src="${img}" class="w-full h-full object-cover">
-          <button type="button" onclick="removeUploadedImage(${idx})" class="absolute top-1 right-1 bg-rose-600 text-white p-1 rounded-full shadow">
+      container.innerHTML = uploadedImages.map((imgUrl, i) => `
+        <div class="relative w-full aspect-square rounded-xl overflow-hidden border border-slate-200 group">
+          <img src="${imgUrl}" class="w-full h-full object-cover">
+          <button type="button" onclick="removeUploadedImage(${i})" class="absolute top-1 right-1 bg-rose-600 text-white p-1 rounded-full text-xs shadow hover:bg-rose-700">
             <i data-lucide="x" class="w-3 h-3"></i>
           </button>
         </div>
@@ -2085,37 +2083,49 @@
       lucide.createIcons();
     }
 
-    function removeUploadedImage(idx) {
-      uploadedImages.splice(idx, 1);
-      renderImagePreviews();
-    }
-
     function handleProductFormSubmit(e) {
       e.preventDefault();
+
       const pId = document.getElementById("pId").value;
       const title = document.getElementById("pTitle").value.trim();
       const category = document.getElementById("pCategory").value;
       const basePrice = parseFloat(document.getElementById("pBasePrice").value) || 0;
-      const promoValue = parseFloat(document.getElementById("pPromoValue").value) || 0;
-      const price = parseFloat(document.getElementById("pPrice").value) || 0;
+      const price = parseFloat(document.getElementById("pPrice").value) || basePrice;
       const desc = document.getElementById("pDesc").value.trim();
       const active = document.getElementById("pStatus").checked;
       const featured = document.getElementById("pFeatured").checked;
 
+      if (!title || !category) {
+        alert("Sila isi semua maklumat mandatori.");
+        return;
+      }
+
       if (pId) {
         const idx = window.products.findIndex(p => p.id === pId);
-        if (idx > -1) {
+        if (idx !== -1) {
           window.products[idx] = {
             ...window.products[idx],
-            title, category, basePrice, promoType: currentPromoType, promoValue, price, desc, active, featured,
-            images: uploadedImages
+            title,
+            category,
+            basePrice,
+            price,
+            desc,
+            active,
+            featured,
+            images: uploadedImages.length > 0 ? uploadedImages : window.products[idx].images
           };
         }
       } else {
         const newProduct = {
           id: "prod-" + Date.now(),
-          title, category, basePrice, promoType: currentPromoType, promoValue, price, desc, active, featured,
-          images: uploadedImages,
+          title,
+          category,
+          basePrice,
+          price,
+          desc,
+          active,
+          featured,
+          images: uploadedImages.length > 0 ? uploadedImages : ['https://via.placeholder.com/400'],
           createdDate: new Date().toISOString()
         };
         window.products.unshift(newProduct);
@@ -2124,31 +2134,36 @@
       saveData(STORAGE_KEY_PRODUCTS, window.products);
       closeProductModal();
       window.refreshAllUI();
+      alert("Produk berjaya disimpan!");
     }
 
     function editProduct(pId) { openProductModal(pId); }
 
     function deleteProduct(pId) {
-      if (confirm("Padam produk ini daripada katalog?")) {
+      if (confirm("Adakah anda pasti mahu memadam produk ini?")) {
         window.products = window.products.filter(p => p.id !== pId);
         saveData(STORAGE_KEY_PRODUCTS, window.products);
         window.refreshAllUI();
       }
     }
 
-    // CATEGORY MODAL HANDLERS
+    // PENGURUSAN KATEGORI
     function openCategoryModal(cId = null) {
-      document.getElementById("categoryForm").reset();
-      document.getElementById("cId").value = "";
+      const form = document.getElementById("categoryForm");
+      form.reset();
 
       if (cId) {
-        const c = window.categories.find(item => item.id === cId);
-        if (c) {
-          document.getElementById("cId").value = c.id;
-          document.getElementById("cName").value = c.name;
-          document.getElementById("cDesc").value = c.desc || "";
-          document.getElementById("cStatus").checked = c.active;
+        const cat = window.categories.find(c => c.id === cId);
+        if (cat) {
+          document.getElementById("cId").value = cat.id;
+          document.getElementById("cName").value = cat.name;
+          document.getElementById("cDesc").value = cat.desc || "";
+          document.getElementById("cStatus").checked = cat.active;
+          document.getElementById("categoryModalTitle").innerText = "Kemaskini Kategori";
         }
+      } else {
+        document.getElementById("cId").value = "";
+        document.getElementById("categoryModalTitle").innerText = "Tambah Kategori";
       }
 
       document.getElementById("categoryFormModal").classList.remove("hidden");
@@ -2165,28 +2180,52 @@
       const desc = document.getElementById("cDesc").value.trim();
       const active = document.getElementById("cStatus").checked;
 
+      if (!name) return;
+
       if (cId) {
         const idx = window.categories.findIndex(c => c.id === cId);
-        if (idx > -1) {
-          window.categories[idx] = { ...window.categories[idx], name, desc, active };
+        if (idx !== -1) {
+          window.categories[idx] = { id: cId, name, desc, active };
         }
       } else {
-        window.categories.push({ id: "cat-" + Date.now(), name, desc, active });
+        window.categories.push({
+          id: "cat-" + Date.now(),
+          name,
+          desc,
+          active
+        });
       }
 
       saveData(STORAGE_KEY_CATEGORIES, window.categories);
       closeCategoryModal();
       window.refreshAllUI();
+      alert("Kategori berjaya disimpan!");
     }
 
     function editCategory(cId) { openCategoryModal(cId); }
 
     function deleteCategory(cId) {
-      if (confirm("Padam kategori ini?")) {
+      if (confirm("Adakah anda pasti mahu memadam kategori ini?")) {
         window.categories = window.categories.filter(c => c.id !== cId);
         saveData(STORAGE_KEY_CATEGORIES, window.categories);
         window.refreshAllUI();
       }
+    }
+
+    // BISNES & WHATSAPP SETTINGS
+    function handleLogoUpload(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        window.settings.logoUrl = event.target.result;
+        const logoPreview = document.getElementById("businessLogoPreview");
+        if (logoPreview) {
+          logoPreview.innerHTML = `<img src="${event.target.result}" class="w-full h-full object-cover">`;
+        }
+      };
+      reader.readAsDataURL(file);
     }
 
     function saveBusinessSettings() {
@@ -2196,8 +2235,8 @@
       window.settings.email = document.getElementById("settingEmail").value.trim();
 
       saveData(STORAGE_KEY_SETTINGS, window.settings);
-      alert("Maklumat bisnes disimpan!");
       window.refreshAllUI();
+      alert("Maklumat bisnes berjaya disimpan!");
     }
 
     function saveWaSettings() {
@@ -2206,21 +2245,8 @@
       window.settings.waTemplate = document.getElementById("settingWaTemplate").value;
 
       saveData(STORAGE_KEY_SETTINGS, window.settings);
-      alert("Tetapan WhatsApp disimpan!");
       window.refreshAllUI();
-    }
-
-    function handleLogoUpload(e) {
-      const file = e.target.files[0];
-      if (!file) return;
-
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        window.settings.logoUrl = event.target.result;
-        saveData(STORAGE_KEY_SETTINGS, window.settings);
-        window.refreshAllUI();
-      };
-      reader.readAsDataURL(file);
+      alert("Tetapan WhatsApp berjaya disimpan!");
     }
   </script>
 </body>
