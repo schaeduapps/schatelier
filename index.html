@@ -61,7 +61,7 @@
     .snap-center-item { scroll-snap-align: center; }
   </style>
 </head>
-<body class="text-slate-800 flex flex-col min-h-screen antialiased pb-16 md:pb-0">
+<body class="text-slate-800 flex flex-col min-h-screen antialiased pb-20 md:pb-0">
 
   <!-- TOP HEADER & NAVIGATION -->
   <header class="sticky top-0 z-40 bg-white/85 backdrop-blur-md border-b border-white/40 shadow-sm">
@@ -100,7 +100,6 @@
 
         <!-- Desktop Nav Actions -->
         <div class="hidden md:flex items-center gap-3">
-          <!-- Button Copy Link Katalog HANYA UNTUK ADMIN / SELLER -->
           <button onclick="copyCatalogLink()" class="seller-only-element hidden text-xs font-bold bg-white/80 hover:bg-white text-slate-700 px-3 py-2.5 rounded-2xl border border-white/60 shadow-sm transition-all items-center gap-1.5" title="Salin Link Katalog">
             <i data-lucide="share-2" class="w-4 h-4 text-pastel-purplePrimary"></i>
             <span>Copy Link Katalog</span>
@@ -117,7 +116,7 @@
           </button>
 
           <!-- Admin Button -->
-          <button id="navAdminBtn" onclick="openAdminModal('login')" class="seller-only-element hidden text-xs font-bold text-white bg-slate-900 hover:bg-pastel-purplePrimary px-4 py-2.5 rounded-2xl transition-all shadow-sm items-center gap-1.5">
+          <button id="navAdminBtn" onclick="openAdminModal('login')" class="text-xs font-bold text-white bg-slate-900 hover:bg-pastel-purplePrimary px-4 py-2.5 rounded-2xl transition-all shadow-sm flex items-center gap-1.5">
             <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
             <span id="navAdminText">Admin Dashboard</span>
           </button>
@@ -198,7 +197,7 @@
             Lihat Semua <i data-lucide="chevron-right" class="w-3 h-3"></i>
           </button>
         </div>
-        <div id="homeCategoriesGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 sm:gap-4"></div>
+        <div id="homeCategoriesGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 sm:gap-4"></div>
       </div>
 
       <!-- Featured Products -->
@@ -431,8 +430,8 @@
     <div id="view-admin" class="view-section hidden">
       <div class="flex flex-col lg:flex-row gap-6 items-start">
         
-        <!-- SIDEBAR ADMIN SEBELAH KIRI -->
-        <aside class="w-full lg:w-64 bg-slate-900 text-slate-300 rounded-3xl p-5 shrink-0 flex flex-col justify-between min-h-[550px] shadow-xl">
+        <!-- SIDEBAR ADMIN SEBELAH KIRI (MEMUATKAN MOBILE & DESKTOP DENGAN KEMAS) -->
+        <aside class="w-full lg:w-64 bg-slate-900 text-slate-300 rounded-3xl p-5 shrink-0 flex flex-col justify-between lg:min-h-[600px] shadow-xl">
           <div class="space-y-6">
             <div class="border-b border-slate-800 pb-4">
               <span class="text-[10px] uppercase font-extrabold bg-pastel-pinkDark text-white px-2.5 py-0.5 rounded-full">Admin Dashboard</span>
@@ -440,37 +439,37 @@
               <p class="text-[11px] text-slate-400 mt-1">Akaun: <span id="syncUserDisplay" class="text-pastel-pink font-bold">Log In</span></p>
             </div>
 
-            <!-- MENU SIDEBAR DARI ATAS KE BAWAH -->
-            <nav class="flex flex-col gap-1.5">
-              <button onclick="switchAdminTab('sales')" id="adminTabBtn-sales" class="admin-tab-btn flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-bold transition-all w-full text-left bg-pastel-purplePrimary text-white shadow-md">
+            <!-- MENU SIDEBAR DENGAN FUNGSI SKROL HORIZONTAL PADA MOBILE -->
+            <nav class="flex lg:flex-col gap-1.5 overflow-x-auto pb-2 lg:pb-0 no-scrollbar">
+              <button onclick="switchAdminTab('sales')" id="adminTabBtn-sales" class="admin-tab-btn flex items-center gap-2.5 px-3.5 py-2.5 rounded-2xl text-xs font-bold transition-all whitespace-nowrap shrink-0 lg:w-full text-left bg-pastel-purplePrimary text-white shadow-md">
                 <i data-lucide="dollar-sign" class="w-4 h-4"></i> Sales Tracker
               </button>
-              <button onclick="switchAdminTab('insights')" id="adminTabBtn-insights" class="admin-tab-btn flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-bold transition-all w-full text-left text-slate-400 hover:bg-slate-800 hover:text-white">
+              <button onclick="switchAdminTab('insights')" id="adminTabBtn-insights" class="admin-tab-btn flex items-center gap-2.5 px-3.5 py-2.5 rounded-2xl text-xs font-bold transition-all whitespace-nowrap shrink-0 lg:w-full text-left text-slate-400 hover:bg-slate-800 hover:text-white">
                 <i data-lucide="line-chart" class="w-4 h-4"></i> Insights
               </button>
-              <button onclick="switchAdminTab('history')" id="adminTabBtn-history" class="admin-tab-btn flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-bold transition-all w-full text-left text-slate-400 hover:bg-slate-800 hover:text-white">
+              <button onclick="switchAdminTab('history')" id="adminTabBtn-history" class="admin-tab-btn flex items-center gap-2.5 px-3.5 py-2.5 rounded-2xl text-xs font-bold transition-all whitespace-nowrap shrink-0 lg:w-full text-left text-slate-400 hover:bg-slate-800 hover:text-white">
                 <i data-lucide="history" class="w-4 h-4"></i> History
               </button>
-              <button onclick="switchAdminTab('reports')" id="adminTabBtn-reports" class="admin-tab-btn flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-bold transition-all w-full text-left text-slate-400 hover:bg-slate-800 hover:text-white">
+              <button onclick="switchAdminTab('reports')" id="adminTabBtn-reports" class="admin-tab-btn flex items-center gap-2.5 px-3.5 py-2.5 rounded-2xl text-xs font-bold transition-all whitespace-nowrap shrink-0 lg:w-full text-left text-slate-400 hover:bg-slate-800 hover:text-white">
                 <i data-lucide="file-text" class="w-4 h-4"></i> Reports
               </button>
-              <button onclick="switchAdminTab('products')" id="adminTabBtn-products" class="admin-tab-btn flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-bold transition-all w-full text-left text-slate-400 hover:bg-slate-800 hover:text-white">
+              <button onclick="switchAdminTab('products')" id="adminTabBtn-products" class="admin-tab-btn flex items-center gap-2.5 px-3.5 py-2.5 rounded-2xl text-xs font-bold transition-all whitespace-nowrap shrink-0 lg:w-full text-left text-slate-400 hover:bg-slate-800 hover:text-white">
                 <i data-lucide="package" class="w-4 h-4"></i> Produk
               </button>
-              <button onclick="switchAdminTab('categories')" id="adminTabBtn-categories" class="admin-tab-btn flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-bold transition-all w-full text-left text-slate-400 hover:bg-slate-800 hover:text-white">
+              <button onclick="switchAdminTab('categories')" id="adminTabBtn-categories" class="admin-tab-btn flex items-center gap-2.5 px-3.5 py-2.5 rounded-2xl text-xs font-bold transition-all whitespace-nowrap shrink-0 lg:w-full text-left text-slate-400 hover:bg-slate-800 hover:text-white">
                 <i data-lucide="tags" class="w-4 h-4"></i> Kategori
               </button>
-              <button onclick="switchAdminTab('business')" id="adminTabBtn-business" class="admin-tab-btn flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-bold transition-all w-full text-left text-slate-400 hover:bg-slate-800 hover:text-white">
+              <button onclick="switchAdminTab('business')" id="adminTabBtn-business" class="admin-tab-btn flex items-center gap-2.5 px-3.5 py-2.5 rounded-2xl text-xs font-bold transition-all whitespace-nowrap shrink-0 lg:w-full text-left text-slate-400 hover:bg-slate-800 hover:text-white">
                 <i data-lucide="store" class="w-4 h-4"></i> Bisnes & Logo
               </button>
-              <button onclick="switchAdminTab('settings')" id="adminTabBtn-settings" class="admin-tab-btn flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-bold transition-all w-full text-left text-slate-400 hover:bg-slate-800 hover:text-white">
+              <button onclick="switchAdminTab('settings')" id="adminTabBtn-settings" class="admin-tab-btn flex items-center gap-2.5 px-3.5 py-2.5 rounded-2xl text-xs font-bold transition-all whitespace-nowrap shrink-0 lg:w-full text-left text-slate-400 hover:bg-slate-800 hover:text-white">
                 <i data-lucide="settings" class="w-4 h-4"></i> WhatsApp
               </button>
             </nav>
           </div>
 
           <!-- BUTTON LOG IN / SIGN UP & LOGOUT BAHAGIAN BAWAH SIDEBAR -->
-          <div class="pt-6 border-t border-slate-800 space-y-2 mt-6">
+          <div class="pt-4 lg:pt-6 border-t border-slate-800 space-y-2 mt-4 lg:mt-6">
             <div id="sidebarAuthButtons" class="space-y-2">
               <button onclick="openAdminModal('login')" class="w-full bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold py-2.5 rounded-xl border border-slate-700 transition-all flex items-center justify-center gap-2">
                 <i data-lucide="log-in" class="w-4 h-4"></i> Log In Seller
@@ -497,11 +496,11 @@
                 <div id="statTotalRevenue" class="text-2xl sm:text-3xl font-black text-pastel-purplePrimary">RM 0.00</div>
               </div>
               <div class="bg-white/90 backdrop-blur-md p-5 rounded-3xl border border-white/80 shadow-sm space-y-1">
-                <span class="text-xs font-bold text-slate-500 uppercase">Jumlah Jualan Hari Ini (Today)</span>
+                <span class="text-xs font-bold text-slate-500 uppercase">Jumlah Jualan Hari Ini</span>
                 <div id="statSalesToday" class="text-2xl sm:text-3xl font-black text-emerald-600">RM 0.00</div>
               </div>
               <div class="bg-white/90 backdrop-blur-md p-5 rounded-3xl border border-white/80 shadow-sm space-y-1">
-                <span class="text-xs font-bold text-slate-500 uppercase">Jumlah Jualan Bulan Ini (This Month)</span>
+                <span class="text-xs font-bold text-slate-500 uppercase">Jumlah Jualan Bulan Ini</span>
                 <div id="statSalesMonth" class="text-2xl sm:text-3xl font-black text-blue-600">RM 0.00</div>
               </div>
             </div>
@@ -515,20 +514,19 @@
               <form onsubmit="handleManualAddSale(event)" class="grid grid-cols-1 sm:grid-cols-5 gap-3 text-xs">
                 <div>
                   <label class="block font-bold text-slate-700 mb-1">Nama Pelanggan</label>
-                  <input type="text" id="saleCustName" required class="w-full px-3 py-2 border border-slate-200 rounded-xl" placeholder="Ahmad Ali">
+                  <input type="text" id="saleCustName" required class="w-full px-3 py-2 border border-slate-200 rounded-xl focus:outline-none focus:border-pastel-purplePrimary" placeholder="Ahmad Ali">
                 </div>
                 <div>
                   <label class="block font-bold text-slate-700 mb-1">Pilih Produk</label>
-                  <select id="saleSelectProduct" onchange="autoFillSaleAmount()" class="w-full px-3 py-2 border border-slate-200 rounded-xl"></select>
+                  <select id="saleSelectProduct" onchange="autoFillSaleAmount()" class="w-full px-3 py-2 border border-slate-200 rounded-xl focus:outline-none focus:border-pastel-purplePrimary"></select>
                 </div>
                 <div>
                   <label class="block font-bold text-slate-700 mb-1">Jumlah Amaun (RM)</label>
-                  <input type="number" step="0.01" id="saleAmount" required class="w-full px-3 py-2 border border-slate-200 rounded-xl" placeholder="0.00">
+                  <input type="number" step="0.01" id="saleAmount" required class="w-full px-3 py-2 border border-slate-200 rounded-xl focus:outline-none focus:border-pastel-purplePrimary" placeholder="0.00">
                 </div>
-                <!-- TAMBAH TARIKH JUALAN -->
                 <div>
                   <label class="block font-bold text-slate-700 mb-1">Tarikh Jualan</label>
-                  <input type="date" id="saleDate" required class="w-full px-3 py-2 border border-slate-200 rounded-xl">
+                  <input type="date" id="saleDate" required class="w-full px-3 py-2 border border-slate-200 rounded-xl focus:outline-none focus:border-pastel-purplePrimary">
                 </div>
                 <div class="flex items-end">
                   <button type="submit" class="w-full bg-pastel-purplePrimary hover:bg-pastel-purpleDark text-white font-bold py-2.5 rounded-xl shadow transition-colors">
@@ -671,23 +669,19 @@
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
                 <div>
                   <label class="block font-bold text-slate-700 mb-1">Nama Bisnes / Kedai</label>
-                  <input type="text" id="settingStoreName" class="w-full px-3 py-2 border border-slate-200 rounded-xl">
+                  <input type="text" id="settingStoreName" class="w-full px-3 py-2 border border-slate-200 rounded-xl focus:outline-none focus:border-pastel-purplePrimary">
                 </div>
                 <div>
                   <label class="block font-bold text-slate-700 mb-1">Nama Seller</label>
-                  <input type="text" id="settingSellerName" class="w-full px-3 py-2 border border-slate-200 rounded-xl" placeholder="Puan Scha">
+                  <input type="text" id="settingSellerName" class="w-full px-3 py-2 border border-slate-200 rounded-xl focus:outline-none focus:border-pastel-purplePrimary" placeholder="Puan Scha">
                 </div>
                 <div>
                   <label class="block font-bold text-slate-700 mb-1">Nombor Telefon Kontak</label>
-                  <input type="text" id="settingContactNo" class="w-full px-3 py-2 border border-slate-200 rounded-xl" placeholder="60123456789">
+                  <input type="text" id="settingContactNo" class="w-full px-3 py-2 border border-slate-200 rounded-xl focus:outline-none focus:border-pastel-purplePrimary" placeholder="60123456789">
                 </div>
                 <div>
                   <label class="block font-bold text-slate-700 mb-1">E-mel Bisnes</label>
-                  <input type="email" id="settingEmail" class="w-full px-3 py-2 border border-slate-200 rounded-xl" placeholder="scha@example.com">
-                </div>
-                <div>
-                  <label class="block font-bold text-slate-700 mb-1">Username Akaun</label>
-                  <input type="text" id="settingUsername" readonly class="w-full px-3 py-2 border border-slate-200 rounded-xl bg-slate-100 text-slate-500">
+                  <input type="email" id="settingEmail" class="w-full px-3 py-2 border border-slate-200 rounded-xl focus:outline-none focus:border-pastel-purplePrimary" placeholder="scha@example.com">
                 </div>
               </div>
 
@@ -707,7 +701,7 @@
                 </div>
               </div>
 
-              <button onclick="saveBusinessSettings()" class="bg-pastel-purplePrimary hover:bg-pastel-purpleDark text-white text-xs font-bold px-5 py-2.5 rounded-xl">
+              <button onclick="saveBusinessSettings()" class="bg-pastel-purplePrimary hover:bg-pastel-purpleDark text-white text-xs font-bold px-5 py-2.5 rounded-xl shadow">
                 Simpan Maklumat Bisnes
               </button>
             </div>
@@ -721,20 +715,20 @@
               <div class="space-y-4 text-xs">
                 <div>
                   <label class="block font-bold text-slate-700 mb-1">Nombor WhatsApp Kedai (Format: 60123456789)</label>
-                  <input type="text" id="settingWaNumber" class="w-full px-3 py-2 border border-slate-200 rounded-xl" placeholder="60123456789">
+                  <input type="text" id="settingWaNumber" class="w-full px-3 py-2 border border-slate-200 rounded-xl focus:outline-none focus:border-pastel-purplePrimary" placeholder="60123456789">
                 </div>
                 <div>
                   <label class="block font-bold text-slate-700 mb-1">Label Butang Checkout WhatsApp</label>
-                  <input type="text" id="settingWaButtonLabel" class="w-full px-3 py-2 border border-slate-200 rounded-xl" placeholder="Order Melalui WhatsApp">
+                  <input type="text" id="settingWaButtonLabel" class="w-full px-3 py-2 border border-slate-200 rounded-xl focus:outline-none focus:border-pastel-purplePrimary" placeholder="Order Melalui WhatsApp">
                 </div>
                 <div>
                   <label class="block font-bold text-slate-700 mb-1">Template Mesej Pesanan Dinamik</label>
                   <p class="text-[11px] text-slate-500 mb-1.5">Gunakan tag: <code>{STORE_NAME}</code>, <code>{CUSTOMER_NAME}</code>, <code>{ITEMS}</code>, <code>{TOTAL}</code></p>
-                  <textarea id="settingWaTemplate" rows="6" class="w-full px-3 py-2 border border-slate-200 rounded-xl font-mono"></textarea>
+                  <textarea id="settingWaTemplate" rows="6" class="w-full px-3 py-2 border border-slate-200 rounded-xl font-mono focus:outline-none focus:border-pastel-purplePrimary"></textarea>
                 </div>
               </div>
 
-              <button onclick="saveWaSettings()" class="bg-pastel-purplePrimary hover:bg-pastel-purpleDark text-white text-xs font-bold px-5 py-2.5 rounded-xl">
+              <button onclick="saveWaSettings()" class="bg-pastel-purplePrimary hover:bg-pastel-purpleDark text-white text-xs font-bold px-5 py-2.5 rounded-xl shadow">
                 Simpan Konfigurasi WhatsApp
               </button>
             </div>
@@ -744,20 +738,19 @@
     </div>
   </main>
 
-  <!-- MOBILE BOTTOM NAVIGATION -->
-  <div class="md:hidden fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-md border-t border-slate-200 z-40 py-2 px-6 flex justify-around items-center shadow-lg">
-    <button onclick="navTo('home')" class="flex flex-col items-center text-slate-600 hover:text-pastel-purplePrimary">
+  <!-- MOBILE BOTTOM NAVIGATION (TELAH DIKEMAS KINI KEPADA: UTAMA - KATALOG - ADMIN) -->
+  <div class="md:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-200 z-40 py-2.5 px-6 flex justify-around items-center shadow-lg">
+    <button onclick="navTo('home')" class="flex flex-col items-center text-slate-600 hover:text-pastel-purplePrimary transition-colors">
       <i data-lucide="home" class="w-5 h-5"></i>
-      <span class="text-[10px] font-bold mt-0.5">Utama</span>
+      <span class="text-[10px] font-bold mt-1">Utama</span>
     </button>
-    <button onclick="navTo('shop')" class="flex flex-col items-center text-slate-600 hover:text-pastel-purplePrimary">
+    <button onclick="navTo('shop')" class="flex flex-col items-center text-slate-600 hover:text-pastel-purplePrimary transition-colors">
       <i data-lucide="grid" class="w-5 h-5"></i>
-      <span class="text-[10px] font-bold mt-0.5">Katalog</span>
+      <span class="text-[10px] font-bold mt-1">Katalog</span>
     </button>
-    <button onclick="navTo('cart')" class="flex flex-col items-center text-slate-600 hover:text-pastel-purplePrimary relative">
-      <i data-lucide="shopping-bag" class="w-5 h-5"></i>
-      <span class="text-[10px] font-bold mt-0.5">Troli</span>
-      <span class="cartBadge absolute -top-1 -right-2 bg-pastel-redDark text-white text-[9px] font-black w-4 h-4 rounded-full flex items-center justify-center border border-white hidden">0</span>
+    <button onclick="handleAdminBottomNav()" class="flex flex-col items-center text-slate-600 hover:text-pastel-purplePrimary transition-colors relative">
+      <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
+      <span class="text-[10px] font-bold mt-1">Admin</span>
     </button>
   </div>
 
@@ -782,7 +775,7 @@
       <div class="space-y-2">
         <span class="font-bold text-white block uppercase tracking-wider text-[11px]">Penjual & Sokongan</span>
         <p class="text-slate-400">Penghantaran produk dilakukan secara manual/automatik selepas pengesahan pesanan melalui WhatsApp rasmi kedai.</p>
-        <div class="pt-2 seller-only-element hidden">
+        <div class="pt-2">
           <button onclick="openAdminModal('login')" class="text-[11px] font-bold text-purple-300 hover:text-white underline inline-flex items-center gap-1">
             <i data-lucide="layout-dashboard" class="w-3.5 h-3.5"></i> Admin Dashboard (Log In / Sign Up)
           </button>
@@ -818,7 +811,7 @@
           <i data-lucide="user-check" class="w-6 h-6"></i>
         </div>
         <h3 class="text-lg font-extrabold text-slate-900">Akaun Admin Penjual</h3>
-        <p class="text-xs text-slate-500">Cloud Sync: Data disimpan dengan akaun pengguna supaya tidak hilang.</p>
+        <p class="text-xs text-slate-500">Log masuk sekali & sesi anda akan dikekalkan selama 2 jam semasa aktif.</p>
       </div>
 
       <div class="flex border-b border-slate-100 text-xs font-bold text-center">
@@ -858,7 +851,7 @@
           <input type="password" id="signupPassword" class="w-full px-4 py-2 border border-slate-200 rounded-xl text-xs outline-none focus:border-pastel-purplePrimary" placeholder="••••••••">
         </div>
         <button onclick="signupAdmin()" class="w-full bg-pastel-purplePrimary hover:bg-pastel-purpleDark text-white font-bold text-xs py-3 rounded-xl transition-all shadow-md mt-2">
-          Daftar Akaun & Cloud Sync
+          Daftar Akaun Admin
         </button>
       </div>
     </div>
@@ -1009,6 +1002,8 @@
     const STORAGE_KEY_LAST_VIEW = "scha_last_active_view";
     const STORAGE_KEY_LAST_ADMIN_TAB = "scha_last_admin_tab";
 
+    const INACTIVITY_LIMIT_MS = 2 * 60 * 60 * 1000; // 2 Jam dalam milisaat
+
     const DEFAULT_CATEGORIES = [
       { id: "cat-1", name: "Pra-Sekolah", desc: "Modul asas membaca, menulis & mengira (3-6 Tahun)", active: true },
       { id: "cat-2", name: "Sekolah Rendah (Tahap 1)", desc: "Bahan aktiviti Tahun 1, 2 & 3", active: true },
@@ -1040,8 +1035,44 @@
       { storeName: "Scha Digital", email: "seller@domain.com", pwd: "password" }
     ];
 
-    const savedSession = JSON.parse(localStorage.getItem(STORAGE_KEY_SELLER_SESSION));
-    window.isAdminLoggedIn = !!(savedSession && savedSession.isLoggedIn);
+    // SEMAK LOG IN & MASA TIDAK AKTIF 2 JAM
+    function checkSessionTimeout() {
+      const savedSession = JSON.parse(localStorage.getItem(STORAGE_KEY_SELLER_SESSION));
+      if (savedSession && savedSession.isLoggedIn) {
+        const lastActive = savedSession.lastActiveTime || 0;
+        const currentTime = Date.now();
+
+        if (currentTime - lastActive > INACTIVITY_LIMIT_MS) {
+          logoutAdmin(true); // Auto logout jika lebih 2 jam
+          return false;
+        } else {
+          // Kemaskini semula cap masa sekiranya masih dalam tempoh sah
+          savedSession.lastActiveTime = currentTime;
+          localStorage.setItem(STORAGE_KEY_SELLER_SESSION, JSON.stringify(savedSession));
+          window.isAdminLoggedIn = true;
+          return true;
+        }
+      } else {
+        window.isAdminLoggedIn = false;
+        return false;
+      }
+    }
+
+    // Kemaskini cap masa pergerakan/aktiviti pengguna
+    function updateActivityTime() {
+      if (window.isAdminLoggedIn) {
+        const savedSession = JSON.parse(localStorage.getItem(STORAGE_KEY_SELLER_SESSION));
+        if (savedSession) {
+          savedSession.lastActiveTime = Date.now();
+          localStorage.setItem(STORAGE_KEY_SELLER_SESSION, JSON.stringify(savedSession));
+        }
+      }
+    }
+
+    // Pendengar aktiviti skrin untuk memperbaharui timer 2 jam secara automatik
+    ['click', 'mousemove', 'keypress', 'scroll', 'touchstart'].forEach(evt => {
+      window.addEventListener(evt, updateActivityTime, { passive: true });
+    });
 
     let isCatalogOnlyView = false;
     let currentDetailProductId = null;
@@ -1055,6 +1086,7 @@
 
     // Global Functions
     window.refreshAllUI = function() {
+      checkSessionTimeout();
       applyBrandingDOM();
       populateCategorySelects();
       renderHomeView();
@@ -1063,7 +1095,6 @@
       checkSellerVisibility();
       updateAdminNavButton();
       
-      // Tetapkan tarikh harini secara default pada Add Sale
       const today = new Date().toISOString().split('T')[0];
       const dateInput = document.getElementById("saleDate");
       if (dateInput) dateInput.value = today;
@@ -1072,6 +1103,7 @@
     };
 
     document.addEventListener("DOMContentLoaded", () => {
+      checkSessionTimeout();
       lucide.createIcons();
       handleHashNavigation();
       window.addEventListener("hashchange", handleHashNavigation);
@@ -1082,7 +1114,6 @@
       localStorage.setItem(key, JSON.stringify(value));
     }
 
-    // FUNGSI 3: Button Copy Link & Dashboard Admin Hanya Untuk Admin / Seller
     function checkSellerVisibility() {
       const sellerElements = document.querySelectorAll('.seller-only-element');
       if (window.isAdminLoggedIn) {
@@ -1104,6 +1135,8 @@
 
     function updateAdminNavButton() {
       const navText = document.getElementById("navAdminText");
+      const savedSession = JSON.parse(localStorage.getItem(STORAGE_KEY_SELLER_SESSION));
+      
       if (navText) {
         navText.innerText = window.isAdminLoggedIn ? "Dashboard Admin" : "Admin Dashboard";
       }
@@ -1113,11 +1146,9 @@
       }
     }
 
-    // FUNGSI 4: Kekal di tempat yang sama apabila Refresh
     function handleHashNavigation() {
       let hash = window.location.hash.replace("#", "");
       
-      // Semak jika terdapat paparan terakhir yang tersimpan di localStorage
       if (!hash) {
         const savedView = localStorage.getItem(STORAGE_KEY_LAST_VIEW);
         hash = savedView || "home";
@@ -1169,7 +1200,14 @@
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
-    // FUNGSI 2: Pindahkan fungsi admin ke sidebar & tukar tab
+    function handleAdminBottomNav() {
+      if (window.isAdminLoggedIn) {
+        navTo('admin');
+      } else {
+        openAdminModal('login');
+      }
+    }
+
     function switchAdminTab(tabName) {
       localStorage.setItem(STORAGE_KEY_LAST_ADMIN_TAB, tabName);
 
@@ -1193,6 +1231,8 @@
 
     function applyBrandingDOM() {
       if(!window.settings) return;
+      const savedSession = JSON.parse(localStorage.getItem(STORAGE_KEY_SELLER_SESSION));
+
       document.getElementById("brandNameDisplay").innerText = window.settings.storeName || "Scha Digital";
       document.getElementById("brandSellerNameDisplay").innerText = window.settings.sellerName || "Learning Hub";
       document.getElementById("footerStoreName").innerText = window.settings.storeName || "SCHA Digital Learning Hub";
@@ -1215,7 +1255,6 @@
       document.getElementById("settingSellerName").value = window.settings.sellerName || "";
       document.getElementById("settingContactNo").value = window.settings.contactNo || "";
       document.getElementById("settingEmail").value = window.settings.email || "";
-      document.getElementById("settingUsername").value = savedSession ? savedSession.email : (window.settings.username || "");
       document.getElementById("settingWaNumber").value = window.settings.waNumber || "";
       document.getElementById("settingWaButtonLabel").value = window.settings.waButtonLabel || "";
       document.getElementById("settingWaTemplate").value = window.settings.waTemplate || "";
@@ -1638,7 +1677,6 @@
       const totalAmount = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
       const itemsListText = cart.map((item, idx) => `${idx + 1}. ${item.title} (x${item.qty}) - RM ${(item.price * item.qty).toFixed(2)}`).join("\n");
 
-      // Automatik Rekod ke Sales Tracker
       const newSaleRecord = {
         id: "sale-" + Date.now(),
         date: new Date().toISOString(),
@@ -1666,7 +1704,6 @@
       window.open(waUrl, "_blank");
     }
 
-    // FUNGSI 1: ADD SALE DENGAN PILIHAN TARIKH
     function handleManualAddSale(e) {
       e.preventDefault();
       const custName = document.getElementById("saleCustName").value.trim();
@@ -1708,7 +1745,6 @@
     }
 
     function renderAdminDashboard() {
-      // 1. Stat Cards
       const totalRev = window.salesHistory.reduce((sum, s) => sum + s.amount, 0);
       
       const todayStr = new Date().toISOString().split('T')[0];
@@ -1725,7 +1761,6 @@
       document.getElementById("statSalesToday").innerText = `RM ${salesToday.toFixed(2)}`;
       document.getElementById("statSalesMonth").innerText = `RM ${salesMonth.toFixed(2)}`;
 
-      // 2. History Table
       const historyBody = document.getElementById("salesHistoryTableBody");
       historyBody.innerHTML = window.salesHistory.map(s => {
         const d = new Date(s.date);
@@ -1745,7 +1780,6 @@
         `;
       }).join("");
 
-      // 3. Products Table
       const prodBody = document.getElementById("adminProductsTableBody");
       prodBody.innerHTML = window.products.map(p => `
         <tr class="hover:bg-slate-50/80">
@@ -1767,7 +1801,6 @@
         </tr>
       `).join("");
 
-      // 4. Categories Table
       const catBody = document.getElementById("adminCategoriesTableBody");
       catBody.innerHTML = window.categories.map(c => `
         <tr class="hover:bg-slate-50/80">
@@ -1785,7 +1818,6 @@
         </tr>
       `).join("");
 
-      // 5. Insights
       const count = window.salesHistory.length;
       const avg = count > 0 ? totalRev / count : 0;
       document.getElementById("insightAvgOrder").innerText = `RM ${avg.toFixed(2)}`;
@@ -1867,7 +1899,6 @@
       document.body.removeChild(link);
     }
 
-    // Modal Admin Auth
     function openAdminModal(mode = 'login') {
       switchAuthMode(mode);
       document.getElementById("adminAuthModal").classList.remove("hidden");
@@ -1905,7 +1936,13 @@
       if (account || (email === "seller@domain.com" && pwd === "password")) {
         err.classList.add("hidden");
         window.isAdminLoggedIn = true;
-        saveData(STORAGE_KEY_SELLER_SESSION, { isLoggedIn: true, email: email });
+        
+        saveData(STORAGE_KEY_SELLER_SESSION, { 
+          isLoggedIn: true, 
+          email: email,
+          lastActiveTime: Date.now() 
+        });
+
         closeAdminModal();
         window.refreshAllUI();
         navTo("admin");
@@ -1928,7 +1965,11 @@
       saveData(STORAGE_KEY_SELLER_ACCOUNTS, sellerAccounts);
 
       window.isAdminLoggedIn = true;
-      saveData(STORAGE_KEY_SELLER_SESSION, { isLoggedIn: true, email: email });
+      saveData(STORAGE_KEY_SELLER_SESSION, { 
+        isLoggedIn: true, 
+        email: email,
+        lastActiveTime: Date.now() 
+      });
 
       window.settings.storeName = storeName;
       window.settings.email = email;
@@ -1939,14 +1980,17 @@
       navTo("admin");
     }
 
-    function logoutAdmin() {
+    function logoutAdmin(isAuto = false) {
       window.isAdminLoggedIn = false;
       localStorage.removeItem(STORAGE_KEY_SELLER_SESSION);
       window.refreshAllUI();
       navTo("home");
+
+      if (isAuto) {
+        alert("Sesi log masuk anda telah tamat tempoh kerana tiada aktiviti selama 2 jam. Sila log masuk semula.");
+      }
     }
 
-    // Modal Product Form
     function openProductModal() {
       document.getElementById("productModalTitle").innerText = "Tambah Produk Baharu";
       document.getElementById("productForm").reset();
@@ -1996,15 +2040,15 @@
 
     function handleImageUpload(e) {
       const files = Array.from(e.target.files);
-      if (files.length + uploadedImages.length > 10) {
-        alert("Maksimum 10 gambar sahaja dibenarkan.");
+      if (uploadedImages.length + files.length > 10) {
+        alert("Anda hanya boleh memuat naik maksimum 10 gambar bagi setiap produk.");
         return;
       }
 
       files.forEach(file => {
         const reader = new FileReader();
-        reader.onload = (event) => {
-          uploadedImages.push(event.target.result);
+        reader.onload = (evt) => {
+          uploadedImages.push(evt.target.result);
           renderImagePreviews();
         };
         reader.readAsDataURL(file);
@@ -2013,10 +2057,10 @@
 
     function renderImagePreviews() {
       const container = document.getElementById("imagePreviewContainer");
-      container.innerHTML = uploadedImages.map((img, idx) => `
-        <div class="relative group aspect-square rounded-xl overflow-hidden border border-slate-200">
+      container.innerHTML = uploadedImages.map((img, i) => `
+        <div class="relative aspect-square rounded-xl overflow-hidden border border-slate-200 bg-slate-50 group">
           <img src="${img}" class="w-full h-full object-cover">
-          <button type="button" onclick="removeUploadedImage(${idx})" class="absolute top-1 right-1 bg-rose-600 text-white p-1 rounded-full text-[10px] shadow">
+          <button type="button" onclick="removeImage(${i})" class="absolute top-1 right-1 bg-rose-600 text-white rounded-full p-1 shadow hover:bg-rose-700">
             <i data-lucide="x" class="w-3 h-3"></i>
           </button>
         </div>
@@ -2024,8 +2068,8 @@
       lucide.createIcons();
     }
 
-    function removeUploadedImage(idx) {
-      uploadedImages.splice(idx, 1);
+    function removeImage(index) {
+      uploadedImages.splice(index, 1);
       renderImagePreviews();
     }
 
@@ -2035,59 +2079,63 @@
       const title = document.getElementById("pTitle").value.trim();
       const category = document.getElementById("pCategory").value;
       const basePrice = parseFloat(document.getElementById("pBasePrice").value) || 0;
-      const price = parseFloat(document.getElementById("pPrice").value) || basePrice;
+      const price = parseFloat(document.getElementById("pPrice").value) || 0;
       const desc = document.getElementById("pDesc").value.trim();
       const active = document.getElementById("pStatus").checked;
       const featured = document.getElementById("pFeatured").checked;
 
       if (pId) {
-        const idx = window.products.findIndex(p => p.id === pId);
-        if (idx > -1) {
-          window.products[idx] = { ...window.products[idx], title, category, basePrice, price, desc, active, featured, images: uploadedImages };
+        const index = window.products.findIndex(p => p.id === pId);
+        if (index !== -1) {
+          window.products[index] = {
+            ...window.products[index],
+            title, category, basePrice, price, desc, active, featured,
+            images: uploadedImages.length > 0 ? uploadedImages : window.products[index].images
+          };
         }
       } else {
-        const newProduct = {
+        const newProd = {
           id: "prod-" + Date.now(),
           title, category, basePrice, price, desc, active, featured,
-          images: uploadedImages.length > 0 ? uploadedImages : ['https://via.placeholder.com/400'],
+          images: uploadedImages,
           createdDate: new Date().toISOString()
         };
-        window.products.unshift(newProduct);
+        window.products.unshift(newProd);
       }
 
       saveData(STORAGE_KEY_PRODUCTS, window.products);
       closeProductModal();
       window.refreshAllUI();
+      alert("Maklumat produk berjaya disimpan!");
     }
 
     function editProduct(pId) {
-      const p = window.products.find(prod => prod.id === pId);
-      if (!p) return;
+      const product = window.products.find(p => p.id === pId);
+      if (!product) return;
 
       openProductModal();
       document.getElementById("productModalTitle").innerText = "Kemaskini Produk";
-      document.getElementById("pId").value = p.id;
-      document.getElementById("pTitle").value = p.title;
-      document.getElementById("pCategory").value = p.category;
-      document.getElementById("pBasePrice").value = p.basePrice || p.price;
-      document.getElementById("pPrice").value = p.price;
-      document.getElementById("pDesc").value = p.desc || "";
-      document.getElementById("pStatus").checked = p.active;
-      document.getElementById("pFeatured").checked = p.featured || false;
+      document.getElementById("pId").value = product.id;
+      document.getElementById("pTitle").value = product.title;
+      document.getElementById("pCategory").value = product.category;
+      document.getElementById("pBasePrice").value = product.basePrice || product.price;
+      document.getElementById("pPrice").value = product.price;
+      document.getElementById("pDesc").value = product.desc || "";
+      document.getElementById("pStatus").checked = product.active;
+      document.getElementById("pFeatured").checked = product.featured || false;
 
-      uploadedImages = p.images ? [...p.images] : [];
+      uploadedImages = product.images ? [...product.images] : [];
       renderImagePreviews();
     }
 
     function deleteProduct(pId) {
-      if (confirm("Adakah anda pasti untuk memadam produk ini?")) {
+      if (confirm("Adakah anda pasti untuk memadam produk ini dari katalog?")) {
         window.products = window.products.filter(p => p.id !== pId);
         saveData(STORAGE_KEY_PRODUCTS, window.products);
         window.refreshAllUI();
       }
     }
 
-    // Modal Category Form
     function openCategoryModal() {
       document.getElementById("categoryModalTitle").innerText = "Tambah Kategori";
       document.getElementById("categoryForm").reset();
@@ -2107,9 +2155,9 @@
       const active = document.getElementById("cStatus").checked;
 
       if (cId) {
-        const idx = window.categories.findIndex(c => c.id === cId);
-        if (idx > -1) {
-          window.categories[idx] = { id: cId, name, desc, active };
+        const index = window.categories.findIndex(c => c.id === cId);
+        if (index !== -1) {
+          window.categories[index] = { ...window.categories[index], name, desc, active };
         }
       } else {
         window.categories.push({ id: "cat-" + Date.now(), name, desc, active });
@@ -2118,18 +2166,19 @@
       saveData(STORAGE_KEY_CATEGORIES, window.categories);
       closeCategoryModal();
       window.refreshAllUI();
+      alert("Kategori berjaya disimpan!");
     }
 
     function editCategory(cId) {
-      const c = window.categories.find(cat => cat.id === cId);
-      if (!c) return;
+      const category = window.categories.find(c => c.id === cId);
+      if (!category) return;
 
       openCategoryModal();
       document.getElementById("categoryModalTitle").innerText = "Kemaskini Kategori";
-      document.getElementById("cId").value = c.id;
-      document.getElementById("cName").value = c.name;
-      document.getElementById("cDesc").value = c.desc || "";
-      document.getElementById("cStatus").checked = c.active;
+      document.getElementById("cId").value = category.id;
+      document.getElementById("cName").value = category.name;
+      document.getElementById("cDesc").value = category.desc || "";
+      document.getElementById("cStatus").checked = category.active;
     }
 
     function deleteCategory(cId) {
@@ -2140,7 +2189,20 @@
       }
     }
 
-    // Settings
+    function handleLogoUpload(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = (evt) => {
+        window.settings.logoUrl = evt.target.result;
+        saveData(STORAGE_KEY_SETTINGS, window.settings);
+        applyBrandingDOM();
+        alert("Logo bisnes berjaya dikemas kini!");
+      };
+      reader.readAsDataURL(file);
+    }
+
     function saveBusinessSettings() {
       window.settings.storeName = document.getElementById("settingStoreName").value.trim();
       window.settings.sellerName = document.getElementById("settingSellerName").value.trim();
@@ -2148,8 +2210,8 @@
       window.settings.email = document.getElementById("settingEmail").value.trim();
 
       saveData(STORAGE_KEY_SETTINGS, window.settings);
+      applyBrandingDOM();
       alert("Maklumat bisnes berjaya disimpan!");
-      window.refreshAllUI();
     }
 
     function saveWaSettings() {
@@ -2158,21 +2220,8 @@
       window.settings.waTemplate = document.getElementById("settingWaTemplate").value;
 
       saveData(STORAGE_KEY_SETTINGS, window.settings);
-      alert("Konfigurasi WhatsApp berjaya disimpan!");
-      window.refreshAllUI();
-    }
-
-    function handleLogoUpload(e) {
-      const file = e.target.files[0];
-      if (!file) return;
-
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        window.settings.logoUrl = event.target.result;
-        saveData(STORAGE_KEY_SETTINGS, window.settings);
-        window.refreshAllUI();
-      };
-      reader.readAsDataURL(file);
+      applyBrandingDOM();
+      alert("Tetapan pesanan WhatsApp berjaya disimpan!");
     }
   </script>
 </body>
