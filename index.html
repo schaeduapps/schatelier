@@ -26,16 +26,17 @@
             pastel: {
               pink: '#FDE2E4',
               pinkDark: '#E5989B',
+              pinkSoft: '#FFF0F3',
               purple: '#E2ECE9',
               purpleBg: '#F3E8EE',
-              purplePrimary: '#9D4EDD',
-              purpleDark: '#7B2CBF',
+              purplePrimary: '#8B5CF6',
               red: '#FFCAD4',
               redDark: '#E07A5F',
               green: '#D8F3DC',
               greenDark: '#52B788',
               blue: '#D0E1FD',
-              blueDark: '#4A90E2',
+              blueSoft: '#E0F2FE',
+              blueDark: '#2563EB',
             }
           }
         }
@@ -46,7 +47,7 @@
   <style>
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      background: linear-gradient(135deg, #FDE2E4 0%, #D0E1FD 33%, #FFCAD4 66%, #D8F3DC 100%);
+      background: linear-gradient(135deg, #FDE2E4 0%, #D0E1FD 50%, #FFF0F3 100%);
       background-attachment: fixed;
       min-height: 100vh;
     }
@@ -54,7 +55,7 @@
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     
     .bg-hero-card {
-      background: linear-gradient(135deg, #9D4EDD 0%, #7B2CBF 50%, #E07A5F 100%);
+      background: linear-gradient(135deg, #2563EB 0%, #E5989B 100%);
     }
 
     .snap-x-mandatory { scroll-snap-type: x mandatory; }
@@ -64,8 +65,8 @@
 <body class="text-slate-800 flex flex-col min-h-screen antialiased pb-20 md:pb-0">
 
   <!-- TOP HEADER & NAVIGATION -->
-  <header class="sticky top-0 z-40 bg-white/85 backdrop-blur-md border-b border-white/40 shadow-sm">
-    <div class="bg-gradient-to-r from-pastel-pinkDark via-pastel-purplePrimary to-pastel-greenDark text-white text-[11px] sm:text-xs py-1.5 px-4 text-center font-semibold tracking-wide">
+  <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-white/60 shadow-sm">
+    <div class="bg-gradient-to-r from-pastel-pinkDark via-pastel-blueDark to-pastel-pinkDark text-white text-[11px] sm:text-xs py-1.5 px-4 text-center font-semibold tracking-wide">
       🌸 Hub Pembelajaran Digital & Sistem Jualan | Soft & Modern
     </div>
 
@@ -74,13 +75,13 @@
         
         <!-- Logo Kedai & Maklumat Bisnes -->
         <a href="#home" onclick="navTo('home')" class="flex items-center gap-2.5 sm:gap-3 shrink-0 group">
-          <div id="brandLogoContainer" class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-tr from-pastel-purplePrimary to-pastel-redDark text-white flex items-center justify-center font-extrabold text-xl sm:text-2xl shadow-lg shadow-purple-200 group-hover:scale-105 transition-transform overflow-hidden">
+          <div id="brandLogoContainer" class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-tr from-pastel-blueDark to-pastel-pinkDark text-white flex items-center justify-center font-extrabold text-xl sm:text-2xl shadow-md shadow-blue-100 group-hover:scale-105 transition-transform overflow-hidden">
             <span id="brandLogoText">S</span>
             <img id="brandLogoImg" class="w-full h-full object-cover hidden" alt="Business Logo">
           </div>
           <div>
             <span id="brandNameDisplay" class="font-extrabold text-base sm:text-xl tracking-tight text-slate-900 block leading-none">Scha Digital</span>
-            <span id="brandSellerNameDisplay" class="text-[10px] sm:text-[11px] uppercase font-bold text-pastel-purplePrimary tracking-widest mt-0.5 sm:mt-1 block">Learning Hub</span>
+            <span id="brandSellerNameDisplay" class="text-[10px] sm:text-[11px] uppercase font-bold text-pastel-blueDark tracking-widest mt-0.5 sm:mt-1 block">Learning Hub</span>
           </div>
         </a>
 
@@ -92,7 +93,7 @@
               id="globalSearchInput"
               placeholder="Cari lembaran kerja, e-book, aplikasi..." 
               oninput="handleSearchInput(event)"
-              class="w-full pl-11 pr-4 py-2.5 bg-white/80 border border-white/60 rounded-2xl text-sm focus:bg-white focus:border-pastel-purplePrimary focus:outline-none focus:ring-4 focus:ring-purple-100 transition-all shadow-sm"
+              class="w-full pl-11 pr-4 py-2.5 bg-white/80 border border-slate-200 rounded-2xl text-sm focus:bg-white focus:border-pastel-blueDark focus:outline-none focus:ring-4 focus:ring-blue-100 transition-all shadow-sm"
             >
             <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-4 top-3.5"></i>
           </div>
@@ -100,23 +101,23 @@
 
         <!-- Desktop Nav Actions -->
         <div class="hidden md:flex items-center gap-3">
-          <button onclick="copyCatalogLink()" class="seller-only-element hidden text-xs font-bold bg-white/80 hover:bg-white text-slate-700 px-3 py-2.5 rounded-2xl border border-white/60 shadow-sm transition-all items-center gap-1.5" title="Salin Link Katalog">
-            <i data-lucide="share-2" class="w-4 h-4 text-pastel-purplePrimary"></i>
+          <button onclick="copyCatalogLink()" class="seller-only-element hidden text-xs font-bold bg-white/80 hover:bg-white text-slate-700 px-3 py-2.5 rounded-2xl border border-slate-200 shadow-sm transition-all items-center gap-1.5" title="Salin Link Katalog">
+            <i data-lucide="share-2" class="w-4 h-4 text-pastel-blueDark"></i>
             <span>Copy Link Katalog</span>
           </button>
 
-          <button onclick="navTo('shop')" class="text-sm font-bold text-slate-700 hover:text-pastel-purplePrimary px-3 py-2.5 rounded-2xl hover:bg-white/60 transition-colors">
+          <button onclick="navTo('shop')" class="text-sm font-bold text-slate-700 hover:text-pastel-blueDark px-3 py-2.5 rounded-2xl hover:bg-white/60 transition-colors">
             Katalog Kedai
           </button>
 
           <!-- Cart Button -->
-          <button onclick="navTo('cart')" class="relative p-2.5 text-slate-700 hover:text-pastel-purplePrimary bg-white/80 hover:bg-white rounded-2xl transition-all shadow-sm border border-white/60" title="Troli Sopping">
+          <button onclick="navTo('cart')" class="relative p-2.5 text-slate-700 hover:text-pastel-blueDark bg-white/80 hover:bg-white rounded-2xl transition-all shadow-sm border border-slate-200" title="Troli Sopping">
             <i data-lucide="shopping-bag" class="w-5 h-5"></i>
-            <span class="cartBadge absolute -top-1 -right-1 bg-pastel-redDark text-white text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center border-2 border-white hidden shadow-sm">0</span>
+            <span class="cartBadge absolute -top-1 -right-1 bg-pastel-pinkDark text-white text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center border-2 border-white hidden shadow-sm">0</span>
           </button>
 
-          <!-- Admin Button (Hanya Kelihatan untuk Admin/Seller) -->
-          <button id="navAdminBtn" onclick="handleAdminNavClick()" class="seller-only-element hidden text-xs font-bold text-white bg-slate-900 hover:bg-pastel-purplePrimary px-4 py-2.5 rounded-2xl transition-all shadow-sm flex items-center gap-1.5">
+          <!-- Admin Button -->
+          <button id="navAdminBtn" onclick="handleAdminNavClick()" class="seller-only-element hidden text-xs font-bold text-white bg-slate-900 hover:bg-pastel-blueDark px-4 py-2.5 rounded-2xl transition-all shadow-sm flex items-center gap-1.5">
             <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
             <span id="navAdminText">Admin Dashboard</span>
           </button>
@@ -124,12 +125,12 @@
 
         <!-- Cart Quick Access Mobile -->
         <div class="flex md:hidden items-center gap-2">
-          <button onclick="copyCatalogLink()" class="seller-only-element hidden p-2 text-slate-700 bg-white/80 rounded-xl border border-white/60" title="Copy Link Katalog">
-            <i data-lucide="share-2" class="w-4 h-4 text-pastel-purplePrimary"></i>
+          <button onclick="copyCatalogLink()" class="seller-only-element hidden p-2 text-slate-700 bg-white/80 rounded-xl border border-slate-200" title="Copy Link Katalog">
+            <i data-lucide="share-2" class="w-4 h-4 text-pastel-blueDark"></i>
           </button>
-          <button onclick="navTo('cart')" class="relative p-2 text-slate-700 bg-white/80 rounded-xl border border-white/60">
+          <button onclick="navTo('cart')" class="relative p-2 text-slate-700 bg-white/80 rounded-xl border border-slate-200">
             <i data-lucide="shopping-bag" class="w-5 h-5"></i>
-            <span class="cartBadge absolute -top-1 -right-1 bg-pastel-redDark text-white text-[9px] font-black w-4 h-4 rounded-full flex items-center justify-center border border-white hidden">0</span>
+            <span class="cartBadge absolute -top-1 -right-1 bg-pastel-pinkDark text-white text-[9px] font-black w-4 h-4 rounded-full flex items-center justify-center border border-white hidden">0</span>
           </button>
         </div>
       </div>
@@ -141,7 +142,7 @@
             type="text" 
             placeholder="Cari bahan..." 
             oninput="handleSearchInput(event)"
-            class="w-full pl-9 pr-4 py-2 bg-white/80 border border-white/60 rounded-xl text-xs focus:bg-white focus:border-pastel-purplePrimary focus:outline-none shadow-sm"
+            class="w-full pl-9 pr-4 py-2 bg-white/80 border border-slate-200 rounded-xl text-xs focus:bg-white focus:border-pastel-blueDark focus:outline-none shadow-sm"
           >
           <i data-lucide="search" class="w-3.5 h-3.5 text-slate-400 absolute left-3 top-2.5"></i>
         </div>
@@ -154,7 +155,7 @@
     
     <!-- VIEW 1: HOME PAGE -->
     <div id="view-home" class="view-section space-y-8 sm:space-y-12">
-      <div id="heroBanner" class="relative rounded-3xl overflow-hidden bg-hero-card text-white p-6 sm:p-12 shadow-xl shadow-purple-200/50 flex flex-col md:flex-row items-center justify-between gap-6 sm:gap-8">
+      <div id="heroBanner" class="relative rounded-3xl overflow-hidden bg-hero-card text-white p-6 sm:p-12 shadow-xl shadow-blue-100/50 flex flex-col md:flex-row items-center justify-between gap-6 sm:gap-8">
         <div class="space-y-4 sm:space-y-5 max-w-xl text-center md:text-left z-10">
           <span class="inline-flex items-center gap-1.5 bg-white/20 backdrop-blur-md px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wider text-white border border-white/30">
             <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> Koleksi Digital Premium
@@ -162,7 +163,7 @@
           <h1 id="bannerTitle" class="text-2xl sm:text-5xl font-extrabold leading-tight tracking-tight">
             Tingkatkan Pembelajaran Anak Lebih Kreatif
           </h1>
-          <p id="bannerDesc" class="text-xs sm:text-base text-purple-100 font-normal leading-relaxed">
+          <p id="bannerDesc" class="text-xs sm:text-base text-blue-50 font-normal leading-relaxed">
             Akses pantas kepada ratusan modul lembaran kerja, e-book, dan aplikasi latihan sekolah rendah & pra-sekolah.
           </p>
           <div class="pt-2 flex flex-wrap gap-3 justify-center md:justify-start">
@@ -181,7 +182,7 @@
           <div class="w-full max-w-[200px] sm:w-64 sm:h-64 bg-white/10 rounded-3xl border border-white/20 p-5 backdrop-blur-md flex flex-col items-center justify-center text-center shadow-2xl">
             <i data-lucide="book-open-check" class="w-12 h-12 sm:w-20 sm:h-20 text-white/90 mb-2 sm:mb-3 stroke-[1.5]"></i>
             <span class="text-xs sm:text-sm font-bold">100% Digital PDF / App</span>
-            <span class="text-[10px] sm:text-xs text-purple-200 mt-1">Muat Turun Serta Merta</span>
+            <span class="text-[10px] sm:text-xs text-blue-100 mt-1">Muat Turun Serta Merta</span>
           </div>
         </div>
       </div>
@@ -190,10 +191,10 @@
       <div>
         <div class="flex items-center justify-between mb-4 sm:mb-5">
           <h2 class="text-base sm:text-lg font-extrabold text-slate-900 flex items-center gap-2">
-            <i data-lucide="grid" class="w-4 h-4 sm:w-5 sm:h-5 text-pastel-redDark"></i>
+            <i data-lucide="grid" class="w-4 h-4 sm:w-5 sm:h-5 text-pastel-pinkDark"></i>
             Kategori Pilihan
           </h2>
-          <button onclick="navTo('shop')" class="text-xs font-bold text-pastel-purplePrimary hover:underline flex items-center gap-1">
+          <button onclick="navTo('shop')" class="text-xs font-bold text-pastel-blueDark hover:underline flex items-center gap-1">
             Lihat Semua <i data-lucide="chevron-right" class="w-3 h-3"></i>
           </button>
         </div>
@@ -210,7 +211,7 @@
             </h2>
             <p class="text-[11px] sm:text-xs text-slate-600 mt-0.5">Lembaran kerja paling banyak mendapat sambutan guru & ibu bapa</p>
           </div>
-          <button onclick="navTo('shop')" class="text-xs font-bold text-pastel-purplePrimary hover:underline">
+          <button onclick="navTo('shop')" class="text-xs font-bold text-pastel-blueDark hover:underline">
             Lihat Katalog Kedai
           </button>
         </div>
@@ -224,17 +225,17 @@
         <div class="flex flex-col md:flex-row gap-3 sm:gap-4 items-stretch md:items-center justify-between">
           <div class="flex flex-wrap gap-2 sm:gap-3 items-center">
             <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Tapis Kategori:</span>
-            <select id="filterCategorySelect" onchange="applyFilters()" class="text-xs font-semibold border border-slate-200 rounded-xl px-3 py-2 bg-slate-50 focus:bg-white focus:outline-none focus:border-pastel-purplePrimary">
+            <select id="filterCategorySelect" onchange="applyFilters()" class="text-xs font-semibold border border-slate-200 rounded-xl px-3 py-2 bg-slate-50 focus:bg-white focus:outline-none focus:border-pastel-blueDark">
               <option value="all">Semua Kategori</option>
             </select>
           </div>
 
           <div class="flex items-center gap-2">
-            <button onclick="copyCatalogLink()" class="seller-only-element hidden text-xs font-bold text-pastel-purplePrimary bg-purple-50 border border-purple-200 px-3 py-2 rounded-xl hover:bg-purple-100 transition-colors items-center gap-1">
+            <button onclick="copyCatalogLink()" class="seller-only-element hidden text-xs font-bold text-pastel-blueDark bg-blue-50 border border-blue-200 px-3 py-2 rounded-xl hover:bg-blue-100 transition-colors items-center gap-1">
               <i data-lucide="link" class="w-3.5 h-3.5"></i> Copy Link Katalog
             </button>
             <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Susun:</span>
-            <select id="sortBySelect" onchange="applyFilters()" class="text-xs font-semibold border border-slate-200 rounded-xl px-3 py-2 bg-slate-50 focus:bg-white focus:outline-none focus:border-pastel-purplePrimary">
+            <select id="sortBySelect" onchange="applyFilters()" class="text-xs font-semibold border border-slate-200 rounded-xl px-3 py-2 bg-slate-50 focus:bg-white focus:outline-none focus:border-pastel-blueDark">
               <option value="newest">Terbaharu</option>
               <option value="price-low">Harga: Rendah ke Tinggi</option>
               <option value="price-high">Harga: Tinggi ke Rendah</option>
@@ -255,7 +256,7 @@
           <i data-lucide="folder-search" class="w-12 h-12 text-slate-400 mx-auto"></i>
           <h3 class="text-base font-bold text-slate-700">Tiada bahan ditemui</h3>
           <p class="text-xs text-slate-500">Cuba ubah kata kunci carian atau tetapan tapisan anda.</p>
-          <button onclick="resetFilters()" class="text-xs font-bold bg-pastel-purplePrimary text-white px-5 py-2.5 rounded-xl shadow">
+          <button onclick="resetFilters()" class="text-xs font-bold bg-pastel-blueDark text-white px-5 py-2.5 rounded-xl shadow">
             Set Semula Carian
           </button>
         </div>
@@ -265,11 +266,11 @@
     <!-- VIEW 3: PRODUCT DETAIL -->
     <div id="view-product-detail" class="view-section hidden space-y-6">
       <div class="flex justify-between items-center">
-        <button onclick="navTo('shop')" class="text-xs font-bold text-slate-600 hover:text-pastel-purplePrimary inline-flex items-center gap-1 bg-white/80 px-3 py-2 rounded-xl border border-white shadow-sm">
+        <button onclick="navTo('shop')" class="text-xs font-bold text-slate-600 hover:text-pastel-blueDark inline-flex items-center gap-1 bg-white/80 px-3 py-2 rounded-xl border border-white shadow-sm">
           <i data-lucide="arrow-left" class="w-4 h-4"></i> Kembali ke Katalog Kedai
         </button>
 
-        <button id="copyProductLinkBtn" onclick="copyProductLink(currentDetailProductId)" class="seller-only-element hidden text-xs font-bold text-pastel-purplePrimary bg-white/90 border border-purple-200 hover:bg-purple-50 px-3 py-2 rounded-xl shadow-sm items-center gap-1.5 transition-all">
+        <button id="copyProductLinkBtn" onclick="copyProductLink(currentDetailProductId)" class="seller-only-element hidden text-xs font-bold text-pastel-blueDark bg-white/90 border border-blue-200 hover:bg-blue-50 px-3 py-2 rounded-xl shadow-sm items-center gap-1.5 transition-all">
           <i data-lucide="copy" class="w-3.5 h-3.5"></i> Salin Link Produk Ini
         </button>
       </div>
@@ -301,13 +302,13 @@
           <div class="space-y-5 sm:space-y-6 flex flex-col justify-between">
             <div class="space-y-3 sm:space-y-4">
               <div class="flex items-center justify-between">
-                <span id="detailCategory" class="text-xs font-extrabold text-pastel-purplePrimary uppercase tracking-wider">Kategori</span>
+                <span id="detailCategory" class="text-xs font-extrabold text-pastel-blueDark uppercase tracking-wider">Kategori</span>
                 <span id="detailStatus" class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-2.5 py-1 rounded-full">Stok Digital Sedia Ada</span>
               </div>
               <h1 id="detailTitle" class="text-xl sm:text-3xl font-extrabold text-slate-900 leading-tight">Tajuk Produk</h1>
               
               <div class="flex items-baseline gap-3 py-3 border-y border-slate-100">
-                <span id="detailPrice" class="text-2xl sm:text-3xl font-black text-pastel-purplePrimary">RM 0.00</span>
+                <span id="detailPrice" class="text-2xl sm:text-3xl font-black text-pastel-blueDark">RM 0.00</span>
                 <span id="detailOriginalPrice" class="text-xs sm:text-sm text-slate-400 line-through font-semibold hidden">RM 0.00</span>
               </div>
 
@@ -330,11 +331,11 @@
 
             <div class="pt-4 sm:pt-6 border-t border-slate-100 space-y-3">
               <div class="flex gap-3">
-                <button id="addToCartBtn" onclick="handleDetailAddToCart()" class="flex-1 border-2 border-pastel-purplePrimary text-pastel-purplePrimary hover:bg-purple-50 font-bold py-3 sm:py-3.5 px-3 rounded-2xl transition-all flex items-center justify-center gap-2 text-xs sm:text-sm">
+                <button id="addToCartBtn" onclick="handleDetailAddToCart()" class="flex-1 border-2 border-pastel-blueDark text-pastel-blueDark hover:bg-blue-50 font-bold py-3 sm:py-3.5 px-3 rounded-2xl transition-all flex items-center justify-center gap-2 text-xs sm:text-sm">
                   <i data-lucide="shopping-bag" class="w-4 h-4"></i>
                   <span>Tambah ke Troli</span>
                 </button>
-                <button id="buyNowBtn" onclick="handleDetailBuyNow()" class="flex-1 bg-gradient-to-r from-pastel-purplePrimary to-pastel-redDark text-white font-bold py-3 sm:py-3.5 px-3 rounded-2xl shadow-lg transition-all flex items-center justify-center gap-2 text-xs sm:text-sm">
+                <button id="buyNowBtn" onclick="handleDetailBuyNow()" class="flex-1 bg-gradient-to-r from-pastel-blueDark to-pastel-pinkDark text-white font-bold py-3 sm:py-3.5 px-3 rounded-2xl shadow-lg transition-all flex items-center justify-center gap-2 text-xs sm:text-sm">
                   <i data-lucide="zap" class="w-4 h-4"></i>
                   <span>Beli Sekarang</span>
                 </button>
@@ -348,7 +349,7 @@
     <!-- VIEW 4: SHOPPING CART -->
     <div id="view-cart" class="view-section hidden max-w-3xl mx-auto space-y-6">
       <h1 class="text-xl sm:text-2xl font-extrabold text-slate-900 flex items-center gap-2">
-        <i data-lucide="shopping-bag" class="w-6 h-6 text-pastel-purplePrimary"></i>
+        <i data-lucide="shopping-bag" class="w-6 h-6 text-pastel-blueDark"></i>
         Troli Sopping Anda
       </h1>
 
@@ -358,7 +359,7 @@
         <i data-lucide="shopping-bag" class="w-12 h-12 sm:w-16 sm:h-16 text-slate-300 mx-auto"></i>
         <h2 class="text-base sm:text-lg font-bold text-slate-800">Troli anda masih kosong</h2>
         <p class="text-xs text-slate-500 max-w-sm mx-auto">Sila pilih lembaran kerja atau bahan digital daripada kedai kami.</p>
-        <button onclick="navTo('shop')" class="bg-pastel-purplePrimary text-white font-bold text-xs px-6 py-3 rounded-xl hover:bg-pastel-purpleDark">
+        <button onclick="navTo('shop')" class="bg-pastel-blueDark text-white font-bold text-xs px-6 py-3 rounded-xl hover:bg-blue-700">
           Mula Membeli-belah
         </button>
       </div>
@@ -370,9 +371,9 @@
         </div>
         <div class="flex justify-between items-center text-sm sm:text-base border-t border-slate-100 pt-3">
           <span class="font-bold text-slate-900">Jumlah Keseluruhan:</span>
-          <span id="cartTotalPrice" class="font-extrabold text-xl sm:text-2xl text-pastel-purplePrimary">RM 0.00</span>
+          <span id="cartTotalPrice" class="font-extrabold text-xl sm:text-2xl text-pastel-blueDark">RM 0.00</span>
         </div>
-        <button onclick="navTo('checkout')" class="w-full bg-slate-900 hover:bg-pastel-purplePrimary text-white font-bold py-3.5 rounded-2xl shadow-lg transition-all flex items-center justify-center gap-2 text-xs sm:text-sm">
+        <button onclick="navTo('checkout')" class="w-full bg-slate-900 hover:bg-pastel-blueDark text-white font-bold py-3.5 rounded-2xl shadow-lg transition-all flex items-center justify-center gap-2 text-xs sm:text-sm">
           <span>Teruskan ke Checkout</span>
           <i data-lucide="arrow-right" class="w-4 h-4"></i>
         </button>
@@ -381,7 +382,7 @@
 
     <!-- VIEW 5: CHECKOUT PAGE -->
     <div id="view-checkout" class="view-section hidden max-w-2xl mx-auto space-y-6">
-      <button onclick="navTo('cart')" class="text-xs font-bold text-slate-600 hover:text-pastel-purplePrimary inline-flex items-center gap-1">
+      <button onclick="navTo('cart')" class="text-xs font-bold text-slate-600 hover:text-pastel-blueDark inline-flex items-center gap-1">
         <i data-lucide="arrow-left" class="w-4 h-4"></i> Kembali ke Troli
       </button>
 
@@ -398,7 +399,7 @@
               type="text" 
               id="customerNameInput" 
               placeholder="Masukkan nama penuh anda" 
-              class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-sm focus:bg-white focus:border-pastel-purplePrimary focus:outline-none focus:ring-4 focus:ring-purple-100"
+              class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-sm focus:bg-white focus:border-pastel-blueDark focus:outline-none focus:ring-4 focus:ring-blue-100"
             >
             <p id="nameError" class="text-[11px] text-rose-500 hidden mt-1">Sila masukkan nama anda sebelum meneruskan pesanan.</p>
           </div>
@@ -409,7 +410,7 @@
           <div id="checkoutItemsList" class="space-y-2 text-xs border-b border-slate-200 pb-3"></div>
           <div class="flex justify-between items-center text-sm font-extrabold text-slate-900 pt-1">
             <span>Jumlah Pembayaran:</span>
-            <span id="checkoutTotalPrice" class="text-pastel-purplePrimary text-lg sm:text-xl">RM 0.00</span>
+            <span id="checkoutTotalPrice" class="text-pastel-blueDark text-lg sm:text-xl">RM 0.00</span>
           </div>
         </div>
 
@@ -441,11 +442,11 @@
 
             <!-- MENU SIDEBAR -->
             <nav class="flex flex-col gap-2 w-full">
-              <button onclick="switchAdminTab('sales')" id="adminTabBtn-sales" class="admin-tab-btn flex items-center gap-2.5 px-3.5 py-2.5 rounded-2xl text-xs font-bold transition-all w-full text-left bg-pastel-purplePrimary text-white shadow-md">
+              <button onclick="switchAdminTab('sales')" id="adminTabBtn-sales" class="admin-tab-btn flex items-center gap-2.5 px-3.5 py-2.5 rounded-2xl text-xs font-bold transition-all w-full text-left bg-pastel-blueDark text-white shadow-md">
                 <i data-lucide="dollar-sign" class="w-4 h-4"></i> Sales Tracker
               </button>
               <button onclick="switchAdminTab('insights')" id="adminTabBtn-insights" class="admin-tab-btn flex items-center gap-2.5 px-3.5 py-2.5 rounded-2xl text-xs font-bold transition-all w-full text-left text-slate-400 hover:bg-slate-800 hover:text-white">
-                <i data-lucide="line-chart" class="w-4 h-4"></i> Insights
+                <i data-lucide="line-chart" class="w-4 h-4"></i> Insights & Graf
               </button>
               <button onclick="switchAdminTab('history')" id="adminTabBtn-history" class="admin-tab-btn flex items-center gap-2.5 px-3.5 py-2.5 rounded-2xl text-xs font-bold transition-all w-full text-left text-slate-400 hover:bg-slate-800 hover:text-white">
                 <i data-lucide="history" class="w-4 h-4"></i> History
@@ -474,7 +475,7 @@
               <button onclick="openAdminModal('login')" class="w-full bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold py-2.5 rounded-xl border border-slate-700 transition-all flex items-center justify-center gap-2">
                 <i data-lucide="log-in" class="w-4 h-4"></i> Log In Seller
               </button>
-              <button onclick="openAdminModal('signup')" class="w-full bg-pastel-purplePrimary hover:bg-purple-600 text-white text-xs font-bold py-2.5 rounded-xl transition-all shadow flex items-center justify-center gap-2">
+              <button onclick="openAdminModal('signup')" class="w-full bg-pastel-blueDark hover:bg-blue-600 text-white text-xs font-bold py-2.5 rounded-xl transition-all shadow flex items-center justify-center gap-2">
                 <i data-lucide="user-plus" class="w-4 h-4"></i> Sign Up Seller
               </button>
             </div>
@@ -490,46 +491,50 @@
           
           <!-- SALES TRACKER -->
           <div id="adminTab-sales" class="admin-tab-content space-y-6">
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <div class="bg-white/90 backdrop-blur-md p-5 rounded-3xl border border-white/80 shadow-sm space-y-1">
-                <span class="text-xs font-bold text-slate-500 uppercase">Jumlah Revenue Keseluruhan</span>
-                <div id="statTotalRevenue" class="text-2xl sm:text-3xl font-black text-pastel-purplePrimary">RM 0.00</div>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+              <div class="bg-white/90 backdrop-blur-md p-4 sm:p-5 rounded-3xl border border-white/80 shadow-sm space-y-1">
+                <span class="text-[10px] sm:text-xs font-bold text-slate-500 uppercase">Jualan Hari Ini</span>
+                <div id="statSalesToday" class="text-xl sm:text-2xl font-black text-emerald-600">RM 0.00</div>
               </div>
-              <div class="bg-white/90 backdrop-blur-md p-5 rounded-3xl border border-white/80 shadow-sm space-y-1">
-                <span class="text-xs font-bold text-slate-500 uppercase">Jumlah Jualan Hari Ini</span>
-                <div id="statSalesToday" class="text-2xl sm:text-3xl font-black text-emerald-600">RM 0.00</div>
+              <div class="bg-white/90 backdrop-blur-md p-4 sm:p-5 rounded-3xl border border-white/80 shadow-sm space-y-1">
+                <span class="text-[10px] sm:text-xs font-bold text-slate-500 uppercase">Jualan Semalam</span>
+                <div id="statSalesYesterday" class="text-xl sm:text-2xl font-black text-amber-600">RM 0.00</div>
               </div>
-              <div class="bg-white/90 backdrop-blur-md p-5 rounded-3xl border border-white/80 shadow-sm space-y-1">
-                <span class="text-xs font-bold text-slate-500 uppercase">Jumlah Jualan Bulan Ini</span>
-                <div id="statSalesMonth" class="text-2xl sm:text-3xl font-black text-blue-600">RM 0.00</div>
+              <div class="bg-white/90 backdrop-blur-md p-4 sm:p-5 rounded-3xl border border-white/80 shadow-sm space-y-1">
+                <span class="text-[10px] sm:text-xs font-bold text-slate-500 uppercase">Jualan Minggu Ini</span>
+                <div id="statSalesThisWeek" class="text-xl sm:text-2xl font-black text-pastel-blueDark">RM 0.00</div>
+              </div>
+              <div class="bg-white/90 backdrop-blur-md p-4 sm:p-5 rounded-3xl border border-white/80 shadow-sm space-y-1">
+                <span class="text-[10px] sm:text-xs font-bold text-slate-500 uppercase">Jumlah Bulan Ini</span>
+                <div id="statSalesMonth" class="text-xl sm:text-2xl font-black text-pink-600">RM 0.00</div>
               </div>
             </div>
 
             <!-- Form Add Sale -->
             <div class="bg-white/90 backdrop-blur-md p-6 rounded-3xl border border-white/80 shadow-sm space-y-4">
               <h2 class="text-base font-bold text-slate-900 flex items-center gap-2">
-                <i data-lucide="plus-circle" class="w-5 h-5 text-pastel-purplePrimary"></i>
+                <i data-lucide="plus-circle" class="w-5 h-5 text-pastel-blueDark"></i>
                 Rekod Jualan Baharu (Add Sale)
               </h2>
               <form onsubmit="handleManualAddSale(event)" class="grid grid-cols-1 sm:grid-cols-5 gap-3 text-xs">
                 <div>
                   <label class="block font-bold text-slate-700 mb-1">Nama Pelanggan</label>
-                  <input type="text" id="saleCustName" required class="w-full px-3 py-2 border border-slate-200 rounded-xl focus:outline-none focus:border-pastel-purplePrimary" placeholder="Ahmad Ali">
+                  <input type="text" id="saleCustName" required class="w-full px-3 py-2 border border-slate-200 rounded-xl focus:outline-none focus:border-pastel-blueDark" placeholder="Ahmad Ali">
                 </div>
                 <div>
                   <label class="block font-bold text-slate-700 mb-1">Pilih Produk</label>
-                  <select id="saleSelectProduct" onchange="autoFillSaleAmount()" class="w-full px-3 py-2 border border-slate-200 rounded-xl focus:outline-none focus:border-pastel-purplePrimary"></select>
+                  <select id="saleSelectProduct" onchange="autoFillSaleAmount()" class="w-full px-3 py-2 border border-slate-200 rounded-xl focus:outline-none focus:border-pastel-blueDark"></select>
                 </div>
                 <div>
                   <label class="block font-bold text-slate-700 mb-1">Jumlah Amaun (RM)</label>
-                  <input type="number" step="0.01" id="saleAmount" required class="w-full px-3 py-2 border border-slate-200 rounded-xl focus:outline-none focus:border-pastel-purplePrimary" placeholder="0.00">
+                  <input type="number" step="0.01" id="saleAmount" required class="w-full px-3 py-2 border border-slate-200 rounded-xl focus:outline-none focus:border-pastel-blueDark" placeholder="0.00">
                 </div>
                 <div>
                   <label class="block font-bold text-slate-700 mb-1">Tarikh Jualan</label>
-                  <input type="date" id="saleDate" required class="w-full px-3 py-2 border border-slate-200 rounded-xl focus:outline-none focus:border-pastel-purplePrimary">
+                  <input type="date" id="saleDate" required class="w-full px-3 py-2 border border-slate-200 rounded-xl focus:outline-none focus:border-pastel-blueDark">
                 </div>
                 <div class="flex items-end">
-                  <button type="submit" class="w-full bg-pastel-purplePrimary hover:bg-pastel-purpleDark text-white font-bold py-2.5 rounded-xl shadow transition-colors">
+                  <button type="submit" class="w-full bg-pastel-blueDark hover:bg-blue-700 text-white font-bold py-2.5 rounded-xl shadow transition-colors">
                     Rekod Jualan
                   </button>
                 </div>
@@ -537,31 +542,63 @@
             </div>
           </div>
 
-          <!-- INSIGHTS -->
+          <!-- INSIGHTS & GRAF (KEMAS, KEMAS & TIDAK AUTO SCROLL) -->
           <div id="adminTab-insights" class="admin-tab-content hidden space-y-6">
-            <div class="bg-white/90 backdrop-blur-md p-6 rounded-3xl border border-white/80 shadow-sm space-y-4">
-              <h2 class="text-base font-bold text-slate-900 flex items-center gap-2">
-                <i data-lucide="bar-chart-2" class="w-5 h-5 text-pastel-purplePrimary"></i>
-                Prestasi & Ringkasan Jualan
-              </h2>
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="bg-slate-50/80 p-4 rounded-2xl border border-slate-200/80">
-                  <h3 class="text-xs font-bold text-slate-700 mb-3">Tren Jualan 7 Hari Terakhir</h3>
-                  <canvas id="salesChart" class="w-full h-48"></canvas>
+            <div class="bg-white/90 backdrop-blur-md p-5 sm:p-6 rounded-3xl border border-white/80 shadow-sm space-y-6">
+              <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                <h2 class="text-base font-bold text-slate-900 flex items-center gap-2">
+                  <i data-lucide="bar-chart-2" class="w-5 h-5 text-pastel-blueDark"></i>
+                  Ringkasan Insights & Analisis Prestasi
+                </h2>
+                <span class="text-[10px] bg-blue-50 text-pastel-blueDark font-bold px-2.5 py-1 rounded-full border border-blue-100">Live Analytics</span>
+              </div>
+
+              <!-- Ruangan Graf Dikecilkan & Kemas -->
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Carta Jualan (2 Kolum) -->
+                <div class="md:col-span-2 bg-slate-50/80 p-4 rounded-2xl border border-slate-200/80">
+                  <h3 class="text-xs font-bold text-slate-700 mb-2 flex items-center gap-1.5">
+                    <i data-lucide="trending-up" class="w-4 h-4 text-emerald-500"></i> Tren Jualan 7 Hari Terakhir
+                  </h3>
+                  <!-- Container Had Ketinggian Graf Supaya Tidak Terlalu Panjang -->
+                  <div class="relative w-full h-56 sm:h-64">
+                    <canvas id="salesChart"></canvas>
+                  </div>
                 </div>
-                <div class="bg-slate-50/80 p-4 rounded-2xl border border-slate-200/80 space-y-3 text-xs">
-                  <h3 class="text-xs font-bold text-slate-700">Analisis Ringkas</h3>
-                  <div class="flex justify-between py-2 border-b border-slate-200">
-                    <span class="text-slate-600">Purata Nilai Pesanan:</span>
-                    <span id="insightAvgOrder" class="font-bold text-slate-900">RM 0.00</span>
+
+                <!-- Kad Prestasi Ringkas (1 Kolum) -->
+                <div class="bg-gradient-to-br from-pastel-pinkSoft to-pastel-blueSoft p-4 sm:p-5 rounded-2xl border border-white shadow-sm flex flex-col justify-between space-y-4">
+                  <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider border-b border-pink-200/60 pb-2">Analisis Prestasi</h3>
+                  
+                  <div class="space-y-3 text-xs">
+                    <div class="flex justify-between items-center py-1 border-b border-slate-200/50">
+                      <span class="text-slate-600">Jualan Hari Ini:</span>
+                      <span id="insightTodaySales" class="font-bold text-emerald-600">RM 0.00</span>
+                    </div>
+                    <div class="flex justify-between items-center py-1 border-b border-slate-200/50">
+                      <span class="text-slate-600">Jualan Semalam:</span>
+                      <span id="insightYesterdaySales" class="font-bold text-amber-600">RM 0.00</span>
+                    </div>
+                    <div class="flex justify-between items-center py-1 border-b border-slate-200/50">
+                      <span class="text-slate-600">Jualan Minggu Ini:</span>
+                      <span id="insightThisWeekSales" class="font-bold text-pastel-blueDark">RM 0.00</span>
+                    </div>
+                    <div class="flex justify-between items-center py-1 border-b border-slate-200/50">
+                      <span class="text-slate-600">Purata Nilai Pesanan:</span>
+                      <span id="insightAvgOrder" class="font-bold text-slate-900">RM 0.00</span>
+                    </div>
+                    <div class="flex justify-between items-center py-1 border-b border-slate-200/50">
+                      <span class="text-slate-600">Jumlah Pesanan:</span>
+                      <span id="insightTotalOrders" class="font-bold text-slate-900">0</span>
+                    </div>
+                    <div class="flex justify-between items-center py-1">
+                      <span class="text-slate-600">Produk Terlaris:</span>
+                      <span id="insightTopProduct" class="font-extrabold text-pastel-pinkDark truncate max-w-[120px]">-</span>
+                    </div>
                   </div>
-                  <div class="flex justify-between py-2 border-b border-slate-200">
-                    <span class="text-slate-600">Jumlah Pesanan Direkod:</span>
-                    <span id="insightTotalOrders" class="font-bold text-slate-900">0</span>
-                  </div>
-                  <div class="flex justify-between py-2 border-b border-slate-200">
-                    <span class="text-slate-600">Produk Terlaris:</span>
-                    <span id="insightTopProduct" class="font-bold text-pastel-purplePrimary">-</span>
+
+                  <div class="pt-2 text-[10px] text-slate-500 text-center font-medium">
+                    Data dikemaskini secara automatik
                   </div>
                 </div>
               </div>
@@ -572,7 +609,7 @@
           <div id="adminTab-history" class="admin-tab-content hidden space-y-6">
             <div class="bg-white/90 backdrop-blur-md rounded-3xl border border-white/80 shadow-sm overflow-hidden p-6 space-y-4">
               <h2 class="text-base font-bold text-slate-900 flex items-center gap-2">
-                <i data-lucide="history" class="w-5 h-5 text-pastel-purplePrimary"></i>
+                <i data-lucide="history" class="w-5 h-5 text-pastel-blueDark"></i>
                 Rekod Jualan Lalu (Sales History)
               </h2>
               <div class="overflow-x-auto">
@@ -596,7 +633,7 @@
           <div id="adminTab-reports" class="admin-tab-content hidden space-y-6">
             <div class="bg-white/90 backdrop-blur-md p-6 rounded-3xl border border-white/80 shadow-sm space-y-4">
               <h2 class="text-base font-bold text-slate-900 flex items-center gap-2">
-                <i data-lucide="file-spreadsheet" class="w-5 h-5 text-pastel-purplePrimary"></i>
+                <i data-lucide="file-spreadsheet" class="w-5 h-5 text-pastel-blueDark"></i>
                 Laporan Jualan (Sales Reports)
               </h2>
               <p class="text-xs text-slate-600">Eksport laporan jualan penuh ke dalam format CSV untuk simpanan atau penyata kira-kira.</p>
@@ -612,7 +649,7 @@
           <div id="adminTab-products" class="admin-tab-content hidden space-y-6">
             <div class="flex justify-between items-center">
               <h2 class="text-base sm:text-lg font-bold text-slate-900">Senarai Produk Katalog</h2>
-              <button onclick="openProductModal()" class="bg-pastel-purplePrimary hover:bg-pastel-purpleDark text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow transition-colors inline-flex items-center gap-1.5">
+              <button onclick="openProductModal()" class="bg-pastel-blueDark hover:bg-blue-700 text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow transition-colors inline-flex items-center gap-1.5">
                 <i data-lucide="plus" class="w-4 h-4"></i> Tambah Produk
               </button>
             </div>
@@ -639,7 +676,7 @@
           <div id="adminTab-categories" class="admin-tab-content hidden space-y-6">
             <div class="flex justify-between items-center">
               <h2 class="text-base sm:text-lg font-bold text-slate-900">Senarai Kategori Produk</h2>
-              <button onclick="openCategoryModal()" class="bg-pastel-purplePrimary hover:bg-pastel-purpleDark text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow transition-colors inline-flex items-center gap-1.5">
+              <button onclick="openCategoryModal()" class="bg-pastel-blueDark hover:bg-blue-700 text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow transition-colors inline-flex items-center gap-1.5">
                 <i data-lucide="plus" class="w-4 h-4"></i> Tambah Kategori
               </button>
             </div>
@@ -669,19 +706,19 @@
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
                 <div>
                   <label class="block font-bold text-slate-700 mb-1">Nama Bisnes / Kedai</label>
-                  <input type="text" id="settingStoreName" class="w-full px-3 py-2 border border-slate-200 rounded-xl focus:outline-none focus:border-pastel-purplePrimary">
+                  <input type="text" id="settingStoreName" class="w-full px-3 py-2 border border-slate-200 rounded-xl focus:outline-none focus:border-pastel-blueDark">
                 </div>
                 <div>
                   <label class="block font-bold text-slate-700 mb-1">Nama Seller</label>
-                  <input type="text" id="settingSellerName" class="w-full px-3 py-2 border border-slate-200 rounded-xl focus:outline-none focus:border-pastel-purplePrimary" placeholder="Puan Scha">
+                  <input type="text" id="settingSellerName" class="w-full px-3 py-2 border border-slate-200 rounded-xl focus:outline-none focus:border-pastel-blueDark" placeholder="Puan Scha">
                 </div>
                 <div>
                   <label class="block font-bold text-slate-700 mb-1">Nombor Telefon Kontak</label>
-                  <input type="text" id="settingContactNo" class="w-full px-3 py-2 border border-slate-200 rounded-xl focus:outline-none focus:border-pastel-purplePrimary" placeholder="60123456789">
+                  <input type="text" id="settingContactNo" class="w-full px-3 py-2 border border-slate-200 rounded-xl focus:outline-none focus:border-pastel-blueDark" placeholder="60123456789">
                 </div>
                 <div>
                   <label class="block font-bold text-slate-700 mb-1">E-mel Bisnes</label>
-                  <input type="email" id="settingEmail" class="w-full px-3 py-2 border border-slate-200 rounded-xl focus:outline-none focus:border-pastel-purplePrimary" placeholder="scha@example.com">
+                  <input type="email" id="settingEmail" class="w-full px-3 py-2 border border-slate-200 rounded-xl focus:outline-none focus:border-pastel-blueDark" placeholder="scha@example.com">
                 </div>
               </div>
 
@@ -694,14 +731,14 @@
                 </div>
                 <div class="space-y-2 text-xs w-full">
                   <input type="file" id="businessLogoInput" accept="image/*" onchange="handleLogoUpload(event)" class="hidden">
-                  <button type="button" onclick="document.getElementById('businessLogoInput').click()" class="bg-purple-50 text-pastel-purplePrimary font-bold px-4 py-2 rounded-xl border border-purple-200 hover:bg-purple-100 transition-colors inline-flex items-center gap-1.5">
+                  <button type="button" onclick="document.getElementById('businessLogoInput').click()" class="bg-blue-50 text-pastel-blueDark font-bold px-4 py-2 rounded-xl border border-blue-200 hover:bg-blue-100 transition-colors inline-flex items-center gap-1.5">
                     <i data-lucide="upload" class="w-4 h-4"></i> Muat Naik Logo (Auto Compress)
                   </button>
                   <p class="text-[11px] text-slate-500">Gambar dipantaskan & dimampatkan automatik untuk kelajuan muat naik pantas.</p>
                 </div>
               </div>
 
-              <button onclick="saveBusinessSettings()" class="bg-pastel-purplePrimary hover:bg-pastel-purpleDark text-white text-xs font-bold px-5 py-2.5 rounded-xl shadow">
+              <button onclick="saveBusinessSettings()" class="bg-pastel-blueDark hover:bg-blue-700 text-white text-xs font-bold px-5 py-2.5 rounded-xl shadow">
                 Simpan Maklumat Bisnes
               </button>
             </div>
@@ -715,20 +752,20 @@
               <div class="space-y-4 text-xs">
                 <div>
                   <label class="block font-bold text-slate-700 mb-1">Nombor WhatsApp Kedai (Format: 60123456789)</label>
-                  <input type="text" id="settingWaNumber" class="w-full px-3 py-2 border border-slate-200 rounded-xl focus:outline-none focus:border-pastel-purplePrimary" placeholder="60123456789">
+                  <input type="text" id="settingWaNumber" class="w-full px-3 py-2 border border-slate-200 rounded-xl focus:outline-none focus:border-pastel-blueDark" placeholder="60123456789">
                 </div>
                 <div>
                   <label class="block font-bold text-slate-700 mb-1">Label Butang Checkout WhatsApp</label>
-                  <input type="text" id="settingWaButtonLabel" class="w-full px-3 py-2 border border-slate-200 rounded-xl focus:outline-none focus:border-pastel-purplePrimary" placeholder="Order Melalui WhatsApp">
+                  <input type="text" id="settingWaButtonLabel" class="w-full px-3 py-2 border border-slate-200 rounded-xl focus:outline-none focus:border-pastel-blueDark" placeholder="Order Melalui WhatsApp">
                 </div>
                 <div>
                   <label class="block font-bold text-slate-700 mb-1">Template Mesej Pesanan Dinamik</label>
                   <p class="text-[11px] text-slate-500 mb-1.5">Gunakan tag: <code>{STORE_NAME}</code>, <code>{CUSTOMER_NAME}</code>, <code>{ITEMS}</code>, <code>{TOTAL}</code></p>
-                  <textarea id="settingWaTemplate" rows="6" class="w-full px-3 py-2 border border-slate-200 rounded-xl font-mono focus:outline-none focus:border-pastel-purplePrimary"></textarea>
+                  <textarea id="settingWaTemplate" rows="6" class="w-full px-3 py-2 border border-slate-200 rounded-xl font-mono focus:outline-none focus:border-pastel-blueDark"></textarea>
                 </div>
               </div>
 
-              <button onclick="saveWaSettings()" class="bg-pastel-purplePrimary hover:bg-pastel-purpleDark text-white text-xs font-bold px-5 py-2.5 rounded-xl shadow">
+              <button onclick="saveWaSettings()" class="bg-pastel-blueDark hover:bg-blue-700 text-white text-xs font-bold px-5 py-2.5 rounded-xl shadow">
                 Simpan Konfigurasi WhatsApp
               </button>
             </div>
@@ -740,22 +777,22 @@
 
   <!-- MOBILE BOTTOM NAVIGATION (KHAS CUSTOMER VIEW) -->
   <div class="md:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-200 z-40 py-2.5 px-6 flex justify-around items-center shadow-lg">
-    <button onclick="navTo('home')" class="flex flex-col items-center text-slate-600 hover:text-pastel-purplePrimary transition-colors">
+    <button onclick="navTo('home')" class="flex flex-col items-center text-slate-600 hover:text-pastel-blueDark transition-colors">
       <i data-lucide="home" class="w-5 h-5"></i>
       <span class="text-[10px] font-bold mt-1">Utama</span>
     </button>
-    <button onclick="navTo('shop')" class="flex flex-col items-center text-slate-600 hover:text-pastel-purplePrimary transition-colors">
+    <button onclick="navTo('shop')" class="flex flex-col items-center text-slate-600 hover:text-pastel-blueDark transition-colors">
       <i data-lucide="grid" class="w-5 h-5"></i>
       <span class="text-[10px] font-bold mt-1">Katalog</span>
     </button>
-    <button onclick="navTo('cart')" class="flex flex-col items-center text-slate-600 hover:text-pastel-purplePrimary transition-colors relative">
+    <button onclick="navTo('cart')" class="flex flex-col items-center text-slate-600 hover:text-pastel-blueDark transition-colors relative">
       <i data-lucide="shopping-bag" class="w-5 h-5"></i>
-      <span class="cartBadge absolute -top-1 right-2 bg-pastel-redDark text-white text-[9px] font-black w-4 h-4 rounded-full flex items-center justify-center border border-white hidden">0</span>
+      <span class="cartBadge absolute -top-1 right-2 bg-pastel-pinkDark text-white text-[9px] font-black w-4 h-4 rounded-full flex items-center justify-center border border-white hidden">0</span>
       <span class="text-[10px] font-bold mt-1">Troli</span>
     </button>
 
-    <!-- Admin Button (HANYA MUNCUL JIKA ADMIN / SELLER TELAH LOG IN) -->
-    <button onclick="handleAdminBottomNav()" class="seller-only-element hidden flex-col items-center text-slate-600 hover:text-pastel-purplePrimary transition-colors relative">
+    <!-- Admin Button -->
+    <button onclick="handleAdminBottomNav()" class="seller-only-element hidden flex-col items-center text-slate-600 hover:text-pastel-blueDark transition-colors relative">
       <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
       <span class="text-[10px] font-bold mt-1">Admin</span>
     </button>
@@ -783,7 +820,7 @@
         <span class="font-bold text-white block uppercase tracking-wider text-[11px]">Penjual & Sokongan</span>
         <p class="text-slate-400">Penghantaran produk dilakukan secara manual/automatik selepas pengesahan pesanan melalui WhatsApp rasmi kedai.</p>
         <div class="pt-2">
-          <button onclick="openAdminModal('login')" class="text-[11px] font-bold text-purple-300 hover:text-white underline inline-flex items-center gap-1">
+          <button onclick="openAdminModal('login')" class="text-[11px] font-bold text-blue-300 hover:text-white underline inline-flex items-center gap-1">
             <i data-lucide="layout-dashboard" class="w-3.5 h-3.5"></i> Log Masuk Admin / Seller
           </button>
         </div>
@@ -814,7 +851,7 @@
       </button>
 
       <div class="text-center space-y-2">
-        <div class="w-12 h-12 bg-purple-50 text-pastel-purplePrimary rounded-2xl flex items-center justify-center mx-auto">
+        <div class="w-12 h-12 bg-blue-50 text-pastel-blueDark rounded-2xl flex items-center justify-center mx-auto">
           <i data-lucide="user-check" class="w-6 h-6"></i>
         </div>
         <h3 class="text-lg font-extrabold text-slate-900">Akaun Admin Penjual</h3>
@@ -822,7 +859,7 @@
       </div>
 
       <div class="flex border-b border-slate-100 text-xs font-bold text-center">
-        <button id="authTabLoginBtn" onclick="switchAuthMode('login')" class="flex-1 py-2 border-b-2 border-pastel-purplePrimary text-pastel-purplePrimary">
+        <button id="authTabLoginBtn" onclick="switchAuthMode('login')" class="flex-1 py-2 border-b-2 border-pastel-blueDark text-pastel-blueDark">
           Log In
         </button>
         <button id="authTabSignupBtn" onclick="switchAuthMode('signup')" class="flex-1 py-2 border-b-2 border-transparent text-slate-400 hover:text-slate-700">
@@ -833,13 +870,13 @@
       <div id="sellerLoginForm" class="space-y-4">
         <div>
           <label class="block text-xs font-bold text-slate-700 mb-1">Username / E-mel</label>
-          <input type="email" id="adminUsernameInput" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-xs focus:ring-4 focus:ring-purple-100 focus:border-pastel-purplePrimary outline-none mb-3" placeholder="seller@domain.com">
+          <input type="email" id="adminUsernameInput" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-xs focus:ring-4 focus:ring-blue-100 focus:border-pastel-blueDark outline-none mb-3" placeholder="seller@domain.com">
           
           <label class="block text-xs font-bold text-slate-700 mb-1">Kata Laluan</label>
-          <input type="password" id="adminPasswordInput" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-xs focus:ring-4 focus:ring-purple-100 focus:border-pastel-purplePrimary outline-none" placeholder="••••••••">
+          <input type="password" id="adminPasswordInput" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-xs focus:ring-4 focus:ring-blue-100 focus:border-pastel-blueDark outline-none" placeholder="••••••••">
           <p id="adminAuthError" class="text-[11px] text-rose-500 hidden mt-1">E-mel atau kata laluan tidak sah.</p>
         </div>
-        <button onclick="loginAdmin()" class="w-full bg-slate-900 hover:bg-pastel-purplePrimary text-white font-bold text-xs py-3 rounded-xl transition-all shadow-md">
+        <button onclick="loginAdmin()" class="w-full bg-slate-900 hover:bg-pastel-blueDark text-white font-bold text-xs py-3 rounded-xl transition-all shadow-md">
           Log Masuk Akaun
         </button>
       </div>
@@ -847,17 +884,17 @@
       <div id="sellerSignupForm" class="space-y-3 hidden">
         <div>
           <label class="block text-xs font-bold text-slate-700 mb-1">Nama Kedai / Bisnes</label>
-          <input type="text" id="signupStoreName" class="w-full px-4 py-2 border border-slate-200 rounded-xl text-xs outline-none focus:border-pastel-purplePrimary" placeholder="Contoh: Kedai Buku Scha">
+          <input type="text" id="signupStoreName" class="w-full px-4 py-2 border border-slate-200 rounded-xl text-xs outline-none focus:border-pastel-blueDark" placeholder="Contoh: Kedai Buku Scha">
         </div>
         <div>
           <label class="block text-xs font-bold text-slate-700 mb-1">E-mel Penjual</label>
-          <input type="email" id="signupEmail" class="w-full px-4 py-2 border border-slate-200 rounded-xl text-xs outline-none focus:border-pastel-purplePrimary" placeholder="seller@domain.com">
+          <input type="email" id="signupEmail" class="w-full px-4 py-2 border border-slate-200 rounded-xl text-xs outline-none focus:border-pastel-blueDark" placeholder="seller@domain.com">
         </div>
         <div>
           <label class="block text-xs font-bold text-slate-700 mb-1">Cipta Kata Laluan</label>
-          <input type="password" id="signupPassword" class="w-full px-4 py-2 border border-slate-200 rounded-xl text-xs outline-none focus:border-pastel-purplePrimary" placeholder="••••••••">
+          <input type="password" id="signupPassword" class="w-full px-4 py-2 border border-slate-200 rounded-xl text-xs outline-none focus:border-pastel-blueDark" placeholder="••••••••">
         </div>
-        <button onclick="signupAdmin()" class="w-full bg-pastel-purplePrimary hover:bg-pastel-purpleDark text-white font-bold text-xs py-3 rounded-xl transition-all shadow-md mt-2">
+        <button onclick="signupAdmin()" class="w-full bg-pastel-blueDark hover:bg-blue-700 text-white font-bold text-xs py-3 rounded-xl transition-all shadow-md mt-2">
           Daftar Akaun Admin
         </button>
       </div>
@@ -879,11 +916,11 @@
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
           <div class="sm:col-span-2">
             <label class="block font-bold text-slate-700 mb-1">Tajuk Produk *</label>
-            <input type="text" id="pTitle" required class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl focus:outline-none focus:border-pastel-purplePrimary" placeholder="Contoh: Lembaran Kerja Matematik">
+            <input type="text" id="pTitle" required class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl focus:outline-none focus:border-pastel-blueDark" placeholder="Contoh: Lembaran Kerja Matematik">
           </div>
           <div>
             <label class="block font-bold text-slate-700 mb-1">Kategori *</label>
-            <select id="pCategory" required class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl focus:outline-none focus:border-pastel-purplePrimary"></select>
+            <select id="pCategory" required class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl focus:outline-none focus:border-pastel-blueDark"></select>
           </div>
         </div>
 
@@ -896,13 +933,13 @@
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
               <label class="block font-bold text-slate-700 mb-1">Harga Asas / Asal (RM) *</label>
-              <input type="number" step="0.01" id="pBasePrice" required oninput="calculatePromoPrice()" class="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl focus:outline-none focus:border-pastel-purplePrimary" placeholder="0.00">
+              <input type="number" step="0.01" id="pBasePrice" required oninput="calculatePromoPrice()" class="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl focus:outline-none focus:border-pastel-blueDark" placeholder="0.00">
             </div>
 
             <div>
               <label class="block font-bold text-slate-700 mb-1">Jenis Promo (Pilihan)</label>
               <div class="flex gap-2">
-                <button type="button" id="promoTypeRMBtn" onclick="setPromoType('RM')" class="flex-1 py-2 font-bold rounded-xl border border-pastel-purplePrimary bg-pastel-purplePrimary text-white transition-all text-center">
+                <button type="button" id="promoTypeRMBtn" onclick="setPromoType('RM')" class="flex-1 py-2 font-bold rounded-xl border border-pastel-blueDark bg-pastel-blueDark text-white transition-all text-center">
                   RM
                 </button>
                 <button type="button" id="promoTypePctBtn" onclick="setPromoType('PCT')" class="flex-1 py-2 font-bold rounded-xl border border-slate-200 bg-white text-slate-600 transition-all text-center">
@@ -915,7 +952,7 @@
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
             <div>
               <label id="promoValueLabel" class="block font-bold text-slate-700 mb-1">Nilai Promo (RM)</label>
-              <input type="number" step="0.01" id="pPromoValue" oninput="calculatePromoPrice()" class="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl focus:outline-none focus:border-pastel-purplePrimary" placeholder="Contoh: 5.00 atau 10">
+              <input type="number" step="0.01" id="pPromoValue" oninput="calculatePromoPrice()" class="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl focus:outline-none focus:border-pastel-blueDark" placeholder="Contoh: 5.00 atau 10">
             </div>
 
             <div>
@@ -930,11 +967,11 @@
             <label class="block font-bold text-slate-700">
               Muat Naik Gambar Produk <span class="text-slate-400 font-normal">(Maksimum 10 gambar)</span>
             </label>
-            <span id="imageCountLabel" class="text-[11px] font-bold text-pastel-purplePrimary">0/10 gambar</span>
+            <span id="imageCountLabel" class="text-[11px] font-bold text-pastel-blueDark">0/10 gambar</span>
           </div>
           <input type="file" id="pImagesInput" accept="image/*" multiple onchange="handleImageUpload(event)" class="hidden">
-          <button type="button" onclick="document.getElementById('pImagesInput').click()" class="w-full py-3 px-4 border-2 border-dashed border-slate-200 rounded-2xl hover:border-pastel-purplePrimary hover:bg-purple-50/50 transition-colors flex items-center justify-center gap-2 text-slate-600 font-semibold">
-            <i data-lucide="image" class="w-4 h-4 text-pastel-purplePrimary"></i>
+          <button type="button" onclick="document.getElementById('pImagesInput').click()" class="w-full py-3 px-4 border-2 border-dashed border-slate-200 rounded-2xl hover:border-pastel-blueDark hover:bg-blue-50/50 transition-colors flex items-center justify-center gap-2 text-slate-600 font-semibold">
+            <i data-lucide="image" class="w-4 h-4 text-pastel-blueDark"></i>
             <span>Buka Galeri & Pilih Gambar (Dimampatkan Automatik)</span>
           </button>
           
@@ -943,23 +980,23 @@
 
         <div>
           <label class="block font-bold text-slate-700 mb-1">Penerangan Produk</label>
-          <textarea id="pDesc" rows="3" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl focus:outline-none focus:border-pastel-purplePrimary" placeholder="Masukkan perincian bahan digital..."></textarea>
+          <textarea id="pDesc" rows="3" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl focus:outline-none focus:border-pastel-blueDark" placeholder="Masukkan perincian bahan digital..."></textarea>
         </div>
 
         <div class="flex items-center gap-4 pt-1">
           <label class="flex items-center gap-2 cursor-pointer">
-            <input type="checkbox" id="pStatus" checked class="rounded text-pastel-purplePrimary">
+            <input type="checkbox" id="pStatus" checked class="rounded text-pastel-blueDark">
             <span class="font-bold text-slate-700">Aktifkan Produk</span>
           </label>
           <label class="flex items-center gap-2 cursor-pointer">
-            <input type="checkbox" id="pFeatured" class="rounded text-pastel-purplePrimary">
+            <input type="checkbox" id="pFeatured" class="rounded text-pastel-blueDark">
             <span class="font-bold text-slate-700">Produk Pilihan (Featured)</span>
           </label>
         </div>
 
         <div class="pt-4 flex justify-end gap-2 border-t border-slate-100">
           <button type="button" onclick="closeProductModal()" class="px-4 py-2 border rounded-xl text-slate-600 font-semibold">Batal</button>
-          <button type="submit" id="saveProductBtn" class="px-5 py-2 bg-pastel-purplePrimary text-white font-bold rounded-xl hover:bg-pastel-purpleDark shadow-md transition-all">Simpan Produk</button>
+          <button type="submit" id="saveProductBtn" class="px-5 py-2 bg-pastel-blueDark text-white font-bold rounded-xl hover:bg-blue-700 shadow-md transition-all">Simpan Produk</button>
         </div>
       </form>
     </div>
@@ -979,22 +1016,22 @@
 
         <div>
           <label class="block font-bold text-slate-700 mb-1">Nama Kategori *</label>
-          <input type="text" id="cName" required class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl focus:outline-none focus:border-pastel-purplePrimary">
+          <input type="text" id="cName" required class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl focus:outline-none focus:border-pastel-blueDark">
         </div>
 
         <div>
           <label class="block font-bold text-slate-700 mb-1">Penerangan Ringkas</label>
-          <input type="text" id="cDesc" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl focus:outline-none focus:border-pastel-purplePrimary">
+          <input type="text" id="cDesc" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl focus:outline-none focus:border-pastel-blueDark">
         </div>
 
         <div class="flex items-center gap-2 pt-2">
-          <input type="checkbox" id="cStatus" checked class="rounded text-pastel-purplePrimary">
+          <input type="checkbox" id="cStatus" checked class="rounded text-pastel-blueDark">
           <label for="cStatus" class="font-bold text-slate-700">Aktifkan Kategori</label>
         </div>
 
         <div class="pt-4 flex justify-end gap-2">
           <button type="button" onclick="closeCategoryModal()" class="px-4 py-2 border rounded-xl text-slate-600">Batal</button>
-          <button type="submit" class="px-5 py-2 bg-pastel-purplePrimary text-white font-bold rounded-xl hover:bg-pastel-purpleDark">Simpan Kategori</button>
+          <button type="submit" class="px-5 py-2 bg-pastel-blueDark text-white font-bold rounded-xl hover:bg-blue-700">Simpan Kategori</button>
         </div>
       </form>
     </div>
@@ -1234,7 +1271,7 @@
 
       document.querySelectorAll(".admin-tab-content").forEach(el => el.classList.add("hidden"));
       document.querySelectorAll(".admin-tab-btn").forEach(btn => {
-        btn.classList.remove("bg-pastel-purplePrimary", "text-white", "shadow-md");
+        btn.classList.remove("bg-pastel-blueDark", "text-white", "shadow-md");
         btn.classList.add("text-slate-400");
       });
 
@@ -1244,7 +1281,7 @@
       const activeTabBtn = document.getElementById(`adminTabBtn-${tabName}`);
       if (activeTabBtn) {
         activeTabBtn.classList.remove("text-slate-400");
-        activeTabBtn.classList.add("bg-pastel-purplePrimary", "text-white", "shadow-md");
+        activeTabBtn.classList.add("bg-pastel-blueDark", "text-white", "shadow-md");
       }
 
       if (tabName === "insights") renderSalesChart();
@@ -1289,8 +1326,8 @@
       const activeCategories = window.categories.filter(c => c.active);
       const categoriesGrid = document.getElementById("homeCategoriesGrid");
       categoriesGrid.innerHTML = activeCategories.map(c => `
-        <div onclick="filterByCategoryFromHome('${c.name}')" class="bg-white/80 backdrop-blur-md p-4 sm:p-5 rounded-3xl border border-white/80 hover:border-pastel-purplePrimary hover:shadow-xl hover:shadow-purple-50 cursor-pointer transition-all text-center space-y-2.5 sm:space-y-3 group">
-          <div class="w-10 h-10 sm:w-12 sm:h-12 bg-pastel-purpleBg rounded-2xl flex items-center justify-center mx-auto text-pastel-purplePrimary group-hover:bg-pastel-purplePrimary group-hover:text-white transition-colors">
+        <div onclick="filterByCategoryFromHome('${c.name}')" class="bg-white/80 backdrop-blur-md p-4 sm:p-5 rounded-3xl border border-white/80 hover:border-pastel-blueDark hover:shadow-xl hover:shadow-blue-50 cursor-pointer transition-all text-center space-y-2.5 sm:space-y-3 group">
+          <div class="w-10 h-10 sm:w-12 sm:h-12 bg-pastel-blueSoft rounded-2xl flex items-center justify-center mx-auto text-pastel-blueDark group-hover:bg-pastel-blueDark group-hover:text-white transition-colors">
             <i data-lucide="book-open" class="w-5 h-5 sm:w-6 sm:h-6"></i>
           </div>
           <h3 class="text-xs font-bold text-slate-800 line-clamp-1">${c.name}</h3>
@@ -1308,19 +1345,19 @@
       const hasDiscount = product.basePrice && product.basePrice > product.price;
 
       return `
-        <div class="bg-white/85 backdrop-blur-md rounded-3xl border border-white/80 overflow-hidden hover:shadow-xl hover:shadow-purple-100/50 transition-all flex flex-col justify-between group">
+        <div class="bg-white/85 backdrop-blur-md rounded-3xl border border-white/80 overflow-hidden hover:shadow-xl hover:shadow-blue-100/50 transition-all flex flex-col justify-between group">
           <div>
             <div class="aspect-square bg-slate-100/50 p-2 relative overflow-hidden cursor-pointer flex items-center justify-center" onclick="navigateToDetail('${product.id}')">
               <img src="${mainImg}" alt="${product.title}" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300">
               
               <button onclick="event.stopPropagation(); copyProductLink('${product.id}')" class="seller-only-element hidden absolute top-2 right-2 bg-white/90 hover:bg-white text-slate-700 p-2 rounded-xl shadow-md backdrop-blur-sm transition-all" title="Copy Link Produk">
-                <i data-lucide="share-2" class="w-3.5 h-3.5 text-pastel-purplePrimary"></i>
+                <i data-lucide="share-2" class="w-3.5 h-3.5 text-pastel-blueDark"></i>
               </button>
             </div>
 
             <div class="p-3 sm:p-4 space-y-1 sm:space-y-2">
-              <span class="text-[9px] sm:text-[10px] font-extrabold text-pastel-purplePrimary uppercase tracking-wider block">${product.category}</span>
-              <h3 onclick="navigateToDetail('${product.id}')" class="text-xs font-bold text-slate-900 line-clamp-2 cursor-pointer hover:text-pastel-purplePrimary transition-colors leading-snug">
+              <span class="text-[9px] sm:text-[10px] font-extrabold text-pastel-blueDark uppercase tracking-wider block">${product.category}</span>
+              <h3 onclick="navigateToDetail('${product.id}')" class="text-xs font-bold text-slate-900 line-clamp-2 cursor-pointer hover:text-pastel-blueDark transition-colors leading-snug">
                 ${product.title}
               </h3>
             </div>
@@ -1328,10 +1365,10 @@
 
           <div class="p-3 sm:p-4 pt-0 flex items-center justify-between gap-1 sm:gap-2 border-t border-slate-100/80 mt-2">
             <div>
-              <span class="text-sm sm:text-base font-extrabold text-pastel-purplePrimary">RM ${parseFloat(product.price).toFixed(2)}</span>
+              <span class="text-sm sm:text-base font-extrabold text-pastel-blueDark">RM ${parseFloat(product.price).toFixed(2)}</span>
               ${hasDiscount ? `<span class="text-[9px] sm:text-[10px] text-slate-400 line-through block font-semibold">RM ${parseFloat(product.basePrice).toFixed(2)}</span>` : ''}
             </div>
-            <button onclick="addToCart('${product.id}')" class="bg-slate-100 hover:bg-pastel-purplePrimary hover:text-white text-slate-800 p-2 sm:p-2.5 rounded-xl sm:rounded-2xl transition-all shadow-sm" title="Tambah ke Troli">
+            <button onclick="addToCart('${product.id}')" class="bg-slate-100 hover:bg-pastel-blueDark hover:text-white text-slate-800 p-2 sm:p-2.5 rounded-xl sm:rounded-2xl transition-all shadow-sm" title="Tambah ke Troli">
               <i data-lucide="shopping-bag" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
             </button>
           </div>
@@ -1421,7 +1458,7 @@
         slider.appendChild(slideDiv);
 
         const thumbBtn = document.createElement("button");
-        thumbBtn.className = "w-12 h-12 sm:w-14 sm:h-14 rounded-xl border border-slate-200 overflow-hidden shrink-0 focus:border-pastel-purplePrimary bg-slate-50 flex items-center justify-center";
+        thumbBtn.className = "w-12 h-12 sm:w-14 sm:h-14 rounded-xl border border-slate-200 overflow-hidden shrink-0 focus:border-pastel-blueDark bg-slate-50 flex items-center justify-center";
         thumbBtn.onclick = () => {
           document.getElementById(item.id).scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
         };
@@ -1630,7 +1667,7 @@
               <img src="${item.img || 'https://via.placeholder.com/100'}" class="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl object-contain border border-slate-100 bg-slate-50">
               <div>
                 <h4 class="text-xs font-bold text-slate-900 line-clamp-1">${item.title}</h4>
-                <span class="text-xs font-extrabold text-pastel-purplePrimary block mt-0.5">RM ${parseFloat(item.price).toFixed(2)}</span>
+                <span class="text-xs font-extrabold text-pastel-blueDark block mt-0.5">RM ${parseFloat(item.price).toFixed(2)}</span>
               </div>
             </div>
 
@@ -1722,7 +1759,7 @@
       window.open(`https://wa.me/${waNumber}?text=${encodedMsg}`, '_blank');
     }
 
-    /* COMPRESS GAMBAR DENGAN CANVAS HTML5 (MAKSIMUM SAiZ DICOMPRESS DENGAN PANTAS) */
+    /* COMPRESS GAMBAR DENGAN CANVAS HTML5 */
     function compressImage(file, maxWidth = 800, quality = 0.7) {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -1745,7 +1782,6 @@
             const ctx = canvas.getContext("2d");
             ctx.drawImage(img, 0, 0, width, height);
 
-            // Mampat ke format webp/jpeg berkualiti optimum
             const compressedDataUrl = canvas.toDataURL("image/jpeg", quality);
             resolve(compressedDataUrl);
           };
@@ -1840,11 +1876,11 @@
       const label = document.getElementById("promoValueLabel");
 
       if (type === "RM") {
-        rmBtn.className = "flex-1 py-2 font-bold rounded-xl border border-pastel-purplePrimary bg-pastel-purplePrimary text-white transition-all text-center";
+        rmBtn.className = "flex-1 py-2 font-bold rounded-xl border border-pastel-blueDark bg-pastel-blueDark text-white transition-all text-center";
         pctBtn.className = "flex-1 py-2 font-bold rounded-xl border border-slate-200 bg-white text-slate-600 transition-all text-center";
         label.innerText = "Nilai Promo (RM)";
       } else {
-        pctBtn.className = "flex-1 py-2 font-bold rounded-xl border border-pastel-purplePrimary bg-pastel-purplePrimary text-white transition-all text-center";
+        pctBtn.className = "flex-1 py-2 font-bold rounded-xl border border-pastel-blueDark bg-pastel-blueDark text-white transition-all text-center";
         rmBtn.className = "flex-1 py-2 font-bold rounded-xl border border-slate-200 bg-white text-slate-600 transition-all text-center";
         label.innerText = "Nilai Promo (%)";
       }
@@ -1981,25 +2017,31 @@
 
     function handleCategoryFormSubmit(e) {
       e.preventDefault();
+
       const cId = document.getElementById("cId").value;
       const name = document.getElementById("cName").value.trim();
       const desc = document.getElementById("cDesc").value.trim();
       const active = document.getElementById("cStatus").checked;
 
+      if (!name) return;
+
       if (cId) {
-        const index = window.categories.findIndex(c => c.id === cId);
-        if (index > -1) {
-          window.categories[index] = { ...window.categories[index], name, desc, active };
+        const idx = window.categories.findIndex(c => c.id === cId);
+        if (idx > -1) {
+          window.categories[idx] = { id: cId, name, desc, active };
         }
       } else {
-        const newCat = { id: "cat-" + Date.now(), name, desc, active };
-        window.categories.push(newCat);
+        window.categories.push({
+          id: "cat-" + Date.now(),
+          name,
+          desc,
+          active
+        });
       }
 
       saveData(STORAGE_KEY_CATEGORIES, window.categories);
       closeCategoryModal();
       window.refreshAllUI();
-      alert("Kategori berjaya disimpan!");
     }
 
     function deleteCategory(cId) {
@@ -2010,33 +2052,115 @@
       }
     }
 
+    /* RENDER DASHBOARD ADMIN & KIRAAN JUALAN BAHARU */
     function renderAdminDashboard() {
-      renderSalesTracker();
-      renderAdminProductsTable();
-      renderAdminCategoriesTable();
-      renderSalesHistoryTable();
-    }
-
-    function renderSalesTracker() {
-      const totalRev = window.salesHistory.reduce((sum, s) => sum + (parseFloat(s.amount) || 0), 0);
+      const now = new Date();
+      const todayStr = now.toISOString().split('T')[0];
       
-      const todayStr = new Date().toISOString().split('T')[0];
-      const todayRev = window.salesHistory
-        .filter(s => s.date.startsWith(todayStr))
-        .reduce((sum, s) => sum + (parseFloat(s.amount) || 0), 0);
+      const yesterdayDate = new Date(now);
+      yesterdayDate.setDate(now.getDate() - 1);
+      const yesterdayStr = yesterdayDate.toISOString().split('T')[0];
 
-      const currentMonthStr = new Date().toISOString().slice(0, 7);
-      const monthRev = window.salesHistory
-        .filter(s => s.date.startsWith(currentMonthStr))
-        .reduce((sum, s) => sum + (parseFloat(s.amount) || 0), 0);
+      // Kiraan Tarikh Mula Minggu Ini (Isnin/Ahad)
+      const startOfWeek = new Date(now);
+      const day = startOfWeek.getDay();
+      const diff = startOfWeek.getDate() - day + (day === 0 ? -6 : 1); // Penyesuaian Isnin
+      startOfWeek.setDate(diff);
+      startOfWeek.setHours(0, 0, 0, 0);
 
-      document.getElementById("statTotalRevenue").innerText = `RM ${totalRev.toFixed(2)}`;
-      document.getElementById("statSalesToday").innerText = `RM ${todayRev.toFixed(2)}`;
-      document.getElementById("statSalesMonth").innerText = `RM ${monthRev.toFixed(2)}`;
+      const currentMonth = now.getMonth();
+      const currentYear = now.getFullYear();
+
+      let salesToday = 0;
+      let salesYesterday = 0;
+      let salesThisWeek = 0;
+      let salesMonth = 0;
+
+      window.salesHistory.forEach(s => {
+        const saleDateObj = new Date(s.date);
+        const sDateStr = s.date.split('T')[0];
+        const amt = parseFloat(s.amount) || 0;
+
+        if (sDateStr === todayStr) salesToday += amt;
+        if (sDateStr === yesterdayStr) salesYesterday += amt;
+        if (saleDateObj >= startOfWeek && saleDateObj <= now) salesThisWeek += amt;
+        if (saleDateObj.getMonth() === currentMonth && saleDateObj.getFullYear() === currentYear) salesMonth += amt;
+      });
+
+      // Kemaskini Stat Jualan
+      document.getElementById("statSalesToday").innerText = `RM ${salesToday.toFixed(2)}`;
+      document.getElementById("statSalesYesterday").innerText = `RM ${salesYesterday.toFixed(2)}`;
+      document.getElementById("statSalesThisWeek").innerText = `RM ${salesThisWeek.toFixed(2)}`;
+      document.getElementById("statSalesMonth").innerText = `RM ${salesMonth.toFixed(2)}`;
+
+      // Kemaskini Stat Insights
+      document.getElementById("insightTodaySales").innerText = `RM ${salesToday.toFixed(2)}`;
+      document.getElementById("insightYesterdaySales").innerText = `RM ${salesYesterday.toFixed(2)}`;
+      document.getElementById("insightThisWeekSales").innerText = `RM ${salesThisWeek.toFixed(2)}`;
+
+      // Render Sejarah Jualan Table
+      const historyTbody = document.getElementById("salesHistoryTableBody");
+      historyTbody.innerHTML = window.salesHistory.map(s => `
+        <tr class="hover:bg-slate-50 transition-colors">
+          <td class="p-3 font-semibold text-slate-800">${new Date(s.date).toLocaleString('ms-MY')}</td>
+          <td class="p-3 font-bold text-slate-900">${s.customer}</td>
+          <td class="p-3 text-slate-600 max-w-xs truncate">${s.items}</td>
+          <td class="p-3 font-black text-pastel-blueDark">RM ${parseFloat(s.amount).toFixed(2)}</td>
+          <td class="p-3 text-right">
+            <button onclick="deleteSaleRecord('${s.id}')" class="text-rose-500 hover:text-rose-700 font-bold">Padam</button>
+          </td>
+        </tr>
+      `).join("");
+
+      // Render Produk Admin Table
+      const prodTbody = document.getElementById("adminProductsTableBody");
+      prodTbody.innerHTML = window.products.map(p => `
+        <tr class="hover:bg-slate-50 transition-colors">
+          <td class="p-4 font-bold text-slate-900 flex items-center gap-3">
+            <img src="${p.images && p.images.length > 0 ? p.images[0] : 'https://via.placeholder.com/50'}" class="w-10 h-10 rounded-xl object-contain bg-slate-100 border">
+            <div>
+              <span>${p.title}</span>
+              ${p.featured ? '<span class="ml-2 text-[9px] bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full font-bold">Featured</span>' : ''}
+            </div>
+          </td>
+          <td class="p-4 text-slate-600 font-medium">${p.category}</td>
+          <td class="p-4 font-black text-pastel-blueDark">RM ${parseFloat(p.price).toFixed(2)}</td>
+          <td class="p-4">
+            <span class="px-2.5 py-1 rounded-full text-[10px] font-bold ${p.active ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-600'}">
+              ${p.active ? 'Aktif' : 'Nyahaktif'}
+            </span>
+          </td>
+          <td class="p-4 text-right space-x-2">
+            <button onclick="openProductModal('${p.id}')" class="text-pastel-blueDark font-bold hover:underline">Edit</button>
+            <button onclick="deleteProduct('${p.id}')" class="text-rose-500 font-bold hover:underline">Padam</button>
+          </td>
+        </tr>
+      `).join("");
+
+      // Render Kategori Admin Table
+      const catTbody = document.getElementById("adminCategoriesTableBody");
+      catTbody.innerHTML = window.categories.map(c => `
+        <tr class="hover:bg-slate-50 transition-colors">
+          <td class="p-4 font-bold text-slate-900">${c.name}</td>
+          <td class="p-4 text-slate-600">${c.desc || '-'}</td>
+          <td class="p-4">
+            <span class="px-2.5 py-1 rounded-full text-[10px] font-bold ${c.active ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-600'}">
+              ${c.active ? 'Aktif' : 'Nyahaktif'}
+            </span>
+          </td>
+          <td class="p-4 text-right space-x-2">
+            <button onclick="openCategoryModal('${c.id}')" class="text-pastel-blueDark font-bold hover:underline">Edit</button>
+            <button onclick="deleteCategory('${c.id}')" class="text-rose-500 font-bold hover:underline">Padam</button>
+          </td>
+        </tr>
+      `).join("");
+
+      lucide.createIcons();
     }
 
     function autoFillSaleAmount() {
       const pId = document.getElementById("saleSelectProduct").value;
+      if (!pId) return;
       const product = window.products.find(p => p.id === pId);
       if (product) {
         document.getElementById("saleAmount").value = parseFloat(product.price).toFixed(2);
@@ -2048,14 +2172,14 @@
       const custName = document.getElementById("saleCustName").value.trim();
       const pId = document.getElementById("saleSelectProduct").value;
       const amount = parseFloat(document.getElementById("saleAmount").value) || 0;
-      const date = document.getElementById("saleDate").value;
+      const saleDate = document.getElementById("saleDate").value;
 
       const product = window.products.find(p => p.id === pId);
-      const itemTitle = product ? product.title : "Jualan Manual";
+      const itemTitle = product ? product.title : "Manual Order";
 
       const newSale = {
         id: "sale-" + Date.now(),
-        date: new Date(date).toISOString(),
+        date: new Date(saleDate).toISOString(),
         customer: custName,
         items: itemTitle,
         amount: amount
@@ -2063,89 +2187,112 @@
 
       window.salesHistory.unshift(newSale);
       saveData(STORAGE_KEY_SALES, window.salesHistory);
-      
       document.getElementById("saleCustName").value = "";
       document.getElementById("saleAmount").value = "";
-      window.refreshAllUI();
+
+      renderAdminDashboard();
       alert("Jualan berjaya direkodkan!");
     }
 
-    function renderSalesHistoryTable() {
-      const tbody = document.getElementById("salesHistoryTableBody");
-      if (window.salesHistory.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-slate-400">Tiada rekod jualan ditemui.</td></tr>`;
-        return;
-      }
-
-      tbody.innerHTML = window.salesHistory.map(s => `
-        <tr class="hover:bg-slate-50/50">
-          <td class="p-3 text-slate-600">${new Date(s.date).toLocaleString('ms-MY')}</td>
-          <td class="p-3 font-bold text-slate-900">${s.customer}</td>
-          <td class="p-3 text-slate-700">${s.items}</td>
-          <td class="p-3 font-extrabold text-pastel-purplePrimary">RM ${parseFloat(s.amount).toFixed(2)}</td>
-          <td class="p-3 text-right">
-            <button onclick="deleteSaleRecord('${s.id}')" class="text-rose-500 hover:text-rose-700 font-bold">Padam</button>
-          </td>
-        </tr>
-      `).join("");
-    }
-
-    function deleteSaleRecord(sId) {
+    function deleteSaleRecord(saleId) {
       if (confirm("Padam rekod jualan ini?")) {
-        window.salesHistory = window.salesHistory.filter(s => s.id !== sId);
+        window.salesHistory = window.salesHistory.filter(s => s.id !== saleId);
         saveData(STORAGE_KEY_SALES, window.salesHistory);
-        window.refreshAllUI();
+        renderAdminDashboard();
       }
     }
 
-    function renderAdminProductsTable() {
-      const tbody = document.getElementById("adminProductsTableBody");
-      if (window.products.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-slate-400">Tiada produk. Sila tambah produk baharu.</td></tr>`;
+    /* RENDER CARTA INSIGHTS DENGAN KETINGGIAN STABIL & TIDAK AUTO SCROLL */
+    function renderSalesChart() {
+      const canvas = document.getElementById("salesChart");
+      if (!canvas) return;
+
+      const ctx = canvas.getContext("2d");
+
+      // Dapatkan 7 hari terakhir
+      const labels = [];
+      const dataPoints = [];
+
+      for (let i = 6; i >= 0; i--) {
+        const d = new Date();
+        d.setDate(d.getDate() - i);
+        const dateStr = d.toISOString().split('T')[0];
+        labels.push(d.toLocaleDateString('ms-MY', { weekday: 'short', day: 'numeric', month: 'numeric' }));
+
+        const totalForDay = window.salesHistory
+          .filter(s => s.date.split('T')[0] === dateStr)
+          .reduce((sum, s) => sum + (parseFloat(s.amount) || 0), 0);
+
+        dataPoints.push(totalForDay);
+      }
+
+      if (salesChartInstance) salesChartInstance.destroy();
+
+      salesChartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Jualan (RM)',
+            data: dataPoints,
+            borderColor: '#2563EB',
+            backgroundColor: 'rgba(37, 99, 235, 0.1)',
+            fill: true,
+            tension: 0.3,
+            borderWidth: 2,
+            pointBackgroundColor: '#E5989B',
+            pointRadius: 4
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              grid: { color: 'rgba(0,0,0,0.05)' },
+              ticks: { font: { size: 10 } }
+            },
+            x: {
+              grid: { display: false },
+              ticks: { font: { size: 10 } }
+            }
+          }
+        }
+      });
+
+      // Kemaskini Metrik Insights Analisis
+      const totalOrders = window.salesHistory.length;
+      const totalAmount = window.salesHistory.reduce((sum, s) => sum + (parseFloat(s.amount) || 0), 0);
+      const avgOrder = totalOrders > 0 ? (totalAmount / totalOrders) : 0;
+
+      document.getElementById("insightAvgOrder").innerText = `RM ${avgOrder.toFixed(2)}`;
+      document.getElementById("insightTotalOrders").innerText = totalOrders;
+      
+      if (window.products.length > 0) {
+        document.getElementById("insightTopProduct").innerText = window.products[0].title;
+      }
+    }
+
+    function downloadSalesCSV() {
+      if (window.salesHistory.length === 0) {
+        alert("Tiada rekod jualan untuk dieksport.");
         return;
       }
 
-      tbody.innerHTML = window.products.map(p => {
-        const img = p.images && p.images.length > 0 ? p.images[0] : 'https://via.placeholder.com/50';
-        return `
-          <tr class="hover:bg-slate-50/50">
-            <td class="p-4 flex items-center gap-3">
-              <img src="${img}" class="w-10 h-10 rounded-xl object-contain bg-slate-100 border border-slate-200">
-              <span class="font-bold text-slate-900 line-clamp-1">${p.title}</span>
-            </td>
-            <td class="p-4 text-slate-600">${p.category}</td>
-            <td class="p-4 font-bold text-pastel-purplePrimary">RM ${parseFloat(p.price).toFixed(2)}</td>
-            <td class="p-4">
-              <span class="px-2 py-1 text-[10px] font-bold rounded-full ${p.active ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-600'}">
-                ${p.active ? 'Aktif' : 'Nyahaktif'}
-              </span>
-            </td>
-            <td class="p-4 text-right space-x-2">
-              <button onclick="openProductModal('${p.id}')" class="text-blue-600 font-bold hover:underline">Edit</button>
-              <button onclick="deleteProduct('${p.id}')" class="text-rose-600 font-bold hover:underline">Padam</button>
-            </td>
-          </tr>
-        `;
-      }).join("");
-    }
+      let csv = "ID Jualan,Tarikh,Pelanggan,Item/Produk,Jumlah (RM)\n";
+      window.salesHistory.forEach(s => {
+        csv += `"${s.id}","${new Date(s.date).toLocaleString('ms-MY')}","${s.customer}","${s.items}",${s.amount}\n`;
+      });
 
-    function renderAdminCategoriesTable() {
-      const tbody = document.getElementById("adminCategoriesTableBody");
-      tbody.innerHTML = window.categories.map(c => `
-        <tr class="hover:bg-slate-50/50">
-          <td class="p-4 font-bold text-slate-900">${c.name}</td>
-          <td class="p-4 text-slate-600">${c.desc || '-'}</td>
-          <td class="p-4">
-            <span class="px-2 py-1 text-[10px] font-bold rounded-full ${c.active ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-600'}">
-              ${c.active ? 'Aktif' : 'Nyahaktif'}
-            </span>
-          </td>
-          <td class="p-4 text-right space-x-2">
-            <button onclick="openCategoryModal('${c.id}')" class="text-blue-600 font-bold hover:underline">Edit</button>
-            <button onclick="deleteCategory('${c.id}')" class="text-rose-600 font-bold hover:underline">Padam</button>
-          </td>
-        </tr>
-      `).join("");
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = `Laporan_Jualan_${new Date().toISOString().split('T')[0]}.csv`;
+      link.click();
     }
 
     function saveBusinessSettings() {
@@ -2156,88 +2303,20 @@
 
       saveData(STORAGE_KEY_SETTINGS, window.settings);
       applyBrandingDOM();
-      alert("Maklumat bisnes berjaya dikemaskini!");
+      alert("Maklumat bisnes berjaya disimpan!");
     }
 
     function saveWaSettings() {
       window.settings.waNumber = document.getElementById("settingWaNumber").value.trim();
       window.settings.waButtonLabel = document.getElementById("settingWaButtonLabel").value.trim();
-      window.settings.waTemplate = document.getElementById("settingWaTemplate").value.trim();
+      window.settings.waTemplate = document.getElementById("settingWaTemplate").value;
 
       saveData(STORAGE_KEY_SETTINGS, window.settings);
       applyBrandingDOM();
-      alert("Tetapan WhatsApp berjaya dikemaskini!");
+      alert("Konfigurasi WhatsApp berjaya disimpan!");
     }
 
-    function renderSalesChart() {
-      const ctx = document.getElementById('salesChart');
-      if (!ctx) return;
-
-      if (salesChartInstance) salesChartInstance.destroy();
-
-      const dates = [];
-      const totals = [];
-
-      for (let i = 6; i >= 0; i--) {
-        const d = new Date();
-        d.setDate(d.getDate() - i);
-        const dateStr = d.toISOString().split('T')[0];
-        dates.push(d.toLocaleDateString('ms-MY', { day: 'numeric', month: 'short' }));
-
-        const daySum = window.salesHistory
-          .filter(s => s.date.startsWith(dateStr))
-          .reduce((sum, s) => sum + (parseFloat(s.amount) || 0), 0);
-        totals.push(daySum);
-      }
-
-      salesChartInstance = new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: dates,
-          datasets: [{
-            label: 'Jualan (RM)',
-            data: totals,
-            borderColor: '#9D4EDD',
-            backgroundColor: 'rgba(157, 78, 221, 0.1)',
-            fill: true,
-            tension: 0.3
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: { legend: { display: false } }
-        }
-      });
-
-      const totalOrders = window.salesHistory.length;
-      const totalRev = window.salesHistory.reduce((sum, s) => sum + (parseFloat(s.amount) || 0), 0);
-      const avgOrder = totalOrders > 0 ? (totalRev / totalOrders) : 0;
-
-      document.getElementById("insightAvgOrder").innerText = `RM ${avgOrder.toFixed(2)}`;
-      document.getElementById("insightTotalOrders").innerText = totalOrders;
-    }
-
-    function downloadSalesCSV() {
-      if (window.salesHistory.length === 0) {
-        alert("Tiada rekod jualan untuk dieksport.");
-        return;
-      }
-
-      let csv = "ID,Tarikh,Pelanggan,Produk,Jumlah (RM)\n";
-      window.salesHistory.forEach(s => {
-        csv += `"${s.id}","${s.date}","${s.customer}","${s.items}",${s.amount}\n`;
-      });
-
-      const blob = new Blob([csv], { type: 'text/csv' });
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `laporan-jualan-${new Date().toISOString().split('T')[0]}.csv`;
-      a.click();
-    }
-
-    /* AUTH / LOGIN SYSTEM */
+    /* AUTH LOG IN & SIGN UP MODAL LOGIC */
     function openAdminModal(mode = 'login') {
       switchAuthMode(mode);
       document.getElementById("adminAuthModal").classList.remove("hidden");
@@ -2250,30 +2329,31 @@
     function switchAuthMode(mode) {
       const loginForm = document.getElementById("sellerLoginForm");
       const signupForm = document.getElementById("sellerSignupForm");
-      const loginBtn = document.getElementById("authTabLoginBtn");
-      const signupBtn = document.getElementById("authTabSignupBtn");
+      const loginTab = document.getElementById("authTabLoginBtn");
+      const signupTab = document.getElementById("authTabSignupBtn");
 
       if (mode === 'login') {
         loginForm.classList.remove("hidden");
         signupForm.classList.add("hidden");
-        loginBtn.className = "flex-1 py-2 border-b-2 border-pastel-purplePrimary text-pastel-purplePrimary";
-        signupBtn.className = "flex-1 py-2 border-b-2 border-transparent text-slate-400 hover:text-slate-700";
+        loginTab.className = "flex-1 py-2 border-b-2 border-pastel-blueDark text-pastel-blueDark font-bold";
+        signupTab.className = "flex-1 py-2 border-b-2 border-transparent text-slate-400 hover:text-slate-700";
       } else {
         loginForm.classList.add("hidden");
         signupForm.classList.remove("hidden");
-        signupBtn.className = "flex-1 py-2 border-b-2 border-pastel-purplePrimary text-pastel-purplePrimary";
-        loginBtn.className = "flex-1 py-2 border-b-2 border-transparent text-slate-400 hover:text-slate-700";
+        signupTab.className = "flex-1 py-2 border-b-2 border-pastel-blueDark text-pastel-blueDark font-bold";
+        loginTab.className = "flex-1 py-2 border-b-2 border-transparent text-slate-400 hover:text-slate-700";
       }
     }
 
     function loginAdmin() {
       const email = document.getElementById("adminUsernameInput").value.trim();
       const pwd = document.getElementById("adminPasswordInput").value.trim();
-      const err = document.getElementById("adminAuthError");
+      const errEl = document.getElementById("adminAuthError");
 
       const acc = sellerAccounts.find(a => a.email === email && a.pwd === pwd);
+
       if (acc || (email === "seller@domain.com" && pwd === "password")) {
-        err.classList.add("hidden");
+        errEl.classList.add("hidden");
         window.isAdminLoggedIn = true;
 
         const session = {
@@ -2285,9 +2365,9 @@
 
         closeAdminModal();
         window.refreshAllUI();
-        navTo('admin');
+        navTo("admin");
       } else {
-        err.classList.remove("hidden");
+        errEl.classList.remove("hidden");
       }
     }
 
@@ -2296,32 +2376,44 @@
       const email = document.getElementById("signupEmail").value.trim();
       const pwd = document.getElementById("signupPassword").value.trim();
 
-      if (!storeName || !email || !pwd) {
-        alert("Sila isi semua maklumat.");
+      if (!email || !pwd) {
+        alert("Sila lengkapkan maklumat pendaftaran.");
         return;
       }
 
       sellerAccounts.push({ storeName, email, pwd });
       saveData(STORAGE_KEY_SELLER_ACCOUNTS, sellerAccounts);
 
-      window.settings.storeName = storeName;
+      if(storeName) window.settings.storeName = storeName;
       window.settings.email = email;
       saveData(STORAGE_KEY_SETTINGS, window.settings);
 
-      alert("Pendaftaran akaun berjaya! Sila log masuk.");
-      switchAuthMode('login');
+      window.isAdminLoggedIn = true;
+      const session = {
+        isLoggedIn: true,
+        email: email,
+        lastActiveTime: Date.now()
+      };
+      localStorage.setItem(STORAGE_KEY_SELLER_SESSION, JSON.stringify(session));
+
+      closeAdminModal();
+      window.refreshAllUI();
+      navTo("admin");
+      alert("Pendaftaran akaun Penjual berjaya!");
     }
 
-    function logoutAdmin(auto = false) {
+    function logoutAdmin(isAuto = false) {
       window.isAdminLoggedIn = false;
       localStorage.removeItem(STORAGE_KEY_SELLER_SESSION);
-      window.refreshAllUI();
-      navTo('home');
-      if (auto) {
-        alert("Sesi log masuk anda telah tamat tempoh secara automatik kerana tiada aktiviti selama 2 jam.");
+      checkSellerVisibility();
+      updateAdminNavButton();
+
+      if (isAuto) {
+        alert("Sesi log masuk anda telah tamat tempoh demi keselamatan (tiada aktiviti dalam 2 jam). Sila log masuk semula.");
       } else {
-        alert("Anda telah log keluar daripada akaun admin.");
+        alert("Anda telah log keluar daripada sistem Admin Penjual.");
       }
+      navTo("home");
     }
   </script>
 </body>
