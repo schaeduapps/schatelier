@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ms">
+<html lang="ms" class="overflow-x-hidden">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -9,9 +9,11 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
-    /* Mengelakkan sebarang limpahan paparan skrin (overflow) ke kiri/kanan */
+    * {
+      box-sizing: border-box;
+    }
     html, body {
-      max-width: 100%;
+      max-width: 100vw;
       overflow-x: hidden;
     }
     body {
@@ -21,9 +23,9 @@
       min-height: 100vh;
     }
     .glass-card {
-      background: rgba(255, 255, 255, 0.88);
+      background: rgba(255, 255, 255, 0.92);
       backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.7);
       box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05);
     }
     .square-img {
@@ -39,27 +41,27 @@
     }
   </style>
 </head>
-<body class="text-slate-800 antialiased min-h-screen flex flex-col pb-20 md:pb-0">
+<body class="text-slate-800 antialiased min-h-screen flex flex-col pb-20 md:pb-0 w-full overflow-x-hidden">
 
   <!-- TOP BAR / HEADER -->
-  <header class="bg-white/80 backdrop-blur-md border-b border-pink-200/50 sticky top-0 z-40 w-full overflow-hidden">
+  <header class="bg-white/90 backdrop-blur-md border-b border-pink-200/50 sticky top-0 z-40 w-full">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-2">
-      <div class="flex items-center gap-3 shrink-0">
-        <img id="headerLogo" src="https://via.placeholder.com/150" class="w-10 h-10 square-img rounded-xl border border-emerald-300 shadow-sm" alt="Logo">
-        <div>
-          <h1 id="headerStoreName" class="font-bold text-slate-900 leading-none text-sm sm:text-base">Kedai Digital</h1>
-          <span id="headerSellerName" class="text-[11px] text-emerald-700 font-semibold hidden sm:inline" data-i18n="officialPortal">Portal Rasmi Penjual</span>
+      <div class="flex items-center gap-2 sm:gap-3 min-w-0">
+        <img id="headerLogo" src="https://via.placeholder.com/150" class="w-9 h-9 sm:w-10 sm:h-10 square-img rounded-xl border border-emerald-300 shadow-sm shrink-0" alt="Logo">
+        <div class="truncate">
+          <h1 id="headerStoreName" class="font-bold text-slate-900 leading-none text-xs sm:text-sm truncate">Kedai Digital</h1>
+          <span id="headerSellerName" class="text-[10px] sm:text-[11px] text-emerald-700 font-semibold truncate block" data-i18n="officialPortal">Portal Rasmi Penjual</span>
         </div>
       </div>
 
-      <div class="flex items-center gap-2 sm:gap-3 shrink-0">
-        <!-- BUTANG VIEW MY STORE DI HEADER (HANYA DILIHAT OLEH ADMIN) -->
+      <div class="flex items-center gap-1.5 sm:gap-3 shrink-0">
+        <!-- BUTANG VIEW MY STORE DI HEADER (HANYA MUNCUL DI ADMIN) -->
         <button id="btnHeaderViewStore" onclick="openCustomerStoreView()" class="hidden md:flex items-center gap-1.5 px-3 py-1.5 bg-pink-600 hover:bg-pink-700 text-white text-xs font-bold rounded-xl shadow-sm transition">
           <i data-lucide="store" class="w-4 h-4"></i>
           <span data-i18n="btnViewStore">Lihat Kedai Saya</span>
         </button>
 
-        <div id="customerSearchContainer" class="hidden relative w-32 sm:w-48 md:w-64">
+        <div id="customerSearchContainer" class="hidden sm:block relative w-36 sm:w-48 md:w-64">
           <input type="text" id="custSearchInput" oninput="searchProducts(this.value)" data-i18n-ph="searchPlaceholder" placeholder="Cari produk..." class="w-full pl-8 pr-3 py-1.5 text-xs bg-slate-100/80 rounded-xl border border-slate-200 focus:outline-none focus:bg-white">
           <i data-lucide="search" class="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-2.5"></i>
         </div>
@@ -78,11 +80,11 @@
   </header>
 
   <!-- MAIN CONTAINER -->
-  <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 overflow-hidden">
+  <main class="flex-1 max-w-7xl w-full mx-auto p-3 sm:p-6 overflow-x-hidden">
 
     <!-- LOGIN / AUTH SECTION -->
-    <section id="view-auth" class="max-w-md mx-auto my-8">
-      <div class="glass-card rounded-3xl p-6 sm:p-8 space-y-6">
+    <section id="view-auth" class="max-w-md mx-auto my-4 sm:my-8">
+      <div class="glass-card rounded-3xl p-5 sm:p-8 space-y-6">
         <div class="text-center space-y-1">
           <div class="w-14 h-14 bg-emerald-100 text-emerald-700 rounded-2xl flex items-center justify-center mx-auto mb-2 shadow-inner">
             <i data-lucide="store" class="w-7 h-7"></i>
@@ -146,9 +148,9 @@
 
     <!-- ADMIN & SELLER DASHBOARD -->
     <section id="view-admin" class="hidden">
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 sm:gap-6">
 
-        <!-- SIDEBAR KIRI -->
+        <!-- SIDEBAR KIRI (DESKTOP) -->
         <aside class="md:col-span-1 glass-card rounded-3xl p-4 space-y-2 h-fit hidden md:block">
           <div class="p-3 border-b border-slate-100 mb-2 flex justify-between items-center">
             <div>
@@ -185,10 +187,9 @@
               <i data-lucide="shopping-bag" class="w-4 h-4 text-amber-600"></i>
               <span data-i18n="menuStore">Katalog Produk Saya</span>
             </button>
-            <!-- MENUKAR NAMA PADA NAVIGASI KEPADA 'ADD KATEGORI' -->
             <button onclick="switchAdminSection('admin-cat')" id="menu-admin-cat" class="sidebar-btn w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl hover:bg-white text-slate-700 transition">
-              <i data-lucide="folder-plus" class="w-4 h-4 text-rose-600"></i>
-              <span data-i18n="menuAdmin">Add Kategori</span>
+              <i data-lucide="shield" class="w-4 h-4 text-rose-600"></i>
+              <span data-i18n="menuAdmin">Pentadbir</span>
             </button>
             <button onclick="switchAdminSection('setting')" id="menu-setting" class="sidebar-btn w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl hover:bg-white text-slate-700 transition">
               <i data-lucide="settings" class="w-4 h-4 text-slate-600"></i>
@@ -204,28 +205,32 @@
         </aside>
 
         <!-- CONTENT AREA UTAMA -->
-        <main class="md:col-span-3 space-y-6 overflow-hidden">
+        <main class="md:col-span-3 space-y-4 sm:space-y-6 w-full min-w-0">
 
           <!-- 1. PROFILE SELLER -->
-          <div id="sec-profile" class="admin-sec hidden glass-card rounded-3xl p-6 space-y-4">
-            <h2 class="text-base font-extrabold text-slate-900 border-b pb-3" data-i18n="profileTitle">Profil Penjual</h2>
+          <div id="sec-profile" class="admin-sec hidden glass-card rounded-3xl p-5 sm:p-6 space-y-4">
+            <div class="flex items-center justify-between border-b pb-3">
+              <h2 class="text-base font-extrabold text-slate-900" data-i18n="profileTitle">Profil Penjual</h2>
+              <button onclick="switchAdminSection('dashboard')" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl flex items-center gap-1">
+                <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> <span data-i18n="btnBackDash">Kembali</span>
+              </button>
+            </div>
             <div class="flex items-center gap-4">
-              <img id="profileAvatar" src="https://via.placeholder.com/150" class="w-20 h-20 square-img rounded-2xl border-2 border-emerald-400">
+              <img id="profileAvatar" src="https://via.placeholder.com/150" class="w-16 h-16 sm:w-20 sm:h-20 square-img rounded-2xl border-2 border-emerald-400">
               <div>
-                <h3 id="profileStoreDisplay" class="font-bold text-slate-900 text-base">Kedai Saya</h3>
-                <p id="profileEmailDisplay" class="text-xs text-slate-500">email@domain.com</p>
+                <h3 id="profileStoreDisplay" class="font-bold text-slate-900 text-base truncate">Kedai Saya</h3>
+                <p id="profileEmailDisplay" class="text-xs text-slate-500 truncate">email@domain.com</p>
                 <span class="inline-block mt-2 px-2.5 py-0.5 bg-emerald-100 text-emerald-800 text-[10px] font-extrabold rounded-full" data-i18n="activeSeller">PENJUAL AKTIF</span>
               </div>
             </div>
           </div>
 
           <!-- 2. DASHBOARD SELLER (HOME UTAMA) -->
-          <div id="sec-dashboard" class="admin-sec space-y-5">
-            <!-- PANEL SELEMAT DATANG DAN BUTANG ACTION CEPAT -->
-            <div class="glass-card rounded-3xl p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-gradient-to-r from-emerald-500/10 via-teal-500/10 to-pink-500/10">
+          <div id="sec-dashboard" class="admin-sec space-y-4 sm:space-y-5">
+            <div class="glass-card rounded-3xl p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-gradient-to-r from-emerald-500/10 via-teal-500/10 to-pink-500/10">
               <div>
-                <h2 class="text-lg font-extrabold text-slate-900" data-i18n="dashWelcomeTitle">Papan Pemuka Pentadbir</h2>
-                <p class="text-xs text-slate-600" data-i18n="dashWelcomeSub">Uruskan jualan, produk dan tetapan kedai anda dari satu tempat.</p>
+                <h2 class="text-base sm:text-lg font-extrabold text-slate-900" data-i18n="dashTitle">Papan Pemuka Pentadbir</h2>
+                <p class="text-xs text-slate-600" data-i18n="dashSub">Uruskan jualan, produk dan tetapan kedai anda dari satu tempat.</p>
               </div>
               <button onclick="openCustomerStoreView()" class="w-full sm:w-auto px-4 py-2.5 bg-pink-600 hover:bg-pink-700 text-white font-bold text-xs rounded-xl flex items-center justify-center gap-2 shadow-md transition">
                 <i data-lucide="store" class="w-4 h-4"></i>
@@ -233,39 +238,37 @@
               </button>
             </div>
 
-            <!-- BUTANG PINATAS (QUICK ACTIONS) -->
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs font-bold">
-              <button onclick="switchAdminSection('add-product')" class="p-3 glass-card rounded-2xl flex items-center gap-3 hover:bg-pink-50 text-slate-800 transition">
-                <div class="p-2 bg-pink-100 text-pink-600 rounded-xl"><i data-lucide="plus-circle" class="w-5 h-5"></i></div>
-                <div class="text-left">
-                  <span class="block text-slate-900" data-i18n="menuAddProduct">Tambah Produk</span>
-                  <span class="text-[10px] text-slate-500 font-normal" data-i18n="prodCatalogSub">Katalog produk</span>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3 text-xs font-bold">
+              <button onclick="switchAdminSection('add-product')" class="p-3 glass-card rounded-2xl flex items-center gap-2.5 hover:bg-pink-50 text-slate-800 transition">
+                <div class="p-2 bg-pink-100 text-pink-600 rounded-xl shrink-0"><i data-lucide="plus-circle" class="w-4 h-4 sm:w-5 sm:h-5"></i></div>
+                <div class="text-left min-w-0">
+                  <span class="block text-slate-900 truncate" data-i18n="menuAddProduct">Tambah Produk</span>
+                  <span class="text-[10px] text-slate-500 font-normal truncate block" data-i18n="subProdCat">Katalog produk</span>
                 </div>
               </button>
-              <button onclick="switchAdminSection('add-sales')" class="p-3 glass-card rounded-2xl flex items-center gap-3 hover:bg-emerald-50 text-slate-800 transition">
-                <div class="p-2 bg-emerald-100 text-emerald-600 rounded-xl"><i data-lucide="badge-dollar-sign" class="w-5 h-5"></i></div>
-                <div class="text-left">
-                  <span class="block text-slate-900" data-i18n="menuAddSales">Tambah Jualan</span>
-                  <span class="text-[10px] text-slate-500 font-normal" data-i18n="recordTransSub">Rekod transaksi</span>
+              <button onclick="switchAdminSection('add-sales')" class="p-3 glass-card rounded-2xl flex items-center gap-2.5 hover:bg-emerald-50 text-slate-800 transition">
+                <div class="p-2 bg-emerald-100 text-emerald-600 rounded-xl shrink-0"><i data-lucide="badge-dollar-sign" class="w-4 h-4 sm:w-5 sm:h-5"></i></div>
+                <div class="text-left min-w-0">
+                  <span class="block text-slate-900 truncate" data-i18n="menuAddSales">Tambah Jualan</span>
+                  <span class="text-[10px] text-slate-500 font-normal truncate block" data-i18n="subRecTrans">Rekod transaksi</span>
                 </div>
               </button>
-              <button onclick="switchAdminSection('store')" class="p-3 glass-card rounded-2xl flex items-center gap-3 hover:bg-amber-50 text-slate-800 transition">
-                <div class="p-2 bg-amber-100 text-amber-600 rounded-xl"><i data-lucide="shopping-bag" class="w-5 h-5"></i></div>
-                <div class="text-left">
-                  <span class="block text-slate-900" data-i18n="prodListTitle">Senarai Produk</span>
-                  <span class="text-[10px] text-slate-500 font-normal" data-i18n="manageListSub">Urus senarai</span>
+              <button onclick="switchAdminSection('store')" class="p-3 glass-card rounded-2xl flex items-center gap-2.5 hover:bg-amber-50 text-slate-800 transition">
+                <div class="p-2 bg-amber-100 text-amber-600 rounded-xl shrink-0"><i data-lucide="shopping-bag" class="w-4 h-4 sm:w-5 sm:h-5"></i></div>
+                <div class="text-left min-w-0">
+                  <span class="block text-slate-900 truncate" data-i18n="menuStore">Senarai Produk</span>
+                  <span class="text-[10px] text-slate-500 font-normal truncate block" data-i18n="subManageList">Urus senarai</span>
                 </div>
               </button>
-              <button onclick="switchAdminSection('my-sales')" class="p-3 glass-card rounded-2xl flex items-center gap-3 hover:bg-purple-50 text-slate-800 transition">
-                <div class="p-2 bg-purple-100 text-purple-600 rounded-xl"><i data-lucide="receipt" class="w-5 h-5"></i></div>
-                <div class="text-left">
-                  <span class="block text-slate-900" data-i18n="salesRecordTitle">Rekod Jualan</span>
-                  <span class="text-[10px] text-slate-500 font-normal" data-i18n="orderHistorySub">Sejarah pesanan</span>
+              <button onclick="switchAdminSection('my-sales')" class="p-3 glass-card rounded-2xl flex items-center gap-2.5 hover:bg-purple-50 text-slate-800 transition">
+                <div class="p-2 bg-purple-100 text-purple-600 rounded-xl shrink-0"><i data-lucide="receipt" class="w-4 h-4 sm:w-5 sm:h-5"></i></div>
+                <div class="text-left min-w-0">
+                  <span class="block text-slate-900 truncate" data-i18n="mySalesTitle">Rekod Jualan</span>
+                  <span class="text-[10px] text-slate-500 font-normal truncate block" data-i18n="subOrderHist">Sejarah pesanan</span>
                 </div>
               </button>
             </div>
 
-            <!-- PENAPIS DAN RINGKASAN STATISTIK -->
             <div class="glass-card rounded-2xl p-3 flex flex-wrap items-center justify-between gap-2 text-xs">
               <span class="font-bold text-slate-700" data-i18n="filterPerf">Penapis Ringkasan Prestasi:</span>
               <div class="flex flex-wrap items-center gap-1.5 font-bold">
@@ -274,36 +277,41 @@
               </div>
             </div>
 
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
-              <div class="glass-card rounded-2xl p-4 space-y-1">
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-4">
+              <div class="glass-card rounded-2xl p-3.5 sm:p-4 space-y-1">
                 <p class="text-[10px] font-extrabold text-slate-400 uppercase" data-i18n="statOrders">Jumlah Pesanan</p>
-                <h3 id="statOrdersCount" class="text-xl font-extrabold text-slate-900">0</h3>
+                <h3 id="statOrdersCount" class="text-lg sm:text-xl font-extrabold text-slate-900">0</h3>
               </div>
-              <div class="glass-card rounded-2xl p-4 space-y-1">
+              <div class="glass-card rounded-2xl p-3.5 sm:p-4 space-y-1">
                 <p class="text-[10px] font-extrabold text-slate-400 uppercase" data-i18n="statToday">Jumlah Jualan Hari Ini</p>
-                <h3 id="statTotalSalesToday" class="text-xl font-extrabold text-emerald-600">RM 0.00</h3>
+                <h3 id="statTotalSalesToday" class="text-lg sm:text-xl font-extrabold text-emerald-600">RM 0.00</h3>
               </div>
-              <div class="glass-card rounded-2xl p-4 space-y-1">
+              <div class="glass-card rounded-2xl p-3.5 sm:p-4 space-y-1">
                 <p class="text-[10px] font-extrabold text-slate-400 uppercase" data-i18n="statMonth">Jumlah Jualan Bulan Ini</p>
-                <h3 id="statTotalSalesMonth" class="text-xl font-extrabold text-pink-600">RM 0.00</h3>
+                <h3 id="statTotalSalesMonth" class="text-lg sm:text-xl font-extrabold text-pink-600">RM 0.00</h3>
               </div>
-              <div class="glass-card rounded-2xl p-4 space-y-1">
+              <div class="glass-card rounded-2xl p-3.5 sm:p-4 space-y-1">
                 <p class="text-[10px] font-extrabold text-slate-400 uppercase" data-i18n="statRevenue">Jumlah Hasil Keseluruhan</p>
-                <h3 id="statTotalRevenue" class="text-xl font-extrabold text-purple-600">RM 0.00</h3>
+                <h3 id="statTotalRevenue" class="text-lg sm:text-xl font-extrabold text-purple-600">RM 0.00</h3>
               </div>
             </div>
 
-            <div class="glass-card rounded-3xl p-5 space-y-3">
+            <div class="glass-card rounded-3xl p-4 sm:p-5 space-y-3">
               <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider" data-i18n="chartTitle">Graf Trend Jualan (Masa Nyata)</h3>
-              <div class="relative w-full h-52">
+              <div class="relative w-full h-48 sm:h-52">
                 <canvas id="dashSalesChart"></canvas>
               </div>
             </div>
           </div>
 
           <!-- 3. ADD PRODUCT -->
-          <div id="sec-add-product" class="admin-sec hidden glass-card rounded-3xl p-6 space-y-4">
-            <h2 id="addProductTitle" class="text-base font-extrabold text-slate-900 border-b pb-3" data-i18n="addProductTitle">Tambah / Edit Produk Katalog</h2>
+          <div id="sec-add-product" class="admin-sec hidden glass-card rounded-3xl p-4 sm:p-6 space-y-4">
+            <div class="flex items-center justify-between border-b pb-3">
+              <h2 id="addProductTitle" class="text-base font-extrabold text-slate-900" data-i18n="addProductTitle">Tambah / Edit Produk Katalog</h2>
+              <button onclick="switchAdminSection('dashboard')" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl flex items-center gap-1">
+                <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> <span data-i18n="btnBackDash">Kembali</span>
+              </button>
+            </div>
             <form id="productForm" onsubmit="handleProductFormSubmit(event)" class="space-y-4 text-xs">
               <input type="hidden" id="editProductId">
               <div>
@@ -311,7 +319,7 @@
                 <input type="text" id="pTitle" required class="w-full px-4 py-2.5 bg-slate-50 rounded-xl border border-slate-200 focus:bg-white focus:outline-none" data-i18n-ph="prodNamePh" placeholder="Contoh: Modul Matematik Tahun 1">
               </div>
 
-              <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
                 <div>
                   <label class="block font-bold text-slate-700 mb-1" data-i18n="category">Kategori *</label>
                   <select id="pCategory" required class="w-full px-4 py-2.5 bg-slate-50 rounded-xl border border-slate-200 focus:bg-white focus:outline-none"></select>
@@ -333,14 +341,14 @@
 
               <div>
                 <label class="block font-bold text-slate-700 mb-1" data-i18n="imgUploadLbl">Gambar Dimuat Naik (Maksimum 10 Gambar - PNG / JPG Auto-Mampat)</label>
-                <input type="file" id="pImageFiles" accept="image/png, image/jpeg" multiple onchange="handleImageOptimization(event)" class="block w-full text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-pink-50 file:text-pink-700 hover:file:bg-pink-100">
+                <input type="file" id="pImageFiles" accept="image/png, image/jpeg" multiple onchange="handleImageOptimization(event)" class="block w-full text-slate-500 text-xs file:mr-3 file:py-2 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-pink-50 file:text-pink-700 hover:file:bg-pink-100">
                 <p id="imgUploadStatus" class="text-[10px] text-slate-500 mt-1"></p>
                 <div id="imagePreviewContainer" class="flex flex-wrap gap-2 mt-2"></div>
               </div>
 
               <div>
                 <label class="block font-bold text-slate-700 mb-1" data-i18n="videoUploadLbl">Video Tambahan Dimuat Naik (1 Video MP4 sahaja, Maksimum 5MB)</label>
-                <input type="file" id="pVideoFile" accept="video/mp4" onchange="handleVideoUpload(event)" class="block w-full text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-purple-50 file:text-purple-700 hover:file:bg-purple-100">
+                <input type="file" id="pVideoFile" accept="video/mp4" onchange="handleVideoUpload(event)" class="block w-full text-slate-500 text-xs file:mr-3 file:py-2 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-purple-50 file:text-purple-700 hover:file:bg-purple-100">
                 <p id="videoUploadStatus" class="text-[10px] text-slate-500 mt-1"></p>
               </div>
 
@@ -357,8 +365,13 @@
           </div>
 
           <!-- 4. RECORD NEW SALES -->
-          <div id="sec-add-sales" class="admin-sec hidden glass-card rounded-3xl p-6 space-y-4 max-w-lg mx-auto">
-            <h2 class="text-base font-extrabold text-slate-900 border-b pb-3" data-i18n="recSalesTitle">+ Rekod Jualan Baharu</h2>
+          <div id="sec-add-sales" class="admin-sec hidden glass-card rounded-3xl p-4 sm:p-6 space-y-4 max-w-lg mx-auto">
+            <div class="flex items-center justify-between border-b pb-3">
+              <h2 class="text-base font-extrabold text-slate-900" data-i18n="recSalesTitle">+ Rekod Jualan Baharu</h2>
+              <button onclick="switchAdminSection('dashboard')" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl flex items-center gap-1">
+                <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> <span data-i18n="btnBackDash">Kembali</span>
+              </button>
+            </div>
             <form id="formRecordSales" onsubmit="handleManualAddSales(event)" class="space-y-4 text-xs">
               <div>
                 <label class="block font-bold text-slate-700 mb-1" data-i18n="custName">Nama Pelanggan</label>
@@ -381,23 +394,28 @@
           </div>
 
           <!-- 5. MY SALES -->
-          <div id="sec-my-sales" class="admin-sec hidden glass-card rounded-3xl p-6 space-y-4">
-            <div class="flex justify-between items-center border-b pb-3">
+          <div id="sec-my-sales" class="admin-sec hidden glass-card rounded-3xl p-4 sm:p-6 space-y-4">
+            <div class="flex justify-between items-center border-b pb-3 flex-wrap gap-2">
               <h2 class="text-base font-extrabold text-slate-900" data-i18n="mySalesTitle">Rekod Jualan Penjual</h2>
-              <button onclick="downloadSalesCSV()" class="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl shadow flex items-center gap-1.5">
-                <i data-lucide="download" class="w-4 h-4"></i> <span data-i18n="btnExportCsv">Eksport CSV</span>
-              </button>
+              <div class="flex items-center gap-2">
+                <button onclick="downloadSalesCSV()" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl shadow flex items-center gap-1">
+                  <i data-lucide="download" class="w-3.5 h-3.5"></i> <span data-i18n="btnExportCsv">Eksport CSV</span>
+                </button>
+                <button onclick="switchAdminSection('dashboard')" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl flex items-center gap-1">
+                  <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> <span data-i18n="btnBackDash">Kembali</span>
+                </button>
+              </div>
             </div>
             
-            <div class="overflow-x-auto">
-              <table class="w-full text-left text-xs border-collapse">
+            <div class="overflow-x-auto no-scrollbar">
+              <table class="w-full text-left text-xs border-collapse min-w-[500px]">
                 <thead>
                   <tr class="bg-slate-100/80 text-slate-700 uppercase font-bold">
-                    <th class="p-3" data-i18n="thDate">Tarikh</th>
-                    <th class="p-3" data-i18n="thCust">Pelanggan</th>
-                    <th class="p-3" data-i18n="thProd">Produk</th>
-                    <th class="p-3" data-i18n="thAmt">Amaun</th>
-                    <th class="p-3 text-right" data-i18n="thAction">Tindakan</th>
+                    <th class="p-2.5" data-i18n="thDate">Tarikh</th>
+                    <th class="p-2.5" data-i18n="thCust">Pelanggan</th>
+                    <th class="p-2.5" data-i18n="thProd">Produk</th>
+                    <th class="p-2.5" data-i18n="thAmt">Amaun</th>
+                    <th class="p-2.5 text-right" data-i18n="thAction">Tindakan</th>
                   </tr>
                 </thead>
                 <tbody id="salesTableBody" class="divide-y divide-slate-100"></tbody>
@@ -406,41 +424,61 @@
           </div>
 
           <!-- 6. INSIGHTS & BAR GRAPH -->
-          <div id="sec-insights" class="admin-sec hidden glass-card rounded-3xl p-6 space-y-4">
-            <h2 class="text-base font-extrabold text-slate-900 border-b pb-3" data-i18n="insightsTitle">Analisis & Graf Bar</h2>
-            <div class="relative w-full h-64">
+          <div id="sec-insights" class="admin-sec hidden glass-card rounded-3xl p-4 sm:p-6 space-y-4">
+            <div class="flex items-center justify-between border-b pb-3">
+              <h2 class="text-base font-extrabold text-slate-900" data-i18n="insightsTitle">Analisis & Graf Bar</h2>
+              <button onclick="switchAdminSection('dashboard')" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl flex items-center gap-1">
+                <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> <span data-i18n="btnBackDash">Kembali</span>
+              </button>
+            </div>
+            <div class="relative w-full h-60 sm:h-64">
               <canvas id="insightsChart"></canvas>
             </div>
           </div>
 
           <!-- 7. STORE (PRODUCT LIST FOR ADMIN) -->
           <div id="sec-store" class="admin-sec hidden space-y-4">
-            <div class="flex justify-between items-center glass-card p-4 rounded-2xl">
+            <div class="flex justify-between items-center glass-card p-4 rounded-2xl flex-wrap gap-2">
               <h2 class="text-base font-extrabold text-slate-900" data-i18n="storeManageTitle">Pengurusan Produk Kedai</h2>
-              <button onclick="switchAdminSection('add-product')" class="px-3 py-2 bg-pink-600 text-white text-xs font-bold rounded-xl shadow" data-i18n="btnAddProdShort">+ Tambah Produk</button>
+              <div class="flex items-center gap-2">
+                <button onclick="switchAdminSection('add-product')" class="px-3 py-1.5 bg-pink-600 text-white text-xs font-bold rounded-xl shadow" data-i18n="btnAddProdShort">+ Tambah Produk</button>
+                <button onclick="switchAdminSection('dashboard')" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl flex items-center gap-1">
+                  <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> <span data-i18n="btnBackDash">Kembali</span>
+                </button>
+              </div>
             </div>
-            <div id="sellerProductsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+            <div id="sellerProductsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4"></div>
           </div>
 
-          <!-- 8. ADMIN (ADD KATEGORI - BOLEH EDIT, CHANGE, REMOVE) -->
-          <div id="sec-admin-cat" class="admin-sec hidden glass-card rounded-3xl p-6 space-y-4">
-            <h2 class="text-base font-extrabold text-slate-900 border-b pb-3" data-i18n="catManageTitle">Pengurusan Add Kategori</h2>
+          <!-- 8. ADMIN (PENGURUSAN KATEGORI - BOLEH EDIT / CHANGE / REMOVE) -->
+          <div id="sec-admin-cat" class="admin-sec hidden glass-card rounded-3xl p-4 sm:p-6 space-y-4">
+            <div class="flex items-center justify-between border-b pb-3">
+              <h2 class="text-base font-extrabold text-slate-900" data-i18n="catManageTitle">Pentadbir - Pengurusan Kategori</h2>
+              <button onclick="switchAdminSection('dashboard')" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl flex items-center gap-1">
+                <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> <span data-i18n="btnBackDash">Kembali</span>
+              </button>
+            </div>
             <form onsubmit="handleAddCategory(event)" class="flex gap-2 text-xs">
               <input type="text" id="newCatInput" required data-i18n-ph="newCatPh" placeholder="Nama kategori baharu..." class="flex-1 px-4 py-2.5 bg-slate-50 rounded-xl border border-slate-200 focus:outline-none">
-              <button type="submit" class="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow" data-i18n="btnAddCat">+ Kategori</button>
+              <button type="submit" class="px-4 py-2.5 bg-emerald-600 text-white font-bold rounded-xl shrink-0" data-i18n="btnAddCat">+ Kategori</button>
             </form>
             <div id="categoriesList" class="space-y-2 pt-2"></div>
           </div>
 
           <!-- 9. SETTING PROFILE & STORE / WHATSAPP SETTINGS -->
-          <div id="sec-setting" class="admin-sec hidden glass-card rounded-3xl p-6 space-y-5 max-w-xl mx-auto text-xs">
-            <h2 class="text-base font-extrabold text-slate-900 border-b pb-3" data-i18n="settingTitle">Tetapan Kedai & WhatsApp</h2>
+          <div id="sec-setting" class="admin-sec hidden glass-card rounded-3xl p-4 sm:p-6 space-y-5 max-w-xl mx-auto text-xs">
+            <div class="flex items-center justify-between border-b pb-3">
+              <h2 class="text-base font-extrabold text-slate-900" data-i18n="settingTitle">Tetapan Kedai & WhatsApp</h2>
+              <button onclick="switchAdminSection('dashboard')" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl flex items-center gap-1">
+                <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> <span data-i18n="btnBackDash">Kembali</span>
+              </button>
+            </div>
 
             <div>
               <label class="block font-bold text-slate-700 mb-1" data-i18n="logoUploadLbl">Muat Naik Gambar Profil / Logo Penjual (Bentuk Petak - PNG / JPG)</label>
-              <input type="file" id="settingLogoFile" accept="image/png, image/jpeg" onchange="handleLogoUpload(event)" class="block w-full text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100">
+              <input type="file" id="settingLogoFile" accept="image/png, image/jpeg" onchange="handleLogoUpload(event)" class="block w-full text-slate-500 text-xs file:mr-3 file:py-2 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100">
               <div class="mt-2">
-                <img id="previewSettingLogo" src="https://via.placeholder.com/150" class="w-20 h-20 square-img rounded-2xl border border-slate-200">
+                <img id="previewSettingLogo" src="https://via.placeholder.com/150" class="w-16 h-16 square-img rounded-2xl border border-slate-200">
               </div>
             </div>
 
@@ -470,7 +508,7 @@
 
               <div>
                 <label class="block font-bold text-slate-700 mb-1" data-i18n="waTplLbl">Templat Mesej Pesanan WhatsApp (Gunakan {ITEMS} dan {TOTAL})</label>
-                <textarea id="setWaTemplate" rows="6" class="w-full px-4 py-2.5 bg-slate-50 rounded-xl border border-slate-200 focus:outline-none font-mono text-[11px]"></textarea>
+                <textarea id="setWaTemplate" rows="5" class="w-full px-4 py-2.5 bg-slate-50 rounded-xl border border-slate-200 focus:outline-none font-mono text-[11px]"></textarea>
               </div>
             </div>
 
@@ -483,29 +521,27 @@
       </div>
     </section>
 
-    <!-- PUBLIC CUSTOMER VIEW (KATALOG PELANGGAN - BERSIH DARI ELEMEN ADMIN) -->
-    <section id="view-customer" class="hidden space-y-6 max-w-7xl mx-auto px-1 sm:px-4 w-full">
-      <div class="glass-card rounded-3xl p-4 sm:p-6 bg-gradient-to-r from-pink-500/10 via-purple-500/10 to-emerald-500/10 border border-white flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <div class="max-w-xl space-y-1">
-          <span class="px-3 py-1 bg-white text-emerald-700 text-[10px] font-extrabold rounded-full shadow-sm inline-block" data-i18n="custCatalogBadge">KATALOG RASMI PELANGGAN</span>
-          <h2 id="custStoreTitle" class="text-xl sm:text-2xl font-extrabold text-slate-900 leading-tight" data-i18n="custWelcome">Selamat Datang ke Kedai Kami</h2>
-          <p class="text-xs text-slate-600" data-i18n="custWelcomeSub">Pilih produk idaman anda dan buat pesanan terus melalui WhatsApp.</p>
+    <!-- PUBLIC CUSTOMER VIEW (KATALOG PELANGGAN SAHAJA - TERSUSUN DAN BEBAS LEBIHAN SKRIN) -->
+    <section id="view-customer" class="hidden space-y-4 sm:space-y-6 w-full max-w-7xl mx-auto">
+      <div class="glass-card rounded-3xl p-4 sm:p-6 bg-gradient-to-r from-pink-500/10 via-purple-500/10 to-emerald-500/10 border border-white flex justify-between items-center gap-3">
+        <div class="space-y-1 min-w-0">
+          <span class="px-2.5 py-0.5 bg-white text-emerald-700 text-[10px] font-extrabold rounded-full shadow-sm inline-block" data-i18n="custCatalogBadge">KATALOG RASMI PELANGGAN</span>
+          <h2 id="custStoreTitle" class="text-lg sm:text-2xl font-extrabold text-slate-900 truncate" data-i18n="custWelcome">Selamat Datang ke Kedai Kami</h2>
+          <p class="text-xs text-slate-600 truncate" data-i18n="custWelcomeSub">Pilih produk idaman anda dan buat pesanan terus melalui WhatsApp.</p>
         </div>
       </div>
 
-      <!-- KATEGORI BAR (RENSISTEN & FIT SCREEN PRO) -->
-      <div class="w-full overflow-x-auto no-scrollbar py-1">
-        <div class="flex items-center gap-2 text-xs font-bold w-max max-w-full" id="customerCategoryBar"></div>
-      </div>
-
-      <!-- PRODUCT GRID MOBILE & DESKTOP PERFECT FIT -->
-      <div id="customerProductsGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 w-full"></div>
+      <!-- KATEGORI BAR PELANGGAN -->
+      <div class="flex items-center gap-2 overflow-x-auto pb-2 no-scrollbar text-xs font-bold w-full" id="customerCategoryBar"></div>
+      
+      <!-- GRID PRODUK PELANGGAN (KEMAS DI SMARTPHONE) -->
+      <div id="customerProductsGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-4 w-full"></div>
     </section>
 
   </main>
 
-  <!-- NAVIGASI BOTTOM BAR (HANYA UNTUK ADMIN DI MOBILE) -->
-  <nav id="mobileBottomNav" class="hidden md:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-200 z-50 justify-around py-2.5 text-[10px] font-bold text-slate-600 shadow-lg">
+  <!-- NAVIGASI BOTTOM BAR (UNTUK PENTADBIR SAHAJA DI MOBILE) -->
+  <nav id="mobileBottomNav" class="hidden md:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-200 z-50 flex justify-around py-2.5 text-[10px] font-bold text-slate-600 shadow-lg w-full">
     <button onclick="showAdminDashboardMobile()" class="flex flex-col items-center gap-1 hover:text-emerald-600">
       <i data-lucide="home" class="w-4 h-4"></i>
       <span data-i18n="navHome">Home</span>
@@ -530,7 +566,7 @@
 
   <!-- CART MODAL PELANGGAN -->
   <div id="cartModal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-    <div class="bg-white w-full max-w-md rounded-3xl p-6 space-y-4 shadow-2xl relative">
+    <div class="bg-white w-full max-w-md rounded-3xl p-5 sm:p-6 space-y-4 shadow-2xl relative">
       <button onclick="toggleCartModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">
         <i data-lucide="x" class="w-5 h-5"></i>
       </button>
@@ -559,7 +595,7 @@
   </div>
 
   <script>
-    // DICTIONARY MULTI-LANGUAGE (100% BM ATAU 100% BI DENGAN TEPAT)
+    // DICTIONARY MULTI-LANGUAGE
     const translations = {
       BM: {
         officialPortal: "Portal Rasmi Penjual",
@@ -589,19 +625,11 @@
         menuAddSales: "Tambah Jualan",
         menuInsights: "Analisis & Graf Bar",
         menuStore: "Katalog Produk Saya",
-        menuAdmin: "Add Kategori",
+        menuAdmin: "Pentadbir",
         menuSetting: "Tetapan Profil",
         btnViewStore: "Lihat Kedai Saya",
         profileTitle: "Profil Penjual",
         activeSeller: "PENJUAL AKTIF",
-        dashWelcomeTitle: "Papan Pemuka Pentadbir",
-        dashWelcomeSub: "Uruskan jualan, produk dan tetapan kedai anda dari satu tempat.",
-        prodCatalogSub: "Katalog produk",
-        recordTransSub: "Rekod transaksi",
-        prodListTitle: "Senarai Produk",
-        manageListSub: "Urus senarai",
-        salesRecordTitle: "Rekod Jualan",
-        orderHistorySub: "Sejarah pesanan",
         filterPerf: "Penapis Ringkasan Prestasi:",
         filterToday: "Hari Ini",
         filterMonth: "Bulan Ini",
@@ -639,7 +667,7 @@
         insightsTitle: "Analisis & Graf Bar",
         storeManageTitle: "Pengurusan Produk Kedai",
         btnAddProdShort: "+ Tambah Produk",
-        catManageTitle: "Pengurusan Add Kategori",
+        catManageTitle: "Pentadbir - Pengurusan Kategori",
         newCatPh: "Nama kategori baharu...",
         btnAddCat: "+ Kategori",
         settingTitle: "Tetapan Kedai & WhatsApp",
@@ -655,9 +683,9 @@
         custWelcome: "Selamat Datang ke Kedai Kami",
         custWelcomeSub: "Pilih produk idaman anda dan buat pesanan terus melalui WhatsApp.",
         allCat: "Semua",
-        navHome: "Laman Utama",
+        navHome: "Home",
         navSales: "Jualan Saya",
-        navAdmin: "Add Kategori",
+        navAdmin: "Pentadbir",
         navSetting: "Tetapan",
         cartTitle: "Troli Pembelian",
         cartEmpty: "Troli anda masih kosong.",
@@ -665,13 +693,36 @@
         enterNamePh: "Masukkan nama...",
         totalOverall: "Jumlah Keseluruhan:",
         btnSendWa: "Hantar Pesanan Ke WhatsApp",
-        editBtn: "Edit",
         deleteBtn: "Padam",
-        saveBtn: "Simpan",
-        cancelBtn: "Batal",
+        editBtn: "Edit",
         chartSalesLabel: "Jualan (RM)",
         chartProdCount: "Bilangan Produk",
-        noData: "Tiada Data"
+        noData: "Tiada Data",
+        btnBackDash: "Kembali ke Papan Pemuka",
+        dashTitle: "Papan Pemuka Pentadbir",
+        dashSub: "Uruskan jualan, produk dan tetapan kedai anda dari satu tempat.",
+        subProdCat: "Katalog produk",
+        subRecTrans: "Rekod transaksi",
+        subManageList: "Urus senarai",
+        subOrderHist: "Sejarah pesanan",
+        msgEditCatPrompt: "Masukkan nama kategori baharu:",
+        msgConfirmDelCat: "Adakah anda pasti mahu memadam kategori ini?",
+        msgConfirmDelProd: "Adakah anda pasti mahu memadam produk ini?",
+        msgSessionExpired: "Sesi anda telah tamat selepas 2 jam tidak aktif. Sila log masuk semula.",
+        msgResetSent: "Pautan penetapan semula kata laluan telah dihantar ke e-mel anda.",
+        msgProdSaved: "Produk berjaya disimpan!",
+        msgMax10Img: "Maksimum 10 gambar sahaja dibenarkan!",
+        msgImgOpting: "Memproses & mengoptimumkan gambar...",
+        msgImgOptSuccess: "gambar berjaya dioptimumkan.",
+        msgMp4Only: "Hanya fail MP4 dibenarkan!",
+        msgMax5mb: "Saiz video melebihi had maksimum 5MB!",
+        msgVidOptSuccess: "Video berjaya dimuat naik (Saiz < 5MB).",
+        msgSalesAdded: "Rekod jualan berjaya ditambah!",
+        msgNoSalesData: "Tiada data jualan.",
+        msgSettingSaved: "Tetapan kedai & WhatsApp disimpan!",
+        msgAddedCart: "Ditambah ke troli!",
+        msgEnterName: "Sila masukkan nama penuh anda!",
+        msgCartEmpty: "Troli anda kosong!"
       },
       BI: {
         officialPortal: "Official Seller Portal",
@@ -701,19 +752,11 @@
         menuAddSales: "Add Sales",
         menuInsights: "Insights & Bar Graph",
         menuStore: "My Product Catalog",
-        menuAdmin: "Add Category",
+        menuAdmin: "Admin",
         menuSetting: "Profile Settings",
         btnViewStore: "View My Store",
         profileTitle: "Seller Profile",
         activeSeller: "ACTIVE SELLER",
-        dashWelcomeTitle: "Admin Dashboard",
-        dashWelcomeSub: "Manage your sales, products and store settings from one place.",
-        prodCatalogSub: "Product catalog",
-        recordTransSub: "Record transactions",
-        prodListTitle: "Product List",
-        manageListSub: "Manage list",
-        salesRecordTitle: "Sales Records",
-        orderHistorySub: "Order history",
         filterPerf: "Performance Summary Filter:",
         filterToday: "Today",
         filterMonth: "This Month",
@@ -751,7 +794,7 @@
         insightsTitle: "Insights & Bar Graph",
         storeManageTitle: "Store Product Management",
         btnAddProdShort: "+ Add Product",
-        catManageTitle: "Add Category Management",
+        catManageTitle: "Admin - Category Management",
         newCatPh: "New category name...",
         btnAddCat: "+ Category",
         settingTitle: "Store & WhatsApp Settings",
@@ -769,7 +812,7 @@
         allCat: "All",
         navHome: "Home",
         navSales: "My Sales",
-        navAdmin: "Add Category",
+        navAdmin: "Admin",
         navSetting: "Settings",
         cartTitle: "Shopping Cart",
         cartEmpty: "Your cart is empty.",
@@ -777,13 +820,36 @@
         enterNamePh: "Enter your name...",
         totalOverall: "Total Overall:",
         btnSendWa: "Send Order to WhatsApp",
-        editBtn: "Edit",
         deleteBtn: "Delete",
-        saveBtn: "Save",
-        cancelBtn: "Cancel",
+        editBtn: "Edit",
         chartSalesLabel: "Sales (RM)",
         chartProdCount: "Product Count",
-        noData: "No Data"
+        noData: "No Data",
+        btnBackDash: "Back to Dashboard",
+        dashTitle: "Admin Dashboard",
+        dashSub: "Manage your store sales, products, and settings from one place.",
+        subProdCat: "Product catalog",
+        subRecTrans: "Record transaction",
+        subManageList: "Manage list",
+        subOrderHist: "Order history",
+        msgEditCatPrompt: "Enter new category name:",
+        msgConfirmDelCat: "Are you sure you want to delete this category?",
+        msgConfirmDelProd: "Are you sure you want to delete this product?",
+        msgSessionExpired: "Your session expired after 2 hours of inactivity. Please log in again.",
+        msgResetSent: "A password reset link has been sent to your email inbox.",
+        msgProdSaved: "Product saved successfully!",
+        msgMax10Img: "Maximum 10 images allowed!",
+        msgImgOpting: "Processing & optimizing images...",
+        msgImgOptSuccess: "images successfully optimized.",
+        msgMp4Only: "Only MP4 files are allowed!",
+        msgMax5mb: "Video size exceeds maximum limit of 5MB!",
+        msgVidOptSuccess: "Video successfully uploaded (Size < 5MB).",
+        msgSalesAdded: "Sale record successfully added!",
+        msgNoSalesData: "No sales data available.",
+        msgSettingSaved: "Store & WhatsApp settings saved!",
+        msgAddedCart: "Added to cart!",
+        msgEnterName: "Please enter your full name!",
+        msgCartEmpty: "Your cart is empty!"
       }
     };
 
@@ -796,6 +862,8 @@
     const KEY_SETTINGS = "scha_settings_v3";
     const KEY_AUTH = "scha_auth_session_v3";
     const KEY_LAST_ACTIVITY = "scha_last_activity_v3";
+    const KEY_ACTIVE_SECTION = "scha_active_section_v3";
+    const KEY_CURRENT_VIEW = "scha_current_view_v3";
 
     const DEFAULT_WA_TEMPLATE = `Hello Scha,\n\nSaya ingin buat pesanan:\n\n{ITEMS}\n\nTotal : RM{TOTAL}\n\nSila berikan QR untuk saya buat pembayaran`;
 
@@ -833,7 +901,7 @@
       if (authSession.isLoggedIn) {
         const lastActivity = parseInt(localStorage.getItem(KEY_LAST_ACTIVITY) || "0", 10);
         if (lastActivity && (Date.now() - lastActivity > TWO_HOURS_MS)) {
-          alert(currentLang === 'BM' ? "Sesi anda telah tamat selepas 2 jam tidak aktif. Sila log masuk semula." : "Your session expired after 2 hours of inactivity. Please log in again.");
+          alert(translations[currentLang].msgSessionExpired);
           handleLogout();
         }
       }
@@ -851,7 +919,9 @@
       setInterval(checkInactivityTimeout, 60000);
 
       const urlParams = new URLSearchParams(window.location.search);
-      if (urlParams.get("mode") === "store") {
+      const savedView = localStorage.getItem(KEY_CURRENT_VIEW);
+      
+      if (urlParams.get("mode") === "store" || savedView === "customer") {
         openCustomerStoreView();
       } else {
         if (authSession.isLoggedIn) {
@@ -862,13 +932,13 @@
       }
     });
 
-    // SET LANGUAGE SYSTEM - 100% BAHASA BM / BI PADA SEMUA ELEMEN
+    // SET LANGUAGE SYSTEM (100% BM & BI TEGAS)
     function setLanguage(lang) {
       currentLang = lang;
       const dict = translations[lang];
 
-      document.getElementById("langBtnBM").className = lang === "BM" ? "px-2 py-1 rounded-lg bg-pink-600 text-white transition font-bold" : "px-2 py-1 rounded-lg text-slate-600 hover:text-slate-900 transition font-bold";
-      document.getElementById("langBtnBI").className = lang === "BI" ? "px-2 py-1 rounded-lg bg-pink-600 text-white transition font-bold" : "px-2 py-1 rounded-lg text-slate-600 hover:text-slate-900 transition font-bold";
+      document.getElementById("langBtnBM").className = lang === "BM" ? "px-2 py-1 rounded-lg bg-pink-600 text-white transition" : "px-2 py-1 rounded-lg text-slate-600 transition";
+      document.getElementById("langBtnBI").className = lang === "BI" ? "px-2 py-1 rounded-lg bg-pink-600 text-white transition" : "px-2 py-1 rounded-lg text-slate-600 transition";
 
       document.querySelectorAll("[data-i18n]").forEach(el => {
         const key = el.getAttribute("data-i18n");
@@ -900,6 +970,7 @@
 
     // AUTH CONTROLLERS
     function showAuthView(type) {
+      localStorage.setItem(KEY_CURRENT_VIEW, "auth");
       document.getElementById("view-auth").classList.remove("hidden");
       document.getElementById("view-admin").classList.add("hidden");
       document.getElementById("view-customer").classList.add("hidden");
@@ -907,7 +978,6 @@
       document.getElementById("customerSearchContainer").classList.add("hidden");
       document.getElementById("btnHeaderViewStore").classList.add("hidden");
       document.getElementById("mobileBottomNav").classList.add("hidden");
-      document.getElementById("mobileBottomNav").classList.remove("flex");
 
       document.getElementById("formSignIn").classList.add("hidden");
       document.getElementById("formSignUp").classList.add("hidden");
@@ -940,7 +1010,7 @@
 
     function handleAuthForgot(e) {
       e.preventDefault();
-      alert(currentLang === 'BM' ? "Pautan penetapan semula kata laluan telah dihantar ke e-mel anda." : "A password reset link has been sent to your email.");
+      alert(translations[currentLang].msgResetSent);
       showAuthView("signin");
     }
 
@@ -948,10 +1018,12 @@
       authSession = { isLoggedIn: false };
       localStorage.setItem(KEY_AUTH, JSON.stringify(authSession));
       localStorage.removeItem(KEY_LAST_ACTIVITY);
+      localStorage.removeItem(KEY_ACTIVE_SECTION);
       showAuthView("signin");
     }
 
     function showAdminView() {
+      localStorage.setItem(KEY_CURRENT_VIEW, "admin");
       document.getElementById("view-auth").classList.add("hidden");
       document.getElementById("view-admin").classList.remove("hidden");
       document.getElementById("view-customer").classList.add("hidden");
@@ -961,7 +1033,8 @@
       document.getElementById("mobileBottomNav").classList.remove("hidden");
       document.getElementById("mobileBottomNav").classList.add("flex");
 
-      switchAdminSection("dashboard");
+      const savedSec = localStorage.getItem(KEY_ACTIVE_SECTION) || "dashboard";
+      switchAdminSection(savedSec);
       loadSettingsToUI();
     }
 
@@ -970,7 +1043,9 @@
       switchAdminSection("dashboard");
     }
 
+    // TUKAR DAN KEKALKAN SECTION ASAL SELEPAS REFRESH (POINT 7)
     function switchAdminSection(sectionId) {
+      localStorage.setItem(KEY_ACTIVE_SECTION, sectionId);
       document.querySelectorAll(".admin-sec").forEach(el => el.classList.add("hidden"));
       const activeSec = document.getElementById(`sec-${sectionId}`);
       if (activeSec) activeSec.classList.remove("hidden");
@@ -1074,7 +1149,7 @@
     function handleImageOptimization(e) {
       const files = Array.from(e.target.files);
       if (files.length > 10) {
-        alert(currentLang === 'BM' ? "Maksimum 10 gambar sahaja dibenarkan!" : "Maximum 10 images allowed!");
+        alert(translations[currentLang].msgMax10Img);
         e.target.value = "";
         return;
       }
@@ -1082,7 +1157,7 @@
       uploadedCompressedImages = [];
       const previewContainer = document.getElementById("imagePreviewContainer");
       previewContainer.innerHTML = "";
-      document.getElementById("imgUploadStatus").innerText = currentLang === 'BM' ? "Memproses & mengoptimumkan gambar..." : "Processing & optimizing images...";
+      document.getElementById("imgUploadStatus").innerText = translations[currentLang].msgImgOpting;
 
       files.forEach(file => {
         if (!['image/jpeg', 'image/png'].includes(file.type)) return;
@@ -1119,7 +1194,7 @@
             imgEl.className = "w-12 h-12 square-img rounded-xl border border-slate-200";
             previewContainer.appendChild(imgEl);
 
-            document.getElementById("imgUploadStatus").innerText = currentLang === 'BM' ? `${uploadedCompressedImages.length} gambar berjaya dioptimumkan.` : `${uploadedCompressedImages.length} images successfully optimized.`;
+            document.getElementById("imgUploadStatus").innerText = `${uploadedCompressedImages.length} ${translations[currentLang].msgImgOptSuccess}`;
           };
           img.src = evt.target.result;
         };
@@ -1132,14 +1207,14 @@
       if (!file) return;
 
       if (file.type !== "video/mp4") {
-        alert(currentLang === 'BM' ? "Hanya fail MP4 dibenarkan!" : "Only MP4 files are allowed!");
+        alert(translations[currentLang].msgMp4Only);
         e.target.value = "";
         return;
       }
 
       const maxSizeInBytes = 5 * 1024 * 1024;
       if (file.size > maxSizeInBytes) {
-        alert(currentLang === 'BM' ? "Saiz video melebihi had maksimum 5MB!" : "Video size exceeds maximum limit of 5MB!");
+        alert(translations[currentLang].msgMax5mb);
         e.target.value = "";
         return;
       }
@@ -1147,7 +1222,7 @@
       const reader = new FileReader();
       reader.onload = (evt) => {
         uploadedVideoBase64 = evt.target.result;
-        document.getElementById("videoUploadStatus").innerText = currentLang === 'BM' ? "Video berjaya dimuat naik (Saiz < 5MB)." : "Video successfully uploaded (Size < 5MB).";
+        document.getElementById("videoUploadStatus").innerText = translations[currentLang].msgVidOptSuccess;
       };
       reader.readAsDataURL(file);
     }
@@ -1191,7 +1266,7 @@
 
       localStorage.setItem(KEY_PRODUCTS, JSON.stringify(products));
       resetProductForm();
-      alert(currentLang === 'BM' ? "Produk berjaya disimpan!" : "Product saved successfully!");
+      alert(translations[currentLang].msgProdSaved);
       switchAdminSection("store");
     }
 
@@ -1212,15 +1287,15 @@
         <div class="glass-card rounded-2xl p-3 flex flex-col justify-between space-y-2">
           <div class="flex items-center gap-3">
             <img src="${p.img}" class="w-12 h-12 square-img rounded-xl bg-slate-100 border">
-            <div class="flex-1 overflow-hidden">
-              <span class="text-[9px] font-extrabold text-pink-600 uppercase">${p.category}</span>
+            <div class="flex-1 overflow-hidden min-w-0">
+              <span class="text-[9px] font-extrabold text-pink-600 uppercase block truncate">${p.category}</span>
               <h4 class="font-bold text-slate-900 text-xs truncate">${p.title}</h4>
               <p class="font-extrabold text-emerald-600 text-xs">RM ${parseFloat(p.totalPrice || p.price).toFixed(2)}</p>
             </div>
           </div>
           <div class="flex items-center justify-end gap-1.5 pt-2 border-t border-slate-100 text-[11px] font-bold">
-            <button onclick="editProduct('${p.id}')" class="px-2 py-1 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 flex items-center gap-1">
-              <i data-lucide="edit-3" class="w-3 h-3"></i> ${dict.editBtn}
+            <button onclick="editProduct('${p.id}')" class="px-2 py-1 bg-amber-50 text-amber-700 rounded-lg hover:bg-amber-100 flex items-center gap-1">
+              <i data-lucide="edit" class="w-3 h-3"></i> ${dict.editBtn}
             </button>
             <button onclick="deleteProduct('${p.id}')" class="px-2 py-1 bg-rose-50 text-rose-600 rounded-lg hover:bg-rose-100 flex items-center gap-1">
               <i data-lucide="trash-2" class="w-3 h-3"></i> ${dict.deleteBtn}
@@ -1234,19 +1309,18 @@
     function editProduct(pId) {
       const p = products.find(x => x.id === pId);
       if (!p) return;
-      
       switchAdminSection('add-product');
       document.getElementById("editProductId").value = p.id;
       document.getElementById("pTitle").value = p.title;
       document.getElementById("pCategory").value = p.category;
       document.getElementById("pPrice").value = p.price;
       document.getElementById("pPromoPrice").value = p.promoPrice || "";
-      document.getElementById("pTotalPrice").value = (p.totalPrice || p.price).toFixed(2);
+      document.getElementById("pTotalPrice").value = p.totalPrice || p.price;
       document.getElementById("pDesc").value = p.desc || "";
     }
 
     function deleteProduct(pId) {
-      if (confirm(currentLang === 'BM' ? "Padam produk ini?" : "Delete this product?")) {
+      if (confirm(translations[currentLang].msgConfirmDelProd)) {
         products = products.filter(p => p.id !== pId);
         localStorage.setItem(KEY_PRODUCTS, JSON.stringify(products));
         renderSellerProductsGrid();
@@ -1277,7 +1351,7 @@
       salesHistory.push({ id: "S-" + Date.now(), date, customer: cust, product: prodName, amount: amt });
       localStorage.setItem(KEY_SALES, JSON.stringify(salesHistory));
 
-      alert(currentLang === 'BM' ? "Rekod jualan berjaya ditambah!" : "Sale record successfully added!");
+      alert(translations[currentLang].msgSalesAdded);
 
       document.getElementById("formRecordSales").reset();
       document.getElementById("saleDate").value = new Date().toISOString().split('T')[0];
@@ -1289,11 +1363,11 @@
       const dict = translations[currentLang];
       body.innerHTML = salesHistory.map((s, idx) => `
         <tr>
-          <td class="p-3">${s.date}</td>
-          <td class="p-3 font-bold text-slate-900">${s.customer}</td>
-          <td class="p-3">${s.product}</td>
-          <td class="p-3 font-extrabold text-emerald-600">RM ${parseFloat(s.amount || 0).toFixed(2)}</td>
-          <td class="p-3 text-right">
+          <td class="p-2.5 font-medium">${s.date}</td>
+          <td class="p-2.5 font-bold text-slate-900">${s.customer}</td>
+          <td class="p-2.5">${s.product}</td>
+          <td class="p-2.5 font-extrabold text-emerald-600">RM ${parseFloat(s.amount || 0).toFixed(2)}</td>
+          <td class="p-2.5 text-right">
             <button onclick="deleteSaleRecord(${idx})" class="text-rose-600 font-bold hover:underline">${dict.deleteBtn}</button>
           </td>
         </tr>
@@ -1307,7 +1381,7 @@
     }
 
     function downloadSalesCSV() {
-      if (salesHistory.length === 0) return alert(currentLang === 'BM' ? "Tiada data jualan." : "No sales data available.");
+      if (salesHistory.length === 0) return alert(translations[currentLang].msgNoSalesData);
       let csv = currentLang === 'BM' ? "ID,Tarikh,Pelanggan,Produk,Amaun(RM)\n" : "ID,Date,Customer,Product,Amount(RM)\n";
       salesHistory.forEach(s => csv += `"${s.id}","${s.date}","${s.customer}","${s.product}","${s.amount}"\n`);
       const blob = new Blob([csv], { type: 'text/csv' });
@@ -1317,50 +1391,19 @@
       a.click();
     }
 
-    // POINT 1: FUNGSI ADD KATEGORI (EDIT, CHANGE, REMOVE)
+    // PENGURUSAN KATEGORI LENGKAP - EDIT, CHANGE, REMOVE (POINT 1)
     function renderCategoriesList() {
       const container = document.getElementById("categoriesList");
       const dict = translations[currentLang];
       container.innerHTML = categories.map((c, idx) => `
-        <div class="flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-200 text-xs gap-2" id="cat-item-${idx}">
-          <span class="font-bold text-slate-800 flex-1" id="cat-text-${idx}">${c}</span>
-          <div class="flex items-center gap-1.5" id="cat-actions-${idx}">
-            <button onclick="editCategoryMode(${idx})" class="px-2.5 py-1 bg-blue-100 text-blue-700 font-bold rounded-lg hover:bg-blue-200 transition">${dict.editBtn}</button>
-            <button onclick="deleteCategory(${idx})" class="px-2.5 py-1 bg-rose-100 text-rose-700 font-bold rounded-lg hover:bg-rose-200 transition">${dict.deleteBtn}</button>
+        <div class="flex items-center justify-between p-2.5 bg-slate-50 rounded-xl border border-slate-200 text-xs">
+          <span class="font-bold text-slate-800 truncate pr-2">${c}</span>
+          <div class="flex items-center gap-1 shrink-0">
+            <button onclick="editCategory(${idx})" class="px-2 py-1 bg-amber-100 text-amber-800 font-bold rounded-lg hover:bg-amber-200">${dict.editBtn}</button>
+            <button onclick="deleteCategory(${idx})" class="px-2 py-1 bg-rose-100 text-rose-700 font-bold rounded-lg hover:bg-rose-200">${dict.deleteBtn}</button>
           </div>
         </div>
       `).join('');
-    }
-
-    function editCategoryMode(idx) {
-      const currentVal = categories[idx];
-      const dict = translations[currentLang];
-      const textEl = document.getElementById(`cat-text-${idx}`);
-      const actionsEl = document.getElementById(`cat-actions-${idx}`);
-
-      textEl.innerHTML = `<input type="text" id="input-edit-cat-${idx}" value="${currentVal}" class="w-full px-2 py-1 bg-white border border-slate-300 rounded-lg text-xs focus:outline-none">`;
-      actionsEl.innerHTML = `
-        <button onclick="saveCategoryEdit(${idx})" class="px-2.5 py-1 bg-emerald-600 text-white font-bold rounded-lg hover:bg-emerald-700 transition">${dict.saveBtn}</button>
-        <button onclick="renderCategoriesList()" class="px-2.5 py-1 bg-slate-200 text-slate-700 font-bold rounded-lg hover:bg-slate-300 transition">${dict.cancelBtn}</button>
-      `;
-    }
-
-    function saveCategoryEdit(idx) {
-      const inputEl = document.getElementById(`input-edit-cat-${idx}`);
-      const newVal = inputEl.value.trim();
-      if (newVal) {
-        const oldCatName = categories[idx];
-        categories[idx] = newVal;
-        
-        // Kemas kini produk yang terikat dengan kategori lama
-        products.forEach(p => {
-          if (p.category === oldCatName) p.category = newVal;
-        });
-
-        localStorage.setItem(KEY_CATEGORIES, JSON.stringify(categories));
-        localStorage.setItem(KEY_PRODUCTS, JSON.stringify(products));
-        renderCategoriesList();
-      }
     }
 
     function handleAddCategory(e) {
@@ -1374,8 +1417,25 @@
       }
     }
 
+    function editCategory(idx) {
+      const newName = prompt(translations[currentLang].msgEditCatPrompt, categories[idx]);
+      if (newName && newName.trim()) {
+        const oldName = categories[idx];
+        categories[idx] = newName.trim();
+        
+        // Kemas kini produk yang guna kategori lama
+        products.forEach(p => {
+          if (p.category === oldName) p.category = newName.trim();
+        });
+
+        localStorage.setItem(KEY_CATEGORIES, JSON.stringify(categories));
+        localStorage.setItem(KEY_PRODUCTS, JSON.stringify(products));
+        renderCategoriesList();
+      }
+    }
+
     function deleteCategory(idx) {
-      if (confirm(currentLang === 'BM' ? "Padam kategori ini?" : "Delete this category?")) {
+      if (confirm(translations[currentLang].msgConfirmDelCat)) {
         categories.splice(idx, 1);
         localStorage.setItem(KEY_CATEGORIES, JSON.stringify(categories));
         renderCategoriesList();
@@ -1419,22 +1479,20 @@
       settings.waTemplate = document.getElementById("setWaTemplate").value;
 
       localStorage.setItem(KEY_SETTINGS, JSON.stringify(settings));
-      alert(currentLang === 'BM' ? "Tetapan kedai & WhatsApp disimpan!" : "Store & WhatsApp settings saved!");
+      alert(translations[currentLang].msgSettingSaved);
       loadSettingsToUI();
     }
 
-    // POINT 2 & 3: KATALOG PRODUK HANYA UNTUK PELANGGAN VIEW (DIBERSIHKAN DARIPADA AKSES ADMIN) & DISESUAIKAN DENGAN CANTIK (NO OVERFLOW)
+    // KATALOG PELANGGAN SAHAJA (POINT 2 & POINT 3)
     function openCustomerStoreView() {
+      localStorage.setItem(KEY_CURRENT_VIEW, "customer");
       document.getElementById("view-auth").classList.add("hidden");
       document.getElementById("view-admin").classList.add("hidden");
       document.getElementById("view-customer").classList.remove("hidden");
       document.getElementById("customerCartBtn").classList.remove("hidden");
       document.getElementById("customerSearchContainer").classList.remove("hidden");
       document.getElementById("btnHeaderViewStore").classList.add("hidden");
-      
-      // Sembunyikan Navigasi Bawah Admin semasa di mod Katalog Pelanggan
       document.getElementById("mobileBottomNav").classList.add("hidden");
-      document.getElementById("mobileBottomNav").classList.remove("flex");
 
       document.getElementById("custStoreTitle").innerText = settings.storeName;
       renderCustomerCategories();
@@ -1444,8 +1502,8 @@
     function renderCustomerCategories() {
       const bar = document.getElementById("customerCategoryBar");
       const dict = translations[currentLang];
-      let html = `<button onclick="renderCustomerProducts()" class="px-3.5 py-1.5 bg-white hover:bg-pink-50 text-slate-800 rounded-xl border border-slate-200 shadow-sm shrink-0 whitespace-nowrap">${dict.allCat}</button>`;
-      html += categories.map(c => `<button onclick="filterCustCat('${c}')" class="px-3.5 py-1.5 bg-white hover:bg-pink-50 text-slate-800 rounded-xl border border-slate-200 shadow-sm shrink-0 whitespace-nowrap">${c}</button>`).join('');
+      let html = `<button onclick="renderCustomerProducts()" class="px-3 py-1.5 bg-white text-slate-800 rounded-xl border border-slate-200 shrink-0 shadow-sm hover:bg-slate-50">${dict.allCat}</button>`;
+      html += categories.map(c => `<button onclick="filterCustCat('${c}')" class="px-3 py-1.5 bg-white text-slate-800 rounded-xl border border-slate-200 shrink-0 shadow-sm hover:bg-slate-50">${c}</button>`).join('');
       bar.innerHTML = html;
     }
 
@@ -1462,15 +1520,15 @@
       const grid = document.getElementById("customerProductsGrid");
 
       grid.innerHTML = list.map(p => `
-        <div class="glass-card rounded-2xl overflow-hidden flex flex-col justify-between p-2.5 sm:p-3 space-y-2 w-full box-border">
-          <img src="${p.img}" class="w-full h-32 sm:h-40 square-img rounded-xl bg-slate-100">
-          <div class="space-y-1">
-            <span class="text-[9px] font-extrabold text-pink-600 uppercase tracking-wider">${p.category}</span>
-            <h4 class="font-bold text-slate-900 text-xs sm:text-sm line-clamp-2 leading-tight">${p.title}</h4>
+        <div class="glass-card rounded-2xl overflow-hidden flex flex-col justify-between p-2.5 sm:p-3 space-y-2 w-full">
+          <img src="${p.img}" class="w-full h-28 sm:h-36 square-img rounded-xl bg-slate-100">
+          <div class="min-w-0">
+            <span class="text-[9px] font-extrabold text-pink-600 uppercase block truncate">${p.category}</span>
+            <h4 class="font-bold text-slate-900 text-xs line-clamp-2 leading-tight">${p.title}</h4>
           </div>
-          <div class="flex items-center justify-between pt-2 border-t border-slate-100/80">
-            <span class="font-extrabold text-emerald-600 text-xs sm:text-sm">RM ${parseFloat(p.totalPrice || p.price).toFixed(2)}</span>
-            <button onclick="addToCart('${p.id}')" class="p-2 bg-pink-600 hover:bg-pink-700 text-white rounded-xl shadow transition">
+          <div class="flex items-center justify-between pt-2 border-t border-slate-100">
+            <span class="font-extrabold text-emerald-600 text-xs sm:text-sm truncate">RM ${parseFloat(p.totalPrice || p.price).toFixed(2)}</span>
+            <button onclick="addToCart('${p.id}')" class="p-2 bg-pink-600 hover:bg-pink-700 text-white rounded-xl shadow transition shrink-0">
               <i data-lucide="shopping-cart" class="w-3.5 h-3.5"></i>
             </button>
           </div>
@@ -1489,7 +1547,7 @@
         cart.push({ id: p.id, title: p.title, price: (p.totalPrice || p.price), qty: 1 });
       }
       updateCartBadge();
-      alert(currentLang === 'BM' ? "Ditambah ke troli!" : "Added to cart!");
+      alert(translations[currentLang].msgAddedCart);
     }
 
     function updateCartBadge() {
@@ -1520,11 +1578,11 @@
         total += itemTotal;
         return `
           <div class="flex items-center justify-between bg-slate-50 p-2.5 rounded-xl">
-            <div class="flex-1 overflow-hidden pr-2">
+            <div class="flex-1 overflow-hidden pr-2 min-w-0">
               <h5 class="font-bold text-slate-800 text-xs truncate">${item.title}</h5>
               <span class="text-emerald-600 font-extrabold text-[11px]">RM ${parseFloat(item.price).toFixed(2)}</span>
             </div>
-            <div class="flex items-center gap-1.5 font-bold">
+            <div class="flex items-center gap-1.5 font-bold shrink-0">
               <button onclick="updateCartQty(${idx}, -1)" class="w-5 h-5 bg-slate-200 rounded text-slate-700 flex items-center justify-center">-</button>
               <span>${item.qty}</span>
               <button onclick="updateCartQty(${idx}, 1)" class="w-5 h-5 bg-slate-200 rounded text-slate-700 flex items-center justify-center">+</button>
@@ -1544,8 +1602,8 @@
 
     function processWhatsAppCheckout() {
       const custName = document.getElementById("custCheckoutName").value.trim();
-      if (!custName) return alert(currentLang === 'BM' ? "Sila masukkan nama penuh anda!" : "Please enter your full name!");
-      if (cart.length === 0) return alert(currentLang === 'BM' ? "Troli anda kosong!" : "Your cart is empty!");
+      if (!custName) return alert(translations[currentLang].msgEnterName);
+      if (cart.length === 0) return alert(translations[currentLang].msgCartEmpty);
 
       const itemsFormatted = cart.map(i => `${i.qty} x ${i.title}`).join('\n');
       const totalVal = cart.reduce((a,b) => a + (b.price * b.qty), 0).toFixed(2);
