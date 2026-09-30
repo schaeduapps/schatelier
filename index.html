@@ -205,9 +205,16 @@
               <img id="profileAvatar" src="https://via.placeholder.com/150" class="w-16 h-16 sm:w-20 sm:h-20 square-img rounded-2xl border-2 border-emerald-400">
               <div>
                 <h3 id="profileStoreDisplay" class="font-bold text-slate-900 text-base truncate">Kedai Saya</h3>
+                <p id="profileSellerNameDisplay" class="text-xs font-semibold text-slate-700 truncate">Nama Penjual</p>
                 <p id="profileEmailDisplay" class="text-xs text-slate-500 truncate">email@domain.com</p>
+                <p id="profilePhoneDisplay" class="text-xs text-slate-500 truncate">0123456789</p>
                 <span class="inline-block mt-2 px-2.5 py-0.5 bg-emerald-100 text-emerald-800 text-[10px] font-extrabold rounded-full" data-i18n="activeSeller">PENJUAL AKTIF</span>
               </div>
+            </div>
+            <div class="pt-3 border-t">
+              <button onclick="switchAdminSection('setting')" class="px-4 py-2 bg-pink-600 hover:bg-pink-700 text-white text-xs font-bold rounded-xl shadow transition">
+                Kemaskini Tetapan Profil
+              </button>
             </div>
           </div>
 
@@ -473,7 +480,7 @@
                   <label class="block font-bold text-slate-700 mb-1">Status Kategori</label>
                   <select id="catStatusInput" class="w-full px-3.5 py-2 bg-white rounded-xl border border-slate-200 focus:outline-none font-semibold">
                     <option value="active">Active (Aktif)</option>
-                    <option value="inactive font-bold text-rose-600">Non Active (Tidak Aktif)</option>
+                    <option value="inactive">Non Active (Tidak Aktif)</option>
                   </select>
                 </div>
               </div>
@@ -505,47 +512,55 @@
               </button>
             </div>
 
-            <div>
-              <label class="block font-bold text-slate-700 mb-1" data-i18n="logoUploadLbl">Muat Naik Gambar Profil / Logo Penjual (Bentuk Petak - PNG / JPG)</label>
-              <input type="file" id="settingLogoFile" accept="image/png, image/jpeg" onchange="handleLogoUpload(event)" class="block w-full text-slate-500 text-xs file:mr-3 file:py-2 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100">
-              <div class="mt-2">
-                <img id="previewSettingLogo" src="https://via.placeholder.com/150" class="w-16 h-16 square-img rounded-2xl border border-slate-200">
-              </div>
-            </div>
-
-            <div>
-              <label class="block font-bold text-slate-700 mb-1" data-i18n="storeSellerNameLbl">Nama Kedai / Penjual</label>
-              <input type="text" id="setStoreName" class="w-full px-4 py-2.5 bg-slate-50 rounded-xl border border-slate-200">
-            </div>
-
-            <div>
-              <label class="block font-bold text-slate-700 mb-1" data-i18n="phoneNumLbl">Nombor Telefon</label>
-              <input type="text" id="setPhone" class="w-full px-4 py-2.5 bg-slate-50 rounded-xl border border-slate-200" placeholder="60123456789">
-            </div>
-
-            <div>
-              <label class="block font-bold text-slate-700 mb-1" data-i18n="email">E-mel</label>
-              <input type="email" id="setEmail" class="w-full px-4 py-2.5 bg-slate-50 rounded-xl border border-slate-200">
-            </div>
-
-            <div class="pt-3 border-t border-slate-100 space-y-3">
-              <h3 class="font-extrabold text-slate-900 text-sm" data-i18n="orderConfigTitle">Pengurusan Pesanan - Konfigurasi Pesanan WhatsApp Pelanggan</h3>
-              <p class="text-[11px] text-slate-500" data-i18n="orderConfigSub">Fungsi templat auto WhatsApp boleh diedit, ditukar, atau dibuang mengikut kesesuaian penjual.</p>
-              
+            <form id="settingForm" onsubmit="handleSaveStoreSettings(event)" class="space-y-4">
               <div>
-                <label class="block font-bold text-slate-700 mb-1" data-i18n="waNumLbl">Nombor WhatsApp Penerima Pesanan (Contoh: 60123456789)</label>
-                <input type="text" id="setWaNum" class="w-full px-4 py-2.5 bg-slate-50 rounded-xl border border-slate-200">
+                <label class="block font-bold text-slate-700 mb-1" data-i18n="logoUploadLbl">Muat Naik Gambar Profil / Logo Penjual (Bentuk Petak - PNG / JPG)</label>
+                <input type="file" id="settingLogoFile" accept="image/png, image/jpeg" onchange="handleLogoUpload(event)" class="block w-full text-slate-500 text-xs file:mr-3 file:py-2 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100">
+                <div class="mt-2">
+                  <img id="previewSettingLogo" src="https://via.placeholder.com/150" class="w-16 h-16 square-img rounded-2xl border border-slate-200">
+                </div>
               </div>
 
               <div>
-                <label class="block font-bold text-slate-700 mb-1" data-i18n="waTplLbl">Templat Mesej Pesanan WhatsApp (Gunakan {ITEMS} dan {TOTAL})</label>
-                <textarea id="setWaTemplate" rows="5" class="w-full px-4 py-2.5 bg-slate-50 rounded-xl border border-slate-200 focus:outline-none font-mono text-[11px]"></textarea>
+                <label class="block font-bold text-slate-700 mb-1" data-i18n="storeSellerNameLbl">Nama Kedai (Store Name)</label>
+                <input type="text" id="setStoreName" required class="w-full px-4 py-2.5 bg-slate-50 rounded-xl border border-slate-200">
               </div>
-            </div>
 
-            <button onclick="saveStoreSettings()" class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-md transition" data-i18n="btnSaveSettings">
-              Simpan Tetapan
-            </button>
+              <div>
+                <label class="block font-bold text-slate-700 mb-1">Nama Penjual (Seller Name)</label>
+                <input type="text" id="setSellerName" required class="w-full px-4 py-2.5 bg-slate-50 rounded-xl border border-slate-200" placeholder="Nama Penjual">
+              </div>
+
+              <div>
+                <label class="block font-bold text-slate-700 mb-1" data-i18n="phoneNumLbl">Nombor Telefon</label>
+                <input type="text" id="setPhone" required class="w-full px-4 py-2.5 bg-slate-50 rounded-xl border border-slate-200" placeholder="60123456789">
+              </div>
+
+              <div>
+                <label class="block font-bold text-slate-700 mb-1" data-i18n="email">E-mel</label>
+                <input type="email" id="setEmail" required class="w-full px-4 py-2.5 bg-slate-50 rounded-xl border border-slate-200">
+              </div>
+
+              <div class="pt-3 border-t border-slate-100 space-y-3">
+                <h3 class="font-extrabold text-slate-900 text-sm" data-i18n="orderConfigTitle">Pengurusan Pesanan - Konfigurasi Pesanan WhatsApp Pelanggan</h3>
+                <p class="text-[11px] text-slate-500" data-i18n="orderConfigSub">Fungsi templat auto WhatsApp boleh diedit, ditukar, atau dibuang mengikut kesesuaian penjual.</p>
+                
+                <div>
+                  <label class="block font-bold text-slate-700 mb-1" data-i18n="waNumLbl">Nombor WhatsApp Penerima Pesanan (Contoh: 60123456789)</label>
+                  <input type="text" id="setWaNum" class="w-full px-4 py-2.5 bg-slate-50 rounded-xl border border-slate-200">
+                </div>
+
+                <div>
+                  <label class="block font-bold text-slate-700 mb-1" data-i18n="waTplLbl">Templat Mesej Pesanan WhatsApp (Gunakan {ITEMS} dan {TOTAL})</label>
+                  <textarea id="setWaTemplate" rows="5" class="w-full px-4 py-2.5 bg-slate-50 rounded-xl border border-slate-200 focus:outline-none font-mono text-[11px]"></textarea>
+                </div>
+              </div>
+
+              <button type="submit" class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-md transition flex items-center justify-center gap-2">
+                <i data-lucide="save" class="w-4 h-4"></i>
+                <span data-i18n="btnSaveSettings">SAVE PROFILE</span>
+              </button>
+            </form>
           </div>
 
         </main>
@@ -711,13 +726,13 @@
         btnAddProdShort: "+ Tambah Produk",
         settingTitle: "Tetapan Kedai & WhatsApp",
         logoUploadLbl: "Muat Naik Gambar Profil / Logo Penjual (Bentuk Petak - PNG / JPG)",
-        storeSellerNameLbl: "Nama Kedai / Penjual",
+        storeSellerNameLbl: "Nama Kedai (Store Name)",
         phoneNumLbl: "Nombor Telefon",
         orderConfigTitle: "Pengurusan Pesanan - Konfigurasi Pesanan WhatsApp Pelanggan",
         orderConfigSub: "Fungsi templat auto WhatsApp boleh diedit, ditukar, atau dibuang mengikut kesesuaian penjual.",
         waNumLbl: "Nombor WhatsApp Penerima Pesanan (Contoh: 60123456789)",
         waTplLbl: "Templat Mesej Pesanan WhatsApp (Gunakan {ITEMS} dan {TOTAL})",
-        btnSaveSettings: "Simpan Tetapan",
+        btnSaveSettings: "SAVE PROFILE",
         custCatalogBadge: "KATALOG RASMI PELANGGAN",
         custWelcome: "Selamat Datang ke Kedai Kami",
         custWelcomeSub: "Pilih produk idaman anda dan buat pesanan terus melalui WhatsApp.",
@@ -757,7 +772,7 @@
         msgVidOptSuccess: "Video berjaya dimuat naik (Saiz < 5MB).",
         msgSalesAdded: "Rekod jualan berjaya ditambah!",
         msgNoSalesData: "Tiada data jualan.",
-        msgSettingSaved: "Tetapan kedai & WhatsApp disimpan!",
+        msgSettingSaved: "PROFILE UPDATED",
         msgAddedCart: "Ditambah ke troli!",
         msgEnterName: "Sila masukkan nama penuh anda!",
         msgCartEmpty: "Troli anda kosong!"
@@ -838,13 +853,13 @@
         btnAddProdShort: "+ Add Product",
         settingTitle: "Store & WhatsApp Settings",
         logoUploadLbl: "Upload Profile / Seller Logo (Square Shape - PNG / JPG)",
-        storeSellerNameLbl: "Store / Seller Name",
+        storeSellerNameLbl: "Store Name",
         phoneNumLbl: "Phone Number",
         orderConfigTitle: "Order Management - Customer WhatsApp Order Configuration",
         orderConfigSub: "WhatsApp auto-template feature can be edited, replaced, or removed as needed.",
         waNumLbl: "WhatsApp Order Receiver Number (E.g.: 60123456789)",
         waTplLbl: "WhatsApp Order Message Template (Use {ITEMS} and {TOTAL})",
-        btnSaveSettings: "Save Settings",
+        btnSaveSettings: "SAVE PROFILE",
         custCatalogBadge: "OFFICIAL CUSTOMER CATALOG",
         custWelcome: "Welcome to Our Store",
         custWelcomeSub: "Choose your favorite products and place orders directly via WhatsApp.",
@@ -884,7 +899,7 @@
         msgVidOptSuccess: "Video successfully uploaded (Size < 5MB).",
         msgSalesAdded: "Sale record successfully added!",
         msgNoSalesData: "No sales data available.",
-        msgSettingSaved: "Store & WhatsApp settings saved!",
+        msgSettingSaved: "PROFILE UPDATED",
         msgAddedCart: "Added to cart!",
         msgEnterName: "Please enter your full name!",
         msgCartEmpty: "Your cart is empty!"
@@ -929,6 +944,7 @@
 
     let uploadedCompressedImages = [];
     let uploadedVideoBase64 = "";
+    let uploadedLogoBase64 = "";
     let cart = [];
     let dashChartInstance = null;
     let insightsChartInstance = null;
@@ -1360,7 +1376,7 @@
       renderCustomerProducts();
     }
 
-    // FUNGSI BATAL / RESET BORANG
+    // FUNGSI BATAL / RESET BORANG PRODUK
     function resetProductForm() {
       document.getElementById("editProductId").value = "";
       document.getElementById("productForm").reset();
@@ -1400,101 +1416,104 @@
       grid.innerHTML = products.map(p => {
         const isBestSeller = bestSellers.includes(p.id);
         return `
-        <div class="glass-card rounded-2xl p-3 flex flex-col justify-between space-y-2 relative border border-slate-200">
-          ${isBestSeller ? `<span class="absolute top-2 right-2 bg-gradient-to-r from-amber-500 to-rose-500 text-white text-[9px] font-extrabold px-2 py-0.5 rounded-full shadow-sm">BEST SELLER</span>` : ''}
-          <div class="flex items-center gap-3">
-            <img src="${p.img || 'https://via.placeholder.com/300'}" class="w-14 h-14 square-img rounded-xl bg-slate-100 border">
-            <div class="flex-1 overflow-hidden min-w-0">
-              <span class="text-[9px] font-extrabold text-pink-600 uppercase block truncate">${p.category}</span>
-              <h4 class="font-bold text-slate-900 text-xs truncate">${p.title}</h4>
-              <p class="font-extrabold text-emerald-600 text-xs">RM ${parseFloat(p.totalPrice || p.price).toFixed(2)}</p>
+          <div class="glass-card rounded-2xl p-3 flex flex-col justify-between space-y-2 relative">
+            ${isBestSeller ? `<span class="absolute top-2 right-2 bg-amber-400 text-slate-900 text-[9px] font-extrabold px-2 py-0.5 rounded-full shadow">BEST SELLER</span>` : ''}
+            <img src="${p.img || 'https://via.placeholder.com/300'}" class="w-full h-32 object-cover rounded-xl">
+            <div>
+              <span class="text-[10px] font-bold text-pink-600 uppercase">${p.category}</span>
+              <h4 class="font-extrabold text-slate-900 text-xs truncate">${p.title}</h4>
+              <p class="text-xs font-black text-emerald-600 mt-1">RM ${(p.totalPrice || p.price).toFixed(2)}</p>
+            </div>
+            <div class="flex gap-2 pt-2 border-t border-slate-100">
+              <button onclick="editProduct('${p.id}')" class="flex-1 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-[11px] font-bold rounded-xl">${dict.editBtn}</button>
+              <button onclick="deleteProduct('${p.id}')" class="flex-1 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-600 text-[11px] font-bold rounded-xl">${dict.deleteBtn}</button>
             </div>
           </div>
-          <div class="flex items-center justify-end gap-1.5 pt-2 border-t border-slate-100 text-[11px] font-bold">
-            <button onclick="editProduct('${p.id}')" class="px-2.5 py-1 bg-amber-50 text-amber-700 rounded-lg hover:bg-amber-100 flex items-center gap-1 transition">
-              <i data-lucide="edit" class="w-3 h-3"></i> ${dict.editBtn}
-            </button>
-            <button onclick="deleteProduct('${p.id}')" class="px-2.5 py-1 bg-rose-50 text-rose-600 rounded-lg hover:bg-rose-100 flex items-center gap-1 transition">
-              <i data-lucide="trash-2" class="w-3 h-3"></i> ${dict.deleteBtn}
-            </button>
-          </div>
-        </div>
-      `;}).join('');
-      lucide.createIcons();
+        `;
+      }).join('');
     }
 
-    function editProduct(pId) {
-      const p = products.find(x => x.id === pId);
+    function editProduct(id) {
+      const p = products.find(x => x.id === id);
       if (!p) return;
+      
       switchAdminSection('add-product');
       document.getElementById("editProductId").value = p.id;
       document.getElementById("pTitle").value = p.title;
       document.getElementById("pCategory").value = p.category;
       document.getElementById("pPrice").value = p.price;
       document.getElementById("pPromoPrice").value = p.promoPrice || "";
-      document.getElementById("pTotalPrice").value = p.totalPrice || p.price;
+      document.getElementById("pTotalPrice").value = (p.totalPrice || p.price).toFixed(2);
       document.getElementById("pDesc").value = p.desc || "";
     }
 
-    function deleteProduct(pId) {
+    function deleteProduct(id) {
       if (confirm(translations[currentLang].msgConfirmDelProd)) {
-        products = products.filter(p => p.id !== pId);
+        products = products.filter(p => p.id !== id);
         localStorage.setItem(KEY_PRODUCTS, JSON.stringify(products));
         renderSellerProductsGrid();
         renderCustomerProducts();
       }
     }
 
+    // RECORD SALES & HISTORY
     function populateSalesProductDropdown() {
       const sel = document.getElementById("saleSelectProd");
-      sel.innerHTML = products.map(p => `<option value="${p.id}" data-price="${p.totalPrice || p.price}">${p.title} (RM ${parseFloat(p.totalPrice || p.price).toFixed(2)})</option>`).join('');
-      document.getElementById("saleDate").value = new Date().toISOString().split('T')[0];
+      sel.innerHTML = products.map(p => `<option value="${p.title}" data-price="${p.totalPrice || p.price}">${p.title} (RM ${(p.totalPrice || p.price).toFixed(2)})</option>`).join('');
       autoFillSaleAmount();
+      document.getElementById("saleDate").value = new Date().toISOString().split('T')[0];
     }
 
     function autoFillSaleAmount() {
       const sel = document.getElementById("saleSelectProd");
       const opt = sel.options[sel.selectedIndex];
-      if (opt) document.getElementById("saleAmount").value = opt.getAttribute("data-price");
+      if (opt) {
+        document.getElementById("saleAmount").value = opt.getAttribute("data-price");
+      }
     }
 
     function handleManualAddSales(e) {
       e.preventDefault();
-      const cust = document.getElementById("saleCustName").value;
-      const sel = document.getElementById("saleSelectProd");
-      const prodName = sel.options[sel.selectedIndex] ? sel.options[sel.selectedIndex].text : "Produk";
-      const amt = parseFloat(document.getElementById("saleAmount").value) || 0;
+      const custName = document.getElementById("saleCustName").value;
+      const product = document.getElementById("saleSelectProd").value;
+      const amount = parseFloat(document.getElementById("saleAmount").value) || 0;
       const date = document.getElementById("saleDate").value;
 
-      salesHistory.push({ id: "S-" + Date.now(), date, customer: cust, product: prodName, amount: amt });
+      salesHistory.unshift({
+        id: "s-" + Date.now(),
+        custName, product, amount, date
+      });
+
       localStorage.setItem(KEY_SALES, JSON.stringify(salesHistory));
-
       alert(translations[currentLang].msgSalesAdded);
-
       document.getElementById("formRecordSales").reset();
-      document.getElementById("saleDate").value = new Date().toISOString().split('T')[0];
-      autoFillSaleAmount();
-      renderDashboardAnalytics(currentFilterType);
+      switchAdminSection("dashboard");
     }
 
     function renderSalesHistoryTable() {
-      const body = document.getElementById("salesTableBody");
+      const tbody = document.getElementById("salesTableBody");
       const dict = translations[currentLang];
-      body.innerHTML = salesHistory.map((s, idx) => `
-        <tr>
+
+      if (salesHistory.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" class="text-center py-6 text-slate-400 font-bold">${dict.msgNoSalesData}</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = salesHistory.map(s => `
+        <tr class="hover:bg-slate-50/50">
           <td class="p-2.5 font-medium">${s.date}</td>
-          <td class="p-2.5 font-bold text-slate-900">${s.customer}</td>
+          <td class="p-2.5 font-bold text-slate-900">${s.custName}</td>
           <td class="p-2.5">${s.product}</td>
-          <td class="p-2.5 font-extrabold text-emerald-600">RM ${parseFloat(s.amount || 0).toFixed(2)}</td>
+          <td class="p-2.5 font-extrabold text-emerald-600">RM ${parseFloat(s.amount).toFixed(2)}</td>
           <td class="p-2.5 text-right">
-            <button onclick="deleteSaleRecord(${idx})" class="text-rose-600 font-bold hover:underline">${dict.deleteBtn}</button>
+            <button onclick="deleteSaleRecord('${s.id}')" class="text-rose-600 font-bold hover:underline text-[11px]">${dict.deleteBtn}</button>
           </td>
         </tr>
       `).join('');
     }
 
-    function deleteSaleRecord(idx) {
-      salesHistory.splice(idx, 1);
+    function deleteSaleRecord(id) {
+      salesHistory = salesHistory.filter(s => s.id !== id);
       localStorage.setItem(KEY_SALES, JSON.stringify(salesHistory));
       renderSalesHistoryTable();
       renderDashboardAnalytics(currentFilterType);
@@ -1502,112 +1521,127 @@
 
     function downloadSalesCSV() {
       if (salesHistory.length === 0) return alert(translations[currentLang].msgNoSalesData);
-      let csv = currentLang === 'BM' ? "ID,Tarikh,Pelanggan,Produk,Amaun(RM)\n" : "ID,Date,Customer,Product,Amount(RM)\n";
-      salesHistory.forEach(s => csv += `"${s.id}","${s.date}","${s.customer}","${s.product}","${s.amount}"\n`);
+      let csv = "Tarikh,Pelanggan,Produk,Amaun (RM)\n";
+      salesHistory.forEach(s => {
+        csv += `"${s.date}","${s.custName}","${s.product}","${parseFloat(s.amount).toFixed(2)}"\n`;
+      });
       const blob = new Blob([csv], { type: 'text/csv' });
+      const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = `Sales_Report_${new Date().toISOString().split('T')[0]}.csv`;
+      a.setAttribute('href', url);
+      a.setAttribute('download', `Rekod_Jualan_${new Date().toISOString().split('T')[0]}.csv`);
       a.click();
     }
 
-    // PENGURUSAN KATEGORI WORKSHEET
+    // SETTINGS PROFILE & LOGO (SAVE PROFILE BUTTON FUNCTIONALITY)
+    function handleLogoUpload(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = (evt) => {
+        uploadedLogoBase64 = evt.target.result;
+        document.getElementById("previewSettingLogo").src = uploadedLogoBase64;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function loadSettingsToUI() {
+      document.getElementById("setStoreName").value = settings.storeName || "";
+      document.getElementById("setSellerName").value = settings.sellerName || "";
+      document.getElementById("setPhone").value = settings.phone || "";
+      document.getElementById("setEmail").value = settings.email || "";
+      document.getElementById("setWaNum").value = settings.waNum || "";
+      document.getElementById("setWaTemplate").value = settings.waTemplate || DEFAULT_WA_TEMPLATE;
+      document.getElementById("previewSettingLogo").src = settings.logoUrl || "https://via.placeholder.com/150";
+
+      // HEADER
+      document.getElementById("headerLogo").src = settings.logoUrl || "https://via.placeholder.com/150";
+      document.getElementById("headerStoreName").innerText = settings.storeName || "Kedai Digital";
+      document.getElementById("headerSellerName").innerText = settings.sellerName || "Portal Rasmi Penjual";
+
+      // PROFILE VIEW
+      document.getElementById("profileAvatar").src = settings.logoUrl || "https://via.placeholder.com/150";
+      document.getElementById("profileStoreDisplay").innerText = settings.storeName || "Kedai Saya";
+      document.getElementById("profileSellerNameDisplay").innerText = settings.sellerName || "Penjual";
+      document.getElementById("profileEmailDisplay").innerText = settings.email || "email@domain.com";
+      document.getElementById("profilePhoneDisplay").innerText = settings.phone || "0123456789";
+
+      // SIDEBAR
+      document.getElementById("sidebarSellerName").innerText = settings.sellerName || "Penjual";
+      document.getElementById("custStoreTitle").innerText = `Selamat Datang ke ${settings.storeName || "Kedai Kami"}`;
+    }
+
+    function handleSaveStoreSettings(e) {
+      e.preventDefault();
+      settings.storeName = document.getElementById("setStoreName").value;
+      settings.sellerName = document.getElementById("setSellerName").value;
+      settings.phone = document.getElementById("setPhone").value;
+      settings.email = document.getElementById("setEmail").value;
+      settings.waNum = document.getElementById("setWaNum").value;
+      settings.waTemplate = document.getElementById("setWaTemplate").value;
+
+      if (uploadedLogoBase64) {
+        settings.logoUrl = uploadedLogoBase64;
+      }
+
+      localStorage.setItem(KEY_SETTINGS, JSON.stringify(settings));
+      loadSettingsToUI();
+
+      // NOTI 'PROFILE UPDATED'
+      alert(translations[currentLang].msgSettingSaved);
+    }
+
+    // CATEGORY MANAGEMENT
     function renderCategoriesList() {
       const container = document.getElementById("categoriesList");
       const dict = translations[currentLang];
 
-      if (categories.length === 0) {
-        container.innerHTML = `<p class="text-center py-4 text-slate-400 text-xs">Tiada kategori. Sila tambah di atas.</p>`;
-        return;
-      }
-
-      container.innerHTML = categories.map((c, idx) => {
-        const isActive = c.status === "active";
-        return `
-          <div class="glass-card p-3 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 border border-slate-200">
-            <div class="space-y-0.5 min-w-0 flex-1">
-              <div class="flex items-center gap-2">
-                <h4 class="font-extrabold text-slate-900 text-xs uppercase tracking-wide truncate">${c.name}</h4>
-                <span class="px-2 py-0.5 rounded-full text-[9px] font-extrabold ${isActive ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'} shrink-0">
-                  ${isActive ? 'ACTIVE' : 'NON ACTIVE'}
-                </span>
-              </div>
-              <p class="text-[11px] text-slate-500 line-clamp-2">${c.desc || 'Tiada penerangan.'}</p>
+      container.innerHTML = categories.map((c, idx) => `
+        <div class="glass-card p-3 rounded-2xl flex items-center justify-between text-xs">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="font-extrabold text-slate-900">${c.name}</span>
+              <span class="px-2 py-0.5 rounded-full text-[9px] font-bold ${c.status === 'active' ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-700'}">${c.status.toUpperCase()}</span>
             </div>
-            <div class="flex items-center gap-1.5 shrink-0 pt-2 sm:pt-0 border-t sm:border-0 border-slate-100 w-full sm:w-auto justify-end">
-              <button onclick="toggleCategoryStatus(${idx})" class="px-2.5 py-1 text-[10px] font-bold rounded-lg border ${isActive ? 'bg-slate-100 text-slate-700 hover:bg-slate-200' : 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100'} transition">
-                ${isActive ? 'Nyahaktif' : 'Aktifkan'}
-              </button>
-              <button onclick="editCategory(${idx})" class="px-2.5 py-1 bg-amber-100 text-amber-800 text-[10px] font-bold rounded-lg hover:bg-amber-200 transition flex items-center gap-1">
-                <i data-lucide="edit" class="w-3 h-3"></i> ${dict.editBtn}
-              </button>
-              <button onclick="deleteCategory(${idx})" class="px-2.5 py-1 bg-rose-100 text-rose-700 text-[10px] font-bold rounded-lg hover:bg-rose-200 transition flex items-center gap-1">
-                <i data-lucide="trash-2" class="w-3 h-3"></i> ${dict.deleteBtn}
-              </button>
-            </div>
+            <p class="text-[11px] text-slate-500 mt-0.5">${c.desc || '-'}</p>
           </div>
-        `;
-      }).join('');
-      lucide.createIcons();
+          <div class="flex items-center gap-1.5 shrink-0">
+            <button onclick="editCategory(${idx})" class="p-1.5 bg-slate-100 text-slate-700 hover:bg-slate-200 rounded-lg font-bold">${dict.editBtn}</button>
+            <button onclick="deleteCategory(${idx})" class="p-1.5 bg-rose-50 text-rose-600 hover:bg-rose-100 rounded-lg font-bold">${dict.deleteBtn}</button>
+          </div>
+        </div>
+      `).join('');
     }
 
     function handleSaveCategory(e) {
       e.preventDefault();
-      const editIndex = parseInt(document.getElementById("editCatIndex").value, 10);
-      const name = document.getElementById("catNameInput").value.trim();
-      const desc = document.getElementById("catDescInput").value.trim();
+      const idx = parseInt(document.getElementById("editCatIndex").value, 10);
+      const name = document.getElementById("catNameInput").value.toUpperCase();
       const status = document.getElementById("catStatusInput").value;
+      const desc = document.getElementById("catDescInput").value;
 
-      if (!name) return;
-
-      if (editIndex >= 0 && editIndex < categories.length) {
-        const oldName = categories[editIndex].name;
-        categories[editIndex] = { name, desc, status };
-
-        if (oldName !== name) {
-          products.forEach(p => {
-            if (p.category === oldName) p.category = name;
-          });
-          localStorage.setItem(KEY_PRODUCTS, JSON.stringify(products));
-        }
+      if (idx >= 0) {
+        categories[idx] = { name, status, desc };
       } else {
-        categories.push({ name, desc, status });
+        categories.push({ name, status, desc });
       }
 
       localStorage.setItem(KEY_CATEGORIES, JSON.stringify(categories));
       resetCategoryForm();
       renderCategoriesList();
+      populateCategoryDropdown();
+      renderCustomerCategories();
     }
 
     function editCategory(idx) {
-      const cat = categories[idx];
-      if (!cat) return;
-
+      const c = categories[idx];
+      if (!c) return;
       document.getElementById("editCatIndex").value = idx;
-      document.getElementById("catNameInput").value = cat.name;
-      document.getElementById("catDescInput").value = cat.desc || "";
-      document.getElementById("catStatusInput").value = cat.status || "active";
-
-      document.getElementById("catFormTitle").innerText = "Edit Kategori Worksheet";
-      document.getElementById("btnSaveCat").innerText = "Kemas Kini Kategori";
-    }
-
-    function toggleCategoryStatus(idx) {
-      if (categories[idx]) {
-        categories[idx].status = categories[idx].status === "active" ? "inactive" : "active";
-        localStorage.setItem(KEY_CATEGORIES, JSON.stringify(categories));
-        renderCategoriesList();
-      }
-    }
-
-    function resetCategoryForm() {
-      document.getElementById("editCatIndex").value = "-1";
-      document.getElementById("catNameInput").value = "";
-      document.getElementById("catDescInput").value = "";
-      document.getElementById("catStatusInput").value = "active";
-
-      document.getElementById("catFormTitle").innerText = "+ Tambah Kategori Baharu";
-      document.getElementById("btnSaveCat").innerText = "+ Simpan Kategori";
+      document.getElementById("catNameInput").value = c.name;
+      document.getElementById("catStatusInput").value = c.status;
+      document.getElementById("catDescInput").value = c.desc || "";
+      document.getElementById("catFormTitle").innerText = "Edit Kategori";
     }
 
     function deleteCategory(idx) {
@@ -1615,51 +1649,20 @@
         categories.splice(idx, 1);
         localStorage.setItem(KEY_CATEGORIES, JSON.stringify(categories));
         renderCategoriesList();
+        populateCategoryDropdown();
+        renderCustomerCategories();
       }
     }
 
-    function loadSettingsToUI() {
-      document.getElementById("headerStoreName").innerText = settings.storeName;
-      document.getElementById("headerSellerName").innerText = settings.sellerName;
-      document.getElementById("headerLogo").src = settings.logoUrl;
-
-      document.getElementById("profileStoreDisplay").innerText = settings.storeName;
-      document.getElementById("profileEmailDisplay").innerText = settings.email;
-      document.getElementById("profileAvatar").src = settings.logoUrl;
-
-      document.getElementById("setStoreName").value = settings.storeName;
-      document.getElementById("setPhone").value = settings.phone;
-      document.getElementById("setEmail").value = settings.email;
-      document.getElementById("setWaNum").value = settings.waNum;
-      document.getElementById("setWaTemplate").value = settings.waTemplate || DEFAULT_WA_TEMPLATE;
-      document.getElementById("previewSettingLogo").src = settings.logoUrl;
+    function resetCategoryForm() {
+      document.getElementById("editCatIndex").value = "-1";
+      document.getElementById("catNameInput").value = "";
+      document.getElementById("catStatusInput").value = "active";
+      document.getElementById("catDescInput").value = "";
+      document.getElementById("catFormTitle").innerText = "+ Tambah Kategori Baharu";
     }
 
-    function handleLogoUpload(e) {
-      const file = e.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = (evt) => {
-          settings.logoUrl = evt.target.result;
-          document.getElementById("previewSettingLogo").src = settings.logoUrl;
-        };
-        reader.readAsDataURL(file);
-      }
-    }
-
-    function saveStoreSettings() {
-      settings.storeName = document.getElementById("setStoreName").value;
-      settings.phone = document.getElementById("setPhone").value;
-      settings.email = document.getElementById("setEmail").value;
-      settings.waNum = document.getElementById("setWaNum").value;
-      settings.waTemplate = document.getElementById("setWaTemplate").value;
-
-      localStorage.setItem(KEY_SETTINGS, JSON.stringify(settings));
-      alert(translations[currentLang].msgSettingSaved);
-      loadSettingsToUI();
-    }
-
-    // KATALOG PELANGGAN & STORE
+    // CUSTOMER STORE VIEW
     function openCustomerStoreView() {
       localStorage.setItem(KEY_CURRENT_VIEW, "customer");
       document.getElementById("view-auth").classList.add("hidden");
@@ -1670,14 +1673,6 @@
       document.getElementById("btnHeaderViewStore").classList.add("hidden");
       document.getElementById("mobileBottomNav").classList.add("hidden");
 
-      const btnBack = document.getElementById("btnBackToAdmin");
-      if (authSession.isLoggedIn) {
-        btnBack.classList.remove("hidden");
-      } else {
-        btnBack.classList.add("hidden");
-      }
-
-      document.getElementById("custStoreTitle").innerText = settings.storeName;
       renderCustomerCategories();
       renderCustomerProducts();
     }
@@ -1690,105 +1685,141 @@
       }
     }
 
+    let activeCustomerCategory = "ALL";
+
     function renderCustomerCategories() {
       const bar = document.getElementById("customerCategoryBar");
       const dict = translations[currentLang];
-      
       const activeCats = categories.filter(c => c.status === "active");
 
-      let html = `<button onclick="renderCustomerProducts()" class="px-3 py-1.5 bg-white text-slate-800 rounded-xl border border-slate-200 shrink-0 shadow-sm hover:bg-slate-50">${dict.allCat}</button>`;
-      html += activeCats.map(c => `<button onclick="filterCustCat('${c.name}')" class="px-3 py-1.5 bg-white text-slate-800 rounded-xl border border-slate-200 shrink-0 shadow-sm hover:bg-slate-50">${c.name}</button>`).join('');
+      let html = `
+        <button onclick="filterCustomerCategory('ALL')" class="px-3 py-1.5 rounded-xl whitespace-nowrap transition ${activeCustomerCategory === 'ALL' ? 'bg-pink-600 text-white' : 'bg-white/80 text-slate-700 hover:bg-white'}">
+          ${dict.allCat}
+        </button>
+      `;
+
+      activeCats.forEach(c => {
+        html += `
+          <button onclick="filterCustomerCategory('${c.name}')" class="px-3 py-1.5 rounded-xl whitespace-nowrap transition ${activeCustomerCategory === c.name ? 'bg-pink-600 text-white' : 'bg-white/80 text-slate-700 hover:bg-white'}">
+            ${c.name}
+          </button>
+        `;
+      });
+
       bar.innerHTML = html;
     }
 
-    function filterCustCat(cat) {
-      renderCustomerProducts(products.filter(p => p.category === cat));
+    function filterCustomerCategory(catName) {
+      activeCustomerCategory = catName;
+      renderCustomerCategories();
+      renderCustomerProducts();
     }
 
-    function searchProducts(q) {
-      renderCustomerProducts(products.filter(p => p.title.toLowerCase().includes(q.toLowerCase())));
+    function searchProducts(query) {
+      renderCustomerProducts(query.toLowerCase());
     }
 
-    function renderCustomerProducts(customList) {
-      const list = customList || products;
+    function renderCustomerProducts(searchQuery = "") {
       const grid = document.getElementById("customerProductsGrid");
       const bestSellers = getBestSellerProductIds();
 
+      let list = products.filter(p => {
+        const matchesCategory = activeCustomerCategory === "ALL" || p.category === activeCustomerCategory;
+        const matchesSearch = p.title.toLowerCase().includes(searchQuery) || p.desc.toLowerCase().includes(searchQuery);
+        return matchesCategory && matchesSearch;
+      });
+
       if (list.length === 0) {
-        grid.innerHTML = `<div class="col-span-full text-center py-12 text-slate-400 font-bold text-xs">Tiada produk dijual dalam kedai.</div>`;
+        grid.innerHTML = `<div class="col-span-full text-center py-12 text-slate-400 font-bold text-xs">Tiada produk ditemui.</div>`;
         return;
       }
 
       grid.innerHTML = list.map(p => {
         const isBestSeller = bestSellers.includes(p.id);
+        const finalPrice = (p.totalPrice || p.price).toFixed(2);
         return `
-        <div class="glass-card rounded-2xl overflow-hidden flex flex-col justify-between p-2.5 sm:p-3 space-y-2 w-full relative">
-          ${isBestSeller ? `<span class="absolute top-4 right-4 bg-gradient-to-r from-amber-500 to-rose-500 text-white text-[9px] font-extrabold px-2 py-0.5 rounded-full shadow-md z-10">BEST SELLER</span>` : ''}
-          <img src="${p.img || 'https://via.placeholder.com/300'}" class="w-full h-28 sm:h-36 square-img rounded-xl bg-slate-100">
-          <div class="min-w-0">
-            <span class="text-[9px] font-extrabold text-pink-600 uppercase block truncate">${p.category}</span>
-            <h4 class="font-bold text-slate-900 text-xs line-clamp-2 leading-tight">${p.title}</h4>
+          <div class="glass-card rounded-2xl p-3 flex flex-col justify-between space-y-2 relative group hover:shadow-lg transition">
+            ${isBestSeller ? `<span class="absolute top-2 right-2 bg-amber-400 text-slate-900 text-[9px] font-extrabold px-2 py-0.5 rounded-full shadow z-10">BEST SELLER</span>` : ''}
+            <div class="relative overflow-hidden rounded-xl bg-slate-100 h-36">
+              <img src="${p.img || 'https://via.placeholder.com/300'}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+            </div>
+            <div class="space-y-1">
+              <span class="text-[9px] font-extrabold text-pink-600 uppercase tracking-wider">${p.category}</span>
+              <h4 class="font-extrabold text-slate-900 text-xs line-clamp-2">${p.title}</h4>
+              <p class="text-[11px] text-slate-500 line-clamp-2">${p.desc || ''}</p>
+            </div>
+            <div class="pt-2 border-t border-slate-100 flex items-center justify-between">
+              <div>
+                <span class="text-xs font-black text-emerald-600 block">RM ${finalPrice}</span>
+                ${p.promoPrice ? `<span class="text-[10px] text-slate-400 line-through">RM ${p.price.toFixed(2)}</span>` : ''}
+              </div>
+              <button onclick="addToCart('${p.id}')" class="p-2 bg-pink-600 hover:bg-pink-700 text-white rounded-xl shadow transition">
+                <i data-lucide="shopping-cart" class="w-4 h-4"></i>
+              </button>
+            </div>
           </div>
-          <div class="flex items-center justify-between pt-2 border-t border-slate-100">
-            <span class="font-extrabold text-emerald-600 text-xs sm:text-sm truncate">RM ${parseFloat(p.totalPrice || p.price).toFixed(2)}</span>
-            <button onclick="addToCart('${p.id}')" class="p-2 bg-pink-600 hover:bg-pink-700 text-white rounded-xl shadow transition shrink-0">
-              <i data-lucide="shopping-cart" class="w-3.5 h-3.5"></i>
-            </button>
-          </div>
-        </div>
-      `;}).join('');
+        `;
+      }).join('');
+
       lucide.createIcons();
     }
 
-    function addToCart(pId) {
-      const p = products.find(x => x.id === pId);
+    // CART & WHATSAPP CHECKOUT
+    function addToCart(productId) {
+      const p = products.find(x => x.id === productId);
       if (!p) return;
-      const exist = cart.find(i => i.id === pId);
-      if (exist) {
-        exist.qty += 1;
+
+      const existing = cart.find(item => item.id === productId);
+      if (existing) {
+        existing.qty += 1;
       } else {
         cart.push({ id: p.id, title: p.title, price: (p.totalPrice || p.price), qty: 1 });
       }
+
       updateCartBadge();
       alert(translations[currentLang].msgAddedCart);
     }
 
     function updateCartBadge() {
-      const totalQty = cart.reduce((a,b) => a + b.qty, 0);
-      document.getElementById("cartBadge").innerText = totalQty;
-      renderCartItems();
+      const count = cart.reduce((a, b) => a + b.qty, 0);
+      document.getElementById("cartBadge").innerText = count;
     }
 
     function toggleCartModal() {
-      document.getElementById("cartModal").classList.toggle("hidden");
+      const modal = document.getElementById("cartModal");
+      modal.classList.toggle("hidden");
+      if (!modal.classList.contains("hidden")) {
+        renderCartItems();
+      }
     }
 
     function renderCartItems() {
       const container = document.getElementById("cartItemsContainer");
-      const empty = document.getElementById("cartEmptyMsg");
+      const emptyMsg = document.getElementById("cartEmptyMsg");
 
       if (cart.length === 0) {
         container.innerHTML = "";
-        empty.classList.remove("hidden");
+        emptyMsg.classList.remove("hidden");
         document.getElementById("cartTotalPrice").innerText = "RM 0.00";
         return;
       }
 
-      empty.classList.add("hidden");
+      emptyMsg.classList.add("hidden");
       let total = 0;
+
       container.innerHTML = cart.map((item, idx) => {
         const itemTotal = item.price * item.qty;
         total += itemTotal;
         return `
-          <div class="flex items-center justify-between bg-slate-50 p-2.5 rounded-xl">
-            <div class="flex-1 overflow-hidden pr-2 min-w-0">
-              <h5 class="font-bold text-slate-800 text-xs truncate">${item.title}</h5>
-              <span class="text-emerald-600 font-extrabold text-[11px]">RM ${parseFloat(item.price).toFixed(2)}</span>
+          <div class="flex items-center justify-between p-2.5 bg-slate-50 rounded-xl">
+            <div class="min-w-0 flex-1 pr-2">
+              <h5 class="font-bold text-slate-900 truncate">${item.title}</h5>
+              <span class="text-emerald-600 font-extrabold">RM ${item.price.toFixed(2)}</span>
             </div>
-            <div class="flex items-center gap-1.5 font-bold shrink-0">
-              <button onclick="updateCartQty(${idx}, -1)" class="w-5 h-5 bg-slate-200 rounded text-slate-700 flex items-center justify-center">-</button>
-              <span>${item.qty}</span>
-              <button onclick="updateCartQty(${idx}, 1)" class="w-5 h-5 bg-slate-200 rounded text-slate-700 flex items-center justify-center">+</button>
+            <div class="flex items-center gap-2">
+              <button onclick="updateCartQty(${idx}, -1)" class="w-6 h-6 bg-slate-200 rounded-lg font-bold flex items-center justify-center">-</button>
+              <span class="font-bold">${item.qty}</span>
+              <button onclick="updateCartQty(${idx}, 1)" class="w-6 h-6 bg-slate-200 rounded-lg font-bold flex items-center justify-center">+</button>
             </div>
           </div>
         `;
@@ -1797,26 +1828,47 @@
       document.getElementById("cartTotalPrice").innerText = `RM ${total.toFixed(2)}`;
     }
 
-    function updateCartQty(idx, delta) {
-      cart[idx].qty += delta;
-      if (cart[idx].qty <= 0) cart.splice(idx, 1);
+    function updateCartQty(index, change) {
+      cart[index].qty += change;
+      if (cart[index].qty <= 0) {
+        cart.splice(index, 1);
+      }
       updateCartBadge();
+      renderCartItems();
     }
 
     function processWhatsAppCheckout() {
-      const custName = document.getElementById("custCheckoutName").value.trim();
-      if (!custName) return alert(translations[currentLang].msgEnterName);
-      if (cart.length === 0) return alert(translations[currentLang].msgCartEmpty);
+      const name = document.getElementById("custCheckoutName").value;
+      if (!name) {
+        return alert(translations[currentLang].msgEnterName);
+      }
+      if (cart.length === 0) {
+        return alert(translations[currentLang].msgCartEmpty);
+      }
 
-      const itemsFormatted = cart.map(i => `${i.qty} x ${i.title}`).join('\n');
-      const totalVal = cart.reduce((a,b) => a + (b.price * b.qty), 0).toFixed(2);
+      let itemsText = cart.map(i => `- ${i.title} (x${i.qty}) : RM ${(i.price * i.qty).toFixed(2)}`).join('\n');
+      let total = cart.reduce((a, b) => a + (b.price * b.qty), 0).toFixed(2);
 
       let template = settings.waTemplate || DEFAULT_WA_TEMPLATE;
-      let finalMsg = template.replace("{ITEMS}", itemsFormatted).replace("{TOTAL}", totalVal);
-      finalMsg = `Nama Pelanggan: ${custName}\n\n` + finalMsg;
+      let message = template.replace('{ITEMS}', itemsText).replace('{TOTAL}', total);
+      message = `Nama Pelanggan: ${name}\n\n` + message;
 
-      const waNumber = settings.waNum || "60123456789";
-      const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent(finalMsg)}`;
+      const waNumber = settings.waNum || settings.phone || "60123456789";
+      const waUrl = `https://wa.me/${waNumber.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(message)}`;
+
+      // Merekodkan jualan baru secara automatik
+      salesHistory.unshift({
+        id: "s-" + Date.now(),
+        custName: name,
+        product: cart.map(c => c.title).join(', '),
+        amount: parseFloat(total),
+        date: new Date().toISOString().split('T')[0]
+      });
+      localStorage.setItem(KEY_SALES, JSON.stringify(salesHistory));
+
+      cart = [];
+      updateCartBadge();
+      toggleCartModal();
 
       window.open(waUrl, '_blank');
     }
