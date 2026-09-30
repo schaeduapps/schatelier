@@ -21,7 +21,6 @@
       border: 1px solid rgba(255, 255, 255, 0.6);
       box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05);
     }
-    /* Square ratio image container */
     .square-img {
       aspect-ratio: 1 / 1;
       object-fit: cover;
@@ -41,18 +40,16 @@
   <header class="bg-white/80 backdrop-blur-md border-b border-pink-200/50 sticky top-0 z-40">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
       <div class="flex items-center gap-3">
-        <!-- Profile Picture Square -->
         <img id="headerLogo" src="https://via.placeholder.com/150" class="w-10 h-10 square-img rounded-xl border border-emerald-300 shadow-sm" alt="Logo">
         <div>
           <h1 id="headerStoreName" class="font-bold text-slate-900 leading-none">Kedai Digital</h1>
-          <span id="headerSellerName" class="text-[11px] text-emerald-700 font-semibold">Portal Rasmi Penjual</span>
+          <span id="headerSellerName" class="text-[11px] text-emerald-700 font-semibold" data-i18n="officialPortal">Portal Rasmi Penjual</span>
         </div>
       </div>
 
       <div class="flex items-center gap-3">
-        <!-- Customer View Tools -->
         <div id="customerSearchContainer" class="hidden sm:block relative w-48 md:w-64">
-          <input type="text" id="custSearchInput" oninput="searchProducts(this.value)" placeholder="Cari produk..." class="w-full pl-8 pr-3 py-1.5 text-xs bg-slate-100/80 rounded-xl border border-slate-200 focus:outline-none focus:bg-white">
+          <input type="text" id="custSearchInput" oninput="searchProducts(this.value)" data-i18n-ph="searchPlaceholder" placeholder="Cari produk..." class="w-full pl-8 pr-3 py-1.5 text-xs bg-slate-100/80 rounded-xl border border-slate-200 focus:outline-none focus:bg-white">
           <i data-lucide="search" class="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-2.5"></i>
         </div>
 
@@ -79,58 +76,58 @@
           <div class="w-14 h-14 bg-emerald-100 text-emerald-700 rounded-2xl flex items-center justify-center mx-auto mb-2 shadow-inner">
             <i data-lucide="store" class="w-7 h-7"></i>
           </div>
-          <h2 id="authTitle" class="text-xl font-extrabold text-slate-900">Log Masuk Penjual</h2>
-          <p id="authSubtitle" class="text-xs text-slate-500">Sila masukkan maklumat akaun anda untuk ke portal</p>
+          <h2 id="authTitle" class="text-xl font-extrabold text-slate-900" data-i18n="sellerLogin">Log Masuk Penjual</h2>
+          <p id="authSubtitle" class="text-xs text-slate-500" data-i18n="sellerLoginSub">Sila masukkan maklumat akaun anda untuk ke portal</p>
         </div>
 
         <form id="formSignIn" onsubmit="handleAuthSignIn(event)" class="space-y-4 text-xs">
           <div>
-            <label class="block font-bold text-slate-700 mb-1" id="lblEmail">E-mel Seller</label>
+            <label class="block font-bold text-slate-700 mb-1" id="lblEmail" data-i18n="sellerEmail">E-mel Penjual</label>
             <input type="email" id="loginEmail" required class="w-full px-4 py-2.5 bg-slate-50 rounded-xl border border-slate-200 focus:bg-white focus:outline-none" placeholder="seller@domain.com">
           </div>
           <div>
-            <label class="block font-bold text-slate-700 mb-1" id="lblPassword">Kata Laluan</label>
+            <label class="block font-bold text-slate-700 mb-1" id="lblPassword" data-i18n="password">Kata Laluan</label>
             <input type="password" id="loginPassword" required class="w-full px-4 py-2.5 bg-slate-50 rounded-xl border border-slate-200 focus:bg-white focus:outline-none" placeholder="••••••••">
           </div>
           <div class="flex justify-end">
-            <button type="button" onclick="showAuthView('forgot')" id="btnForgotPwd" class="text-pink-600 font-bold hover:underline">Lupa Kata Laluan?</button>
+            <button type="button" onclick="showAuthView('forgot')" id="btnForgotPwd" class="text-pink-600 font-bold hover:underline" data-i18n="forgotPwd">Lupa Kata Laluan?</button>
           </div>
-          <button type="submit" id="btnSignInSubmit" class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-lg shadow-emerald-600/20 transition">Log Masuk</button>
+          <button type="submit" id="btnSignInSubmit" class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-lg shadow-emerald-600/20 transition" data-i18n="btnLogin">Log Masuk</button>
           <div class="text-center pt-2 border-t border-slate-100">
-            <span id="txtNoAccount" class="text-slate-500">Belum ada akaun?</span>
-            <button type="button" onclick="showAuthView('signup')" id="btnGoSignUp" class="text-pink-600 font-bold hover:underline ml-1">Daftar Sekarang (Sign Up)</button>
+            <span id="txtNoAccount" class="text-slate-500" data-i18n="noAccount">Belum ada akaun?</span>
+            <button type="button" onclick="showAuthView('signup')" id="btnGoSignUp" class="text-pink-600 font-bold hover:underline ml-1" data-i18n="registerNow">Daftar Sekarang</button>
           </div>
         </form>
 
         <form id="formSignUp" onsubmit="handleAuthSignUp(event)" class="hidden space-y-4 text-xs">
           <div>
-            <label class="block font-bold text-slate-700 mb-1" id="lblRegisterName">Nama Penuh / Kedai</label>
-            <input type="text" id="regName" required class="w-full px-4 py-2.5 bg-slate-50 rounded-xl border border-slate-200 focus:bg-white focus:outline-none" placeholder="Nama Penjual / Kedai">
+            <label class="block font-bold text-slate-700 mb-1" id="lblRegisterName" data-i18n="fullNameStore">Nama Penuh / Kedai</label>
+            <input type="text" id="regName" required class="w-full px-4 py-2.5 bg-slate-50 rounded-xl border border-slate-200 focus:bg-white focus:outline-none" data-i18n-ph="regNamePh" placeholder="Nama Penjual / Kedai">
           </div>
           <div>
-            <label class="block font-bold text-slate-700 mb-1" id="lblRegisterEmail">E-mel</label>
+            <label class="block font-bold text-slate-700 mb-1" id="lblRegisterEmail" data-i18n="email">E-mel</label>
             <input type="email" id="regEmail" required class="w-full px-4 py-2.5 bg-slate-50 rounded-xl border border-slate-200 focus:bg-white focus:outline-none" placeholder="seller@domain.com">
           </div>
           <div>
-            <label class="block font-bold text-slate-700 mb-1" id="lblRegisterPassword">Kata Laluan Baru</label>
+            <label class="block font-bold text-slate-700 mb-1" id="lblRegisterPassword" data-i18n="newPassword">Kata Laluan Baharu</label>
             <input type="password" id="regPassword" required class="w-full px-4 py-2.5 bg-slate-50 rounded-xl border border-slate-200 focus:bg-white focus:outline-none" placeholder="••••••••">
           </div>
-          <button type="submit" id="btnSignUpSubmit" class="w-full py-3 bg-pink-600 hover:bg-pink-700 text-white font-bold rounded-xl shadow-lg shadow-pink-600/20 transition">Daftar Akaun Baru</button>
+          <button type="submit" id="btnSignUpSubmit" class="w-full py-3 bg-pink-600 hover:bg-pink-700 text-white font-bold rounded-xl shadow-lg shadow-pink-600/20 transition" data-i18n="btnRegister">Daftar Akaun Baharu</button>
           <div class="text-center pt-2 border-t border-slate-100">
-            <span id="txtHasAccount" class="text-slate-500">Sudah ada akaun?</span>
-            <button type="button" onclick="showAuthView('signin')" id="btnGoSignIn" class="text-emerald-600 font-bold hover:underline ml-1">Log Masuk</button>
+            <span id="txtHasAccount" class="text-slate-500" data-i18n="hasAccount">Sudah ada akaun?</span>
+            <button type="button" onclick="showAuthView('signin')" id="btnGoSignIn" class="text-emerald-600 font-bold hover:underline ml-1" data-i18n="btnLogin">Log Masuk</button>
           </div>
         </form>
 
         <form id="formForgot" onsubmit="handleAuthForgot(event)" class="hidden space-y-4 text-xs">
-          <p id="forgotDesc" class="text-slate-600">Masukkan e-mel anda. Pautan penetapan semula kata laluan akan dihantar ke e-mel anda.</p>
+          <p id="forgotDesc" class="text-slate-600" data-i18n="forgotDesc">Masukkan e-mel anda. Pautan penetapan semula kata laluan akan dihantar ke e-mel anda.</p>
           <div>
-            <label class="block font-bold text-slate-700 mb-1" id="lblForgotEmail">E-mel Berdaftar</label>
+            <label class="block font-bold text-slate-700 mb-1" id="lblForgotEmail" data-i18n="regEmail">E-mel Berdaftar</label>
             <input type="email" id="forgotEmail" required class="w-full px-4 py-2.5 bg-slate-50 rounded-xl border border-slate-200 focus:bg-white focus:outline-none" placeholder="seller@domain.com">
           </div>
-          <button type="submit" id="btnForgotSubmit" class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl transition">Hantar Emel Reset</button>
+          <button type="submit" id="btnForgotSubmit" class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl transition" data-i18n="btnSendReset">Hantar E-mel Set Semula</button>
           <div class="text-center">
-            <button type="button" onclick="showAuthView('signin')" id="btnBackLogin" class="text-slate-500 font-bold hover:underline">Kembali ke Log Masuk</button>
+            <button type="button" onclick="showAuthView('signin')" id="btnBackLogin" class="text-slate-500 font-bold hover:underline" data-i18n="backLogin">Kembali ke Log Masuk</button>
           </div>
         </form>
       </div>
@@ -144,7 +141,7 @@
         <aside class="md:col-span-1 glass-card rounded-3xl p-4 space-y-2 h-fit hidden md:block">
           <div class="p-3 border-b border-slate-100 mb-2 flex justify-between items-center">
             <div>
-              <p id="sidebarGreeting" class="text-xs text-slate-500 font-semibold">Selamat Datang,</p>
+              <p id="sidebarGreeting" class="text-xs text-slate-500 font-semibold" data-i18n="welcome">Selamat Datang,</p>
               <h3 id="sidebarSellerName" class="font-bold text-slate-900 text-sm">Penjual</h3>
             </div>
             <button onclick="handleLogout()" title="Log Keluar" class="p-2 text-rose-600 hover:bg-rose-50 rounded-xl">
@@ -155,41 +152,41 @@
           <nav class="space-y-1 text-xs font-bold">
             <button onclick="switchAdminSection('profile')" id="menu-profile" class="sidebar-btn w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl hover:bg-white text-slate-700 transition">
               <i data-lucide="user" class="w-4 h-4 text-emerald-600"></i>
-              <span>Profile Seller</span>
+              <span data-i18n="menuProfile">Profil Penjual</span>
             </button>
             <button onclick="switchAdminSection('dashboard')" id="menu-dashboard" class="sidebar-btn w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl bg-emerald-600 text-white transition">
               <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
-              <span>Dashboard Seller</span>
+              <span data-i18n="menuDashboard">Papan Pemuka Penjual</span>
             </button>
             <button onclick="switchAdminSection('add-product')" id="menu-add-product" class="sidebar-btn w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl hover:bg-white text-slate-700 transition">
               <i data-lucide="plus-circle" class="w-4 h-4 text-pink-600"></i>
-              <span>Add Product</span>
+              <span data-i18n="menuAddProduct">Tambah Produk</span>
             </button>
             <button onclick="switchAdminSection('add-sales')" id="menu-add-sales" class="sidebar-btn w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl hover:bg-white text-slate-700 transition">
               <i data-lucide="badge-dollar-sign" class="w-4 h-4 text-emerald-600"></i>
-              <span>Add Sales</span>
+              <span data-i18n="menuAddSales">Tambah Jualan</span>
             </button>
             <button onclick="switchAdminSection('insights')" id="menu-insights" class="sidebar-btn w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl hover:bg-white text-slate-700 transition">
               <i data-lucide="line-chart" class="w-4 h-4 text-blue-600"></i>
-              <span>Insights & Bar Graph</span>
+              <span data-i18n="menuInsights">Analisis & Graf Bar</span>
             </button>
             <button onclick="switchAdminSection('store')" id="menu-store" class="sidebar-btn w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl hover:bg-white text-slate-700 transition">
               <i data-lucide="shopping-bag" class="w-4 h-4 text-amber-600"></i>
-              <span>Store</span>
+              <span data-i18n="menuStore">Kedai</span>
             </button>
             <button onclick="switchAdminSection('admin-cat')" id="menu-admin-cat" class="sidebar-btn w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl hover:bg-white text-slate-700 transition">
               <i data-lucide="shield" class="w-4 h-4 text-rose-600"></i>
-              <span>Admin</span>
+              <span data-i18n="menuAdmin">Pentadbir</span>
             </button>
             <button onclick="switchAdminSection('setting')" id="menu-setting" class="sidebar-btn w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl hover:bg-white text-slate-700 transition">
               <i data-lucide="settings" class="w-4 h-4 text-slate-600"></i>
-              <span>Setting Profile</span>
+              <span data-i18n="menuSetting">Tetapan Profil</span>
             </button>
           </nav>
 
           <div class="pt-4 border-t border-slate-100 space-y-2">
             <button onclick="openCustomerStoreView()" class="w-full py-2.5 bg-pink-600 hover:bg-pink-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 shadow-sm transition">
-              <i data-lucide="external-link" class="w-4 h-4"></i> View My Store
+              <i data-lucide="external-link" class="w-4 h-4"></i> <span data-i18n="btnViewStore">Lihat Kedai Saya</span>
             </button>
           </div>
         </aside>
@@ -199,14 +196,13 @@
 
           <!-- 1. PROFILE SELLER -->
           <div id="sec-profile" class="admin-sec hidden glass-card rounded-3xl p-6 space-y-4">
-            <h2 class="text-base font-extrabold text-slate-900 border-b pb-3">Profile Seller</h2>
+            <h2 class="text-base font-extrabold text-slate-900 border-b pb-3" data-i18n="profileTitle">Profil Penjual</h2>
             <div class="flex items-center gap-4">
-              <!-- Profile Square Shape -->
               <img id="profileAvatar" src="https://via.placeholder.com/150" class="w-20 h-20 square-img rounded-2xl border-2 border-emerald-400">
               <div>
                 <h3 id="profileStoreDisplay" class="font-bold text-slate-900 text-base">Kedai Saya</h3>
                 <p id="profileEmailDisplay" class="text-xs text-slate-500">email@domain.com</p>
-                <span class="inline-block mt-2 px-2.5 py-0.5 bg-emerald-100 text-emerald-800 text-[10px] font-extrabold rounded-full">ACTIVE SELLER</span>
+                <span class="inline-block mt-2 px-2.5 py-0.5 bg-emerald-100 text-emerald-800 text-[10px] font-extrabold rounded-full" data-i18n="activeSeller">PENJUAL AKTIF</span>
               </div>
             </div>
           </div>
@@ -214,129 +210,125 @@
           <!-- 2. DASHBOARD SELLER -->
           <div id="sec-dashboard" class="admin-sec space-y-5">
             <div class="glass-card rounded-2xl p-3 flex flex-wrap items-center justify-between gap-2 text-xs">
-              <span class="font-bold text-slate-700">Penapis Ringkasan Prestasi:</span>
+              <span class="font-bold text-slate-700" data-i18n="filterPerf">Penapis Ringkasan Prestasi:</span>
               <div class="flex flex-wrap items-center gap-1.5 font-bold">
-                <button onclick="filterDashboardData('today')" id="df-today" class="df-btn px-3 py-1.5 rounded-xl bg-emerald-600 text-white">Hari Ini</button>
-                <button onclick="filterDashboardData('month')" id="df-month" class="df-btn px-3 py-1.5 rounded-xl bg-white text-slate-700 hover:bg-slate-100">Bulan Ini</button>
+                <button onclick="filterDashboardData('today')" id="df-today" class="df-btn px-3 py-1.5 rounded-xl bg-emerald-600 text-white" data-i18n="filterToday">Hari Ini</button>
+                <button onclick="filterDashboardData('month')" id="df-month" class="df-btn px-3 py-1.5 rounded-xl bg-white text-slate-700 hover:bg-slate-100" data-i18n="filterMonth">Bulan Ini</button>
               </div>
             </div>
 
-            <!-- Dashboard Cards dengan Penukaran Nama Yang Diminta -->
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
               <div class="glass-card rounded-2xl p-4 space-y-1">
-                <p class="text-[10px] font-extrabold text-slate-400 uppercase">Jumlah Pesanan</p>
+                <p class="text-[10px] font-extrabold text-slate-400 uppercase" data-i18n="statOrders">Jumlah Pesanan</p>
                 <h3 id="statOrdersCount" class="text-xl font-extrabold text-slate-900">0</h3>
               </div>
               <div class="glass-card rounded-2xl p-4 space-y-1">
-                <p class="text-[10px] font-extrabold text-slate-400 uppercase">Total Sales Today</p>
+                <p class="text-[10px] font-extrabold text-slate-400 uppercase" data-i18n="statToday">Jumlah Jualan Hari Ini</p>
                 <h3 id="statTotalSalesToday" class="text-xl font-extrabold text-emerald-600">RM 0.00</h3>
               </div>
               <div class="glass-card rounded-2xl p-4 space-y-1">
-                <p class="text-[10px] font-extrabold text-slate-400 uppercase">Total Sales This Month</p>
+                <p class="text-[10px] font-extrabold text-slate-400 uppercase" data-i18n="statMonth">Jumlah Jualan Bulan Ini</p>
                 <h3 id="statTotalSalesMonth" class="text-xl font-extrabold text-pink-600">RM 0.00</h3>
               </div>
               <div class="glass-card rounded-2xl p-4 space-y-1">
-                <p class="text-[10px] font-extrabold text-slate-400 uppercase">Jumlah Hasil Keseluruhan</p>
+                <p class="text-[10px] font-extrabold text-slate-400 uppercase" data-i18n="statRevenue">Jumlah Hasil Keseluruhan</p>
                 <h3 id="statTotalRevenue" class="text-xl font-extrabold text-purple-600">RM 0.00</h3>
               </div>
             </div>
 
             <div class="glass-card rounded-3xl p-5 space-y-3">
-              <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider">Graf Trend Jualan (Real-Time)</h3>
+              <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider" data-i18n="chartTitle">Graf Trend Jualan (Masa Nyata)</h3>
               <div class="relative w-full h-52">
                 <canvas id="dashSalesChart"></canvas>
               </div>
             </div>
           </div>
 
-          <!-- 3. ADD PRODUCT (PEMBAIKAN DENGAN PROMO, AMMENDED TOTAL, COMPRESS IMG & VIDEO) -->
+          <!-- 3. ADD PRODUCT -->
           <div id="sec-add-product" class="admin-sec hidden glass-card rounded-3xl p-6 space-y-4">
-            <h2 id="addProductTitle" class="text-base font-extrabold text-slate-900 border-b pb-3">Tambah / Edit Produk Katalog</h2>
+            <h2 id="addProductTitle" class="text-base font-extrabold text-slate-900 border-b pb-3" data-i18n="addProductTitle">Tambah / Edit Produk Katalog</h2>
             <form id="productForm" onsubmit="handleProductFormSubmit(event)" class="space-y-4 text-xs">
               <input type="hidden" id="editProductId">
               <div>
-                <label class="block font-bold text-slate-700 mb-1">Nama Produk *</label>
-                <input type="text" id="pTitle" required class="w-full px-4 py-2.5 bg-slate-50 rounded-xl border border-slate-200 focus:bg-white focus:outline-none" placeholder="Contoh: Modul Matematik Tahun 1">
+                <label class="block font-bold text-slate-700 mb-1" data-i18n="prodName">Nama Produk *</label>
+                <input type="text" id="pTitle" required class="w-full px-4 py-2.5 bg-slate-50 rounded-xl border border-slate-200 focus:bg-white focus:outline-none" data-i18n-ph="prodNamePh" placeholder="Contoh: Modul Matematik Tahun 1">
               </div>
 
               <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div>
-                  <label class="block font-bold text-slate-700 mb-1">Kategori *</label>
+                  <label class="block font-bold text-slate-700 mb-1" data-i18n="category">Kategori *</label>
                   <select id="pCategory" required class="w-full px-4 py-2.5 bg-slate-50 rounded-xl border border-slate-200 focus:bg-white focus:outline-none"></select>
                 </div>
                 <div>
-                  <label class="block font-bold text-slate-700 mb-1">Harga Asal (RM) *</label>
+                  <label class="block font-bold text-slate-700 mb-1" data-i18n="originalPrice">Harga Asal (RM) *</label>
                   <input type="number" step="0.01" id="pPrice" oninput="calculateProductTotalPrice()" required class="w-full px-4 py-2.5 bg-slate-50 rounded-xl border border-slate-200 focus:bg-white focus:outline-none" placeholder="0.00">
                 </div>
                 <div>
-                  <label class="block font-bold text-slate-700 mb-1">Promo Price (RM)</label>
+                  <label class="block font-bold text-slate-700 mb-1" data-i18n="promoPrice">Harga Promo (RM)</label>
                   <input type="number" step="0.01" id="pPromoPrice" oninput="calculateProductTotalPrice()" class="w-full px-4 py-2.5 bg-slate-50 rounded-xl border border-slate-200 focus:bg-white focus:outline-none" placeholder="0.00">
                 </div>
               </div>
 
-              <!-- Total Price Auto-Update -->
               <div>
-                <label class="block font-bold text-slate-700 mb-1">Total Price (RM) - Auto Update</label>
+                <label class="block font-bold text-slate-700 mb-1" data-i18n="totalPriceAuto">Jumlah Harga (RM) - Kemas Kini Automatik</label>
                 <input type="number" step="0.01" id="pTotalPrice" readonly class="w-full px-4 py-2.5 bg-slate-200/80 font-extrabold text-emerald-700 rounded-xl border border-slate-300 focus:outline-none" placeholder="0.00">
               </div>
 
-              <!-- Image Uploaded (Up to 10 max, Compress & Optimize PNG/JPG) -->
               <div>
-                <label class="block font-bold text-slate-700 mb-1">Image Uploaded (Maksimum 10 Gambar - PNG / JPG Auto-Compress)</label>
+                <label class="block font-bold text-slate-700 mb-1" data-i18n="imgUploadLbl">Gambar Dimuat Naik (Maksimum 10 Gambar - PNG / JPG Auto-Mampat)</label>
                 <input type="file" id="pImageFiles" accept="image/png, image/jpeg" multiple onchange="handleImageOptimization(event)" class="block w-full text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-pink-50 file:text-pink-700 hover:file:bg-pink-100">
                 <p id="imgUploadStatus" class="text-[10px] text-slate-500 mt-1"></p>
                 <div id="imagePreviewContainer" class="flex flex-wrap gap-2 mt-2"></div>
               </div>
 
-              <!-- Video Uploaded (1 Video MP4 Max 5MB) -->
               <div>
-                <label class="block font-bold text-slate-700 mb-1">Add on Video Uploaded (1 Video MP4 sahaja, Max 5MB)</label>
+                <label class="block font-bold text-slate-700 mb-1" data-i18n="videoUploadLbl">Video Tambahan Dimuat Naik (1 Video MP4 sahaja, Maksimum 5MB)</label>
                 <input type="file" id="pVideoFile" accept="video/mp4" onchange="handleVideoUpload(event)" class="block w-full text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-purple-50 file:text-purple-700 hover:file:bg-purple-100">
                 <p id="videoUploadStatus" class="text-[10px] text-slate-500 mt-1"></p>
               </div>
 
               <div>
-                <label class="block font-bold text-slate-700 mb-1">Penerangan Produk</label>
-                <textarea id="pDesc" rows="3" class="w-full px-4 py-2.5 bg-slate-50 rounded-xl border border-slate-200 focus:bg-white focus:outline-none" placeholder="Penerangan ringkas..."></textarea>
+                <label class="block font-bold text-slate-700 mb-1" data-i18n="prodDesc">Penerangan Produk</label>
+                <textarea id="pDesc" rows="3" class="w-full px-4 py-2.5 bg-slate-50 rounded-xl border border-slate-200 focus:bg-white focus:outline-none" data-i18n-ph="prodDescPh" placeholder="Penerangan ringkas..."></textarea>
               </div>
 
               <div class="flex justify-end gap-2 pt-2">
-                <button type="button" onclick="resetProductForm()" class="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl">Batal / Reset</button>
-                <button type="submit" class="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-md">Simpan Produk</button>
+                <button type="button" onclick="resetProductForm()" class="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl" data-i18n="btnCancel">Batal / Reset</button>
+                <button type="submit" class="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-md" data-i18n="btnSaveProd">Simpan Produk</button>
               </div>
             </form>
           </div>
 
-          <!-- 4. RECORD NEW SALES (ADD SALES) - AUTO CLEAR FORM -->
+          <!-- 4. RECORD NEW SALES -->
           <div id="sec-add-sales" class="admin-sec hidden glass-card rounded-3xl p-6 space-y-4 max-w-lg mx-auto">
-            <h2 class="text-base font-extrabold text-slate-900 border-b pb-3">+ Record New Sales</h2>
+            <h2 class="text-base font-extrabold text-slate-900 border-b pb-3" data-i18n="recSalesTitle">+ Rekod Jualan Baharu</h2>
             <form id="formRecordSales" onsubmit="handleManualAddSales(event)" class="space-y-4 text-xs">
               <div>
-                <label class="block font-bold text-slate-700 mb-1">Nama Pelanggan</label>
+                <label class="block font-bold text-slate-700 mb-1" data-i18n="custName">Nama Pelanggan</label>
                 <input type="text" id="saleCustName" required class="w-full px-4 py-2.5 bg-slate-50 rounded-xl border border-slate-200 focus:bg-white focus:outline-none" placeholder="Ahmad Ali">
               </div>
               <div>
-                <label class="block font-bold text-slate-700 mb-1">Pilih Produk</label>
+                <label class="block font-bold text-slate-700 mb-1" data-i18n="selectProd">Pilih Produk</label>
                 <select id="saleSelectProd" onchange="autoFillSaleAmount()" class="w-full px-4 py-2.5 bg-slate-50 rounded-xl border border-slate-200 focus:bg-white focus:outline-none"></select>
               </div>
               <div>
-                <label class="block font-bold text-slate-700 mb-1">Amaun Jualan (RM)</label>
+                <label class="block font-bold text-slate-700 mb-1" data-i18n="saleAmt">Amaun Jualan (RM)</label>
                 <input type="number" step="0.01" id="saleAmount" required class="w-full px-4 py-2.5 bg-slate-50 rounded-xl border border-slate-200 focus:bg-white focus:outline-none" placeholder="0.00">
               </div>
               <div>
-                <label class="block font-bold text-slate-700 mb-1">Tarikh Jualan</label>
+                <label class="block font-bold text-slate-700 mb-1" data-i18n="saleDate">Tarikh Jualan</label>
                 <input type="date" id="saleDate" required class="w-full px-4 py-2.5 bg-slate-50 rounded-xl border border-slate-200 focus:bg-white focus:outline-none">
               </div>
-              <button type="submit" class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-md">Rekodkan Jualan</button>
+              <button type="submit" class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-md" data-i18n="btnRecSale">Rekodkan Jualan</button>
             </form>
           </div>
 
-          <!-- 5. MY SALES (SENARAI REKOD JUALAN) -->
+          <!-- 5. MY SALES -->
           <div id="sec-my-sales" class="admin-sec hidden glass-card rounded-3xl p-6 space-y-4">
             <div class="flex justify-between items-center border-b pb-3">
-              <h2 class="text-base font-extrabold text-slate-900">Rekod Jualan Penjual (My Sales)</h2>
+              <h2 class="text-base font-extrabold text-slate-900" data-i18n="mySalesTitle">Rekod Jualan Penjual</h2>
               <button onclick="downloadSalesCSV()" class="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl shadow flex items-center gap-1.5">
-                <i data-lucide="download" class="w-4 h-4"></i> Export CSV
+                <i data-lucide="download" class="w-4 h-4"></i> <span data-i18n="btnExportCsv">Eksport CSV</span>
               </button>
             </div>
             
@@ -344,11 +336,11 @@
               <table class="w-full text-left text-xs border-collapse">
                 <thead>
                   <tr class="bg-slate-100/80 text-slate-700 uppercase font-bold">
-                    <th class="p-3">Tarikh</th>
-                    <th class="p-3">Pelanggan</th>
-                    <th class="p-3">Produk</th>
-                    <th class="p-3">Amaun</th>
-                    <th class="p-3 text-right">Tindakan</th>
+                    <th class="p-3" data-i18n="thDate">Tarikh</th>
+                    <th class="p-3" data-i18n="thCust">Pelanggan</th>
+                    <th class="p-3" data-i18n="thProd">Produk</th>
+                    <th class="p-3" data-i18n="thAmt">Amaun</th>
+                    <th class="p-3 text-right" data-i18n="thAction">Tindakan</th>
                   </tr>
                 </thead>
                 <tbody id="salesTableBody" class="divide-y divide-slate-100"></tbody>
@@ -358,7 +350,7 @@
 
           <!-- 6. INSIGHTS & BAR GRAPH -->
           <div id="sec-insights" class="admin-sec hidden glass-card rounded-3xl p-6 space-y-4">
-            <h2 class="text-base font-extrabold text-slate-900 border-b pb-3">Insights & Bar Graph</h2>
+            <h2 class="text-base font-extrabold text-slate-900 border-b pb-3" data-i18n="insightsTitle">Analisis & Graf Bar</h2>
             <div class="relative w-full h-64">
               <canvas id="insightsChart"></canvas>
             </div>
@@ -367,29 +359,28 @@
           <!-- 7. STORE -->
           <div id="sec-store" class="admin-sec hidden space-y-4">
             <div class="flex justify-between items-center glass-card p-4 rounded-2xl">
-              <h2 class="text-base font-extrabold text-slate-900">Pengurusan Produk Store</h2>
-              <button onclick="switchAdminSection('add-product')" class="px-3 py-2 bg-pink-600 text-white text-xs font-bold rounded-xl shadow">+ Tambah Produk</button>
+              <h2 class="text-base font-extrabold text-slate-900" data-i18n="storeManageTitle">Pengurusan Produk Kedai</h2>
+              <button onclick="switchAdminSection('add-product')" class="px-3 py-2 bg-pink-600 text-white text-xs font-bold rounded-xl shadow" data-i18n="btnAddProdShort">+ Tambah Produk</button>
             </div>
             <div id="sellerProductsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
           </div>
 
           <!-- 8. ADMIN (KATEGORI) -->
           <div id="sec-admin-cat" class="admin-sec hidden glass-card rounded-3xl p-6 space-y-4">
-            <h2 class="text-base font-extrabold text-slate-900 border-b pb-3">Admin - Pengurusan Kategori</h2>
+            <h2 class="text-base font-extrabold text-slate-900 border-b pb-3" data-i18n="catManageTitle">Pentadbir - Pengurusan Kategori</h2>
             <form onsubmit="handleAddCategory(event)" class="flex gap-2 text-xs">
-              <input type="text" id="newCatInput" required placeholder="Nama kategori baharu..." class="flex-1 px-4 py-2.5 bg-slate-50 rounded-xl border border-slate-200 focus:outline-none">
-              <button type="submit" class="px-4 py-2.5 bg-emerald-600 text-white font-bold rounded-xl">+ Kategori</button>
+              <input type="text" id="newCatInput" required data-i18n-ph="newCatPh" placeholder="Nama kategori baharu..." class="flex-1 px-4 py-2.5 bg-slate-50 rounded-xl border border-slate-200 focus:outline-none">
+              <button type="submit" class="px-4 py-2.5 bg-emerald-600 text-white font-bold rounded-xl" data-i18n="btnAddCat">+ Kategori</button>
             </form>
             <div id="categoriesList" class="space-y-2 pt-2"></div>
           </div>
 
           <!-- 9. SETTING PROFILE & STORE / WHATSAPP SETTINGS -->
           <div id="sec-setting" class="admin-sec hidden glass-card rounded-3xl p-6 space-y-5 max-w-xl mx-auto text-xs">
-            <h2 class="text-base font-extrabold text-slate-900 border-b pb-3">Store & WhatsApp Setting</h2>
+            <h2 class="text-base font-extrabold text-slate-900 border-b pb-3" data-i18n="settingTitle">Tetapan Kedai & WhatsApp</h2>
 
-            <!-- Square Shape Upload Profile Seller -->
             <div>
-              <label class="block font-bold text-slate-700 mb-1">Square Shape Upload Gambar Profile / Logo Seller (PNG / JPG)</label>
+              <label class="block font-bold text-slate-700 mb-1" data-i18n="logoUploadLbl">Muat Naik Gambar Profil / Logo Penjual (Bentuk Petak - PNG / JPG)</label>
               <input type="file" id="settingLogoFile" accept="image/png, image/jpeg" onchange="handleLogoUpload(event)" class="block w-full text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100">
               <div class="mt-2">
                 <img id="previewSettingLogo" src="https://via.placeholder.com/150" class="w-20 h-20 square-img rounded-2xl border border-slate-200">
@@ -397,36 +388,36 @@
             </div>
 
             <div>
-              <label class="block font-bold text-slate-700 mb-1">Store / Seller Name</label>
+              <label class="block font-bold text-slate-700 mb-1" data-i18n="storeSellerNameLbl">Nama Kedai / Penjual</label>
               <input type="text" id="setStoreName" class="w-full px-4 py-2.5 bg-slate-50 rounded-xl border border-slate-200">
             </div>
 
             <div>
-              <label class="block font-bold text-slate-700 mb-1">Phone Number</label>
+              <label class="block font-bold text-slate-700 mb-1" data-i18n="phoneNumLbl">Nombor Telefon</label>
               <input type="text" id="setPhone" class="w-full px-4 py-2.5 bg-slate-50 rounded-xl border border-slate-200" placeholder="60123456789">
             </div>
 
             <div>
-              <label class="block font-bold text-slate-700 mb-1">Email</label>
+              <label class="block font-bold text-slate-700 mb-1" data-i18n="email">E-mel</label>
               <input type="email" id="setEmail" class="w-full px-4 py-2.5 bg-slate-50 rounded-xl border border-slate-200">
             </div>
 
             <div class="pt-3 border-t border-slate-100 space-y-3">
-              <h3 class="font-extrabold text-slate-900 text-sm">Order Management - Customer Whatsapp Order Configuration</h3>
-              <p class="text-[11px] text-slate-500">Fungsi templat auto WhatsApp boleh diedit, ditukar, atau dibuang mengikut kesesuaian penjual.</p>
+              <h3 class="font-extrabold text-slate-900 text-sm" data-i18n="orderConfigTitle">Pengurusan Pesanan - Konfigurasi Pesanan WhatsApp Pelanggan</h3>
+              <p class="text-[11px] text-slate-500" data-i18n="orderConfigSub">Fungsi templat auto WhatsApp boleh diedit, ditukar, atau dibuang mengikut kesesuaian penjual.</p>
               
               <div>
-                <label class="block font-bold text-slate-700 mb-1">Nombor WhatsApp Penerima Order (Contoh: 60123456789)</label>
+                <label class="block font-bold text-slate-700 mb-1" data-i18n="waNumLbl">Nombor WhatsApp Penerima Pesanan (Contoh: 60123456789)</label>
                 <input type="text" id="setWaNum" class="w-full px-4 py-2.5 bg-slate-50 rounded-xl border border-slate-200">
               </div>
 
               <div>
-                <label class="block font-bold text-slate-700 mb-1">Templat Mesej Pesanan WhatsApp (Gunakan {ITEMS} dan {TOTAL})</label>
+                <label class="block font-bold text-slate-700 mb-1" data-i18n="waTplLbl">Templat Mesej Pesanan WhatsApp (Gunakan {ITEMS} dan {TOTAL})</label>
                 <textarea id="setWaTemplate" rows="6" class="w-full px-4 py-2.5 bg-slate-50 rounded-xl border border-slate-200 focus:outline-none font-mono text-[11px]"></textarea>
               </div>
             </div>
 
-            <button onclick="saveStoreSettings()" class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-md transition">
+            <button onclick="saveStoreSettings()" class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-md transition" data-i18n="btnSaveSettings">
               Simpan Tetapan
             </button>
           </div>
@@ -439,9 +430,9 @@
     <section id="view-customer" class="hidden space-y-6">
       <div class="glass-card rounded-3xl p-6 sm:p-8 bg-gradient-to-r from-pink-500/10 via-purple-500/10 to-emerald-500/10 border border-white">
         <div class="max-w-2xl space-y-2">
-          <span class="px-3 py-1 bg-white text-emerald-700 text-[10px] font-extrabold rounded-full shadow-sm">KATALOG RASMI PELANGGAN</span>
-          <h2 id="custStoreTitle" class="text-2xl sm:text-3xl font-extrabold text-slate-900">Selamat Datang ke Kedai Kami</h2>
-          <p class="text-xs sm:text-sm text-slate-600">Pilih produk idaman anda dan buat pesanan terus melalui WhatsApp.</p>
+          <span class="px-3 py-1 bg-white text-emerald-700 text-[10px] font-extrabold rounded-full shadow-sm" data-i18n="custCatalogBadge">KATALOG RASMI PELANGGAN</span>
+          <h2 id="custStoreTitle" class="text-2xl sm:text-3xl font-extrabold text-slate-900" data-i18n="custWelcome">Selamat Datang ke Kedai Kami</h2>
+          <p class="text-xs sm:text-sm text-slate-600" data-i18n="custWelcomeSub">Pilih produk idaman anda dan buat pesanan terus melalui WhatsApp.</p>
         </div>
       </div>
 
@@ -451,23 +442,23 @@
 
   </main>
 
-  <!-- NAVIGASI BOTTOM BAR AT BOTTOM (HOME, MY SALES, ADMIN, SETTING) -->
+  <!-- NAVIGASI BOTTOM BAR -->
   <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-200 z-50 flex justify-around py-2 text-[10px] font-bold text-slate-600">
     <button onclick="openCustomerStoreView()" class="flex flex-col items-center gap-0.5 hover:text-pink-600">
       <i data-lucide="home" class="w-4 h-4"></i>
-      <span>Home</span>
+      <span data-i18n="navHome">Utama</span>
     </button>
     <button onclick="switchAdminSection('my-sales')" class="flex flex-col items-center gap-0.5 hover:text-purple-600">
       <i data-lucide="receipt" class="w-4 h-4"></i>
-      <span>My Sales</span>
+      <span data-i18n="navSales">Jualan Saya</span>
     </button>
     <button onclick="switchAdminSection('dashboard')" class="flex flex-col items-center gap-0.5 hover:text-emerald-600">
       <i data-lucide="shield" class="w-4 h-4"></i>
-      <span>Admin</span>
+      <span data-i18n="navAdmin">Pentadbir</span>
     </button>
     <button onclick="switchAdminSection('setting')" class="flex flex-col items-center gap-0.5 hover:text-amber-600">
       <i data-lucide="settings" class="w-4 h-4"></i>
-      <span>Setting</span>
+      <span data-i18n="navSetting">Tetapan</span>
     </button>
   </nav>
 
@@ -479,29 +470,237 @@
       </button>
 
       <h3 class="text-base font-extrabold text-slate-900 flex items-center gap-2">
-        <i data-lucide="shopping-bag" class="w-5 h-5 text-pink-600"></i> Troli Pembelian
+        <i data-lucide="shopping-bag" class="w-5 h-5 text-pink-600"></i> <span data-i18n="cartTitle">Troli Pembelian</span>
       </h3>
 
       <div id="cartItemsContainer" class="space-y-3 max-h-60 overflow-y-auto pr-1 text-xs"></div>
-      <div id="cartEmptyMsg" class="text-center py-6 text-slate-400 text-xs hidden">Troli anda masih kosong.</div>
+      <div id="cartEmptyMsg" class="text-center py-6 text-slate-400 text-xs hidden" data-i18n="cartEmpty">Troli anda masih kosong.</div>
 
       <div class="pt-3 border-t border-slate-100 space-y-3 text-xs">
         <div>
-          <label class="block font-bold text-slate-700 mb-1">Nama Penuh Anda *</label>
-          <input type="text" id="custCheckoutName" required class="w-full px-3.5 py-2 bg-slate-100 rounded-xl border border-slate-200 focus:bg-white focus:outline-none" placeholder="Masukkan nama...">
+          <label class="block font-bold text-slate-700 mb-1" data-i18n="yourFullName">Nama Penuh Anda *</label>
+          <input type="text" id="custCheckoutName" required class="w-full px-3.5 py-2 bg-slate-100 rounded-xl border border-slate-200 focus:bg-white focus:outline-none" data-i18n-ph="enterNamePh" placeholder="Masukkan nama...">
         </div>
         <div class="flex justify-between items-center text-sm font-extrabold text-slate-900">
-          <span>Jumlah Keseluruhan:</span>
+          <span data-i18n="totalOverall">Jumlah Keseluruhan:</span>
           <span id="cartTotalPrice" class="text-emerald-600">RM 0.00</span>
         </div>
         <button onclick="processWhatsAppCheckout()" class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-lg flex items-center justify-center gap-2">
-          <i data-lucide="message-circle" class="w-4 h-4"></i> Hantar Pesanan Ke WhatsApp
+          <i data-lucide="message-circle" class="w-4 h-4"></i> <span data-i18n="btnSendWa">Hantar Pesanan Ke WhatsApp</span>
         </button>
       </div>
     </div>
   </div>
 
   <script>
+    // DICTIONARY MULTI-LANGUAGE
+    const translations = {
+      BM: {
+        officialPortal: "Portal Rasmi Penjual",
+        searchPlaceholder: "Cari produk...",
+        sellerLogin: "Log Masuk Penjual",
+        sellerLoginSub: "Sila masukkan maklumat akaun anda untuk ke portal",
+        sellerEmail: "E-mel Penjual",
+        password: "Kata Laluan",
+        forgotPwd: "Lupa Kata Laluan?",
+        btnLogin: "Log Masuk",
+        noAccount: "Belum ada akaun?",
+        registerNow: "Daftar Sekarang",
+        fullNameStore: "Nama Penuh / Kedai",
+        regNamePh: "Nama Penjual / Kedai",
+        email: "E-mel",
+        newPassword: "Kata Laluan Baharu",
+        btnRegister: "Daftar Akaun Baharu",
+        hasAccount: "Sudah ada akaun?",
+        forgotDesc: "Masukkan e-mel anda. Pautan penetapan semula kata laluan akan dihantar ke e-mel anda.",
+        regEmail: "E-mel Berdaftar",
+        btnSendReset: "Hantar E-mel Set Semula",
+        backLogin: "Kembali ke Log Masuk",
+        welcome: "Selamat Datang,",
+        menuProfile: "Profil Penjual",
+        menuDashboard: "Papan Pemuka Penjual",
+        menuAddProduct: "Tambah Produk",
+        menuAddSales: "Tambah Jualan",
+        menuInsights: "Analisis & Graf Bar",
+        menuStore: "Kedai",
+        menuAdmin: "Pentadbir",
+        menuSetting: "Tetapan Profil",
+        btnViewStore: "Lihat Kedai Saya",
+        profileTitle: "Profil Penjual",
+        activeSeller: "PENJUAL AKTIF",
+        filterPerf: "Penapis Ringkasan Prestasi:",
+        filterToday: "Hari Ini",
+        filterMonth: "Bulan Ini",
+        statOrders: "Jumlah Pesanan",
+        statToday: "Jumlah Jualan Hari Ini",
+        statMonth: "Jumlah Jualan Bulan Ini",
+        statRevenue: "Jumlah Hasil Keseluruhan",
+        chartTitle: "Graf Trend Jualan (Masa Nyata)",
+        addProductTitle: "Tambah / Edit Produk Katalog",
+        prodName: "Nama Produk *",
+        prodNamePh: "Contoh: Modul Matematik Tahun 1",
+        category: "Kategori *",
+        originalPrice: "Harga Asal (RM) *",
+        promoPrice: "Harga Promo (RM)",
+        totalPriceAuto: "Jumlah Harga (RM) - Kemas Kini Automatik",
+        imgUploadLbl: "Gambar Dimuat Naik (Maksimum 10 Gambar - PNG / JPG Auto-Mampat)",
+        videoUploadLbl: "Video Tambahan Dimuat Naik (1 Video MP4 sahaja, Maksimum 5MB)",
+        prodDesc: "Penerangan Produk",
+        prodDescPh: "Penerangan ringkas...",
+        btnCancel: "Batal / Reset",
+        btnSaveProd: "Simpan Produk",
+        recSalesTitle: "+ Rekod Jualan Baharu",
+        custName: "Nama Pelanggan",
+        selectProd: "Pilih Produk",
+        saleAmt: "Amaun Jualan (RM)",
+        saleDate: "Tarikh Jualan",
+        btnRecSale: "Rekodkan Jualan",
+        mySalesTitle: "Rekod Jualan Penjual",
+        btnExportCsv: "Eksport CSV",
+        thDate: "Tarikh",
+        thCust: "Pelanggan",
+        thProd: "Produk",
+        thAmt: "Amaun",
+        thAction: "Tindakan",
+        insightsTitle: "Analisis & Graf Bar",
+        storeManageTitle: "Pengurusan Produk Kedai",
+        btnAddProdShort: "+ Tambah Produk",
+        catManageTitle: "Pentadbir - Pengurusan Kategori",
+        newCatPh: "Nama kategori baharu...",
+        btnAddCat: "+ Kategori",
+        settingTitle: "Tetapan Kedai & WhatsApp",
+        logoUploadLbl: "Muat Naik Gambar Profil / Logo Penjual (Bentuk Petak - PNG / JPG)",
+        storeSellerNameLbl: "Nama Kedai / Penjual",
+        phoneNumLbl: "Nombor Telefon",
+        orderConfigTitle: "Pengurusan Pesanan - Konfigurasi Pesanan WhatsApp Pelanggan",
+        orderConfigSub: "Fungsi templat auto WhatsApp boleh diedit, ditukar, atau dibuang mengikut kesesuaian penjual.",
+        waNumLbl: "Nombor WhatsApp Penerima Pesanan (Contoh: 60123456789)",
+        waTplLbl: "Templat Mesej Pesanan WhatsApp (Gunakan {ITEMS} dan {TOTAL})",
+        btnSaveSettings: "Simpan Tetapan",
+        custCatalogBadge: "KATALOG RASMI PELANGGAN",
+        custWelcome: "Selamat Datang ke Kedai Kami",
+        custWelcomeSub: "Pilih produk idaman anda dan buat pesanan terus melalui WhatsApp.",
+        allCat: "Semua",
+        navHome: "Utama",
+        navSales: "Jualan Saya",
+        navAdmin: "Pentadbir",
+        navSetting: "Tetapan",
+        cartTitle: "Troli Pembelian",
+        cartEmpty: "Troli anda masih kosong.",
+        yourFullName: "Nama Penuh Anda *",
+        enterNamePh: "Masukkan nama...",
+        totalOverall: "Jumlah Keseluruhan:",
+        btnSendWa: "Hantar Pesanan Ke WhatsApp",
+        deleteBtn: "Padam",
+        chartSalesLabel: "Jualan (RM)",
+        chartProdCount: "Bilangan Produk",
+        noData: "Tiada Data"
+      },
+      BI: {
+        officialPortal: "Official Seller Portal",
+        searchPlaceholder: "Search products...",
+        sellerLogin: "Seller Login",
+        sellerLoginSub: "Please enter your account details to access the portal",
+        sellerEmail: "Seller Email",
+        password: "Password",
+        forgotPwd: "Forgot Password?",
+        btnLogin: "Log In",
+        noAccount: "Don't have an account?",
+        registerNow: "Register Now",
+        fullNameStore: "Full Name / Store Name",
+        regNamePh: "Seller Name / Store",
+        email: "Email",
+        newPassword: "New Password",
+        btnRegister: "Register New Account",
+        hasAccount: "Already have an account?",
+        forgotDesc: "Enter your email. A password reset link will be sent to your inbox.",
+        regEmail: "Registered Email",
+        btnSendReset: "Send Reset Email",
+        backLogin: "Back to Login",
+        welcome: "Welcome,",
+        menuProfile: "Seller Profile",
+        menuDashboard: "Seller Dashboard",
+        menuAddProduct: "Add Product",
+        menuAddSales: "Add Sales",
+        menuInsights: "Insights & Bar Graph",
+        menuStore: "Store",
+        menuAdmin: "Admin",
+        menuSetting: "Profile Settings",
+        btnViewStore: "View My Store",
+        profileTitle: "Seller Profile",
+        activeSeller: "ACTIVE SELLER",
+        filterPerf: "Performance Summary Filter:",
+        filterToday: "Today",
+        filterMonth: "This Month",
+        statOrders: "Total Orders",
+        statToday: "Total Sales Today",
+        statMonth: "Total Sales This Month",
+        statRevenue: "Total Overall Revenue",
+        chartTitle: "Sales Trend Chart (Real-Time)",
+        addProductTitle: "Add / Edit Product Catalog",
+        prodName: "Product Name *",
+        prodNamePh: "Example: Mathematics Module Year 1",
+        category: "Category *",
+        originalPrice: "Original Price (RM) *",
+        promoPrice: "Promo Price (RM)",
+        totalPriceAuto: "Total Price (RM) - Auto Update",
+        imgUploadLbl: "Image Uploaded (Maximum 10 Images - PNG / JPG Auto-Compress)",
+        videoUploadLbl: "Add-on Video Uploaded (1 MP4 Video Only, Max 5MB)",
+        prodDesc: "Product Description",
+        prodDescPh: "Short description...",
+        btnCancel: "Cancel / Reset",
+        btnSaveProd: "Save Product",
+        recSalesTitle: "+ Record New Sales",
+        custName: "Customer Name",
+        selectProd: "Select Product",
+        saleAmt: "Sales Amount (RM)",
+        saleDate: "Sales Date",
+        btnRecSale: "Record Sale",
+        mySalesTitle: "Seller Sales Records",
+        btnExportCsv: "Export CSV",
+        thDate: "Date",
+        thCust: "Customer",
+        thProd: "Product",
+        thAmt: "Amount",
+        thAction: "Action",
+        insightsTitle: "Insights & Bar Graph",
+        storeManageTitle: "Store Product Management",
+        btnAddProdShort: "+ Add Product",
+        catManageTitle: "Admin - Category Management",
+        newCatPh: "New category name...",
+        btnAddCat: "+ Category",
+        settingTitle: "Store & WhatsApp Settings",
+        logoUploadLbl: "Upload Profile / Seller Logo (Square Shape - PNG / JPG)",
+        storeSellerNameLbl: "Store / Seller Name",
+        phoneNumLbl: "Phone Number",
+        orderConfigTitle: "Order Management - Customer WhatsApp Order Configuration",
+        orderConfigSub: "WhatsApp auto-template feature can be edited, replaced, or removed as needed.",
+        waNumLbl: "WhatsApp Order Receiver Number (E.g.: 60123456789)",
+        waTplLbl: "WhatsApp Order Message Template (Use {ITEMS} and {TOTAL})",
+        btnSaveSettings: "Save Settings",
+        custCatalogBadge: "OFFICIAL CUSTOMER CATALOG",
+        custWelcome: "Welcome to Our Store",
+        custWelcomeSub: "Choose your favorite products and place orders directly via WhatsApp.",
+        allCat: "All",
+        navHome: "Home",
+        navSales: "My Sales",
+        navAdmin: "Admin",
+        navSetting: "Settings",
+        cartTitle: "Shopping Cart",
+        cartEmpty: "Your cart is empty.",
+        yourFullName: "Your Full Name *",
+        enterNamePh: "Enter your name...",
+        totalOverall: "Total Overall:",
+        btnSendWa: "Send Order to WhatsApp",
+        deleteBtn: "Delete",
+        chartSalesLabel: "Sales (RM)",
+        chartProdCount: "Product Count",
+        noData: "No Data"
+      }
+    };
+
+    let currentLang = "BM";
+
     // STORAGE KEYS
     const KEY_PRODUCTS = "scha_prod_v3";
     const KEY_CATEGORIES = "scha_cat_v3";
@@ -510,7 +709,6 @@
     const KEY_AUTH = "scha_auth_session_v3";
     const KEY_LAST_ACTIVITY = "scha_last_activity_v3";
 
-    // DEFAULT TEMPLATE CONFIG WHATSAPP
     const DEFAULT_WA_TEMPLATE = `Hello Scha,\n\nSaya ingin buat pesanan:\n\n{ITEMS}\n\nTotal : RM{TOTAL}\n\nSila berikan QR untuk saya buat pembayaran`;
 
     const DEFAULT_SETTINGS = {
@@ -535,7 +733,6 @@
     let dashChartInstance = null;
     let insightsChartInstance = null;
 
-    // INACTIVITY AUTO LOG OUT (2 HOURS)
     const TWO_HOURS_MS = 2 * 60 * 60 * 1000;
 
     function updateActivityTimestamp() {
@@ -548,13 +745,12 @@
       if (authSession.isLoggedIn) {
         const lastActivity = parseInt(localStorage.getItem(KEY_LAST_ACTIVITY) || "0", 10);
         if (lastActivity && (Date.now() - lastActivity > TWO_HOURS_MS)) {
-          alert("Sesi anda telah tamat selepas 2 jam tidak aktif. Sila log masuk semula.");
+          alert(currentLang === 'BM' ? "Sesi anda telah tamat selepas 2 jam tidak aktif. Sila log masuk semula." : "Your session expired after 2 hours of inactivity. Please log in again.");
           handleLogout();
         }
       }
     }
 
-    // LISTENER FOR ACTIVITY
     ['click', 'mousemove', 'keypress', 'scroll', 'touchstart'].forEach(evt => {
       window.addEventListener(evt, updateActivityTimestamp, false);
     });
@@ -562,8 +758,9 @@
     window.addEventListener("DOMContentLoaded", () => {
       lucide.createIcons();
       loadSettingsToUI();
+      setLanguage('BM');
       checkInactivityTimeout();
-      setInterval(checkInactivityTimeout, 60000); // Check every 1 min
+      setInterval(checkInactivityTimeout, 60000);
 
       const urlParams = new URLSearchParams(window.location.search);
       if (urlParams.get("mode") === "store") {
@@ -576,6 +773,42 @@
         }
       }
     });
+
+    // SET LANGUAGE SYSTEM
+    function setLanguage(lang) {
+      currentLang = lang;
+      const dict = translations[lang];
+
+      document.getElementById("langBtnBM").className = lang === "BM" ? "px-2 py-1 rounded-lg bg-pink-600 text-white transition" : "px-2 py-1 rounded-lg text-slate-600 transition";
+      document.getElementById("langBtnBI").className = lang === "BI" ? "px-2 py-1 rounded-lg bg-pink-600 text-white transition" : "px-2 py-1 rounded-lg text-slate-600 transition";
+
+      document.querySelectorAll("[data-i18n]").forEach(el => {
+        const key = el.getAttribute("data-i18n");
+        if (dict[key]) el.innerText = dict[key];
+      });
+
+      document.querySelectorAll("[data-i18n-ph]").forEach(el => {
+        const key = el.getAttribute("data-i18n-ph");
+        if (dict[key]) el.placeholder = dict[key];
+      });
+
+      renderCustomerCategories();
+      if (!document.getElementById("sec-dashboard").classList.contains("hidden")) {
+        renderDashSalesChart();
+      }
+      if (!document.getElementById("sec-insights").classList.contains("hidden")) {
+        renderInsightsChart();
+      }
+      if (!document.getElementById("sec-store").classList.contains("hidden")) {
+        renderSellerProductsGrid();
+      }
+      if (!document.getElementById("sec-my-sales").classList.contains("hidden")) {
+        renderSalesHistoryTable();
+      }
+      if (!document.getElementById("sec-admin-cat").classList.contains("hidden")) {
+        renderCategoriesList();
+      }
+    }
 
     // AUTH CONTROLLERS
     function showAuthView(type) {
@@ -616,7 +849,7 @@
 
     function handleAuthForgot(e) {
       e.preventDefault();
-      alert("Pautan penetapan semula kata laluan telah dihantar ke e-mel anda.");
+      alert(currentLang === 'BM' ? "Pautan penetapan semula kata laluan telah dihantar ke e-mel anda." : "A password reset link has been sent to your email.");
       showAuthView("signin");
     }
 
@@ -652,7 +885,7 @@
       if (sectionId === 'admin-cat') renderCategoriesList();
     }
 
-    // DASHBOARD STATS (TODAY & THIS MONTH SALES)
+    // DASHBOARD STATS
     function filterDashboardData(filter) {
       renderDashboardAnalytics(filter);
     }
@@ -691,12 +924,13 @@
         totals.push(sum);
       }
 
+      const dict = translations[currentLang];
       dashChartInstance = new Chart(ctx, {
         type: 'line',
         data: {
           labels: dates,
           datasets: [{
-            label: 'Jualan (RM)',
+            label: dict.chartSalesLabel,
             data: totals,
             borderColor: '#059669',
             backgroundColor: 'rgba(5, 150, 105, 0.1)',
@@ -713,15 +947,16 @@
       if (!ctx) return;
       if (insightsChartInstance) insightsChartInstance.destroy();
 
+      const dict = translations[currentLang];
       const catCounts = {};
       products.forEach(p => catCounts[p.category] = (catCounts[p.category] || 0) + 1);
 
       insightsChartInstance = new Chart(ctx, {
         type: 'bar',
         data: {
-          labels: Object.keys(catCounts).length ? Object.keys(catCounts) : ["Tiada Data"],
+          labels: Object.keys(catCounts).length ? Object.keys(catCounts) : [dict.noData],
           datasets: [{
-            label: 'Bilangan Produk',
+            label: dict.chartProdCount,
             data: Object.values(catCounts).length ? Object.values(catCounts) : [0],
             backgroundColor: '#db2777'
           }]
@@ -730,7 +965,6 @@
       });
     }
 
-    // CALCULATE PRODUCT TOTAL PRICE AUTOMATICALLY
     function calculateProductTotalPrice() {
       const price = parseFloat(document.getElementById("pPrice").value) || 0;
       const promo = parseFloat(document.getElementById("pPromoPrice").value) || 0;
@@ -738,11 +972,10 @@
       document.getElementById("pTotalPrice").value = total.toFixed(2);
     }
 
-    // COMPRESS & OPTIMIZE UP TO 10 IMAGES (PNG & JPG)
     function handleImageOptimization(e) {
       const files = Array.from(e.target.files);
       if (files.length > 10) {
-        alert("Maksimum 10 gambar sahaja dibenarkan!");
+        alert(currentLang === 'BM' ? "Maksimum 10 gambar sahaja dibenarkan!" : "Maximum 10 images allowed!");
         e.target.value = "";
         return;
       }
@@ -750,7 +983,7 @@
       uploadedCompressedImages = [];
       const previewContainer = document.getElementById("imagePreviewContainer");
       previewContainer.innerHTML = "";
-      document.getElementById("imgUploadStatus").innerText = "Memproses & mengoptimumkan gambar...";
+      document.getElementById("imgUploadStatus").innerText = currentLang === 'BM' ? "Memproses & mengoptimumkan gambar..." : "Processing & optimizing images...";
 
       files.forEach(file => {
         if (!['image/jpeg', 'image/png'].includes(file.type)) return;
@@ -762,7 +995,7 @@
             const canvas = document.createElement("canvas");
             let width = img.width;
             let height = img.height;
-            const maxDimension = 800; // Resize if bigger than 800px
+            const maxDimension = 800;
 
             if (width > maxDimension || height > maxDimension) {
               if (width > height) {
@@ -779,7 +1012,7 @@
             const ctx = canvas.getContext("2d");
             ctx.drawImage(img, 0, 0, width, height);
 
-            const compressedBase64 = canvas.toDataURL("image/jpeg", 0.7); // Compress quality 70%
+            const compressedBase64 = canvas.toDataURL("image/jpeg", 0.7);
             uploadedCompressedImages.push(compressedBase64);
 
             const imgEl = document.createElement("img");
@@ -787,7 +1020,7 @@
             imgEl.className = "w-12 h-12 square-img rounded-xl border border-slate-200";
             previewContainer.appendChild(imgEl);
 
-            document.getElementById("imgUploadStatus").innerText = `${uploadedCompressedImages.length} gambar berjaya dioptimumkan.`;
+            document.getElementById("imgUploadStatus").innerText = currentLang === 'BM' ? `${uploadedCompressedImages.length} gambar berjaya dioptimumkan.` : `${uploadedCompressedImages.length} images successfully optimized.`;
           };
           img.src = evt.target.result;
         };
@@ -795,20 +1028,19 @@
       });
     }
 
-    // HANDLE VIDEO UPLOAD (MAX 1 VIDEO MP4, MAX 5MB)
     function handleVideoUpload(e) {
       const file = e.target.files[0];
       if (!file) return;
 
       if (file.type !== "video/mp4") {
-        alert("Hanya fail MP4 dibenarkan!");
+        alert(currentLang === 'BM' ? "Hanya fail MP4 dibenarkan!" : "Only MP4 files are allowed!");
         e.target.value = "";
         return;
       }
 
-      const maxSizeInBytes = 5 * 1024 * 1024; // 5MB
+      const maxSizeInBytes = 5 * 1024 * 1024;
       if (file.size > maxSizeInBytes) {
-        alert("Saiz video melebihi had maksimum 5MB!");
+        alert(currentLang === 'BM' ? "Saiz video melebihi had maksimum 5MB!" : "Video size exceeds maximum limit of 5MB!");
         e.target.value = "";
         return;
       }
@@ -816,7 +1048,7 @@
       const reader = new FileReader();
       reader.onload = (evt) => {
         uploadedVideoBase64 = evt.target.result;
-        document.getElementById("videoUploadStatus").innerText = "Video berjaya dimuat naik (Saiz < 5MB).";
+        document.getElementById("videoUploadStatus").innerText = currentLang === 'BM' ? "Video berjaya dimuat naik (Saiz < 5MB)." : "Video successfully uploaded (Size < 5MB).";
       };
       reader.readAsDataURL(file);
     }
@@ -860,7 +1092,7 @@
 
       localStorage.setItem(KEY_PRODUCTS, JSON.stringify(products));
       resetProductForm();
-      alert("Produk berjaya disimpan!");
+      alert(currentLang === 'BM' ? "Produk berjaya disimpan!" : "Product saved successfully!");
       switchAdminSection("store");
     }
 
@@ -876,6 +1108,7 @@
 
     function renderSellerProductsGrid() {
       const grid = document.getElementById("sellerProductsGrid");
+      const dict = translations[currentLang];
       grid.innerHTML = products.map(p => `
         <div class="glass-card rounded-2xl p-3 flex flex-col justify-between space-y-2">
           <div class="flex items-center gap-3">
@@ -888,7 +1121,7 @@
           </div>
           <div class="flex items-center justify-end gap-1.5 pt-2 border-t border-slate-100 text-[11px] font-bold">
             <button onclick="deleteProduct('${p.id}')" class="px-2 py-1 bg-rose-50 text-rose-600 rounded-lg hover:bg-rose-100 flex items-center gap-1">
-              <i data-lucide="trash-2" class="w-3 h-3"></i> Padam
+              <i data-lucide="trash-2" class="w-3 h-3"></i> ${dict.deleteBtn}
             </button>
           </div>
         </div>
@@ -897,14 +1130,13 @@
     }
 
     function deleteProduct(pId) {
-      if (confirm("Padam produk ini?")) {
+      if (confirm(currentLang === 'BM' ? "Padam produk ini?" : "Delete this product?")) {
         products = products.filter(p => p.id !== pId);
         localStorage.setItem(KEY_PRODUCTS, JSON.stringify(products));
         renderSellerProductsGrid();
       }
     }
 
-    // 4. RECORD NEW SALES - AUTO BACK TO EMPTY FORM
     function populateSalesProductDropdown() {
       const sel = document.getElementById("saleSelectProd");
       sel.innerHTML = products.map(p => `<option value="${p.id}" data-price="${p.totalPrice || p.price}">${p.title} (RM ${parseFloat(p.totalPrice || p.price).toFixed(2)})</option>`).join('');
@@ -929,9 +1161,8 @@
       salesHistory.push({ id: "S-" + Date.now(), date, customer: cust, product: prodName, amount: amt });
       localStorage.setItem(KEY_SALES, JSON.stringify(salesHistory));
 
-      alert("Rekod jualan berjaya ditambah!");
+      alert(currentLang === 'BM' ? "Rekod jualan berjaya ditambah!" : "Sale record successfully added!");
 
-      // Reset form back to empty
       document.getElementById("formRecordSales").reset();
       document.getElementById("saleDate").value = new Date().toISOString().split('T')[0];
       autoFillSaleAmount();
@@ -939,6 +1170,7 @@
 
     function renderSalesHistoryTable() {
       const body = document.getElementById("salesTableBody");
+      const dict = translations[currentLang];
       body.innerHTML = salesHistory.map((s, idx) => `
         <tr>
           <td class="p-3">${s.date}</td>
@@ -946,7 +1178,7 @@
           <td class="p-3">${s.product}</td>
           <td class="p-3 font-extrabold text-emerald-600">RM ${parseFloat(s.amount || 0).toFixed(2)}</td>
           <td class="p-3 text-right">
-            <button onclick="deleteSaleRecord(${idx})" class="text-rose-600 font-bold hover:underline">Padam</button>
+            <button onclick="deleteSaleRecord(${idx})" class="text-rose-600 font-bold hover:underline">${dict.deleteBtn}</button>
           </td>
         </tr>
       `).join('');
@@ -959,8 +1191,8 @@
     }
 
     function downloadSalesCSV() {
-      if (salesHistory.length === 0) return alert("Tiada data jualan.");
-      let csv = "ID,Tarikh,Pelanggan,Produk,Amaun(RM)\n";
+      if (salesHistory.length === 0) return alert(currentLang === 'BM' ? "Tiada data jualan." : "No sales data available.");
+      let csv = currentLang === 'BM' ? "ID,Tarikh,Pelanggan,Produk,Amaun(RM)\n" : "ID,Date,Customer,Product,Amount(RM)\n";
       salesHistory.forEach(s => csv += `"${s.id}","${s.date}","${s.customer}","${s.product}","${s.amount}"\n`);
       const blob = new Blob([csv], { type: 'text/csv' });
       const a = document.createElement('a');
@@ -969,13 +1201,13 @@
       a.click();
     }
 
-    // CATEGORY CONTROLLERS
     function renderCategoriesList() {
       const container = document.getElementById("categoriesList");
+      const dict = translations[currentLang];
       container.innerHTML = categories.map((c, idx) => `
         <div class="flex items-center justify-between p-2.5 bg-slate-50 rounded-xl border border-slate-200 text-xs">
           <span class="font-bold text-slate-800">${c}</span>
-          <button onclick="deleteCategory(${idx})" class="px-2 py-1 bg-rose-100 text-rose-700 font-bold rounded-lg">Padam</button>
+          <button onclick="deleteCategory(${idx})" class="px-2 py-1 bg-rose-100 text-rose-700 font-bold rounded-lg">${dict.deleteBtn}</button>
         </div>
       `).join('');
     }
@@ -997,7 +1229,6 @@
       renderCategoriesList();
     }
 
-    // SETTINGS & LOGO SQUARE SHAPE
     function loadSettingsToUI() {
       document.getElementById("headerStoreName").innerText = settings.storeName;
       document.getElementById("headerSellerName").innerText = settings.sellerName;
@@ -1035,11 +1266,10 @@
       settings.waTemplate = document.getElementById("setWaTemplate").value;
 
       localStorage.setItem(KEY_SETTINGS, JSON.stringify(settings));
-      alert("Tetapan kedai & WhatsApp disimpan!");
+      alert(currentLang === 'BM' ? "Tetapan kedai & WhatsApp disimpan!" : "Store & WhatsApp settings saved!");
       loadSettingsToUI();
     }
 
-    // CUSTOMER STORE ENGINE
     function openCustomerStoreView() {
       document.getElementById("view-auth").classList.add("hidden");
       document.getElementById("view-admin").classList.add("hidden");
@@ -1054,7 +1284,8 @@
 
     function renderCustomerCategories() {
       const bar = document.getElementById("customerCategoryBar");
-      let html = `<button onclick="renderCustomerProducts()" class="px-3 bg-white text-slate-800 py-1.5 rounded-xl border border-slate-200">Semua</button>`;
+      const dict = translations[currentLang];
+      let html = `<button onclick="renderCustomerProducts()" class="px-3 bg-white text-slate-800 py-1.5 rounded-xl border border-slate-200">${dict.allCat}</button>`;
       html += categories.map(c => `<button onclick="filterCustCat('${c}')" class="px-3 bg-white text-slate-800 py-1.5 rounded-xl border border-slate-200">${c}</button>`).join('');
       bar.innerHTML = html;
     }
@@ -1089,7 +1320,6 @@
       lucide.createIcons();
     }
 
-    // CART & WHATSAPP CHECKOUT (DYNAMIC TEMPLATE)
     function addToCart(pId) {
       const p = products.find(x => x.id === pId);
       if (!p) return;
@@ -1100,7 +1330,7 @@
         cart.push({ id: p.id, title: p.title, price: (p.totalPrice || p.price), qty: 1 });
       }
       updateCartBadge();
-      alert("Ditambah ke troli!");
+      alert(currentLang === 'BM' ? "Ditambah ke troli!" : "Added to cart!");
     }
 
     function updateCartBadge() {
@@ -1155,8 +1385,8 @@
 
     function processWhatsAppCheckout() {
       const custName = document.getElementById("custCheckoutName").value.trim();
-      if (!custName) return alert("Sila masukkan nama penuh anda!");
-      if (cart.length === 0) return alert("Troli anda kosong!");
+      if (!custName) return alert(currentLang === 'BM' ? "Sila masukkan nama penuh anda!" : "Please enter your full name!");
+      if (cart.length === 0) return alert(currentLang === 'BM' ? "Troli anda kosong!" : "Your cart is empty!");
 
       const itemsFormatted = cart.map(i => `${i.qty} x ${i.title}`).join('\n');
       const totalVal = cart.reduce((a,b) => a + (b.price * b.qty), 0).toFixed(2);
@@ -1164,7 +1394,6 @@
       let template = settings.waTemplate || DEFAULT_WA_TEMPLATE;
       let finalMsg = template.replace("{ITEMS}", itemsFormatted).replace("{TOTAL}", totalVal);
 
-      // Auto add to sales history
       salesHistory.push({
         id: "WA-" + Date.now(),
         date: new Date().toISOString().split('T')[0],
@@ -1179,11 +1408,6 @@
       updateCartBadge();
       toggleCartModal();
       window.open(url, '_blank');
-    }
-
-    function setLanguage(lang) {
-      document.getElementById("langBtnBM").className = lang === "BM" ? "px-2 py-1 rounded-lg bg-pink-600 text-white transition" : "px-2 py-1 rounded-lg text-slate-600 transition";
-      document.getElementById("langBtnBI").className = lang === "BI" ? "px-2 py-1 rounded-lg bg-pink-600 text-white transition" : "px-2 py-1 rounded-lg text-slate-600 transition";
     }
   </script>
 </body>
