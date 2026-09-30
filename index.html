@@ -256,11 +256,14 @@
               </button>
             </div>
 
+            <!-- PERFORMANCE SUMMARY FILTER -->
             <div class="glass-card rounded-2xl p-3 flex flex-wrap items-center justify-between gap-2 text-xs">
               <span class="font-bold text-slate-700" data-i18n="filterPerf">Penapis Ringkasan Prestasi:</span>
               <div class="flex flex-wrap items-center gap-1.5 font-bold">
-                <button onclick="filterDashboardData('today')" id="df-today" class="df-btn px-3 py-1.5 rounded-xl bg-emerald-600 text-white" data-i18n="filterToday">Hari Ini</button>
-                <button onclick="filterDashboardData('month')" id="df-month" class="df-btn px-3 py-1.5 rounded-xl bg-white text-slate-700 hover:bg-slate-100" data-i18n="filterMonth">Bulan Ini</button>
+                <button onclick="filterDashboardData('today')" id="df-today" class="df-btn px-3 py-1.5 rounded-xl bg-emerald-600 text-white" data-i18n="filterToday">TODAY</button>
+                <button onclick="filterDashboardData('yesterday')" id="df-yesterday" class="df-btn px-3 py-1.5 rounded-xl bg-white text-slate-700 hover:bg-slate-100" data-i18n="filterYesterday">YESTERDAY</button>
+                <button onclick="filterDashboardData('7days')" id="df-7days" class="df-btn px-3 py-1.5 rounded-xl bg-white text-slate-700 hover:bg-slate-100" data-i18n="filter7Days">7 DAYS</button>
+                <button onclick="filterDashboardData('month')" id="df-month" class="df-btn px-3 py-1.5 rounded-xl bg-white text-slate-700 hover:bg-slate-100" data-i18n="filterMonth">THIS MONTH</button>
               </div>
             </div>
 
@@ -270,8 +273,8 @@
                 <h3 id="statOrdersCount" class="text-lg sm:text-xl font-extrabold text-slate-900">0</h3>
               </div>
               <div class="glass-card rounded-2xl p-3.5 sm:p-4 space-y-1">
-                <p class="text-[10px] font-extrabold text-slate-400 uppercase" data-i18n="statToday">Jumlah Jualan Hari Ini</p>
-                <h3 id="statTotalSalesToday" class="text-lg sm:text-xl font-extrabold text-emerald-600">RM 0.00</h3>
+                <p class="text-[10px] font-extrabold text-slate-400 uppercase" id="statFilterSalesLabel" data-i18n="statToday">Jumlah Jualan (Hari Ini)</p>
+                <h3 id="statTotalSalesFiltered" class="text-lg sm:text-xl font-extrabold text-emerald-600">RM 0.00</h3>
               </div>
               <div class="glass-card rounded-2xl p-3.5 sm:p-4 space-y-1">
                 <p class="text-[10px] font-extrabold text-slate-400 uppercase" data-i18n="statMonth">Jumlah Jualan Bulan Ini</p>
@@ -428,10 +431,13 @@
             </div>
           </div>
 
-          <!-- 7. STORE (PRODUCT LIST FOR ADMIN) -->
+          <!-- 7. STORE (PRODUCT MANAGEMENT FOR ADMIN) -->
           <div id="sec-store" class="admin-sec hidden space-y-4">
             <div class="flex justify-between items-center glass-card p-4 rounded-2xl flex-wrap gap-2">
-              <h2 class="text-base font-extrabold text-slate-900" data-i18n="storeManageTitle">Pengurusan Produk Kedai</h2>
+              <div>
+                <h2 class="text-base font-extrabold text-slate-900" data-i18n="storeManageTitle">STORE PRODUCT MANAGEMENT</h2>
+                <p class="text-xs text-slate-500">Senarai produk yang ada di store dan penanda Best Seller.</p>
+              </div>
               <div class="flex items-center gap-2">
                 <button onclick="switchAdminSection('add-product')" class="px-3 py-1.5 bg-pink-600 text-white text-xs font-bold rounded-xl shadow" data-i18n="btnAddProdShort">+ Tambah Produk</button>
                 <button onclick="switchAdminSection('dashboard')" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl flex items-center gap-1">
@@ -442,7 +448,7 @@
             <div id="sellerProductsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4"></div>
           </div>
 
-          <!-- 8. PENGURUSAN KATEGORI WORKSHEET (KHAS / ISOLATED SECTION) -->
+          <!-- 8. PENGURUSAN KATEGORI WORKSHEET -->
           <div id="sec-admin-cat" class="admin-sec hidden glass-card rounded-3xl p-4 sm:p-6 space-y-4">
             <div class="flex items-center justify-between border-b pb-3">
               <div>
@@ -547,10 +553,10 @@
       </div>
     </section>
 
-    <!-- PUBLIC CUSTOMER VIEW (KATALOG PELANGGAN SAHAJA - TERSUSUN DAN BEBAS LEBIHAN SKRIN) -->
+    <!-- PUBLIC CUSTOMER VIEW -->
     <section id="view-customer" class="hidden space-y-4 sm:space-y-6 w-full max-w-7xl mx-auto">
       
-      <!-- HEADER KATALOG DENGAN BUTANG KEMBALI DI KATALOG -->
+      <!-- HEADER KATALOG -->
       <div class="glass-card rounded-3xl p-4 sm:p-6 bg-gradient-to-r from-pink-500/10 via-purple-500/10 to-emerald-500/10 border border-white flex justify-between items-center gap-3">
         <div class="space-y-1 min-w-0">
           <span class="px-2.5 py-0.5 bg-white text-emerald-700 text-[10px] font-extrabold rounded-full shadow-sm inline-block" data-i18n="custCatalogBadge">KATALOG RASMI PELANGGAN</span>
@@ -558,7 +564,6 @@
           <p class="text-xs text-slate-600 truncate" data-i18n="custWelcomeSub">Pilih produk idaman anda dan buat pesanan terus melalui WhatsApp.</p>
         </div>
 
-        <!-- BUTANG 'KEMBALI' DI KATALOG PELANGGAN -->
         <button id="btnBackToAdmin" onclick="exitCustomerStoreView()" class="px-3.5 py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-xl shadow-md transition shrink-0 flex items-center gap-1.5">
           <i data-lucide="arrow-left" class="w-4 h-4"></i>
           <span>Kembali</span>
@@ -574,7 +579,7 @@
 
   </main>
 
-  <!-- NAVIGASI BOTTOM BAR (UNTUK PENTADBIR SAHAJA DI MOBILE) -->
+  <!-- NAVIGASI BOTTOM BAR (MOBILE) -->
   <nav id="mobileBottomNav" class="hidden md:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-200 z-50 flex justify-around py-2.5 text-[10px] font-bold text-slate-600 shadow-lg w-full">
     <button onclick="showAdminDashboardMobile()" class="flex flex-col items-center gap-1 hover:text-emerald-600">
       <i data-lucide="home" class="w-4 h-4"></i>
@@ -665,10 +670,14 @@
         profileTitle: "Profil Penjual",
         activeSeller: "PENJUAL AKTIF",
         filterPerf: "Penapis Ringkasan Prestasi:",
-        filterToday: "Hari Ini",
-        filterMonth: "Bulan Ini",
+        filterToday: "TODAY",
+        filterYesterday: "YESTERDAY",
+        filter7Days: "7 DAYS",
+        filterMonth: "THIS MONTH",
         statOrders: "Jumlah Pesanan",
-        statToday: "Jumlah Jualan Hari Ini",
+        statToday: "Jumlah Jualan (Hari Ini)",
+        statYesterday: "Jumlah Jualan (Semalam)",
+        stat7Days: "Jumlah Jualan (7 Hari)",
         statMonth: "Jumlah Jualan Bulan Ini",
         statRevenue: "Jumlah Hasil Keseluruhan",
         chartTitle: "Graf Trend Jualan (Masa Nyata)",
@@ -699,7 +708,7 @@
         thAmt: "Amaun",
         thAction: "Tindakan",
         insightsTitle: "Analisis & Graf Bar",
-        storeManageTitle: "Pengurusan Produk Kedai",
+        storeManageTitle: "STORE PRODUCT MANAGEMENT",
         btnAddProdShort: "+ Tambah Produk",
         settingTitle: "Tetapan Kedai & WhatsApp",
         logoUploadLbl: "Muat Naik Gambar Profil / Logo Penjual (Bentuk Petak - PNG / JPG)",
@@ -740,7 +749,7 @@
         msgConfirmDelProd: "Adakah anda pasti mahu memadam produk ini?",
         msgSessionExpired: "Sesi anda telah tamat selepas 2 jam tidak aktif. Sila log masuk semula.",
         msgResetSent: "Pautan penetapan semula kata laluan telah dihantar ke e-mel anda.",
-        msgProdSaved: "Produk berjaya disimpan!",
+        msgProdSaved: "PRODUK BERJAYA DISIMPAN",
         msgMax10Img: "Maksimum 10 gambar sahaja dibenarkan!",
         msgImgOpting: "Memproses & mengoptimumkan gambar...",
         msgImgOptSuccess: "gambar berjaya dioptimumkan.",
@@ -788,11 +797,15 @@
         profileTitle: "Seller Profile",
         activeSeller: "ACTIVE SELLER",
         filterPerf: "Performance Summary Filter:",
-        filterToday: "Today",
-        filterMonth: "This Month",
+        filterToday: "TODAY",
+        filterYesterday: "YESTERDAY",
+        filter7Days: "7 DAYS",
+        filterMonth: "THIS MONTH",
         statOrders: "Total Orders",
-        statToday: "Total Sales Today",
-        statMonth: "Total Sales This Month",
+        statToday: "Sales Amount (Today)",
+        statYesterday: "Sales Amount (Yesterday)",
+        stat7Days: "Sales Amount (7 Days)",
+        statMonth: "Sales This Month",
         statRevenue: "Total Overall Revenue",
         chartTitle: "Sales Trend Chart (Real-Time)",
         addProductTitle: "Add / Edit Product Catalog",
@@ -822,7 +835,7 @@
         thAmt: "Amount",
         thAction: "Action",
         insightsTitle: "Insights & Bar Graph",
-        storeManageTitle: "Store Product Management",
+        storeManageTitle: "STORE PRODUCT MANAGEMENT",
         btnAddProdShort: "+ Add Product",
         settingTitle: "Store & WhatsApp Settings",
         logoUploadLbl: "Upload Profile / Seller Logo (Square Shape - PNG / JPG)",
@@ -863,7 +876,7 @@
         msgConfirmDelProd: "Are you sure you want to delete this product?",
         msgSessionExpired: "Your session expired after 2 hours of inactivity. Please log in again.",
         msgResetSent: "A password reset link has been sent to your email inbox.",
-        msgProdSaved: "Product saved successfully!",
+        msgProdSaved: "PRODUK BERJAYA DISIMPAN",
         msgMax10Img: "Maximum 10 images allowed!",
         msgImgOpting: "Processing & optimizing images...",
         msgImgOptSuccess: "images successfully optimized.",
@@ -903,7 +916,6 @@
       logoUrl: "https://via.placeholder.com/150"
     };
 
-    // KATEGORI WORKSHEET ASAL DENGAN DESCRIPTION & STATUS
     const DEFAULT_CATEGORIES = [
       { name: "PRASEKOLAH", desc: "Lembaran kerja dan aktiviti asas untuk kanak-kanak prasekolah & tadika.", status: "active" },
       { name: "SEKOLAH RENDAH", desc: "Modul dan soalan latihan lengkap untuk murid Tahun 1 hingga Tahun 6.", status: "active" },
@@ -921,6 +933,7 @@
     let cart = [];
     let dashChartInstance = null;
     let insightsChartInstance = null;
+    let currentFilterType = 'today';
 
     const TWO_HOURS_MS = 2 * 60 * 60 * 1000;
 
@@ -984,7 +997,7 @@
 
       renderCustomerCategories();
       if (!document.getElementById("sec-dashboard").classList.contains("hidden")) {
-        renderDashSalesChart();
+        renderDashboardAnalytics(currentFilterType);
       }
       if (!document.getElementById("sec-insights").classList.contains("hidden")) {
         renderInsightsChart();
@@ -1081,7 +1094,7 @@
       const activeSec = document.getElementById(`sec-${sectionId}`);
       if (activeSec) activeSec.classList.remove("hidden");
 
-      if (sectionId === 'dashboard') renderDashboardAnalytics();
+      if (sectionId === 'dashboard') renderDashboardAnalytics(currentFilterType);
       if (sectionId === 'add-product') populateCategoryDropdown();
       if (sectionId === 'add-sales') populateSalesProductDropdown();
       if (sectionId === 'my-sales') renderSalesHistoryTable();
@@ -1090,24 +1103,58 @@
       if (sectionId === 'admin-cat') renderCategoriesList();
     }
 
-    // DASHBOARD ANALYTICS
+    // 5. PERFORMANCE SUMMARY FILTER (TODAY, YESTERDAY, 7 DAYS, THIS MONTH)
     function filterDashboardData(filter) {
+      currentFilterType = filter;
+      document.querySelectorAll('.df-btn').forEach(btn => {
+        btn.className = "df-btn px-3 py-1.5 rounded-xl bg-white text-slate-700 hover:bg-slate-100";
+      });
+      const activeBtn = document.getElementById(`df-${filter}`);
+      if (activeBtn) {
+        activeBtn.className = "df-btn px-3 py-1.5 rounded-xl bg-emerald-600 text-white";
+      }
       renderDashboardAnalytics(filter);
     }
 
     function renderDashboardAnalytics(filter = 'today') {
-      const todayStr = new Date().toISOString().split('T')[0];
+      const today = new Date();
+      const todayStr = today.toISOString().split('T')[0];
       const thisMonthStr = todayStr.substring(0, 7);
 
-      const salesToday = salesHistory.filter(s => s.date === todayStr);
+      let filteredSales = [];
+      let labelText = "Jumlah Jualan (Hari Ini)";
+
+      if (filter === 'today') {
+        filteredSales = salesHistory.filter(s => s.date === todayStr);
+        labelText = translations[currentLang].statToday;
+      } else if (filter === 'yesterday') {
+        const yest = new Date(today);
+        yest.setDate(yest.getDate() - 1);
+        const yestStr = yest.toISOString().split('T')[0];
+        filteredSales = salesHistory.filter(s => s.date === yestStr);
+        labelText = translations[currentLang].statYesterday;
+      } else if (filter === '7days') {
+        const sevenDaysAgo = new Date(today);
+        sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 6);
+        filteredSales = salesHistory.filter(s => {
+          const sDate = new Date(s.date);
+          return sDate >= sevenDaysAgo && sDate <= today;
+        });
+        labelText = translations[currentLang].stat7Days;
+      } else if (filter === 'month') {
+        filteredSales = salesHistory.filter(s => s.date && s.date.startsWith(thisMonthStr));
+        labelText = translations[currentLang].statMonth;
+      }
+
       const salesMonth = salesHistory.filter(s => s.date && s.date.startsWith(thisMonthStr));
 
-      const sumToday = salesToday.reduce((a,b) => a + parseFloat(b.amount || 0), 0);
+      const sumFiltered = filteredSales.reduce((a,b) => a + parseFloat(b.amount || 0), 0);
       const sumMonth = salesMonth.reduce((a,b) => a + parseFloat(b.amount || 0), 0);
       const totalRevenue = salesHistory.reduce((a,b) => a + parseFloat(b.amount || 0), 0);
 
       document.getElementById("statOrdersCount").innerText = salesHistory.length;
-      document.getElementById("statTotalSalesToday").innerText = `RM ${sumToday.toFixed(2)}`;
+      document.getElementById("statFilterSalesLabel").innerText = labelText;
+      document.getElementById("statTotalSalesFiltered").innerText = `RM ${sumFiltered.toFixed(2)}`;
       document.getElementById("statTotalSalesMonth").innerText = `RM ${sumMonth.toFixed(2)}`;
       document.getElementById("statTotalRevenue").innerText = `RM ${totalRevenue.toFixed(2)}`;
 
@@ -1260,7 +1307,6 @@
 
     function populateCategoryDropdown() {
       const sel = document.getElementById("pCategory");
-      // HANYA POPULATE KATEGORI YANG AKTIF SAHAJA
       const activeCats = categories.filter(c => c.status === "active");
       if (activeCats.length === 0) {
         sel.innerHTML = `<option value="">-- Tiada Kategori Aktif --</option>`;
@@ -1269,6 +1315,7 @@
       }
     }
 
+    // 1 & 2. FUNGSI SIMPAN PRODUK BERFUNGSI & NOTIFIKASI 'PRODUK BERJAYA DISIMPAN'
     function handleProductFormSubmit(e) {
       e.preventDefault();
       const editId = document.getElementById("editProductId").value;
@@ -1285,10 +1332,11 @@
         const idx = products.findIndex(p => p.id === editId);
         if (idx !== -1) {
           products[idx] = {
-            ...products[idx], title, category, price, promoPrice, totalPrice, desc,
+            ...products[idx],
+            title, category, price, promoPrice, totalPrice, desc,
             images: uploadedCompressedImages.length ? uploadedCompressedImages : products[idx].images,
             video: uploadedVideoBase64 || products[idx].video,
-            img: mainImg
+            img: uploadedCompressedImages.length ? mainImg : products[idx].img
           };
         }
       } else {
@@ -1301,12 +1349,19 @@
         });
       }
 
+      // Simpan ke storage & paparkan kedai
       localStorage.setItem(KEY_PRODUCTS, JSON.stringify(products));
       resetProductForm();
-      alert(translations[currentLang].msgProdSaved);
+      
+      // 2. NOTIFIKASI
+      alert("PRODUK BERJAYA DISIMPAN");
+      
       switchAdminSection("store");
+      renderSellerProductsGrid();
+      renderCustomerProducts();
     }
 
+    // 1. FUNGSI BATAL / RESET BORANG
     function resetProductForm() {
       document.getElementById("editProductId").value = "";
       document.getElementById("productForm").reset();
@@ -1315,15 +1370,42 @@
       document.getElementById("imagePreviewContainer").innerHTML = "";
       document.getElementById("imgUploadStatus").innerText = "";
       document.getElementById("videoUploadStatus").innerText = "";
+      document.getElementById("pTotalPrice").value = "";
+    }
+
+    // 3 & 4. STORE PRODUCT MANAGEMENT & TUNJUK SENARAI PRODUK BESERTA BEST SELLER
+    function getBestSellerProductIds() {
+      const counts = {};
+      salesHistory.forEach(s => {
+        if (s.product) {
+          products.forEach(p => {
+            if (s.product.includes(p.title)) {
+              counts[p.id] = (counts[p.id] || 0) + 1;
+            }
+          });
+        }
+      });
+      const sorted = Object.keys(counts).sort((a, b) => counts[b] - counts[a]);
+      return sorted.slice(0, 3); // Top 3 jualan dianggap Best Seller
     }
 
     function renderSellerProductsGrid() {
       const grid = document.getElementById("sellerProductsGrid");
       const dict = translations[currentLang];
-      grid.innerHTML = products.map(p => `
-        <div class="glass-card rounded-2xl p-3 flex flex-col justify-between space-y-2">
+      const bestSellers = getBestSellerProductIds();
+
+      if (products.length === 0) {
+        grid.innerHTML = `<div class="col-span-full text-center py-8 text-slate-400 font-bold text-xs">Tiada produk tersimpan di store.</div>`;
+        return;
+      }
+
+      grid.innerHTML = products.map(p => {
+        const isBestSeller = bestSellers.includes(p.id);
+        return `
+        <div class="glass-card rounded-2xl p-3 flex flex-col justify-between space-y-2 relative border border-slate-200">
+          ${isBestSeller ? `<span class="absolute top-2 right-2 bg-gradient-to-r from-amber-500 to-rose-500 text-white text-[9px] font-extrabold px-2 py-0.5 rounded-full shadow-sm">BEST SELLER</span>` : ''}
           <div class="flex items-center gap-3">
-            <img src="${p.img}" class="w-12 h-12 square-img rounded-xl bg-slate-100 border">
+            <img src="${p.img || 'https://via.placeholder.com/300'}" class="w-14 h-14 square-img rounded-xl bg-slate-100 border">
             <div class="flex-1 overflow-hidden min-w-0">
               <span class="text-[9px] font-extrabold text-pink-600 uppercase block truncate">${p.category}</span>
               <h4 class="font-bold text-slate-900 text-xs truncate">${p.title}</h4>
@@ -1331,15 +1413,15 @@
             </div>
           </div>
           <div class="flex items-center justify-end gap-1.5 pt-2 border-t border-slate-100 text-[11px] font-bold">
-            <button onclick="editProduct('${p.id}')" class="px-2 py-1 bg-amber-50 text-amber-700 rounded-lg hover:bg-amber-100 flex items-center gap-1">
+            <button onclick="editProduct('${p.id}')" class="px-2.5 py-1 bg-amber-50 text-amber-700 rounded-lg hover:bg-amber-100 flex items-center gap-1 transition">
               <i data-lucide="edit" class="w-3 h-3"></i> ${dict.editBtn}
             </button>
-            <button onclick="deleteProduct('${p.id}')" class="px-2 py-1 bg-rose-50 text-rose-600 rounded-lg hover:bg-rose-100 flex items-center gap-1">
+            <button onclick="deleteProduct('${p.id}')" class="px-2.5 py-1 bg-rose-50 text-rose-600 rounded-lg hover:bg-rose-100 flex items-center gap-1 transition">
               <i data-lucide="trash-2" class="w-3 h-3"></i> ${dict.deleteBtn}
             </button>
           </div>
         </div>
-      `).join('');
+      `;}).join('');
       lucide.createIcons();
     }
 
@@ -1361,6 +1443,7 @@
         products = products.filter(p => p.id !== pId);
         localStorage.setItem(KEY_PRODUCTS, JSON.stringify(products));
         renderSellerProductsGrid();
+        renderCustomerProducts();
       }
     }
 
@@ -1393,6 +1476,7 @@
       document.getElementById("formRecordSales").reset();
       document.getElementById("saleDate").value = new Date().toISOString().split('T')[0];
       autoFillSaleAmount();
+      renderDashboardAnalytics(currentFilterType);
     }
 
     function renderSalesHistoryTable() {
@@ -1415,6 +1499,7 @@
       salesHistory.splice(idx, 1);
       localStorage.setItem(KEY_SALES, JSON.stringify(salesHistory));
       renderSalesHistoryTable();
+      renderDashboardAnalytics(currentFilterType);
     }
 
     function downloadSalesCSV() {
@@ -1428,9 +1513,7 @@
       a.click();
     }
 
-    // =========================================
-    // FUNGSI PENGURUSAN KATEGORI WORKSHEET KHAS (POINT 2)
-    // =========================================
+    // PENGURUSAN KATEGORI WORKSHEET
     function renderCategoriesList() {
       const container = document.getElementById("categoriesList");
       const dict = translations[currentLang];
@@ -1480,11 +1563,9 @@
       if (!name) return;
 
       if (editIndex >= 0 && editIndex < categories.length) {
-        // Mode Kemas Kini (Edit)
         const oldName = categories[editIndex].name;
         categories[editIndex] = { name, desc, status };
 
-        // Kemas kini nama kategori pada produk sedia ada jika berubah
         if (oldName !== name) {
           products.forEach(p => {
             if (p.category === oldName) p.category = name;
@@ -1492,7 +1573,6 @@
           localStorage.setItem(KEY_PRODUCTS, JSON.stringify(products));
         }
       } else {
-        // Mode Tambah Kategori Baharu
         categories.push({ name, desc, status });
       }
 
@@ -1581,9 +1661,7 @@
       loadSettingsToUI();
     }
 
-    // =========================================
-    // KATALOG PELANGGAN & FUNGSI 'KEMBALI' (POINT 1)
-    // =========================================
+    // KATALOG PELANGGAN & STORE
     function openCustomerStoreView() {
       localStorage.setItem(KEY_CURRENT_VIEW, "customer");
       document.getElementById("view-auth").classList.add("hidden");
@@ -1594,7 +1672,6 @@
       document.getElementById("btnHeaderViewStore").classList.add("hidden");
       document.getElementById("mobileBottomNav").classList.add("hidden");
 
-      // Laraskan Butang Kembali
       const btnBack = document.getElementById("btnBackToAdmin");
       if (authSession.isLoggedIn) {
         btnBack.classList.remove("hidden");
@@ -1607,7 +1684,6 @@
       renderCustomerProducts();
     }
 
-    // KELUAR DARI KATALOG PELANGGAN / KEMBALI KE DASHBOARD
     function exitCustomerStoreView() {
       if (authSession.isLoggedIn) {
         showAdminView();
@@ -1620,7 +1696,6 @@
       const bar = document.getElementById("customerCategoryBar");
       const dict = translations[currentLang];
       
-      // HANYA KATEGORI YANG AKTIF DIAPARKAN UNTUK PELANGGAN
       const activeCats = categories.filter(c => c.status === "active");
 
       let html = `<button onclick="renderCustomerProducts()" class="px-3 py-1.5 bg-white text-slate-800 rounded-xl border border-slate-200 shrink-0 shadow-sm hover:bg-slate-50">${dict.allCat}</button>`;
@@ -1636,18 +1711,23 @@
       renderCustomerProducts(products.filter(p => p.title.toLowerCase().includes(q.toLowerCase())));
     }
 
+    // 3. PRODUK AKAN TERPAPAR DI STORE (PELANGGAN)
     function renderCustomerProducts(customList) {
       const list = customList || products;
       const grid = document.getElementById("customerProductsGrid");
+      const bestSellers = getBestSellerProductIds();
 
       if (list.length === 0) {
-        grid.innerHTML = `<div class="col-span-full text-center py-12 text-slate-400 font-bold text-xs">Tiada produk dijual dalam kategori ini.</div>`;
+        grid.innerHTML = `<div class="col-span-full text-center py-12 text-slate-400 font-bold text-xs">Tiada produk dijual dalam kedai.</div>`;
         return;
       }
 
-      grid.innerHTML = list.map(p => `
-        <div class="glass-card rounded-2xl overflow-hidden flex flex-col justify-between p-2.5 sm:p-3 space-y-2 w-full">
-          <img src="${p.img}" class="w-full h-28 sm:h-36 square-img rounded-xl bg-slate-100">
+      grid.innerHTML = list.map(p => {
+        const isBestSeller = bestSellers.includes(p.id);
+        return `
+        <div class="glass-card rounded-2xl overflow-hidden flex flex-col justify-between p-2.5 sm:p-3 space-y-2 w-full relative">
+          ${isBestSeller ? `<span class="absolute top-4 right-4 bg-gradient-to-r from-amber-500 to-rose-500 text-white text-[9px] font-extrabold px-2 py-0.5 rounded-full shadow-md z-10">BEST SELLER</span>` : ''}
+          <img src="${p.img || 'https://via.placeholder.com/300'}" class="w-full h-28 sm:h-36 square-img rounded-xl bg-slate-100">
           <div class="min-w-0">
             <span class="text-[9px] font-extrabold text-pink-600 uppercase block truncate">${p.category}</span>
             <h4 class="font-bold text-slate-900 text-xs line-clamp-2 leading-tight">${p.title}</h4>
@@ -1659,7 +1739,7 @@
             </button>
           </div>
         </div>
-      `).join('');
+      `;}).join('');
       lucide.createIcons();
     }
 
@@ -1751,6 +1831,7 @@
       updateCartBadge();
       toggleCartModal();
       window.open(url, '_blank');
+      renderDashboardAnalytics(currentFilterType);
     }
   </script>
 </body>
