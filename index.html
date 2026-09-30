@@ -42,7 +42,6 @@
       </div>
 
       <div class="flex items-center gap-1.5 sm:gap-3 shrink-0">
-        <!-- COPY LINK KATALOG BUTTON IN HEADER -->
         <button onclick="copyStoreCatalogLink()" class="flex items-center gap-1 px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl shadow-sm transition">
           <i data-lucide="copy" class="w-3.5 h-3.5"></i>
           <span class="hidden sm:inline">Salin Link Katalog</span>
@@ -227,7 +226,7 @@
             </div>
           </div>
 
-          <!-- 2. DASHBOARD SELLER (HOME UTAMA) -->
+          <!-- 2. DASHBOARD SELLER -->
           <div id="sec-dashboard" class="admin-sec space-y-4 sm:space-y-5">
             <div class="glass-card rounded-3xl p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-gradient-to-r from-emerald-500/10 via-teal-500/10 to-pink-500/10">
               <div>
@@ -354,7 +353,6 @@
                 <input type="number" step="0.01" id="pTotalPrice" readonly class="w-full px-4 py-2.5 bg-slate-200/80 font-extrabold text-emerald-700 rounded-xl border border-slate-300 focus:outline-none" placeholder="0.00">
               </div>
 
-              <!-- MUAT NAIK GAMBAR ATAU PILIH DARI GALLERY ALBUM -->
               <div>
                 <div class="flex justify-between items-center mb-1">
                   <label class="font-bold text-slate-700" data-i18n="imgUploadLbl">Gambar Dimuat Naik (Maksimum 10 Gambar - PNG / JPG Auto-Mampat)</label>
@@ -444,7 +442,7 @@
             </div>
           </div>
 
-          <!-- 6. INSIGHTS & BAR GRAPH -->
+          <!-- 6. INSIGHTS -->
           <div id="sec-insights" class="admin-sec hidden glass-card rounded-3xl p-4 sm:p-6 space-y-4">
             <div class="flex items-center justify-between border-b pb-3">
               <h2 class="text-base font-extrabold text-slate-900" data-i18n="insightsTitle">Analisis & Graf Bar</h2>
@@ -457,7 +455,7 @@
             </div>
           </div>
 
-          <!-- 7. STORE (PRODUCT MANAGEMENT FOR ADMIN) -->
+          <!-- 7. STORE MANAGEMENT -->
           <div id="sec-store" class="admin-sec hidden space-y-4">
             <div class="flex justify-between items-center glass-card p-4 rounded-2xl flex-wrap gap-2">
               <div>
@@ -486,7 +484,6 @@
               </button>
             </div>
 
-            <!-- BORANG TAMBAH/EDIT KATEGORI -->
             <form onsubmit="handleSaveCategory(event)" class="bg-slate-50/80 p-4 rounded-2xl border border-slate-200 space-y-3 text-xs">
               <input type="hidden" id="editCatIndex" value="-1">
               <h3 id="catFormTitle" class="font-extrabold text-slate-800 text-xs uppercase tracking-wider">+ Tambah Kategori Baharu</h3>
@@ -516,14 +513,13 @@
               </div>
             </form>
 
-            <!-- SENARAI KATEGORI -->
             <div class="space-y-2 pt-2">
               <h3 class="font-extrabold text-slate-800 text-xs uppercase">Senarai Kategori Sedia Ada</h3>
               <div id="categoriesList" class="space-y-2.5"></div>
             </div>
           </div>
 
-          <!-- 9. SETTING PROFILE & STORE / WHATSAPP SETTINGS -->
+          <!-- 9. SETTING PROFILE -->
           <div id="sec-setting" class="admin-sec hidden glass-card rounded-3xl p-4 sm:p-6 space-y-5 max-w-xl mx-auto text-xs">
             <div class="flex items-center justify-between border-b pb-3">
               <h2 class="text-base font-extrabold text-slate-900" data-i18n="settingTitle">Tetapan Kedai & WhatsApp</h2>
@@ -610,8 +606,37 @@
         </button>
       </div>
 
-      <!-- KATEGORI BAR PELANGGAN -->
-      <div class="flex items-center gap-2 overflow-x-auto pb-2 no-scrollbar text-xs font-bold w-full" id="customerCategoryBar"></div>
+      <!-- BAR PENAPIS KATEGORI DAN PRODUK (FILTER) -->
+      <div class="space-y-3">
+        <!-- BAR KATEGORI UTAMA -->
+        <div class="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar text-xs font-bold w-full" id="customerCategoryBar"></div>
+        
+        <!-- BAR PENAPIS PRODUK KEDUA (LEPAS FILTER KATEGORI) -->
+        <div class="glass-card p-3 rounded-2xl flex flex-wrap items-center justify-between gap-3 text-xs font-bold">
+          <div class="flex items-center gap-2">
+            <i data-lucide="sliders-horizontal" class="w-4 h-4 text-pink-600"></i>
+            <span class="text-slate-700">Penapis Produk:</span>
+            <span id="activeCategoryLabel" class="px-2 py-0.5 bg-pink-100 text-pink-700 rounded-lg text-[11px]">Semua Kategori</span>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-2 w-full sm:w-auto">
+            <select id="filterPriceRange" onchange="applyProductFilters()" class="px-3 py-1.5 bg-slate-100 rounded-xl border border-slate-200 text-xs focus:outline-none">
+              <option value="ALL">Semua Harga</option>
+              <option value="0-10">Bawah RM 10</option>
+              <option value="10-30">RM 10 - RM 30</option>
+              <option value="30-50">RM 30 - RM 50</option>
+              <option value="50+">RM 50 ke atas</option>
+            </select>
+
+            <select id="filterSortBy" onchange="applyProductFilters()" class="px-3 py-1.5 bg-slate-100 rounded-xl border border-slate-200 text-xs focus:outline-none">
+              <option value="DEFAULT">Susunan Asal</option>
+              <option value="PRICE_LOW">Harga: Terendah ke Tertinggi</option>
+              <option value="PRICE_HIGH">Harga: Tertinggi ke Terendah</option>
+              <option value="NAME_ASC">Nama: A - Z</option>
+            </select>
+          </div>
+        </div>
+      </div>
       
       <!-- GRID PRODUK PELANGGAN -->
       <div id="customerProductsGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-4 w-full"></div>
@@ -643,7 +668,7 @@
     </button>
   </nav>
 
-  <!-- GALLERY / ALBUM MODAL (AKSES SEMUA GAMBAR) -->
+  <!-- GALLERY MODAL -->
   <div id="galleryModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
     <div class="bg-white w-full max-w-2xl rounded-3xl p-5 space-y-4 shadow-2xl relative max-h-[85vh] flex flex-col">
       <div class="flex justify-between items-center border-b pb-3">
@@ -655,10 +680,7 @@
         </button>
       </div>
 
-      <!-- FILTER ALBUM KATEGORI -->
       <div class="flex items-center gap-2 overflow-x-auto pb-1 text-xs font-bold no-scrollbar" id="galleryAlbumTabs"></div>
-
-      <!-- GRID GAMBAR GALLERY -->
       <div id="galleryImagesGrid" class="grid grid-cols-3 sm:grid-cols-4 gap-3 overflow-y-auto p-1 flex-1 min-h-[200px]"></div>
 
       <div class="pt-3 border-t flex justify-end gap-2 text-xs font-bold">
@@ -694,6 +716,17 @@
           <i data-lucide="message-circle" class="w-4 h-4"></i> <span data-i18n="btnSendWa">Hantar Pesanan Ke WhatsApp</span>
         </button>
       </div>
+    </div>
+  </div>
+
+  <!-- MODAL DETAIL PRODUK PELANGGAN & SHARE -->
+  <div id="productDetailModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white w-full max-w-lg rounded-3xl p-5 space-y-4 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+      <button onclick="closeProductDetailModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 z-10">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <div id="modalProductContent" class="space-y-4 text-xs"></div>
     </div>
   </div>
 
@@ -813,7 +846,7 @@
         msgConfirmDelProd: "Adakah anda pasti mahu memadam produk ini?",
         msgSessionExpired: "Sesi anda telah tamat selepas 2 jam tidak aktif. Sila log masuk semula.",
         msgResetSent: "Pautan penetapan semula kata laluan telah dihantar ke e-mel anda.",
-        msgProdSaved: "PRODUK BERJAYA DISIMPAN",
+        msgProdSaved: "PRODUK BERJAYA DIKEMASKINI",
         msgMax10Img: "Maksimum 10 gambar sahaja dibenarkan!",
         msgImgOpting: "Memproses & mengoptimumkan gambar...",
         msgImgOptSuccess: "gambar berjaya dioptimumkan.",
@@ -940,7 +973,7 @@
         msgConfirmDelProd: "Are you sure you want to delete this product?",
         msgSessionExpired: "Your session expired after 2 hours of inactivity. Please log in again.",
         msgResetSent: "A password reset link has been sent to your email inbox.",
-        msgProdSaved: "PRODUK BERJAYA DISIMPAN",
+        msgProdSaved: "PRODUK BERJAYA DIKEMASKINI",
         msgMax10Img: "Maximum 10 images allowed!",
         msgImgOpting: "Processing & optimizing images...",
         msgImgOptSuccess: "images successfully optimized.",
@@ -959,14 +992,14 @@
     let currentLang = "BM";
 
     // STORAGE KEYS
-    const KEY_PRODUCTS = "scha_prod_v4";
-    const KEY_CATEGORIES = "scha_cat_v4";
-    const KEY_SALES = "scha_sales_v4";
-    const KEY_SETTINGS = "scha_settings_v4";
-    const KEY_AUTH = "scha_auth_session_v4";
-    const KEY_LAST_ACTIVITY = "scha_last_activity_v4";
-    const KEY_ACTIVE_SECTION = "scha_active_section_v4";
-    const KEY_CURRENT_VIEW = "scha_current_view_v4";
+    const KEY_PRODUCTS = "scha_prod_v5";
+    const KEY_CATEGORIES = "scha_cat_v5";
+    const KEY_SALES = "scha_sales_v5";
+    const KEY_SETTINGS = "scha_settings_v5";
+    const KEY_AUTH = "scha_auth_session_v5";
+    const KEY_LAST_ACTIVITY = "scha_last_activity_v5";
+    const KEY_ACTIVE_SECTION = "scha_active_section_v5";
+    const KEY_CURRENT_VIEW = "scha_current_view_v5";
 
     const DEFAULT_WA_TEMPLATE = `Hello Scha,\n\nSaya ingin buat pesanan:\n\n{ITEMS}\n\nTotal : RM{TOTAL}\n\nSila berikan QR untuk saya buat pembayaran`;
 
@@ -1000,6 +1033,7 @@
     let insightsChartInstance = null;
     let currentFilterType = 'today';
     let activeGalleryAlbum = 'ALL';
+    let selectedCustomerCategory = 'ALL';
 
     const TWO_HOURS_MS = 2 * 60 * 60 * 1000;
 
@@ -1032,9 +1066,13 @@
 
       const urlParams = new URLSearchParams(window.location.search);
       const savedView = localStorage.getItem(KEY_CURRENT_VIEW);
+      const productIdParam = urlParams.get("product");
       
       if (urlParams.get("mode") === "store" || savedView === "customer") {
         openCustomerStoreView();
+        if (productIdParam) {
+          showProductDetail(productIdParam);
+        }
       } else {
         if (authSession.isLoggedIn) {
           showAdminView();
@@ -1044,7 +1082,7 @@
       }
     });
 
-    // FUNGSI COPY LINK KATALOG UNTUK BAGI KE CUSTOMER
+    // COPY STORE LINK
     function copyStoreCatalogLink() {
       const baseUrl = window.location.href.split('?')[0];
       const catalogUrl = `${baseUrl}?mode=store`;
@@ -1053,6 +1091,32 @@
         alert(`Pautan Katalog Berjaya Disalin!\n\nLink Katalog: ${catalogUrl}\n\nSila berikan pautan ini kepada pelanggan anda.`);
       }).catch(err => {
         alert(`Gagal menyalin pautan. Sila salin pautan ini secara manual:\n${catalogUrl}`);
+      });
+    }
+
+    // SHARE INDIVIDUAL PRODUCT LINK
+    function shareProductLink(productId, e) {
+      if (e) e.stopPropagation();
+      const baseUrl = window.location.href.split('?')[0];
+      const productUrl = `${baseUrl}?mode=store&product=${productId}`;
+
+      if (navigator.share) {
+        navigator.share({
+          title: 'Lihat Produk Ini',
+          url: productUrl
+        }).catch(() => {
+          copyToClipboard(productUrl);
+        });
+      } else {
+        copyToClipboard(productUrl);
+      }
+    }
+
+    function copyToClipboard(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        alert(`Pautan produk berjaya disalin!\n\nPautan: ${text}`);
+      }).catch(() => {
+        alert(`Pautan produk: ${text}`);
       });
     }
 
@@ -1302,6 +1366,7 @@
       document.getElementById("pTotalPrice").value = total.toFixed(2);
     }
 
+    // PEMAMPATAN GAMBAR AUTO (SOLUSI GAMBAR HILANG & BUTTON SIMPAN FUNGSI)
     function handleImageOptimization(e) {
       const files = Array.from(e.target.files);
       if (files.length > 10) {
@@ -1326,7 +1391,7 @@
             const canvas = document.createElement("canvas");
             let width = img.width;
             let height = img.height;
-            const maxDimension = 800;
+            const maxDimension = 600; // Saiz ideal supaya storage tidak melimpah
 
             if (width > maxDimension || height > maxDimension) {
               if (width > height) {
@@ -1343,7 +1408,7 @@
             const ctx = canvas.getContext("2d");
             ctx.drawImage(img, 0, 0, width, height);
 
-            const compressedBase64 = canvas.toDataURL("image/jpeg", 0.7);
+            const compressedBase64 = canvas.toDataURL("image/jpeg", 0.6);
             uploadedCompressedImages.push(compressedBase64);
 
             renderImagePreviews();
@@ -1379,7 +1444,7 @@
       renderImagePreviews();
     }
 
-    // GALLERY & ALBUM MODAL (AKSES SEMUA GAMBAR GALLERY)
+    // GALLERY MODAL
     function openGalleryModal() {
       document.getElementById("galleryModal").classList.remove("hidden");
       renderGalleryAlbums();
@@ -1491,7 +1556,7 @@
       }
     }
 
-    // FUNGSI SIMPAN PRODUK
+    // SIMPAN / EDIT PRODUK (BERFUNGSI PENUH & SELAMAT)
     function handleProductFormSubmit(e) {
       e.preventDefault();
       const editId = document.getElementById("editProductId").value;
@@ -1525,17 +1590,21 @@
         });
       }
 
-      localStorage.setItem(KEY_PRODUCTS, JSON.stringify(products));
-      resetProductForm();
-      
-      alert(translations[currentLang].msgProdSaved);
-      
-      switchAdminSection("store");
-      renderSellerProductsGrid();
-      renderCustomerProducts();
+      try {
+        localStorage.setItem(KEY_PRODUCTS, JSON.stringify(products));
+        resetProductForm();
+        
+        // NOTIFIKASI BERJAYA DIKEMASKINI
+        alert("PRODUK BERJAYA DIKEMASKINI");
+        
+        switchAdminSection("store");
+        renderSellerProductsGrid();
+        renderCustomerProducts();
+      } catch (err) {
+        alert("Gagal menyimpan produk! Saiz gambar terlalu besar. Sila padamkan sebahagian gambar atau gunakan imej bersaiz lebih kecil.");
+      }
     }
 
-    // FUNGSI BATAL / RESET BORANG PRODUK
     function resetProductForm() {
       document.getElementById("editProductId").value = "";
       document.getElementById("productForm").reset();
@@ -1752,19 +1821,16 @@
       document.getElementById("setWaTemplate").value = settings.waTemplate || DEFAULT_WA_TEMPLATE;
       document.getElementById("previewSettingLogo").src = settings.logoUrl || "https://via.placeholder.com/150";
 
-      // HEADER
       document.getElementById("headerLogo").src = settings.logoUrl || "https://via.placeholder.com/150";
       document.getElementById("headerStoreName").innerText = settings.storeName || "Kedai Digital";
       document.getElementById("headerSellerName").innerText = settings.sellerName || "Portal Rasmi Penjual";
 
-      // PROFILE VIEW
       document.getElementById("profileAvatar").src = settings.logoUrl || "https://via.placeholder.com/150";
       document.getElementById("profileStoreDisplay").innerText = settings.storeName || "Kedai Saya";
       document.getElementById("profileSellerNameDisplay").innerText = settings.sellerName || "Penjual";
       document.getElementById("profileEmailDisplay").innerText = settings.email || "email@domain.com";
       document.getElementById("profilePhoneDisplay").innerText = settings.phone || "0123456789";
 
-      // SIDEBAR
       document.getElementById("sidebarSellerName").innerText = settings.sellerName || "Penjual";
       document.getElementById("custStoreTitle").innerText = `Selamat Datang ke ${settings.storeName || "Kedai Kami"}`;
     }
@@ -1803,11 +1869,11 @@
               <span class="font-extrabold text-slate-900">${c.name}</span>
               <span class="px-2 py-0.5 rounded-full text-[9px] font-bold ${c.status === 'active' ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-700'}">${c.status.toUpperCase()}</span>
             </div>
-            <p class="text-[11px] text-slate-500 mt-0.5">${c.desc || '-'}</p>
+            <p class="text-[11px] text-slate-500 mt-0.5">${c.desc || 'Tiada penerangan'}</p>
           </div>
-          <div class="flex items-center gap-1.5 shrink-0">
-            <button onclick="editCategory(${idx})" class="p-1.5 bg-slate-100 text-slate-700 hover:bg-slate-200 rounded-lg font-bold">${dict.editBtn}</button>
-            <button onclick="deleteCategory(${idx})" class="p-1.5 bg-rose-50 text-rose-600 hover:bg-rose-100 rounded-lg font-bold">${dict.deleteBtn}</button>
+          <div class="flex gap-2">
+            <button onclick="editCategory(${idx})" class="px-2.5 py-1 bg-slate-100 text-slate-700 font-bold rounded-lg">${dict.editBtn}</button>
+            <button onclick="deleteCategory(${idx})" class="px-2.5 py-1 bg-rose-50 text-rose-600 font-bold rounded-lg">${dict.deleteBtn}</button>
           </div>
         </div>
       `).join('');
@@ -1816,9 +1882,9 @@
     function handleSaveCategory(e) {
       e.preventDefault();
       const idx = parseInt(document.getElementById("editCatIndex").value, 10);
-      const name = document.getElementById("catNameInput").value.toUpperCase();
+      const name = document.getElementById("catNameInput").value.trim().toUpperCase();
       const status = document.getElementById("catStatusInput").value;
-      const desc = document.getElementById("catDescInput").value;
+      const desc = document.getElementById("catDescInput").value.trim();
 
       if (idx >= 0) {
         categories[idx] = { name, status, desc };
@@ -1829,8 +1895,16 @@
       localStorage.setItem(KEY_CATEGORIES, JSON.stringify(categories));
       resetCategoryForm();
       renderCategoriesList();
-      populateCategoryDropdown();
       renderCustomerCategories();
+    }
+
+    function resetCategoryForm() {
+      document.getElementById("editCatIndex").value = "-1";
+      document.getElementById("catNameInput").value = "";
+      document.getElementById("catStatusInput").value = "active";
+      document.getElementById("catDescInput").value = "";
+      document.getElementById("catFormTitle").innerText = "+ Tambah Kategori Baharu";
+      document.getElementById("btnSaveCat").innerText = "+ Simpan Kategori";
     }
 
     function editCategory(idx) {
@@ -1841,6 +1915,7 @@
       document.getElementById("catStatusInput").value = c.status;
       document.getElementById("catDescInput").value = c.desc || "";
       document.getElementById("catFormTitle").innerText = "Edit Kategori";
+      document.getElementById("btnSaveCat").innerText = "Kemaskini Kategori";
     }
 
     function deleteCategory(idx) {
@@ -1848,25 +1923,17 @@
         categories.splice(idx, 1);
         localStorage.setItem(KEY_CATEGORIES, JSON.stringify(categories));
         renderCategoriesList();
-        populateCategoryDropdown();
         renderCustomerCategories();
       }
     }
 
-    function resetCategoryForm() {
-      document.getElementById("editCatIndex").value = "-1";
-      document.getElementById("catNameInput").value = "";
-      document.getElementById("catStatusInput").value = "active";
-      document.getElementById("catDescInput").value = "";
-      document.getElementById("catFormTitle").innerText = "+ Tambah Kategori Baharu";
-    }
-
-    // CUSTOMER STORE VIEW
+    // PUBLIC CUSTOMER STORE VIEW
     function openCustomerStoreView() {
       localStorage.setItem(KEY_CURRENT_VIEW, "customer");
       document.getElementById("view-auth").classList.add("hidden");
       document.getElementById("view-admin").classList.add("hidden");
       document.getElementById("view-customer").classList.remove("hidden");
+
       document.getElementById("customerCartBtn").classList.remove("hidden");
       document.getElementById("customerSearchContainer").classList.remove("hidden");
       document.getElementById("btnHeaderViewStore").classList.add("hidden");
@@ -1884,22 +1951,19 @@
       }
     }
 
-    let activeCustomerCategory = "ALL";
-
     function renderCustomerCategories() {
       const bar = document.getElementById("customerCategoryBar");
-      const dict = translations[currentLang];
       const activeCats = categories.filter(c => c.status === "active");
 
       let html = `
-        <button onclick="filterCustomerCategory('ALL')" class="px-3 py-1.5 rounded-xl whitespace-nowrap transition ${activeCustomerCategory === 'ALL' ? 'bg-pink-600 text-white' : 'bg-white/80 text-slate-700 hover:bg-white'}">
-          ${dict.allCat}
+        <button onclick="filterCustomerCategory('ALL')" class="px-4 py-2 rounded-xl whitespace-nowrap border ${selectedCustomerCategory === 'ALL' ? 'bg-pink-600 text-white border-pink-600' : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'} shadow-sm">
+          ${translations[currentLang].allCat}
         </button>
       `;
 
       activeCats.forEach(c => {
         html += `
-          <button onclick="filterCustomerCategory('${c.name}')" class="px-3 py-1.5 rounded-xl whitespace-nowrap transition ${activeCustomerCategory === c.name ? 'bg-pink-600 text-white' : 'bg-white/80 text-slate-700 hover:bg-white'}">
+          <button onclick="filterCustomerCategory('${c.name}')" class="px-4 py-2 rounded-xl whitespace-nowrap border ${selectedCustomerCategory === c.name ? 'bg-pink-600 text-white border-pink-600' : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'} shadow-sm">
             ${c.name}
           </button>
         `;
@@ -1909,135 +1973,229 @@
     }
 
     function filterCustomerCategory(catName) {
-      activeCustomerCategory = catName;
+      selectedCustomerCategory = catName;
+      document.getElementById("activeCategoryLabel").innerText = catName === 'ALL' ? 'Semua Kategori' : catName;
       renderCustomerCategories();
-      renderCustomerProducts();
+      applyProductFilters();
+    }
+
+    // APLIKASI PENAPIS PRODUK LENGKAP (FILTER KATEGORI + FILTER PRODUK SELEPAS FILTER KATEGORI)
+    function applyProductFilters() {
+      let filtered = [...products];
+
+      // 1. Filter Kategori
+      if (selectedCustomerCategory !== 'ALL') {
+        filtered = filtered.filter(p => p.category === selectedCustomerCategory);
+      }
+
+      // 2. Filter Carian Teks
+      const searchVal = document.getElementById("custSearchInput").value.toLowerCase().trim();
+      if (searchVal) {
+        filtered = filtered.filter(p => p.title.toLowerCase().includes(searchVal) || (p.desc && p.desc.toLowerCase().includes(searchVal)));
+      }
+
+      // 3. Filter Julat Harga
+      const priceRange = document.getElementById("filterPriceRange").value;
+      if (priceRange !== 'ALL') {
+        filtered = filtered.filter(p => {
+          const price = p.totalPrice || p.price;
+          if (priceRange === '0-10') return price <= 10;
+          if (priceRange === '10-30') return price > 10 && price <= 30;
+          if (priceRange === '30-50') return price > 30 && price <= 50;
+          if (priceRange === '50+') return price > 50;
+          return true;
+        });
+      }
+
+      // 4. Susunan (Sorting)
+      const sortBy = document.getElementById("filterSortBy").value;
+      if (sortBy === 'PRICE_LOW') {
+        filtered.sort((a,b) => (a.totalPrice || a.price) - (b.totalPrice || b.price));
+      } else if (sortBy === 'PRICE_HIGH') {
+        filtered.sort((a,b) => (b.totalPrice || b.price) - (a.totalPrice || a.price));
+      } else if (sortBy === 'NAME_ASC') {
+        filtered.sort((a,b) => a.title.localeCompare(b.title));
+      }
+
+      renderCustomerProductsGrid(filtered);
     }
 
     function searchProducts(query) {
-      renderCustomerProducts(query.toLowerCase());
+      applyProductFilters();
     }
 
-    function renderCustomerProducts(searchQuery = "") {
+    function renderCustomerProducts() {
+      applyProductFilters();
+    }
+
+    function renderCustomerProductsGrid(productList) {
       const grid = document.getElementById("customerProductsGrid");
-      const bestSellers = getBestSellerProductIds();
 
-      let list = products.filter(p => {
-        const matchesCategory = activeCustomerCategory === "ALL" || p.category === activeCustomerCategory;
-        const matchesSearch = p.title.toLowerCase().includes(searchQuery) || p.desc.toLowerCase().includes(searchQuery);
-        return matchesCategory && matchesSearch;
-      });
-
-      if (list.length === 0) {
-        grid.innerHTML = `<div class="col-span-full text-center py-12 text-slate-400 font-bold text-xs">Tiada produk ditemui.</div>`;
+      if (productList.length === 0) {
+        grid.innerHTML = `<div class="col-span-full text-center py-12 text-slate-400 font-bold text-xs">Tiada produk ditemui mengikut kriteria penapis anda.</div>`;
         return;
       }
 
-      grid.innerHTML = list.map(p => {
-        const isBestSeller = bestSellers.includes(p.id);
-        const finalPrice = (p.totalPrice || p.price).toFixed(2);
-        return `
-          <div class="glass-card rounded-2xl p-3 flex flex-col justify-between space-y-2 relative group hover:shadow-lg transition">
-            ${isBestSeller ? `<span class="absolute top-2 right-2 bg-amber-400 text-slate-900 text-[9px] font-extrabold px-2 py-0.5 rounded-full shadow z-10">BEST SELLER</span>` : ''}
-            <div class="relative overflow-hidden rounded-xl bg-slate-100 h-36">
-              <img src="${p.img || 'https://via.placeholder.com/300'}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
-            </div>
-            <div class="space-y-1">
-              <span class="text-[9px] font-extrabold text-pink-600 uppercase tracking-wider">${p.category}</span>
-              <h4 class="font-extrabold text-slate-900 text-xs line-clamp-2">${p.title}</h4>
-              <p class="text-[11px] text-slate-500 line-clamp-2">${p.desc || ''}</p>
-            </div>
-            <div class="pt-2 border-t border-slate-100 flex items-center justify-between">
-              <div>
-                <span class="text-xs font-black text-emerald-600 block">RM ${finalPrice}</span>
-                ${p.promoPrice ? `<span class="text-[10px] text-slate-400 line-through">RM ${p.price.toFixed(2)}</span>` : ''}
-              </div>
-              <button onclick="addToCart('${p.id}')" class="p-2 bg-pink-600 hover:bg-pink-700 text-white rounded-xl shadow transition">
-                <i data-lucide="shopping-cart" class="w-4 h-4"></i>
-              </button>
+      grid.innerHTML = productList.map(p => `
+        <div class="glass-card rounded-2xl p-2.5 sm:p-3 flex flex-col justify-between hover:shadow-lg transition group">
+          <div class="relative cursor-pointer" onclick="showProductDetail('${p.id}')">
+            <img src="${p.img || 'https://via.placeholder.com/300'}" class="w-full h-36 sm:h-44 object-cover rounded-xl mb-2 group-hover:scale-105 transition duration-300">
+            
+            <!-- BUTTON SHARE PRODUK -->
+            <button onclick="shareProductLink('${p.id}', event)" title="Kongsi Link Produk" class="absolute top-2 right-2 p-1.5 bg-white/90 hover:bg-white text-slate-700 rounded-full shadow border border-slate-200 transition">
+              <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
+            </button>
+          </div>
+
+          <div>
+            <span class="text-[9px] font-extrabold text-pink-600 uppercase tracking-wide">${p.category}</span>
+            <h3 class="font-extrabold text-slate-900 text-xs sm:text-sm line-clamp-2 leading-tight cursor-pointer hover:text-pink-600" onclick="showProductDetail('${p.id}')">${p.title}</h3>
+            
+            <div class="mt-1.5 flex items-baseline gap-1.5">
+              <span class="text-xs sm:text-sm font-black text-emerald-600">RM ${(p.totalPrice || p.price).toFixed(2)}</span>
+              ${p.promoPrice ? `<span class="text-[10px] text-slate-400 line-through">RM ${p.price.toFixed(2)}</span>` : ''}
             </div>
           </div>
-        `;
-      }).join('');
+
+          <div class="mt-3 pt-2 border-t border-slate-100 flex gap-1.5">
+            <button onclick="addToCart('${p.id}')" class="flex-1 py-2 bg-pink-600 hover:bg-pink-700 text-white font-bold text-xs rounded-xl shadow transition flex items-center justify-center gap-1">
+              <i data-lucide="shopping-cart" class="w-3.5 h-3.5"></i>
+              <span>+ Troli</span>
+            </button>
+            <button onclick="shareProductLink('${p.id}', event)" class="p-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl" title="Salin Link Produk">
+              <i data-lucide="link" class="w-3.5 h-3.5"></i>
+            </button>
+          </div>
+        </div>
+      `).join('');
 
       lucide.createIcons();
     }
 
-    // CART & WHATSAPP CHECKOUT
-    function addToCart(productId) {
+    // MODAL PERINCIAN PRODUK & SHARE
+    function showProductDetail(productId) {
       const p = products.find(x => x.id === productId);
       if (!p) return;
 
-      const existing = cart.find(item => item.id === productId);
+      const modal = document.getElementById("productDetailModal");
+      const content = document.getElementById("modalProductContent");
+
+      const images = p.images && p.images.length > 0 ? p.images : [p.img || 'https://via.placeholder.com/300'];
+
+      content.innerHTML = `
+        <div class="space-y-3">
+          <div class="relative">
+            <img id="detailMainImg" src="${images[0]}" class="w-full h-56 object-cover rounded-2xl border border-slate-100">
+            <button onclick="shareProductLink('${p.id}')" class="absolute top-2 right-2 px-3 py-1.5 bg-white/90 hover:bg-white text-slate-800 rounded-xl font-bold text-xs shadow flex items-center gap-1">
+              <i data-lucide="share-2" class="w-3.5 h-3.5 text-pink-600"></i> Kongsi Link
+            </button>
+          </div>
+
+          ${images.length > 1 ? `
+            <div class="flex gap-2 overflow-x-auto pb-1 no-scrollbar">
+              ${images.map(img => `<img src="${img}" onclick="document.getElementById('detailMainImg').src='${img}'" class="w-12 h-12 square-img rounded-xl border border-slate-200 cursor-pointer hover:border-pink-500">`).join('')}
+            </div>
+          ` : ''}
+
+          ${p.video ? `
+            <div>
+              <span class="font-bold text-slate-700 block mb-1">Video Pratinjau:</span>
+              <video src="${p.video}" controls class="w-full rounded-2xl max-h-48 bg-black"></video>
+            </div>
+          ` : ''}
+
+          <div>
+            <span class="text-[10px] font-bold text-pink-600 uppercase">${p.category}</span>
+            <h3 class="text-base font-extrabold text-slate-900">${p.title}</h3>
+            <p class="text-emerald-600 font-extrabold text-base mt-1">RM ${(p.totalPrice || p.price).toFixed(2)}</p>
+          </div>
+
+          <div class="p-3 bg-slate-50 rounded-2xl border border-slate-100">
+            <span class="font-bold text-slate-700 block mb-1">Penerangan Produk:</span>
+            <p class="text-slate-600 whitespace-pre-line text-xs">${p.desc || 'Tiada penerangan tersedia.'}</p>
+          </div>
+
+          <div class="pt-2 flex gap-2">
+            <button onclick="addToCart('${p.id}'); closeProductDetailModal();" class="flex-1 py-3 bg-pink-600 hover:bg-pink-700 text-white font-bold rounded-xl shadow flex items-center justify-center gap-2">
+              <i data-lucide="shopping-cart" class="w-4 h-4"></i> Tambah ke Troli
+            </button>
+          </div>
+        </div>
+      `;
+
+      modal.classList.remove("hidden");
+      lucide.createIcons();
+    }
+
+    function closeProductDetailModal() {
+      document.getElementById("productDetailModal").classList.add("hidden");
+    }
+
+    // SHOPPING CART CONTROLLER
+    function addToCart(id) {
+      const p = products.find(x => x.id === id);
+      if (!p) return;
+
+      const existing = cart.find(item => item.id === id);
       if (existing) {
         existing.qty += 1;
       } else {
         cart.push({ id: p.id, title: p.title, price: (p.totalPrice || p.price), qty: 1 });
       }
 
-      updateCartBadge();
+      updateCartUI();
       alert(translations[currentLang].msgAddedCart);
     }
 
-    function updateCartBadge() {
-      const count = cart.reduce((a, b) => a + b.qty, 0);
-      document.getElementById("cartBadge").innerText = count;
-    }
+    function updateCartUI() {
+      const badge = document.getElementById("cartBadge");
+      const totalQty = cart.reduce((a, b) => a + b.qty, 0);
+      badge.innerText = totalQty;
 
-    function toggleCartModal() {
-      const modal = document.getElementById("cartModal");
-      modal.classList.toggle("hidden");
-      if (!modal.classList.contains("hidden")) {
-        renderCartItems();
-      }
-    }
-
-    function renderCartItems() {
       const container = document.getElementById("cartItemsContainer");
       const emptyMsg = document.getElementById("cartEmptyMsg");
 
       if (cart.length === 0) {
         container.innerHTML = "";
         emptyMsg.classList.remove("hidden");
-        document.getElementById("cartTotalPrice").innerText = "RM 0.00";
-        return;
-      }
-
-      emptyMsg.classList.add("hidden");
-      let total = 0;
-
-      container.innerHTML = cart.map((item, idx) => {
-        const itemTotal = item.price * item.qty;
-        total += itemTotal;
-        return `
-          <div class="flex items-center justify-between p-2.5 bg-slate-50 rounded-xl">
+      } else {
+        emptyMsg.classList.add("hidden");
+        container.innerHTML = cart.map((item, i) => `
+          <div class="flex items-center justify-between p-2.5 bg-slate-50 rounded-2xl border border-slate-100">
             <div class="min-w-0 flex-1 pr-2">
-              <h5 class="font-bold text-slate-900 truncate">${item.title}</h5>
-              <p class="text-[10px] text-slate-500">RM ${item.price.toFixed(2)} x ${item.qty}</p>
+              <h4 class="font-bold text-slate-900 truncate text-xs">${item.title}</h4>
+              <p class="text-emerald-600 font-extrabold text-[11px]">RM ${(item.price * item.qty).toFixed(2)}</p>
             </div>
             <div class="flex items-center gap-2">
-              <span class="font-extrabold text-emerald-600">RM ${itemTotal.toFixed(2)}</span>
-              <button onclick="removeFromCart(${idx})" class="text-rose-500 hover:text-rose-700">
-                <i data-lucide="trash-2" class="w-4 h-4"></i>
-              </button>
+              <button onclick="changeQty(${i}, -1)" class="w-6 h-6 bg-slate-200 font-bold rounded-lg flex items-center justify-center">-</button>
+              <span class="font-extrabold text-xs">${item.qty}</span>
+              <button onclick="changeQty(${i}, 1)" class="w-6 h-6 bg-slate-200 font-bold rounded-lg flex items-center justify-center">+</button>
             </div>
           </div>
-        `;
-      }).join('');
+        `).join('');
+      }
 
-      document.getElementById("cartTotalPrice").innerText = `RM ${total.toFixed(2)}`;
-      lucide.createIcons();
+      const totalPrice = cart.reduce((a, b) => a + (b.price * b.qty), 0);
+      document.getElementById("cartTotalPrice").innerText = `RM ${totalPrice.toFixed(2)}`;
     }
 
-    function removeFromCart(idx) {
-      cart.splice(idx, 1);
-      updateCartBadge();
-      renderCartItems();
+    function changeQty(index, change) {
+      cart[index].qty += change;
+      if (cart[index].qty <= 0) {
+        cart.splice(index, 1);
+      }
+      updateCartUI();
+    }
+
+    function toggleCartModal() {
+      const modal = document.getElementById("cartModal");
+      modal.classList.toggle("hidden");
+      updateCartUI();
     }
 
     function processWhatsAppCheckout() {
-      const nameInput = document.getElementById("custCheckoutName").value.trim();
-      if (!nameInput) {
+      const custName = document.getElementById("custCheckoutName").value.trim();
+      if (!custName) {
         alert(translations[currentLang].msgEnterName);
         return;
       }
@@ -2048,34 +2206,36 @@
       }
 
       let itemsText = "";
-      let total = 0;
+      let totalSum = 0;
 
       cart.forEach((item, idx) => {
         const itemTotal = item.price * item.qty;
-        total += itemTotal;
-        itemsText += `${idx + 1}. ${item.title} x${item.qty} - RM${itemTotal.toFixed(2)}\n`;
+        totalSum += itemTotal;
+        itemsText += `${idx + 1}. ${item.title} (x${item.qty}) - RM ${itemTotal.toFixed(2)}\n`;
       });
 
       let template = settings.waTemplate || DEFAULT_WA_TEMPLATE;
-      template = template.replace("{ITEMS}", itemsText.trim());
-      template = template.replace("{TOTAL}", total.toFixed(2));
+      let message = template
+        .replace("{ITEMS}", itemsText.trim())
+        .replace("{TOTAL}", totalSum.toFixed(2));
 
-      // MEREKOD JUALAN SECARA AUTOMATIK KAN
+      message = `Nama Pelanggan: ${custName}\n\n` + message;
+
+      const targetWa = settings.waNum || "60123456789";
+      const waUrl = `https://wa.me/${targetWa.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(message)}`;
+
+      // REKODKAN JUALAN AUTOMATIK
       salesHistory.unshift({
         id: "s-" + Date.now(),
-        custName: nameInput,
-        product: cart.map(i => i.title).join(", "),
-        amount: total,
+        custName: custName,
+        product: cart.map(c => `${c.title} (x${c.qty})`).join(", "),
+        amount: totalSum,
         date: new Date().toISOString().split('T')[0]
       });
       localStorage.setItem(KEY_SALES, JSON.stringify(salesHistory));
 
-      const waNum = settings.waNum || "60123456789";
-      const encodedMsg = encodeURIComponent(`Nama Pelanggan: ${nameInput}\n\n` + template);
-      const waUrl = `https://wa.me/${waNum}?text=${encodedMsg}`;
-
       cart = [];
-      updateCartBadge();
+      updateCartUI();
       toggleCartModal();
 
       window.open(waUrl, "_blank");
