@@ -42,6 +42,12 @@
       </div>
 
       <div class="flex items-center gap-1.5 sm:gap-3 shrink-0">
+        <!-- COPY LINK KATALOG BUTTON IN HEADER -->
+        <button onclick="copyStoreCatalogLink()" class="flex items-center gap-1 px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl shadow-sm transition">
+          <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+          <span class="hidden sm:inline">Salin Link Katalog</span>
+        </button>
+
         <button id="btnHeaderViewStore" onclick="openCustomerStoreView()" class="hidden md:flex items-center gap-1.5 px-3 py-1.5 bg-pink-600 hover:bg-pink-700 text-white text-xs font-bold rounded-xl shadow-sm transition">
           <i data-lucide="store" class="w-4 h-4"></i>
           <span data-i18n="btnViewStore">Lihat Kedai Saya</span>
@@ -184,6 +190,9 @@
           </nav>
 
           <div class="pt-4 border-t border-slate-100 space-y-2">
+            <button onclick="copyStoreCatalogLink()" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 shadow-sm transition">
+              <i data-lucide="copy" class="w-4 h-4"></i> Salin Link Katalog
+            </button>
             <button onclick="openCustomerStoreView()" class="w-full py-2.5 bg-pink-600 hover:bg-pink-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 shadow-sm transition">
               <i data-lucide="external-link" class="w-4 h-4"></i> <span data-i18n="btnViewStore">Lihat Kedai Saya</span>
             </button>
@@ -225,10 +234,15 @@
                 <h2 class="text-base sm:text-lg font-extrabold text-slate-900" data-i18n="dashTitle">Papan Pemuka Pentadbir</h2>
                 <p class="text-xs text-slate-600" data-i18n="dashSub">Uruskan jualan, produk dan tetapan kedai anda dari satu tempat.</p>
               </div>
-              <button onclick="openCustomerStoreView()" class="w-full sm:w-auto px-4 py-2.5 bg-pink-600 hover:bg-pink-700 text-white font-bold text-xs rounded-xl flex items-center justify-center gap-2 shadow-md transition">
-                <i data-lucide="store" class="w-4 h-4"></i>
-                <span data-i18n="btnViewStore">Lihat Kedai Saya (Pelanggan)</span>
-              </button>
+              <div class="flex gap-2 w-full sm:w-auto">
+                <button onclick="copyStoreCatalogLink()" class="flex-1 sm:flex-initial px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl flex items-center justify-center gap-2 shadow-md transition">
+                  <i data-lucide="copy" class="w-4 h-4"></i> Salin Link Katalog
+                </button>
+                <button onclick="openCustomerStoreView()" class="flex-1 sm:flex-initial px-4 py-2.5 bg-pink-600 hover:bg-pink-700 text-white font-bold text-xs rounded-xl flex items-center justify-center gap-2 shadow-md transition">
+                  <i data-lucide="store" class="w-4 h-4"></i>
+                  <span data-i18n="btnViewStore">Lihat Kedai</span>
+                </button>
+              </div>
             </div>
 
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3 text-xs font-bold">
@@ -340,8 +354,14 @@
                 <input type="number" step="0.01" id="pTotalPrice" readonly class="w-full px-4 py-2.5 bg-slate-200/80 font-extrabold text-emerald-700 rounded-xl border border-slate-300 focus:outline-none" placeholder="0.00">
               </div>
 
+              <!-- MUAT NAIK GAMBAR ATAU PILIH DARI GALLERY ALBUM -->
               <div>
-                <label class="block font-bold text-slate-700 mb-1" data-i18n="imgUploadLbl">Gambar Dimuat Naik (Maksimum 10 Gambar - PNG / JPG Auto-Mampat)</label>
+                <div class="flex justify-between items-center mb-1">
+                  <label class="font-bold text-slate-700" data-i18n="imgUploadLbl">Gambar Dimuat Naik (Maksimum 10 Gambar - PNG / JPG Auto-Mampat)</label>
+                  <button type="button" onclick="openGalleryModal()" class="px-2.5 py-1 bg-purple-100 hover:bg-purple-200 text-purple-700 rounded-lg text-[11px] font-bold flex items-center gap-1 transition">
+                    <i data-lucide="image" class="w-3.5 h-3.5"></i> Guna Gambar Sedia Ada (Gallery)
+                  </button>
+                </div>
                 <input type="file" id="pImageFiles" accept="image/png, image/jpeg" multiple onchange="handleImageOptimization(event)" class="block w-full text-slate-500 text-xs file:mr-3 file:py-2 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-pink-50 file:text-pink-700 hover:file:bg-pink-100">
                 <p id="imgUploadStatus" class="text-[10px] text-slate-500 mt-1"></p>
                 <div id="imagePreviewContainer" class="flex flex-wrap gap-2 mt-2"></div>
@@ -557,10 +577,15 @@
                 </div>
               </div>
 
-              <button type="submit" class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-md transition flex items-center justify-center gap-2">
-                <i data-lucide="save" class="w-4 h-4"></i>
-                <span data-i18n="btnSaveSettings">SAVE PROFILE</span>
-              </button>
+              <div class="pt-2 flex flex-col gap-2">
+                <button type="button" onclick="copyStoreCatalogLink()" class="w-full py-2.5 bg-pink-600 hover:bg-pink-700 text-white font-bold rounded-xl transition flex items-center justify-center gap-2">
+                  <i data-lucide="copy" class="w-4 h-4"></i> SALIN LINK KATALOG PELANGGAN
+                </button>
+                <button type="submit" class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-md transition flex items-center justify-center gap-2">
+                  <i data-lucide="save" class="w-4 h-4"></i>
+                  <span data-i18n="btnSaveSettings">SIMPAN PROFIL & TETAPAN</span>
+                </button>
+              </div>
             </form>
           </div>
 
@@ -617,6 +642,30 @@
       <span data-i18n="navSetting">Tetapan</span>
     </button>
   </nav>
+
+  <!-- GALLERY / ALBUM MODAL (AKSES SEMUA GAMBAR) -->
+  <div id="galleryModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white w-full max-w-2xl rounded-3xl p-5 space-y-4 shadow-2xl relative max-h-[85vh] flex flex-col">
+      <div class="flex justify-between items-center border-b pb-3">
+        <h3 class="text-base font-extrabold text-slate-900 flex items-center gap-2">
+          <i data-lucide="images" class="w-5 h-5 text-purple-600"></i> Gallery Gambar
+        </h3>
+        <button onclick="closeGalleryModal()" class="text-slate-400 hover:text-slate-600">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- FILTER ALBUM KATEGORI -->
+      <div class="flex items-center gap-2 overflow-x-auto pb-1 text-xs font-bold no-scrollbar" id="galleryAlbumTabs"></div>
+
+      <!-- GRID GAMBAR GALLERY -->
+      <div id="galleryImagesGrid" class="grid grid-cols-3 sm:grid-cols-4 gap-3 overflow-y-auto p-1 flex-1 min-h-[200px]"></div>
+
+      <div class="pt-3 border-t flex justify-end gap-2 text-xs font-bold">
+        <button onclick="closeGalleryModal()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl">Batal</button>
+      </div>
+    </div>
+  </div>
 
   <!-- CART MODAL PELANGGAN -->
   <div id="cartModal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
@@ -950,6 +999,7 @@
     let dashChartInstance = null;
     let insightsChartInstance = null;
     let currentFilterType = 'today';
+    let activeGalleryAlbum = 'ALL';
 
     const TWO_HOURS_MS = 2 * 60 * 60 * 1000;
 
@@ -993,6 +1043,18 @@
         }
       }
     });
+
+    // FUNGSI COPY LINK KATALOG UNTUK BAGI KE CUSTOMER
+    function copyStoreCatalogLink() {
+      const baseUrl = window.location.href.split('?')[0];
+      const catalogUrl = `${baseUrl}?mode=store`;
+
+      navigator.clipboard.writeText(catalogUrl).then(() => {
+        alert(`Pautan Katalog Berjaya Disalin!\n\nLink Katalog: ${catalogUrl}\n\nSila berikan pautan ini kepada pelanggan anda.`);
+      }).catch(err => {
+        alert(`Gagal menyalin pautan. Sila salin pautan ini secara manual:\n${catalogUrl}`);
+      });
+    }
 
     function setLanguage(lang) {
       currentLang = lang;
@@ -1284,10 +1346,7 @@
             const compressedBase64 = canvas.toDataURL("image/jpeg", 0.7);
             uploadedCompressedImages.push(compressedBase64);
 
-            const imgEl = document.createElement("img");
-            imgEl.src = compressedBase64;
-            imgEl.className = "w-12 h-12 square-img rounded-xl border border-slate-200";
-            previewContainer.appendChild(imgEl);
+            renderImagePreviews();
 
             loadedCount++;
             document.getElementById("imgUploadStatus").innerText = `${loadedCount} ${translations[currentLang].msgImgOptSuccess}`;
@@ -1296,6 +1355,105 @@
         };
         reader.readAsDataURL(file);
       });
+    }
+
+    function renderImagePreviews() {
+      const previewContainer = document.getElementById("imagePreviewContainer");
+      previewContainer.innerHTML = "";
+      uploadedCompressedImages.forEach((imgSrc, idx) => {
+        const wrap = document.createElement("div");
+        wrap.className = "relative group";
+        wrap.innerHTML = `
+          <img src="${imgSrc}" class="w-14 h-14 square-img rounded-xl border border-slate-200">
+          <button type="button" onclick="removeSelectedImage(${idx})" class="absolute -top-1.5 -right-1.5 bg-rose-500 text-white rounded-full p-0.5 shadow hover:bg-rose-600">
+            <i data-lucide="x" class="w-3 h-3"></i>
+          </button>
+        `;
+        previewContainer.appendChild(wrap);
+      });
+      lucide.createIcons();
+    }
+
+    function removeSelectedImage(idx) {
+      uploadedCompressedImages.splice(idx, 1);
+      renderImagePreviews();
+    }
+
+    // GALLERY & ALBUM MODAL (AKSES SEMUA GAMBAR GALLERY)
+    function openGalleryModal() {
+      document.getElementById("galleryModal").classList.remove("hidden");
+      renderGalleryAlbums();
+      renderGalleryImages();
+    }
+
+    function closeGalleryModal() {
+      document.getElementById("galleryModal").classList.add("hidden");
+    }
+
+    function renderGalleryAlbums() {
+      const tabs = document.getElementById("galleryAlbumTabs");
+      const activeCats = categories.filter(c => c.status === "active");
+
+      let html = `
+        <button type="button" onclick="filterGalleryAlbum('ALL')" class="px-3 py-1 rounded-xl whitespace-nowrap ${activeGalleryAlbum === 'ALL' ? 'bg-purple-600 text-white' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}">
+          Semua Album
+        </button>
+      `;
+
+      activeCats.forEach(c => {
+        html += `
+          <button type="button" onclick="filterGalleryAlbum('${c.name}')" class="px-3 py-1 rounded-xl whitespace-nowrap ${activeGalleryAlbum === c.name ? 'bg-purple-600 text-white' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}">
+            ${c.name}
+          </button>
+        `;
+      });
+
+      tabs.innerHTML = html;
+    }
+
+    function filterGalleryAlbum(albumName) {
+      activeGalleryAlbum = albumName;
+      renderGalleryAlbums();
+      renderGalleryImages();
+    }
+
+    function renderGalleryImages() {
+      const grid = document.getElementById("galleryImagesGrid");
+      let allImages = [];
+
+      products.forEach(p => {
+        if (activeGalleryAlbum === 'ALL' || p.category === activeGalleryAlbum) {
+          if (p.images && p.images.length > 0) {
+            p.images.forEach(img => allImages.push({ src: img, prodTitle: p.title, cat: p.category }));
+          } else if (p.img) {
+            allImages.push({ src: p.img, prodTitle: p.title, cat: p.category });
+          }
+        }
+      });
+
+      if (allImages.length === 0) {
+        grid.innerHTML = `<div class="col-span-full text-center py-8 text-slate-400 font-bold text-xs">Tiada gambar dalam album ini.</div>`;
+        return;
+      }
+
+      grid.innerHTML = allImages.map((imgObj, i) => `
+        <div onclick="selectImageFromGallery('${imgObj.src}')" class="relative group cursor-pointer border border-slate-200 rounded-xl overflow-hidden hover:border-purple-500 hover:ring-2 hover:ring-purple-400 transition">
+          <img src="${imgObj.src}" class="w-full h-24 square-img">
+          <div class="absolute inset-0 bg-slate-900/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white text-[10px] font-bold p-1 text-center">
+            Pilih Gambar
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function selectImageFromGallery(imgSrc) {
+      if (uploadedCompressedImages.length >= 10) {
+        alert(translations[currentLang].msgMax10Img);
+        return;
+      }
+      uploadedCompressedImages.push(imgSrc);
+      renderImagePreviews();
+      closeGalleryModal();
     }
 
     function handleVideoUpload(e) {
@@ -1446,6 +1604,11 @@
       document.getElementById("pPromoPrice").value = p.promoPrice || "";
       document.getElementById("pTotalPrice").value = (p.totalPrice || p.price).toFixed(2);
       document.getElementById("pDesc").value = p.desc || "";
+
+      if (p.images && p.images.length > 0) {
+        uploadedCompressedImages = [...p.images];
+        renderImagePreviews();
+      }
     }
 
     function deleteProduct(id) {
@@ -1534,7 +1697,7 @@
       a.click();
     }
 
-    // SETTINGS PROFILE & LOGO (OPTIMIZED IMAGE COMPRESSION FOR PROFILE LOGO)
+    // SETTINGS PROFILE & LOGO
     function handleLogoUpload(e) {
       const file = e.target.files[0];
       if (!file) return;
@@ -1554,7 +1717,7 @@
           const canvas = document.createElement("canvas");
           let width = img.width;
           let height = img.height;
-          const maxDimension = 300; // Saiz ideal untuk logo/profil
+          const maxDimension = 300;
 
           if (width > maxDimension || height > maxDimension) {
             if (width > height) {
@@ -1571,7 +1734,6 @@
           const ctx = canvas.getContext("2d");
           ctx.drawImage(img, 0, 0, width, height);
 
-          // Compress to JPEG with 0.75 quality to keep string size very small for localStorage
           uploadedLogoBase64 = canvas.toDataURL("image/jpeg", 0.75);
           document.getElementById("previewSettingLogo").src = uploadedLogoBase64;
           if(statusEl) statusEl.innerText = "Gambar profil berjaya dimampatkan & dioptimumkan.";
@@ -1851,61 +2013,72 @@
           <div class="flex items-center justify-between p-2.5 bg-slate-50 rounded-xl">
             <div class="min-w-0 flex-1 pr-2">
               <h5 class="font-bold text-slate-900 truncate">${item.title}</h5>
-              <span class="text-emerald-600 font-extrabold">RM ${item.price.toFixed(2)}</span>
+              <p class="text-[10px] text-slate-500">RM ${item.price.toFixed(2)} x ${item.qty}</p>
             </div>
             <div class="flex items-center gap-2">
-              <button onclick="updateCartQty(${idx}, -1)" class="w-6 h-6 bg-slate-200 rounded-lg font-bold flex items-center justify-center">-</button>
-              <span class="font-bold">${item.qty}</span>
-              <button onclick="updateCartQty(${idx}, 1)" class="w-6 h-6 bg-slate-200 rounded-lg font-bold flex items-center justify-center">+</button>
+              <span class="font-extrabold text-emerald-600">RM ${itemTotal.toFixed(2)}</span>
+              <button onclick="removeFromCart(${idx})" class="text-rose-500 hover:text-rose-700">
+                <i data-lucide="trash-2" class="w-4 h-4"></i>
+              </button>
             </div>
           </div>
         `;
       }).join('');
 
       document.getElementById("cartTotalPrice").innerText = `RM ${total.toFixed(2)}`;
+      lucide.createIcons();
     }
 
-    function updateCartQty(index, change) {
-      cart[index].qty += change;
-      if (cart[index].qty <= 0) {
-        cart.splice(index, 1);
-      }
+    function removeFromCart(idx) {
+      cart.splice(idx, 1);
       updateCartBadge();
       renderCartItems();
     }
 
     function processWhatsAppCheckout() {
-      const name = document.getElementById("custCheckoutName").value;
-      if (!name) {
-        return alert(translations[currentLang].msgEnterName);
-      }
-      if (cart.length === 0) {
-        return alert(translations[currentLang].msgCartEmpty);
+      const nameInput = document.getElementById("custCheckoutName").value.trim();
+      if (!nameInput) {
+        alert(translations[currentLang].msgEnterName);
+        return;
       }
 
-      let itemsText = cart.map(i => `- ${i.title} (x${i.qty}) : RM ${(i.price * i.qty).toFixed(2)}`).join('\n');
-      let total = cart.reduce((a, b) => a + (b.price * b.qty), 0).toFixed(2);
+      if (cart.length === 0) {
+        alert(translations[currentLang].msgCartEmpty);
+        return;
+      }
+
+      let itemsText = "";
+      let total = 0;
+
+      cart.forEach((item, idx) => {
+        const itemTotal = item.price * item.qty;
+        total += itemTotal;
+        itemsText += `${idx + 1}. ${item.title} x${item.qty} - RM${itemTotal.toFixed(2)}\n`;
+      });
 
       let template = settings.waTemplate || DEFAULT_WA_TEMPLATE;
-      let text = template.replace("{ITEMS}", itemsText).replace("{TOTAL}", total);
+      template = template.replace("{ITEMS}", itemsText.trim());
+      template = template.replace("{TOTAL}", total.toFixed(2));
 
-      // Rekod jualan automatik ke dalam sistem
+      // MEREKOD JUALAN SECARA AUTOMATIK KAN
       salesHistory.unshift({
         id: "s-" + Date.now(),
-        custName: name,
+        custName: nameInput,
         product: cart.map(i => i.title).join(", "),
-        amount: parseFloat(total),
+        amount: total,
         date: new Date().toISOString().split('T')[0]
       });
       localStorage.setItem(KEY_SALES, JSON.stringify(salesHistory));
 
-      const waNumber = settings.waNum || settings.phone || "60123456789";
-      const waUrl = `https://wa.me/${waNumber.replace(/[^0-9]/g, '')}?text=${encodeURIComponent("Nama: " + name + "\n\n" + text)}`;
+      const waNum = settings.waNum || "60123456789";
+      const encodedMsg = encodeURIComponent(`Nama Pelanggan: ${nameInput}\n\n` + template);
+      const waUrl = `https://wa.me/${waNum}?text=${encodedMsg}`;
 
       cart = [];
       updateCartBadge();
       toggleCartModal();
-      window.open(waUrl, '_blank');
+
+      window.open(waUrl, "_blank");
     }
   </script>
 </body>
