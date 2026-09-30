@@ -42,7 +42,6 @@
       </div>
 
       <div class="flex items-center gap-1.5 sm:gap-3 shrink-0">
-        <!-- BUTANG VIEW MY STORE DI HEADER -->
         <button id="btnHeaderViewStore" onclick="openCustomerStoreView()" class="hidden md:flex items-center gap-1.5 px-3 py-1.5 bg-pink-600 hover:bg-pink-700 text-white text-xs font-bold rounded-xl shadow-sm transition">
           <i data-lucide="store" class="w-4 h-4"></i>
           <span data-i18n="btnViewStore">Lihat Kedai Saya</span>
@@ -1103,7 +1102,7 @@
       if (sectionId === 'admin-cat') renderCategoriesList();
     }
 
-    // 5. PERFORMANCE SUMMARY FILTER (TODAY, YESTERDAY, 7 DAYS, THIS MONTH)
+    // PERFORMANCE SUMMARY FILTER
     function filterDashboardData(filter) {
       currentFilterType = filter;
       document.querySelectorAll('.df-btn').forEach(btn => {
@@ -1237,6 +1236,7 @@
       previewContainer.innerHTML = "";
       document.getElementById("imgUploadStatus").innerText = translations[currentLang].msgImgOpting;
 
+      let loadedCount = 0;
       files.forEach(file => {
         if (!['image/jpeg', 'image/png'].includes(file.type)) return;
 
@@ -1272,7 +1272,8 @@
             imgEl.className = "w-12 h-12 square-img rounded-xl border border-slate-200";
             previewContainer.appendChild(imgEl);
 
-            document.getElementById("imgUploadStatus").innerText = `${uploadedCompressedImages.length} ${translations[currentLang].msgImgOptSuccess}`;
+            loadedCount++;
+            document.getElementById("imgUploadStatus").innerText = `${loadedCount} ${translations[currentLang].msgImgOptSuccess}`;
           };
           img.src = evt.target.result;
         };
@@ -1315,7 +1316,7 @@
       }
     }
 
-    // 1 & 2. FUNGSI SIMPAN PRODUK BERFUNGSI & NOTIFIKASI 'PRODUK BERJAYA DISIMPAN'
+    // FUNGSI SIMPAN PRODUK
     function handleProductFormSubmit(e) {
       e.preventDefault();
       const editId = document.getElementById("editProductId").value;
@@ -1334,9 +1335,9 @@
           products[idx] = {
             ...products[idx],
             title, category, price, promoPrice, totalPrice, desc,
-            images: uploadedCompressedImages.length ? uploadedCompressedImages : products[idx].images,
-            video: uploadedVideoBase64 || products[idx].video,
-            img: uploadedCompressedImages.length ? mainImg : products[idx].img
+            images: uploadedCompressedImages.length ? uploadedCompressedImages : (products[idx].images || []),
+            video: uploadedVideoBase64 || products[idx].video || "",
+            img: uploadedCompressedImages.length ? mainImg : (products[idx].img || 'https://via.placeholder.com/300')
           };
         }
       } else {
@@ -1349,19 +1350,17 @@
         });
       }
 
-      // Simpan ke storage & paparkan kedai
       localStorage.setItem(KEY_PRODUCTS, JSON.stringify(products));
       resetProductForm();
       
-      // 2. NOTIFIKASI
-      alert("PRODUK BERJAYA DISIMPAN");
+      alert(translations[currentLang].msgProdSaved);
       
       switchAdminSection("store");
       renderSellerProductsGrid();
       renderCustomerProducts();
     }
 
-    // 1. FUNGSI BATAL / RESET BORANG
+    // FUNGSI BATAL / RESET BORANG
     function resetProductForm() {
       document.getElementById("editProductId").value = "";
       document.getElementById("productForm").reset();
@@ -1373,7 +1372,6 @@
       document.getElementById("pTotalPrice").value = "";
     }
 
-    // 3 & 4. STORE PRODUCT MANAGEMENT & TUNJUK SENARAI PRODUK BESERTA BEST SELLER
     function getBestSellerProductIds() {
       const counts = {};
       salesHistory.forEach(s => {
@@ -1386,7 +1384,7 @@
         }
       });
       const sorted = Object.keys(counts).sort((a, b) => counts[b] - counts[a]);
-      return sorted.slice(0, 3); // Top 3 jualan dianggap Best Seller
+      return sorted.slice(0, 3);
     }
 
     function renderSellerProductsGrid() {
@@ -1711,7 +1709,6 @@
       renderCustomerProducts(products.filter(p => p.title.toLowerCase().includes(q.toLowerCase())));
     }
 
-    // 3. PRODUK AKAN TERPAPAR DI STORE (PELANGGAN)
     function renderCustomerProducts(customList) {
       const list = customList || products;
       const grid = document.getElementById("customerProductsGrid");
@@ -1816,22 +1813,12 @@
 
       let template = settings.waTemplate || DEFAULT_WA_TEMPLATE;
       let finalMsg = template.replace("{ITEMS}", itemsFormatted).replace("{TOTAL}", totalVal);
+      finalMsg = `Nama Pelanggan: ${custName}\n\n` + finalMsg;
 
-      salesHistory.push({
-        id: "WA-" + Date.now(),
-        date: new Date().toISOString().split('T')[0],
-        customer: custName,
-        product: cart.map(c => `${c.qty}x ${c.title}`).join(', '),
-        amount: parseFloat(totalVal)
-      });
-      localStorage.setItem(KEY_SALES, JSON.stringify(salesHistory));
+      const waNumber = settings.waNum || "60123456789";
+      const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent(finalMsg)}`;
 
-      const url = `https://wa.me/${settings.waNum}?text=${encodeURIComponent(finalMsg)}`;
-      cart = [];
-      updateCartBadge();
-      toggleCartModal();
-      window.open(url, '_blank');
-      renderDashboardAnalytics(currentFilterType);
+      window.open(waUrl, '_blank');
     }
   </script>
 </body>
