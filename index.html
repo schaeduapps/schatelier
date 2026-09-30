@@ -34,7 +34,7 @@
     }
   </style>
 </head>
-<body class="text-slate-800 antialiased min-h-screen flex flex-col pb-16 md:pb-0">
+<body class="text-slate-800 antialiased min-h-screen flex flex-col pb-20 md:pb-0">
 
   <!-- TOP BAR / HEADER -->
   <header class="bg-white/80 backdrop-blur-md border-b border-pink-200/50 sticky top-0 z-40">
@@ -48,6 +48,12 @@
       </div>
 
       <div class="flex items-center gap-3">
+        <!-- BUTANG VIEW MY STORE DI HEADER -->
+        <button id="btnHeaderViewStore" onclick="openCustomerStoreView()" class="hidden md:flex items-center gap-1.5 px-3 py-1.5 bg-pink-600 hover:bg-pink-700 text-white text-xs font-bold rounded-xl shadow-sm transition">
+          <i data-lucide="store" class="w-4 h-4"></i>
+          <span data-i18n="btnViewStore">Lihat Kedai Saya</span>
+        </button>
+
         <div id="customerSearchContainer" class="hidden sm:block relative w-48 md:w-64">
           <input type="text" id="custSearchInput" oninput="searchProducts(this.value)" data-i18n-ph="searchPlaceholder" placeholder="Cari produk..." class="w-full pl-8 pr-3 py-1.5 text-xs bg-slate-100/80 rounded-xl border border-slate-200 focus:outline-none focus:bg-white">
           <i data-lucide="search" class="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-2.5"></i>
@@ -172,7 +178,7 @@
             </button>
             <button onclick="switchAdminSection('store')" id="menu-store" class="sidebar-btn w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl hover:bg-white text-slate-700 transition">
               <i data-lucide="shopping-bag" class="w-4 h-4 text-amber-600"></i>
-              <span data-i18n="menuStore">Kedai</span>
+              <span data-i18n="menuStore">Katalog Produk Saya</span>
             </button>
             <button onclick="switchAdminSection('admin-cat')" id="menu-admin-cat" class="sidebar-btn w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl hover:bg-white text-slate-700 transition">
               <i data-lucide="shield" class="w-4 h-4 text-rose-600"></i>
@@ -207,8 +213,53 @@
             </div>
           </div>
 
-          <!-- 2. DASHBOARD SELLER -->
+          <!-- 2. DASHBOARD SELLER (HOME UTAMA) -->
           <div id="sec-dashboard" class="admin-sec space-y-5">
+            <!-- PANEL SELEMAT DATANG DAN BUTANG ACTION CEPAT -->
+            <div class="glass-card rounded-3xl p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-gradient-to-r from-emerald-500/10 via-teal-500/10 to-pink-500/10">
+              <div>
+                <h2 class="text-lg font-extrabold text-slate-900">Papan Pemuka Pentadbir</h2>
+                <p class="text-xs text-slate-600">Uruskan jualan, produk dan tetapan kedai anda dari satu tempat.</p>
+              </div>
+              <button onclick="openCustomerStoreView()" class="w-full sm:w-auto px-4 py-2.5 bg-pink-600 hover:bg-pink-700 text-white font-bold text-xs rounded-xl flex items-center justify-center gap-2 shadow-md transition">
+                <i data-lucide="store" class="w-4 h-4"></i>
+                <span data-i18n="btnViewStore">Lihat Kedai Saya (Pelanggan)</span>
+              </button>
+            </div>
+
+            <!-- BUTANG PINATAS (QUICK ACTIONS) -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs font-bold">
+              <button onclick="switchAdminSection('add-product')" class="p-3 glass-card rounded-2xl flex items-center gap-3 hover:bg-pink-50 text-slate-800 transition">
+                <div class="p-2 bg-pink-100 text-pink-600 rounded-xl"><i data-lucide="plus-circle" class="w-5 h-5"></i></div>
+                <div class="text-left">
+                  <span class="block text-slate-900">Tambah Produk</span>
+                  <span class="text-[10px] text-slate-500 font-normal">Katalog produk</span>
+                </div>
+              </button>
+              <button onclick="switchAdminSection('add-sales')" class="p-3 glass-card rounded-2xl flex items-center gap-3 hover:bg-emerald-50 text-slate-800 transition">
+                <div class="p-2 bg-emerald-100 text-emerald-600 rounded-xl"><i data-lucide="badge-dollar-sign" class="w-5 h-5"></i></div>
+                <div class="text-left">
+                  <span class="block text-slate-900">Tambah Jualan</span>
+                  <span class="text-[10px] text-slate-500 font-normal">Rekod transaksi</span>
+                </div>
+              </button>
+              <button onclick="switchAdminSection('store')" class="p-3 glass-card rounded-2xl flex items-center gap-3 hover:bg-amber-50 text-slate-800 transition">
+                <div class="p-2 bg-amber-100 text-amber-600 rounded-xl"><i data-lucide="shopping-bag" class="w-5 h-5"></i></div>
+                <div class="text-left">
+                  <span class="block text-slate-900">Senarai Produk</span>
+                  <span class="text-[10px] text-slate-500 font-normal">Urus senarai</span>
+                </div>
+              </button>
+              <button onclick="switchAdminSection('my-sales')" class="p-3 glass-card rounded-2xl flex items-center gap-3 hover:bg-purple-50 text-slate-800 transition">
+                <div class="p-2 bg-purple-100 text-purple-600 rounded-xl"><i data-lucide="receipt" class="w-5 h-5"></i></div>
+                <div class="text-left">
+                  <span class="block text-slate-900">Rekod Jualan</span>
+                  <span class="text-[10px] text-slate-500 font-normal">Sejarah pesanan</span>
+                </div>
+              </button>
+            </div>
+
+            <!-- PENAPIS DAN RINGKASAN STATISTIK -->
             <div class="glass-card rounded-2xl p-3 flex flex-wrap items-center justify-between gap-2 text-xs">
               <span class="font-bold text-slate-700" data-i18n="filterPerf">Penapis Ringkasan Prestasi:</span>
               <div class="flex flex-wrap items-center gap-1.5 font-bold">
@@ -356,7 +407,7 @@
             </div>
           </div>
 
-          <!-- 7. STORE -->
+          <!-- 7. STORE (PRODUCT LIST FOR ADMIN) -->
           <div id="sec-store" class="admin-sec hidden space-y-4">
             <div class="flex justify-between items-center glass-card p-4 rounded-2xl">
               <h2 class="text-base font-extrabold text-slate-900" data-i18n="storeManageTitle">Pengurusan Produk Kedai</h2>
@@ -426,14 +477,19 @@
       </div>
     </section>
 
-    <!-- PUBLIC CUSTOMER VIEW -->
+    <!-- PUBLIC CUSTOMER VIEW (KATALOG PELANGGAN) -->
     <section id="view-customer" class="hidden space-y-6">
-      <div class="glass-card rounded-3xl p-6 sm:p-8 bg-gradient-to-r from-pink-500/10 via-purple-500/10 to-emerald-500/10 border border-white">
-        <div class="max-w-2xl space-y-2">
+      <div class="glass-card rounded-3xl p-4 sm:p-6 bg-gradient-to-r from-pink-500/10 via-purple-500/10 to-emerald-500/10 border border-white flex justify-between items-center">
+        <div class="max-w-xl space-y-1">
           <span class="px-3 py-1 bg-white text-emerald-700 text-[10px] font-extrabold rounded-full shadow-sm" data-i18n="custCatalogBadge">KATALOG RASMI PELANGGAN</span>
-          <h2 id="custStoreTitle" class="text-2xl sm:text-3xl font-extrabold text-slate-900" data-i18n="custWelcome">Selamat Datang ke Kedai Kami</h2>
-          <p class="text-xs sm:text-sm text-slate-600" data-i18n="custWelcomeSub">Pilih produk idaman anda dan buat pesanan terus melalui WhatsApp.</p>
+          <h2 id="custStoreTitle" class="text-xl sm:text-2xl font-extrabold text-slate-900" data-i18n="custWelcome">Selamat Datang ke Kedai Kami</h2>
+          <p class="text-xs text-slate-600" data-i18n="custWelcomeSub">Pilih produk idaman anda dan buat pesanan terus melalui WhatsApp.</p>
         </div>
+        <!-- BUTANG KEMBALI KE ADMIN DARI VIEW KEDAI -->
+        <button onclick="showAdminView()" class="px-3 py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-xl shadow-md flex items-center gap-1.5 shrink-0">
+          <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+          <span class="hidden sm:inline">Kembali ke Portal Admin</span>
+        </button>
       </div>
 
       <div class="flex items-center gap-2 overflow-x-auto pb-2 no-scrollbar text-xs font-bold" id="customerCategoryBar"></div>
@@ -442,21 +498,25 @@
 
   </main>
 
-  <!-- NAVIGASI BOTTOM BAR -->
-  <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-200 z-50 flex justify-around py-2 text-[10px] font-bold text-slate-600">
-    <button onclick="openCustomerStoreView()" class="flex flex-col items-center gap-0.5 hover:text-pink-600">
+  <!-- NAVIGASI BOTTOM BAR (UNTUK DI PERANTI MOBILE) -->
+  <nav id="mobileBottomNav" class="md:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-200 z-50 flex justify-around py-2.5 text-[10px] font-bold text-slate-600 shadow-lg">
+    <button onclick="showAdminDashboardMobile()" class="flex flex-col items-center gap-1 hover:text-emerald-600">
       <i data-lucide="home" class="w-4 h-4"></i>
-      <span data-i18n="navHome">Utama</span>
+      <span data-i18n="navHome">Home</span>
     </button>
-    <button onclick="switchAdminSection('my-sales')" class="flex flex-col items-center gap-0.5 hover:text-purple-600">
-      <i data-lucide="receipt" class="w-4 h-4"></i>
-      <span data-i18n="navSales">Jualan Saya</span>
+    <button onclick="switchAdminSection('add-product')" class="flex flex-col items-center gap-1 text-pink-600 font-extrabold">
+      <i data-lucide="plus-circle" class="w-4 h-4"></i>
+      <span>Add Produk</span>
     </button>
-    <button onclick="switchAdminSection('dashboard')" class="flex flex-col items-center gap-0.5 hover:text-emerald-600">
-      <i data-lucide="shield" class="w-4 h-4"></i>
-      <span data-i18n="navAdmin">Pentadbir</span>
+    <button onclick="switchAdminSection('add-sales')" class="flex flex-col items-center gap-1 text-emerald-600 font-extrabold">
+      <i data-lucide="badge-dollar-sign" class="w-4 h-4"></i>
+      <span>Add Sales</span>
     </button>
-    <button onclick="switchAdminSection('setting')" class="flex flex-col items-center gap-0.5 hover:text-amber-600">
+    <button onclick="openCustomerStoreView()" class="flex flex-col items-center gap-1 hover:text-amber-600">
+      <i data-lucide="store" class="w-4 h-4"></i>
+      <span>Kedai Saya</span>
+    </button>
+    <button onclick="switchAdminSection('setting')" class="flex flex-col items-center gap-1 hover:text-slate-900">
       <i data-lucide="settings" class="w-4 h-4"></i>
       <span data-i18n="navSetting">Tetapan</span>
     </button>
@@ -522,7 +582,7 @@
         menuAddProduct: "Tambah Produk",
         menuAddSales: "Tambah Jualan",
         menuInsights: "Analisis & Graf Bar",
-        menuStore: "Kedai",
+        menuStore: "Katalog Produk Saya",
         menuAdmin: "Pentadbir",
         menuSetting: "Tetapan Profil",
         btnViewStore: "Lihat Kedai Saya",
@@ -581,7 +641,7 @@
         custWelcome: "Selamat Datang ke Kedai Kami",
         custWelcomeSub: "Pilih produk idaman anda dan buat pesanan terus melalui WhatsApp.",
         allCat: "Semua",
-        navHome: "Utama",
+        navHome: "Home",
         navSales: "Jualan Saya",
         navAdmin: "Pentadbir",
         navSetting: "Tetapan",
@@ -623,7 +683,7 @@
         menuAddProduct: "Add Product",
         menuAddSales: "Add Sales",
         menuInsights: "Insights & Bar Graph",
-        menuStore: "Store",
+        menuStore: "My Product Catalog",
         menuAdmin: "Admin",
         menuSetting: "Profile Settings",
         btnViewStore: "View My Store",
@@ -817,6 +877,7 @@
       document.getElementById("view-customer").classList.add("hidden");
       document.getElementById("customerCartBtn").classList.add("hidden");
       document.getElementById("customerSearchContainer").classList.add("hidden");
+      document.getElementById("btnHeaderViewStore").classList.add("hidden");
 
       document.getElementById("formSignIn").classList.add("hidden");
       document.getElementById("formSignUp").classList.add("hidden");
@@ -866,9 +927,15 @@
       document.getElementById("view-customer").classList.add("hidden");
       document.getElementById("customerCartBtn").classList.add("hidden");
       document.getElementById("customerSearchContainer").classList.add("hidden");
+      document.getElementById("btnHeaderViewStore").classList.remove("hidden");
 
       switchAdminSection("dashboard");
       loadSettingsToUI();
+    }
+
+    function showAdminDashboardMobile() {
+      showAdminView();
+      switchAdminSection("dashboard");
     }
 
     function switchAdminSection(sectionId) {
@@ -1276,6 +1343,7 @@
       document.getElementById("view-customer").classList.remove("hidden");
       document.getElementById("customerCartBtn").classList.remove("hidden");
       document.getElementById("customerSearchContainer").classList.remove("hidden");
+      document.getElementById("btnHeaderViewStore").classList.add("hidden");
 
       document.getElementById("custStoreTitle").innerText = settings.storeName;
       renderCustomerCategories();
