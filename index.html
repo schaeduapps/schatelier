@@ -514,8 +514,9 @@
 
             <form id="settingForm" onsubmit="handleSaveStoreSettings(event)" class="space-y-4">
               <div>
-                <label class="block font-bold text-slate-700 mb-1" data-i18n="logoUploadLbl">Muat Naik Gambar Profil / Logo Penjual (Bentuk Petak - PNG / JPG)</label>
+                <label class="block font-bold text-slate-700 mb-1" data-i18n="logoUploadLbl">Muat Naik Gambar Profil / Logo Penjual (Bentuk Petak - PNG / JPG Auto-Mampat)</label>
                 <input type="file" id="settingLogoFile" accept="image/png, image/jpeg" onchange="handleLogoUpload(event)" class="block w-full text-slate-500 text-xs file:mr-3 file:py-2 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100">
+                <p id="logoUploadStatus" class="text-[10px] text-slate-500 mt-1"></p>
                 <div class="mt-2">
                   <img id="previewSettingLogo" src="https://via.placeholder.com/150" class="w-16 h-16 square-img rounded-2xl border border-slate-200">
                 </div>
@@ -725,7 +726,7 @@
         storeManageTitle: "STORE PRODUCT MANAGEMENT",
         btnAddProdShort: "+ Tambah Produk",
         settingTitle: "Tetapan Kedai & WhatsApp",
-        logoUploadLbl: "Muat Naik Gambar Profil / Logo Penjual (Bentuk Petak - PNG / JPG)",
+        logoUploadLbl: "Muat Naik Gambar Profil / Logo Penjual (Bentuk Petak - PNG / JPG Auto-Mampat)",
         storeSellerNameLbl: "Nama Kedai (Store Name)",
         phoneNumLbl: "Nombor Telefon",
         orderConfigTitle: "Pengurusan Pesanan - Konfigurasi Pesanan WhatsApp Pelanggan",
@@ -852,7 +853,7 @@
         storeManageTitle: "STORE PRODUCT MANAGEMENT",
         btnAddProdShort: "+ Add Product",
         settingTitle: "Store & WhatsApp Settings",
-        logoUploadLbl: "Upload Profile / Seller Logo (Square Shape - PNG / JPG)",
+        logoUploadLbl: "Upload Profile / Seller Logo (Square Shape - PNG / JPG Auto-Compress)",
         storeSellerNameLbl: "Store Name",
         phoneNumLbl: "Phone Number",
         orderConfigTitle: "Order Management - Customer WhatsApp Order Configuration",
@@ -1533,15 +1534,49 @@
       a.click();
     }
 
-    // SETTINGS PROFILE & LOGO (SAVE PROFILE BUTTON FUNCTIONALITY)
+    // SETTINGS PROFILE & LOGO (OPTIMIZED IMAGE COMPRESSION FOR PROFILE LOGO)
     function handleLogoUpload(e) {
       const file = e.target.files[0];
       if (!file) return;
 
+      if (!['image/jpeg', 'image/png'].includes(file.type)) {
+        alert("Sila muat naik format PNG atau JPG sahaja.");
+        return;
+      }
+
+      const statusEl = document.getElementById("logoUploadStatus");
+      if(statusEl) statusEl.innerText = translations[currentLang].msgImgOpting;
+
       const reader = new FileReader();
       reader.onload = (evt) => {
-        uploadedLogoBase64 = evt.target.result;
-        document.getElementById("previewSettingLogo").src = uploadedLogoBase64;
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement("canvas");
+          let width = img.width;
+          let height = img.height;
+          const maxDimension = 300; // Saiz ideal untuk logo/profil
+
+          if (width > maxDimension || height > maxDimension) {
+            if (width > height) {
+              height = Math.round((height * maxDimension) / width);
+              width = maxDimension;
+            } else {
+              width = Math.round((width * maxDimension) / height);
+              height = maxDimension;
+            }
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(img, 0, 0, width, height);
+
+          // Compress to JPEG with 0.75 quality to keep string size very small for localStorage
+          uploadedLogoBase64 = canvas.toDataURL("image/jpeg", 0.75);
+          document.getElementById("previewSettingLogo").src = uploadedLogoBase64;
+          if(statusEl) statusEl.innerText = "Gambar profil berjaya dimampatkan & dioptimumkan.";
+        };
+        img.src = evt.target.result;
       };
       reader.readAsDataURL(file);
     }
@@ -1585,11 +1620,13 @@
         settings.logoUrl = uploadedLogoBase64;
       }
 
-      localStorage.setItem(KEY_SETTINGS, JSON.stringify(settings));
-      loadSettingsToUI();
-
-      // NOTI 'PROFILE UPDATED'
-      alert(translations[currentLang].msgSettingSaved);
+      try {
+        localStorage.setItem(KEY_SETTINGS, JSON.stringify(settings));
+        loadSettingsToUI();
+        alert(translations[currentLang].msgSettingSaved);
+      } catch (err) {
+        alert("Gagal menyimpan profil: Saiz storan terlalu besar. Sila guna imej bernisbah lebih kecil.");
+      }
     }
 
     // CATEGORY MANAGEMENT
@@ -1850,26 +1887,24 @@
       let total = cart.reduce((a, b) => a + (b.price * b.qty), 0).toFixed(2);
 
       let template = settings.waTemplate || DEFAULT_WA_TEMPLATE;
-      let message = template.replace('{ITEMS}', itemsText).replace('{TOTAL}', total);
-      message = `Nama Pelanggan: ${name}\n\n` + message;
+      let text = template.replace("{ITEMS}", itemsText).replace("{TOTAL}", total);
 
-      const waNumber = settings.waNum || settings.phone || "60123456789";
-      const waUrl = `https://wa.me/${waNumber.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(message)}`;
-
-      // Merekodkan jualan baru secara automatik
+      // Rekod jualan automatik ke dalam sistem
       salesHistory.unshift({
         id: "s-" + Date.now(),
         custName: name,
-        product: cart.map(c => c.title).join(', '),
+        product: cart.map(i => i.title).join(", "),
         amount: parseFloat(total),
         date: new Date().toISOString().split('T')[0]
       });
       localStorage.setItem(KEY_SALES, JSON.stringify(salesHistory));
 
+      const waNumber = settings.waNum || settings.phone || "60123456789";
+      const waUrl = `https://wa.me/${waNumber.replace(/[^0-9]/g, '')}?text=${encodeURIComponent("Nama: " + name + "\n\n" + text)}`;
+
       cart = [];
       updateCartBadge();
       toggleCartModal();
-
       window.open(waUrl, '_blank');
     }
   </script>
