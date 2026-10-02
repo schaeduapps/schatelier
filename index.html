@@ -13,15 +13,16 @@
     html, body { max-width: 100vw; overflow-x: hidden; }
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      background: linear-gradient(135deg, #fce7f3 0%, #fbcfe8 35%, #dcfce7 70%, #bbf7d0 100%);
-      background-attachment: fixed;
+      /* Background dikekalkan + Elemen Alam Realistik HD (Forest) */
+      background: linear-gradient(135deg, rgba(252, 231, 243, 0.85) 0%, rgba(251, 207, 232, 0.85) 35%, rgba(220, 252, 231, 0.85) 70%, rgba(187, 247, 208, 0.85) 100%), 
+                  url('https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat fixed;
       min-height: 100vh;
     }
     .glass-card {
       background: rgba(255, 255, 255, 0.92);
       backdrop-filter: blur(12px);
       border: 1px solid rgba(255, 255, 255, 0.7);
-      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.08);
     }
     .square-img { aspect-ratio: 1 / 1; object-fit: cover; }
     .no-scrollbar::-webkit-scrollbar { display: none; }
@@ -34,7 +35,7 @@
   <header id="mainHeader" class="bg-white/90 backdrop-blur-md border-b border-pink-200/50 sticky top-0 z-40 w-full hidden">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-2">
       
-      <!-- HEADER LEFT: LOGO & NAME (ADMIN ONLY) -->
+      <!-- HEADER LEFT: LOGO & NAME -->
       <div id="headerLeftInfo" class="flex items-center gap-2 sm:gap-3 min-w-0">
         <img id="headerLogo" src="https://via.placeholder.com/150" class="w-9 h-9 sm:w-10 sm:h-10 square-img rounded-xl border border-emerald-300 shadow-sm shrink-0" alt="Logo">
         <div class="truncate">
@@ -46,25 +47,25 @@
       <!-- HEADER RIGHT: BUTTONS & LANG -->
       <div class="flex items-center gap-1.5 sm:gap-3 shrink-0 ml-auto">
         
-        <!-- COPY LINK BUTTON (ADMIN VIEW ONLY) -->
+        <!-- COPY LINK BUTTON -->
         <button id="btnHeaderCopyLink" onclick="copyStoreCatalogLink()" class="flex items-center gap-1 px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl shadow-sm transition">
           <i data-lucide="copy" class="w-3.5 h-3.5"></i>
           <span class="hidden sm:inline" data-i18n="copyCatalogLink">Copy Catalog Link</span>
         </button>
 
-        <!-- VIEW STORE BUTTON (ADMIN VIEW ONLY) -->
+        <!-- VIEW STORE BUTTON -->
         <button id="btnHeaderViewStore" onclick="openCustomerStoreView()" class="hidden md:flex items-center gap-1.5 px-3 py-1.5 bg-pink-600 hover:bg-pink-700 text-white text-xs font-bold rounded-xl shadow-sm transition">
           <i data-lucide="store" class="w-4 h-4"></i>
           <span data-i18n="btnViewStore">View My Store</span>
         </button>
 
-        <!-- CART BUTTON (CUSTOMER VIEW ONLY) -->
+        <!-- CART BUTTON -->
         <button id="customerCartBtn" onclick="toggleCartModal()" class="hidden relative p-2 bg-pink-100 text-pink-700 hover:bg-pink-200 rounded-xl transition">
           <i data-lucide="shopping-cart" class="w-5 h-5"></i>
           <span id="cartBadge" class="absolute -top-1 -right-1 bg-rose-500 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">0</span>
         </button>
 
-        <!-- LANGUAGE SWITCHER (ALWAYS VISIBLE IN BOTH VIEWS) -->
+        <!-- LANGUAGE SWITCHER -->
         <div class="flex items-center bg-slate-100 p-1 rounded-xl border border-slate-200 text-xs font-bold">
           <button onclick="setLanguage('BM')" id="langBtnBM" class="px-2 py-1 rounded-lg text-slate-600 transition">BM</button>
           <button onclick="setLanguage('BI')" id="langBtnBI" class="px-2 py-1 rounded-lg bg-pink-600 text-white transition">BI</button>
@@ -324,7 +325,7 @@
             </div>
           </div>
 
-          <!-- 3. ADD PRODUCT -->
+          <!-- 3. ADD PRODUCT (DIKEMASKINI: HAD 5 GAMBAR, PNG/JPG SAHAJA, MAX 10MB) -->
           <div id="sec-add-product" class="admin-sec hidden glass-card rounded-3xl p-4 sm:p-6 space-y-4">
             <div class="flex items-center justify-between border-b pb-3">
               <h2 id="addProductTitle" class="text-base font-extrabold text-slate-900" data-i18n="addProductTitle">Add / Edit Product Catalog</h2>
@@ -366,11 +367,12 @@
 
               <div>
                 <div class="flex justify-between items-center mb-1">
-                  <label class="font-bold text-slate-700" data-i18n="imgUploadLbl">Image Uploaded (Maximum 10 Images - PNG / JPG Auto-Compress)</label>
+                  <label class="font-bold text-slate-700" data-i18n="imgUploadLbl">Image Uploaded (Maximum 5 Images - PNG / JPG Only, Max 10MB)</label>
                   <button type="button" onclick="openGalleryModal()" class="px-2.5 py-1 bg-purple-100 hover:bg-purple-200 text-purple-700 rounded-lg text-[11px] font-bold flex items-center gap-1 transition">
                     <i data-lucide="image" class="w-3.5 h-3.5"></i> <span data-i18n="btnUseGallery">Use Existing Gallery</span>
                   </button>
                 </div>
+                <!-- MENGIZINKAN SEMUA GALERI/FILE PADA PERANTI -->
                 <input type="file" id="pImageFiles" accept="image/png, image/jpeg" multiple onchange="handleImageOptimization(event)" class="block w-full text-slate-500 text-xs file:mr-3 file:py-2 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-pink-50 file:text-pink-700 hover:file:bg-pink-100">
                 <p id="imgUploadStatus" class="text-[10px] text-slate-500 mt-1"></p>
                 <div id="imagePreviewContainer" class="flex flex-wrap gap-2 mt-2"></div>
@@ -604,10 +606,10 @@
       </div>
     </section>
 
-    <!-- PUBLIC CUSTOMER VIEW (KATALOG PELANGGAN SAHAJA) -->
+    <!-- PUBLIC CUSTOMER VIEW -->
     <section id="view-customer" class="hidden space-y-4 sm:space-y-6 w-full max-w-7xl mx-auto">
       
-      <!-- HEADER KATALOG PELANGGAN (KEMASKINI NO 2 & NO 3) -->
+      <!-- HEADER KATALOG PELANGGAN -->
       <div class="glass-card rounded-3xl p-4 sm:p-6 bg-gradient-to-r from-pink-500/10 via-purple-500/10 to-emerald-500/10 border border-white flex justify-between items-center gap-3">
         <div class="space-y-1 min-w-0 flex-1">
           <h2 id="custStoreTitle" class="text-xl sm:text-3xl font-extrabold text-slate-900 leading-snug break-words" data-i18n="custWelcome">Welcome to Scha Store</h2>
@@ -620,24 +622,19 @@
         </button>
       </div>
 
-      <!-- BAHAGIAN DROPDOWN TAPISAN KATALOG (KEMASKINI NO 4 & NO 5) -->
+      <!-- BAHAGIAN DROPDOWN TAPISAN KATALOG -->
       <div class="glass-card rounded-2xl p-3 sm:p-4 space-y-3">
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 items-center">
-          
-          <!-- NO 4: DROPDOWN FILTER BY CATEGORIES -->
           <div>
             <label class="block text-[11px] font-extrabold text-slate-700 uppercase mb-1" data-i18n="filterByCategories">Filter by Categories</label>
             <select id="custCategorySelect" onchange="onCategorySelectChange(this.value)" class="w-full px-3.5 py-2 text-xs bg-slate-50 font-bold text-slate-800 rounded-xl border border-slate-200 focus:outline-none focus:bg-white focus:ring-2 focus:ring-pink-300">
             </select>
           </div>
-          
-          <!-- NO 5: DROPDOWN FILTER BY PRODUCTS -->
           <div>
             <label class="block text-[11px] font-extrabold text-slate-700 uppercase mb-1" data-i18n="filterByProducts">Filter by Products</label>
             <select id="custProductSelect" onchange="onProductSelectChange(this.value)" class="w-full px-3.5 py-2 text-xs bg-slate-50 font-bold text-slate-800 rounded-xl border border-slate-200 focus:outline-none focus:bg-white focus:ring-2 focus:ring-pink-300">
             </select>
           </div>
-
         </div>
       </div>
       
@@ -724,20 +721,20 @@
   </div>
 
   <script>
-    // DICTIONARY MULTI-LANGUAGE
+    // KETEGASAN BAHASA (NO. 2): 100% BM & 100% BI DENGAN BI DIJADIKAN DEFAULT BAHASA
     const translations = {
       BM: {
         officialPortal: "Portal Rasmi Penjual",
         searchPlaceholder: "Cari produk...",
         sellerLogin: "Log Masuk Penjual",
-        sellerLoginSub: "Sila masukkan maklumat akaun anda untuk ke portal",
+        sellerLoginSub: "Sila masukkan maklumat akaun anda untuk akses ke portal",
         sellerEmail: "E-mel Penjual",
         password: "Kata Laluan",
         forgotPwd: "Lupa Kata Laluan?",
         btnLogin: "Log Masuk",
         noAccount: "Belum ada akaun?",
         registerNow: "Daftar Sekarang",
-        fullNameStore: "Nama Penuh / Kedai",
+        fullNameStore: "Nama Penuh / Nama Kedai",
         regNamePh: "Nama Penjual / Kedai",
         email: "E-mel",
         newPassword: "Kata Laluan Baharu",
@@ -745,7 +742,7 @@
         hasAccount: "Sudah ada akaun?",
         forgotDesc: "Masukkan e-mel anda. Pautan penetapan semula kata laluan akan dihantar ke e-mel anda.",
         regEmail: "E-mel Berdaftar",
-        btnSendReset: "Hantar E-mel Set Semula",
+        btnSendReset: "Hantar E-mel Tetap Semula",
         backLogin: "Kembali ke Log Masuk",
         welcome: "Selamat Datang,",
         menuProfile: "Profil Penjual",
@@ -772,18 +769,18 @@
         statRevenue: "Jumlah Hasil Keseluruhan",
         chartTitle: "Graf Trend Jualan (Masa Nyata)",
         monthlySalesTitle: "Jualan Bulanan 2026",
-        addProductTitle: "Tambah / Edit Produk Katalog",
+        addProductTitle: "Tambah / Edit Katalog Produk",
         prodName: "Nama Produk *",
         prodNamePh: "Contoh: Modul Matematik Tahun 1",
         category: "Kategori *",
         originalPrice: "Harga Asal (RM) *",
         promoPrice: "Harga Promo (RM)",
         totalPriceAuto: "Jumlah Harga (RM) - Kemas Kini Automatik",
-        imgUploadLbl: "Gambar Dimuat Naik (Maksimum 10 Gambar - PNG / JPG Auto-Mampat)",
-        videoUploadLbl: "Video Tambahan Dimuat Naik (1 Video MP4 sahaja, Maksimum 5MB)",
+        imgUploadLbl: "Gambar Dimuat Naik (Maksimum 5 Gambar - PNG / JPG Sahaja, Max 10MB)",
+        videoUploadLbl: "Video Tambahan Dimuat Naik (1 Video MP4 Sahaja, Max 5MB)",
         prodDesc: "Penerangan Produk",
         prodDescPh: "Penerangan ringkas...",
-        btnCancel: "Batal / Reset",
+        btnCancel: "Batal / Semula",
         btnSaveProd: "Simpan Produk",
         recSalesTitle: "+ Rekod Jualan Baharu",
         custName: "Nama Pelanggan",
@@ -800,35 +797,35 @@
         thAction: "Tindakan",
         insightsTitle: "Analisis & Graf Bar",
         storeManageTitle: "PENGURUSAN PRODUK KEDAI",
-        storeManageSub: "Senarai produk yang ada di store dan penanda Best Seller.",
+        storeManageSub: "Senarai produk yang ada di kedai dan penanda Jualan Terbaik.",
         btnAddProdShort: "+ Tambah Produk",
         settingTitle: "Tetapan Kedai & WhatsApp",
-        logoUploadLbl: "Muat Naik Gambar Profil / Logo Penjual (Bentuk Petak - PNG / JPG Auto-Mampat)",
-        storeSellerNameLbl: "Nama Kedai (Store Name)",
-        sellerNameLbl: "Nama Penjual (Seller Name)",
+        logoUploadLbl: "Muat Naik Logo Profil / Penjual (Bentuk Petak - PNG / JPG Auto-Mampat)",
+        storeSellerNameLbl: "Nama Kedai",
+        sellerNameLbl: "Nama Penjual",
         phoneNumLbl: "Nombor Telefon",
         orderConfigTitle: "Pengurusan Pesanan - Konfigurasi Pesanan WhatsApp Pelanggan",
-        orderConfigSub: "Fungsi templat auto WhatsApp boleh diedit, ditukar, atau dibuang mengikut kesesuaian penjual.",
+        orderConfigSub: "Fungsi templat auto WhatsApp boleh diedit, ditukar, atau dibuang mengikut kesesuaian.",
         waNumLbl: "Nombor WhatsApp Penerima Pesanan (Contoh: 60123456789)",
         waTplLbl: "Templat Mesej Pesanan WhatsApp (Gunakan {ITEMS} dan {TOTAL})",
         btnSaveSettings: "SIMPAN PROFIL & TETAPAN",
-        btnCopyCustomerCatalog: "SALIN LINK KATALOG PELANGGAN",
+        btnCopyCustomerCatalog: "SALIN PAUTAN KATALOG PELANGGAN",
         btnSignOut: "Log Keluar",
-        custWelcome: "Welcome to Scha Store",
-        custWelcomeSub: "Choose Products & Place Your Order Less Than 5 Minutes",
+        custWelcome: "Selamat Datang ke Scha Store",
+        custWelcomeSub: "Pilih Produk & Buat Pesanan Anda Dalam Masa Kurang 5 Minit",
         filterByCategories: "Tapis Mengikut Kategori",
         filterByProducts: "Tapis Mengikut Produk",
         allCat: "-- Semua Kategori --",
         allProd: "-- Semua Produk --",
-        navHome: "Laman Utama",
-        navAddProduct: "Add Produk",
-        navAddSales: "Add Jualan",
+        navHome: "Utama",
+        navAddProduct: "Tambah Produk",
+        navAddSales: "Tambah Jualan",
         navMyStore: "Kedai Saya",
         navSetting: "Tetapan",
         cartTitle: "Troli Pembelian",
         cartEmpty: "Troli anda masih kosong.",
         yourFullName: "Nama Penuh Anda *",
-        enterNamePh: "Masukkan nama...",
+        enterNamePh: "Masukkan nama anda...",
         totalOverall: "Jumlah Keseluruhan:",
         btnSendWa: "Hantar Pesanan Ke WhatsApp",
         deleteBtn: "Padam",
@@ -843,27 +840,27 @@
         subRecTrans: "Rekod transaksi",
         subManageList: "Urus senarai",
         subOrderHist: "Sejarah pesanan",
-        copyCatalogLink: "Salin Link Katalog",
+        copyCatalogLink: "Salin Pautan Katalog",
         categoryManagement: "Pengurusan Kategori",
-        btnUpdateProfileSetting: "Kemaskini Tetapan Profil",
+        btnUpdateProfileSetting: "Kemas Kini Tetapan Profil",
         btnBack: "Kembali",
         manageCatBtn: "Urus Kategori",
-        btnUseGallery: "Guna Gambar Sedia Ada",
-        catTitle: "Pengurusan Kategori Worksheet",
-        catSub: "Urus kategori produk worksheet anda (Bukan fungsi Tambah Produk).",
+        btnUseGallery: "Guna Galeri Sedia Ada",
+        catTitle: "Pengurusan Kategori Lembaran Kerja",
+        catSub: "Urus kategori produk lembaran kerja anda.",
         addCatNewHeader: "+ Tambah Kategori Baharu",
         catNameLbl: "Nama Kategori *",
         catStatusLbl: "Status Kategori",
-        catDescLbl: "Penerangan Kategori (Description)",
+        catDescLbl: "Penerangan Kategori",
         btnSaveCatText: "+ Simpan Kategori",
         catListHeader: "Senarai Kategori Sedia Ada",
-        galleryHeader: "Gallery Gambar",
+        galleryHeader: "Galeri Gambar",
         msgConfirmDelCat: "Adakah anda pasti mahu memadam kategori ini?",
         msgConfirmDelProd: "Adakah anda pasti mahu memadam produk ini?",
         msgSessionExpired: "Sesi anda telah tamat selepas 2 jam tidak aktif. Sila log masuk semula.",
         msgResetSent: "Pautan penetapan semula kata laluan telah dihantar ke e-mel anda.",
         msgProdSaved: "PRODUK BERJAYA DIKEMASKINI",
-        msgMax10Img: "Maksimum 10 gambar sahaja dibenarkan!",
+        msgMax10Img: "Maksimum 5 gambar sahaja dibenarkan!",
         msgImgOpting: "Memproses & mengoptimumkan gambar...",
         msgImgOptSuccess: "gambar berjaya dioptimumkan.",
         msgMp4Only: "Hanya fail MP4 dibenarkan!",
@@ -871,7 +868,7 @@
         msgVidOptSuccess: "Video berjaya dimuat naik (Saiz < 5MB).",
         msgSalesAdded: "Rekod jualan berjaya ditambah!",
         msgNoSalesData: "Tiada data jualan.",
-        msgSettingSaved: "PROFILE UPDATED",
+        msgSettingSaved: "PROFIL BERJAYA DIKEMASKINI",
         msgAddedCart: "Ditambah ke troli!",
         msgEnterName: "Sila masukkan nama penuh anda!",
         msgCartEmpty: "Troli anda kosong!"
@@ -929,7 +926,7 @@
         originalPrice: "Original Price (RM) *",
         promoPrice: "Promo Price (RM)",
         totalPriceAuto: "Total Price (RM) - Auto Update",
-        imgUploadLbl: "Image Uploaded (Maximum 10 Images - PNG / JPG Auto-Compress)",
+        imgUploadLbl: "Image Uploaded (Maximum 5 Images - PNG / JPG Only, Max 10MB)",
         videoUploadLbl: "Add-on Video Uploaded (1 MP4 Video Only, Max 5MB)",
         prodDesc: "Product Description",
         prodDescPh: "Short description...",
@@ -1012,8 +1009,8 @@
         msgConfirmDelProd: "Are you sure you want to delete this product?",
         msgSessionExpired: "Your session expired after 2 hours of inactivity. Please log in again.",
         msgResetSent: "A password reset link has been sent to your email inbox.",
-        msgProdSaved: "PRODUK BERJAYA DIKEMASKINI",
-        msgMax10Img: "Maximum 10 images allowed!",
+        msgProdSaved: "PRODUCT SUCCESSFULLY UPDATED",
+        msgMax10Img: "Maximum 5 images allowed!",
         msgImgOpting: "Processing & optimizing images...",
         msgImgOptSuccess: "images successfully optimized.",
         msgMp4Only: "Only MP4 files are allowed!",
@@ -1028,7 +1025,8 @@
       }
     };
 
-    let currentLang = "BI";
+    // BI DIJADIKAN DEFAULT BAHASA (NO. 2)
+    let currentLang = localStorage.getItem("scha_lang_preference") || "BI";
 
     // STORAGE KEYS
     const KEY_PRODUCTS = "scha_prod_v4";
@@ -1039,6 +1037,7 @@
     const KEY_LAST_ACTIVITY = "scha_last_activity_v4";
     const KEY_ACTIVE_SECTION = "scha_active_section_v4";
     const KEY_CURRENT_VIEW = "scha_current_view_v4";
+    const KEY_SCROLL_POS = "scha_scroll_position_v4"; // DOKUMEN REFRESH KEKAL TEMPAT SAMA (NO. 1)
 
     const DEFAULT_WA_TEMPLATE = `Hello Scha,\n\nSaya ingin buat pesanan:\n\n{ITEMS}\n\nTotal : RM{TOTAL}\n\nSila berikan QR untuk saya buat pembayaran`;
 
@@ -1077,6 +1076,11 @@
 
     const TWO_HOURS_MS = 2 * 60 * 60 * 1000;
 
+    // SIMPAN POSISI SKRIN SEBELUM UNLOAD/REFRESH (NO. 1)
+    window.addEventListener("beforeunload", () => {
+      localStorage.setItem(KEY_SCROLL_POS, window.scrollY.toString());
+    });
+
     function updateActivityTimestamp() {
       if (authSession.isLoggedIn) {
         localStorage.setItem(KEY_LAST_ACTIVITY, Date.now().toString());
@@ -1100,7 +1104,7 @@
     window.addEventListener("DOMContentLoaded", () => {
       lucide.createIcons();
       loadSettingsToUI();
-      setLanguage('BI');
+      setLanguage(currentLang); // Default BI atau tersimpan
       updateDashboardDate();
       checkInactivityTimeout();
       setInterval(checkInactivityTimeout, 60000);
@@ -1116,6 +1120,14 @@
         } else {
           showAuthView("signin");
         }
+      }
+
+      // PULIHKAN POSISI SKRIN SELEPAS REFRESH (NO. 1)
+      const savedScrollPos = localStorage.getItem(KEY_SCROLL_POS);
+      if (savedScrollPos) {
+        setTimeout(() => {
+          window.scrollTo(0, parseInt(savedScrollPos, 10));
+        }, 100);
       }
     });
 
@@ -1140,8 +1152,10 @@
       });
     }
 
+    // KETEGASAN BAHASA (NO. 2)
     function setLanguage(lang) {
       currentLang = lang;
+      localStorage.setItem("scha_lang_preference", lang);
       document.documentElement.lang = lang === "BM" ? "ms" : "en";
       const dict = translations[lang];
 
@@ -1421,22 +1435,23 @@
       document.getElementById("pTotalPrice").value = total.toFixed(2);
     }
 
+    // KEMASKINI NO. 3 & NO. 4: HAD MAKSIMUM 5 GAMBAR, PNG/JPG SAHAJA, MAX 10MB, AKSES PENUH GALERI
     function handleImageOptimization(e) {
       const files = Array.from(e.target.files);
-      if (uploadedCompressedImages.length + files.length > 10) {
-        alert(translations[currentLang].msgMax10Img);
+      if (uploadedCompressedImages.length + files.length > 5) {
+        alert(translations[currentLang].msgMax10Img); // Mesej had 5 gambar
         e.target.value = "";
         return;
       }
 
       for (let file of files) {
         if (!['image/jpeg', 'image/png'].includes(file.type)) {
-          alert("Only PNG or JPG files are allowed!");
+          alert("Hanya fail PNG dan JPG SAHAJA dibenarkan!");
           e.target.value = "";
           return;
         }
-        if (file.size > 5 * 1024 * 1024) {
-          alert(`Image file ${file.name} exceeds max limit of 5MB!`);
+        if (file.size > 10 * 1024 * 1024) { // Maksimum 10MB
+          alert(`Maksimum saiz gambar adalah 10MB! Fail ${file.name} melebihi had.`);
           e.target.value = "";
           return;
         }
@@ -1453,7 +1468,7 @@
             const canvas = document.createElement("canvas");
             let width = img.width;
             let height = img.height;
-            const maxDimension = 800;
+            const maxDimension = 1000;
 
             if (width > maxDimension || height > maxDimension) {
               if (width > height) {
@@ -1470,7 +1485,7 @@
             const ctx = canvas.getContext("2d");
             ctx.drawImage(img, 0, 0, width, height);
 
-            const compressedBase64 = canvas.toDataURL("image/jpeg", 0.7);
+            const compressedBase64 = canvas.toDataURL("image/jpeg", 0.75);
             uploadedCompressedImages.push(compressedBase64);
 
             renderImagePreviews();
@@ -1506,6 +1521,30 @@
       renderImagePreviews();
     }
 
+    function handleVideoUpload(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      if (file.type !== "video/mp4") {
+        alert(translations[currentLang].msgMp4Only);
+        e.target.value = "";
+        return;
+      }
+
+      if (file.size > 5 * 1024 * 1024) {
+        alert(translations[currentLang].msgMax5mb);
+        e.target.value = "";
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = (evt) => {
+        uploadedVideoBase64 = evt.target.result;
+        document.getElementById("videoUploadStatus").innerText = translations[currentLang].msgVidOptSuccess;
+      };
+      reader.readAsDataURL(file);
+    }
+
     function openGalleryModal() {
       document.getElementById("galleryModal").classList.remove("hidden");
       renderGalleryAlbums();
@@ -1537,92 +1576,45 @@
       const grid = document.getElementById("galleryImagesGrid");
       grid.innerHTML = "";
 
-      let allImgs = [];
-      products.forEach(p => {
-        if (activeGalleryAlbum === 'ALL' || p.category === activeGalleryAlbum) {
-          if (p.images && p.images.length) {
-            p.images.forEach(img => allImgs.push({ img, title: p.title }));
-          }
+      let filteredProds = products;
+      if (activeGalleryAlbum !== 'ALL') {
+        filteredProds = products.filter(p => p.category === activeGalleryAlbum);
+      }
+
+      let allImages = [];
+      filteredProds.forEach(p => {
+        if (p.images && p.images.length) {
+          p.images.forEach(img => allImages.push(img));
         }
       });
 
-      if (!allImgs.length) {
-        grid.innerHTML = `<div class="col-span-full text-center text-slate-400 py-8">${translations[currentLang].noData}</div>`;
+      if (!allImages.length) {
+        grid.innerHTML = `<p class="col-span-full text-center text-xs text-slate-400 py-8">${translations[currentLang].noData}</p>`;
         return;
       }
 
-      allImgs.forEach((item, i) => {
-        const div = document.createElement("div");
-        div.className = "relative group cursor-pointer border rounded-2xl overflow-hidden hover:ring-2 ring-purple-500 transition";
-        div.onclick = () => selectGalleryImageToProduct(item.img);
-        div.innerHTML = `
-          <img src="${item.img}" class="w-full h-24 square-img">
-          <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white text-[10px] font-bold p-1 text-center">${item.title}</div>
+      allImages.forEach(imgUrl => {
+        const item = document.createElement("div");
+        item.className = "cursor-pointer rounded-xl overflow-hidden border border-slate-200 hover:border-purple-500 transition relative group";
+        item.innerHTML = `
+          <img src="${imgUrl}" class="w-full h-24 square-img">
+          <div class="absolute inset-0 bg-purple-600/30 opacity-0 group-hover:opacity-100 flex items-center justify-center transition">
+            <span class="text-[10px] bg-white text-purple-700 font-extrabold px-2 py-1 rounded-lg shadow">+ Pilih</span>
+          </div>
         `;
-        grid.appendChild(div);
+        item.onclick = () => selectGalleryImage(imgUrl);
+        grid.appendChild(item);
       });
     }
 
-    function selectGalleryImageToProduct(imgSrc) {
-      if (uploadedCompressedImages.length >= 10) {
+    function selectGalleryImage(imgUrl) {
+      if (uploadedCompressedImages.length >= 5) {
         alert(translations[currentLang].msgMax10Img);
         return;
       }
-      uploadedCompressedImages.push(imgSrc);
+      uploadedCompressedImages.push(imgUrl);
       renderImagePreviews();
       closeGalleryModal();
-    }
-
-    function handleVideoUpload(e) {
-      const file = e.target.files[0];
-      if (!file) return;
-
-      if (file.type !== "video/mp4") {
-        alert(translations[currentLang].msgMp4Only);
-        e.target.value = "";
-        return;
-      }
-
-      if (file.size > 5 * 1024 * 1024) {
-        alert(translations[currentLang].msgMax5mb);
-        e.target.value = "";
-        return;
-      }
-
-      const reader = new FileReader();
-      reader.onload = (evt) => {
-        uploadedVideoBase64 = evt.target.result;
-        document.getElementById("videoUploadStatus").innerText = translations[currentLang].msgVidOptSuccess;
-      };
-      reader.readAsDataURL(file);
-    }
-
-    function handleLogoUpload(e) {
-      const file = e.target.files[0];
-      if (!file) return;
-
-      if (!['image/jpeg', 'image/png'].includes(file.type)) {
-        alert("Only PNG/JPG files are allowed!");
-        e.target.value = "";
-        return;
-      }
-
-      const reader = new FileReader();
-      reader.onload = (evt) => {
-        const img = new Image();
-        img.onload = () => {
-          const canvas = document.createElement("canvas");
-          canvas.width = 300;
-          canvas.height = 300;
-          const ctx = canvas.getContext("2d");
-          ctx.drawImage(img, 0, 0, 300, 300);
-          uploadedLogoBase64 = canvas.toDataURL("image/jpeg", 0.8);
-          document.getElementById("previewSettingLogo").src = uploadedLogoBase64;
-          document.getElementById("logoUploadStatus").innerText = "Logo updated successfully!";
-        };
-        img.src = evt.target.result;
-      };
-      reader.readAsDataURL(file);
     }
 
     function populateCategoryDropdown() {
@@ -1637,25 +1629,6 @@
       });
     }
 
-    function populateSalesProductDropdown() {
-      const select = document.getElementById("saleSelectProd");
-      select.innerHTML = `<option value="">-- Choose Product --</option>`;
-      products.forEach(p => {
-        const opt = document.createElement("option");
-        opt.value = p.id;
-        opt.innerText = `${p.title} (RM ${parseFloat(p.totalPrice).toFixed(2)})`;
-        select.appendChild(opt);
-      });
-    }
-
-    function autoFillSaleAmount() {
-      const prodId = document.getElementById("saleSelectProd").value;
-      const prod = products.find(p => p.id === prodId);
-      if (prod) {
-        document.getElementById("saleAmount").value = parseFloat(prod.totalPrice).toFixed(2);
-      }
-    }
-
     function handleProductFormSubmit(e) {
       e.preventDefault();
       const editId = document.getElementById("editProductId").value;
@@ -1663,32 +1636,27 @@
       const category = document.getElementById("pCategory").value;
       const price = parseFloat(document.getElementById("pPrice").value) || 0;
       const promoPrice = parseFloat(document.getElementById("pPromoPrice").value) || 0;
-      const totalPrice = promoPrice > 0 ? promoPrice : price;
       const desc = document.getElementById("pDesc").value;
 
-      if (!uploadedCompressedImages.length) {
-        uploadedCompressedImages.push("https://via.placeholder.com/400x400?text=Scha+Store");
-      }
-
       if (editId) {
-        const idx = products.findIndex(p => p.id === editId);
-        if (idx !== -1) {
-          products[idx] = {
-            ...products[idx],
-            title, category, price, promoPrice, totalPrice, desc,
-            images: [...uploadedCompressedImages],
-            video: uploadedVideoBase64 || products[idx].video
+        const index = products.findIndex(p => p.id === editId);
+        if (index !== -1) {
+          products[index] = {
+            ...products[index],
+            title, category, price, promoPrice, desc,
+            images: uploadedCompressedImages.length ? uploadedCompressedImages : products[index].images,
+            video: uploadedVideoBase64 || products[index].video
           };
         }
       } else {
-        const newProduct = {
-          id: "prod_" + Date.now(),
-          title, category, price, promoPrice, totalPrice, desc,
-          images: [...uploadedCompressedImages],
+        const newProd = {
+          id: 'prod_' + Date.now(),
+          title, category, price, promoPrice, desc,
+          images: uploadedCompressedImages.length ? uploadedCompressedImages : ['https://via.placeholder.com/300'],
           video: uploadedVideoBase64,
           isBestSeller: false
         };
-        products.push(newProduct);
+        products.push(newProd);
       }
 
       localStorage.setItem(KEY_PRODUCTS, JSON.stringify(products));
@@ -1708,34 +1676,22 @@
     }
 
     function editProduct(id) {
-      const p = products.find(item => item.id === id);
-      if (!p) return;
+      const prod = products.find(p => p.id === id);
+      if (!prod) return;
 
       switchAdminSection("add-product");
-      document.getElementById("editProductId").value = p.id;
-      document.getElementById("pTitle").value = p.title;
-      document.getElementById("pCategory").value = p.category;
-      document.getElementById("pPrice").value = p.price;
-      document.getElementById("pPromoPrice").value = p.promoPrice || 0;
-      document.getElementById("pTotalPrice").value = parseFloat(p.totalPrice).toFixed(2);
-      document.getElementById("pDesc").value = p.desc || "";
+      document.getElementById("editProductId").value = prod.id;
+      document.getElementById("pTitle").value = prod.title;
+      document.getElementById("pCategory").value = prod.category;
+      document.getElementById("pPrice").value = prod.price;
+      document.getElementById("pPromoPrice").value = prod.promoPrice || "";
+      document.getElementById("pDesc").value = prod.desc || "";
 
-      uploadedCompressedImages = p.images ? [...p.images] : [];
-      uploadedVideoBase64 = p.video || "";
+      calculateProductTotalPrice();
 
+      uploadedCompressedImages = prod.images ? [...prod.images] : [];
+      uploadedVideoBase64 = prod.video || "";
       renderImagePreviews();
-      if (uploadedVideoBase64) {
-        document.getElementById("videoUploadStatus").innerText = "Video currently attached.";
-      }
-    }
-
-    function toggleBestSeller(id) {
-      const idx = products.findIndex(p => p.id === id);
-      if (idx !== -1) {
-        products[idx].isBestSeller = !products[idx].isBestSeller;
-        localStorage.setItem(KEY_PRODUCTS, JSON.stringify(products));
-        renderSellerProductsGrid();
-      }
     }
 
     function deleteProduct(id) {
@@ -1746,55 +1702,159 @@
       }
     }
 
+    function toggleBestSeller(id) {
+      const index = products.findIndex(p => p.id === id);
+      if (index !== -1) {
+        products[index].isBestSeller = !products[index].isBestSeller;
+        localStorage.setItem(KEY_PRODUCTS, JSON.stringify(products));
+        renderSellerProductsGrid();
+      }
+    }
+
     function renderSellerProductsGrid() {
       const grid = document.getElementById("sellerProductsGrid");
       grid.innerHTML = "";
 
       if (!products.length) {
-        grid.innerHTML = `<div class="col-span-full text-center text-slate-400 py-12 font-bold">${translations[currentLang].noData}</div>`;
+        grid.innerHTML = `<p class="col-span-full text-center text-xs text-slate-400 py-8">${translations[currentLang].noData}</p>`;
         return;
       }
 
+      const dict = translations[currentLang];
+
       products.forEach(p => {
         const card = document.createElement("div");
-        card.className = "glass-card rounded-2xl p-3.5 space-y-3 flex flex-col justify-between";
+        card.className = "glass-card rounded-2xl p-3 flex flex-col justify-between space-y-2 relative";
         
-        const mainImg = (p.images && p.images.length) ? p.images[0] : "https://via.placeholder.com/400x400?text=Scha+Store";
-        const isBest = p.isBestSeller;
+        const mainImg = (p.images && p.images[0]) ? p.images[0] : 'https://via.placeholder.com/300';
+        const displayPrice = p.promoPrice > 0 ? p.promoPrice : p.price;
 
         card.innerHTML = `
           <div class="space-y-2">
-            <div class="relative rounded-xl overflow-hidden">
-              <img src="${mainImg}" class="w-full h-40 square-img">
-              ${isBest ? `<span class="absolute top-2 left-2 bg-rose-500 text-white text-[10px] font-extrabold px-2 py-0.5 rounded-md shadow">BEST SELLER</span>` : ''}
-              <button onclick="shareProductLink('${p.id}')" title="Copy Product Link" class="absolute top-2 right-2 bg-white/90 hover:bg-white text-slate-800 p-1.5 rounded-lg shadow">
-                <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
-              </button>
+            <div class="relative rounded-xl overflow-hidden border border-slate-100">
+              <img src="${mainImg}" class="w-full h-36 square-img">
+              ${p.isBestSeller ? `<span class="absolute top-2 left-2 bg-amber-500 text-white text-[9px] font-extrabold px-2 py-0.5 rounded-full shadow">BEST SELLER</span>` : ''}
             </div>
             <div>
-              <span class="text-[10px] font-bold text-emerald-600 uppercase">${p.category}</span>
-              <h4 class="font-extrabold text-slate-900 text-xs truncate">${p.title}</h4>
-              <p class="text-xs text-slate-600 line-clamp-2 mt-0.5">${p.desc || ''}</p>
-            </div>
-            <div class="flex items-baseline gap-2">
-              <span class="text-sm font-extrabold text-pink-600">RM ${parseFloat(p.totalPrice).toFixed(2)}</span>
-              ${p.promoPrice > 0 ? `<span class="text-[10px] text-slate-400 line-through">RM ${parseFloat(p.price).toFixed(2)}</span>` : ''}
+              <span class="text-[10px] font-extrabold text-pink-600 uppercase">${p.category}</span>
+              <h4 class="font-bold text-slate-900 text-xs line-clamp-1">${p.title}</h4>
+              <p class="text-xs font-extrabold text-emerald-600 mt-1">RM ${parseFloat(displayPrice).toFixed(2)}</p>
             </div>
           </div>
-
           <div class="pt-2 border-t flex items-center justify-between gap-1 text-[11px] font-bold">
-            <button onclick="toggleBestSeller('${p.id}')" class="px-2.5 py-1.5 rounded-lg border ${isBest?'bg-amber-100 text-amber-800 border-amber-300':'bg-slate-50 text-slate-600'}">
-              ★ Best Seller
+            <button onclick="toggleBestSeller('${p.id}')" class="px-2 py-1 ${p.isBestSeller ? 'bg-amber-100 text-amber-700' : 'bg-slate-100 text-slate-600'} rounded-lg text-[10px]">
+              ${p.isBestSeller ? '★ Best Seller' : '☆ Set Best Seller'}
             </button>
-            <div class="flex items-center gap-1">
-              <button onclick="editProduct('${p.id}')" class="px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-lg">${translations[currentLang].editBtn}</button>
-              <button onclick="deleteProduct('${p.id}')" class="px-2.5 py-1.5 bg-rose-100 hover:bg-rose-200 text-rose-700 rounded-lg">${translations[currentLang].deleteBtn}</button>
+            <div class="flex gap-1">
+              <button onclick="editProduct('${p.id}')" class="px-2 py-1 bg-blue-50 text-blue-600 rounded-lg">${dict.editBtn}</button>
+              <button onclick="deleteProduct('${p.id}')" class="px-2 py-1 bg-rose-50 text-rose-600 rounded-lg">${dict.deleteBtn}</button>
             </div>
           </div>
         `;
         grid.appendChild(card);
       });
+    }
+
+    function populateSalesProductDropdown() {
+      const select = document.getElementById("saleSelectProd");
+      select.innerHTML = `<option value="">-- ${translations[currentLang].selectProd} --</option>`;
+      products.forEach(p => {
+        const opt = document.createElement("option");
+        opt.value = p.id;
+        opt.innerText = p.title;
+        select.appendChild(opt);
+      });
+    }
+
+    function autoFillSaleAmount() {
+      const prodId = document.getElementById("saleSelectProd").value;
+      const prod = products.find(p => p.id === prodId);
+      if (prod) {
+        const amt = prod.promoPrice > 0 ? prod.promoPrice : prod.price;
+        document.getElementById("saleAmount").value = amt;
+      }
+    }
+
+    function handleManualAddSales(e) {
+      e.preventDefault();
+      const custName = document.getElementById("saleCustName").value;
+      const prodId = document.getElementById("saleSelectProd").value;
+      const amt = parseFloat(document.getElementById("saleAmount").value) || 0;
+      const date = document.getElementById("saleDate").value;
+
+      const prod = products.find(p => p.id === prodId);
+      const prodTitle = prod ? prod.title : "Manual Sale";
+
+      const newSale = {
+        id: 'sale_' + Date.now(),
+        custName,
+        prodTitle,
+        amount: amt,
+        date
+      };
+
+      salesHistory.unshift(newSale);
+      localStorage.setItem(KEY_SALES, JSON.stringify(salesHistory));
+      alert(translations[currentLang].msgSalesAdded);
+      document.getElementById("formRecordSales").reset();
+      switchAdminSection("dashboard");
+    }
+
+    function renderSalesHistoryTable() {
+      const tbody = document.getElementById("salesTableBody");
+      tbody.innerHTML = "";
+
+      if (!salesHistory.length) {
+        tbody.innerHTML = `<tr><td colspan="5" class="text-center py-6 text-slate-400 text-xs">${translations[currentLang].msgNoSalesData}</td></tr>`;
+        return;
+      }
+
+      const dict = translations[currentLang];
+
+      salesHistory.forEach((s, idx) => {
+        const tr = document.createElement("tr");
+        tr.className = "hover:bg-slate-50/50";
+        tr.innerHTML = `
+          <td class="p-2.5 font-semibold text-slate-600">${s.date}</td>
+          <td class="p-2.5 font-bold text-slate-900">${s.custName}</td>
+          <td class="p-2.5 font-medium text-slate-700">${s.prodTitle}</td>
+          <td class="p-2.5 font-extrabold text-emerald-600">RM ${parseFloat(s.amount).toFixed(2)}</td>
+          <td class="p-2.5 text-right">
+            <button onclick="deleteSalesRecord(${idx})" class="p-1 text-rose-600 hover:bg-rose-50 rounded-lg">
+              <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
       lucide.createIcons();
+    }
+
+    function deleteSalesRecord(index) {
+      salesHistory.splice(index, 1);
+      localStorage.setItem(KEY_SALES, JSON.stringify(salesHistory));
+      renderSalesHistoryTable();
+      renderDashboardAnalytics(currentFilterType);
+    }
+
+    function downloadSalesCSV() {
+      if (!salesHistory.length) {
+        alert(translations[currentLang].msgNoSalesData);
+        return;
+      }
+
+      let csvContent = "data:text/csv;charset=utf-8,Date,Customer,Product,Amount(RM)\n";
+      salesHistory.forEach(s => {
+        csvContent += `"${s.date}","${s.custName}","${s.prodTitle}","${s.amount}"\n`;
+      });
+
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", `sales_report_${Date.now()}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     }
 
     function handleSaveCategory(e) {
@@ -1813,7 +1873,6 @@
       localStorage.setItem(KEY_CATEGORIES, JSON.stringify(categories));
       resetCategoryForm();
       renderCategoriesList();
-      populateCategoryDropdown();
     }
 
     function resetCategoryForm() {
@@ -1821,17 +1880,40 @@
       document.getElementById("catNameInput").value = "";
       document.getElementById("catStatusInput").value = "active";
       document.getElementById("catDescInput").value = "";
-      document.getElementById("catFormTitle").innerText = translations[currentLang].addCatNewHeader;
+    }
+
+    function renderCategoriesList() {
+      const container = document.getElementById("categoriesList");
+      container.innerHTML = "";
+
+      const dict = translations[currentLang];
+
+      categories.forEach((cat, idx) => {
+        const div = document.createElement("div");
+        div.className = "bg-white p-3 rounded-2xl border border-slate-200 flex items-center justify-between gap-3";
+        div.innerHTML = `
+          <div>
+            <div class="flex items-center gap-2">
+              <h4 class="font-bold text-slate-900 text-xs">${cat.name}</h4>
+              <span class="px-2 py-0.5 rounded-full text-[9px] font-extrabold ${cat.status==='active'?'bg-emerald-100 text-emerald-700':'bg-slate-100 text-slate-500'}">${cat.status.toUpperCase()}</span>
+            </div>
+            <p class="text-[11px] text-slate-500 mt-0.5">${cat.desc || '-'}</p>
+          </div>
+          <div class="flex gap-1 shrink-0">
+            <button onclick="editCategory(${idx})" class="p-1.5 bg-blue-50 text-blue-600 rounded-xl text-xs font-bold">${dict.editBtn}</button>
+            <button onclick="deleteCategory(${idx})" class="p-1.5 bg-rose-50 text-rose-600 rounded-xl text-xs font-bold">${dict.deleteBtn}</button>
+          </div>
+        `;
+        container.appendChild(div);
+      });
     }
 
     function editCategory(idx) {
-      const c = categories[idx];
-      if (!c) return;
+      const cat = categories[idx];
       document.getElementById("editCatIndex").value = idx;
-      document.getElementById("catNameInput").value = c.name;
-      document.getElementById("catStatusInput").value = c.status;
-      document.getElementById("catDescInput").value = c.desc || "";
-      document.getElementById("catFormTitle").innerText = `Edit Category: ${c.name}`;
+      document.getElementById("catNameInput").value = cat.name;
+      document.getElementById("catStatusInput").value = cat.status;
+      document.getElementById("catDescInput").value = cat.desc || "";
     }
 
     function deleteCategory(idx) {
@@ -1839,137 +1921,42 @@
         categories.splice(idx, 1);
         localStorage.setItem(KEY_CATEGORIES, JSON.stringify(categories));
         renderCategoriesList();
-        populateCategoryDropdown();
       }
-    }
-
-    function renderCategoriesList() {
-      const container = document.getElementById("categoriesList");
-      container.innerHTML = "";
-
-      categories.forEach((c, i) => {
-        const item = document.createElement("div");
-        item.className = "bg-white/80 p-3 rounded-2xl border border-slate-200 flex justify-between items-center text-xs";
-        item.innerHTML = `
-          <div>
-            <div class="flex items-center gap-2">
-              <span class="font-extrabold text-slate-900">${c.name}</span>
-              <span class="px-2 py-0.5 rounded-full text-[9px] font-bold ${c.status==='active'?'bg-emerald-100 text-emerald-800':'bg-slate-100 text-slate-600'}">${c.status.toUpperCase()}</span>
-            </div>
-            <p class="text-[11px] text-slate-500 mt-0.5">${c.desc || ''}</p>
-          </div>
-          <div class="flex items-center gap-1 font-bold">
-            <button onclick="editCategory(${i})" class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-lg">${translations[currentLang].editBtn}</button>
-            <button onclick="deleteCategory(${i})" class="px-2.5 py-1 bg-rose-100 hover:bg-rose-200 text-rose-700 rounded-lg">${translations[currentLang].deleteBtn}</button>
-          </div>
-        `;
-        container.appendChild(item);
-      });
-    }
-
-    function handleManualAddSales(e) {
-      e.preventDefault();
-      const custName = document.getElementById("saleCustName").value;
-      const prodId = document.getElementById("saleSelectProd").value;
-      const amount = parseFloat(document.getElementById("saleAmount").value) || 0;
-      const date = document.getElementById("saleDate").value;
-
-      const prod = products.find(p => p.id === prodId);
-      const prodName = prod ? prod.title : "General Item";
-
-      const newSale = {
-        id: "sale_" + Date.now(),
-        custName,
-        prodName,
-        amount,
-        date
-      };
-
-      salesHistory.unshift(newSale);
-      localStorage.setItem(KEY_SALES, JSON.stringify(salesHistory));
-
-      alert(translations[currentLang].msgSalesAdded);
-      document.getElementById("formRecordSales").reset();
-      switchAdminSection("dashboard");
-    }
-
-    function renderSalesHistoryTable() {
-      const tbody = document.getElementById("salesTableBody");
-      tbody.innerHTML = "";
-
-      if (!salesHistory.length) {
-        tbody.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-slate-400 font-bold">${translations[currentLang].msgNoSalesData}</td></tr>`;
-        return;
-      }
-
-      salesHistory.forEach((s, idx) => {
-        const tr = document.createElement("tr");
-        tr.className = "hover:bg-slate-50/50";
-        tr.innerHTML = `
-          <td class="p-2.5 font-bold text-slate-600">${s.date}</td>
-          <td class="p-2.5 font-bold text-slate-900">${s.custName}</td>
-          <td class="p-2.5 text-slate-700">${s.prodName}</td>
-          <td class="p-2.5 font-extrabold text-emerald-600">RM ${parseFloat(s.amount).toFixed(2)}</td>
-          <td class="p-2.5 text-right">
-            <button onclick="deleteSaleRecord(${idx})" class="p-1 text-rose-600 hover:bg-rose-50 rounded-lg">
-              <i data-lucide="trash-2" class="w-4 h-4"></i>
-            </button>
-          </td>
-        `;
-        tbody.appendChild(tr);
-      });
-      lucide.createIcons();
-    }
-
-    function deleteSaleRecord(idx) {
-      if (confirm("Padam rekod jualan ini?")) {
-        salesHistory.splice(idx, 1);
-        localStorage.setItem(KEY_SALES, JSON.stringify(salesHistory));
-        renderSalesHistoryTable();
-        renderDashboardAnalytics(currentFilterType);
-      }
-    }
-
-    function downloadSalesCSV() {
-      if (!salesHistory.length) {
-        alert(translations[currentLang].msgNoSalesData);
-        return;
-      }
-
-      let csv = "Tarikh,Pelanggan,Produk,Amaun(RM)\n";
-      salesHistory.forEach(s => {
-        csv += `"${s.date}","${s.custName}","${s.prodName}","${parseFloat(s.amount).toFixed(2)}"\n`;
-      });
-
-      const blob = new Blob([csv], { type: "text/csv" });
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `Rekod_Jualan_Scha_${Date.now()}.csv`;
-      a.click();
     }
 
     function loadSettingsToUI() {
-      document.getElementById("setStoreName").value = settings.storeName || "Scha Store";
-      document.getElementById("setSellerName").value = settings.sellerName || "Scha";
-      document.getElementById("setPhone").value = settings.phone || "60123456789";
-      document.getElementById("setEmail").value = settings.email || "seller@scha.com";
-      document.getElementById("setWaNum").value = settings.waNum || "60123456789";
-      document.getElementById("setWaTemplate").value = settings.waTemplate || DEFAULT_WA_TEMPLATE;
-      document.getElementById("previewSettingLogo").src = settings.logoUrl || "https://via.placeholder.com/150";
+      document.getElementById("headerStoreName").innerText = settings.storeName;
+      document.getElementById("headerSellerName").innerText = settings.sellerName;
+      document.getElementById("headerLogo").src = settings.logoUrl;
 
-      document.getElementById("headerStoreName").innerText = settings.storeName || "Scha Store";
-      document.getElementById("headerSellerName").innerText = settings.sellerName || "Scha";
-      document.getElementById("headerLogo").src = settings.logoUrl || "https://via.placeholder.com/150";
-      document.getElementById("sidebarSellerName").innerText = settings.sellerName || "Scha";
+      document.getElementById("sidebarSellerName").innerText = settings.sellerName;
+      document.getElementById("profileStoreDisplay").innerText = settings.storeName;
+      document.getElementById("profileSellerNameDisplay").innerText = settings.sellerName;
+      document.getElementById("profileEmailDisplay").innerText = settings.email;
+      document.getElementById("profilePhoneDisplay").innerText = settings.phone;
+      document.getElementById("profileAvatar").src = settings.logoUrl;
 
-      document.getElementById("profileStoreDisplay").innerText = settings.storeName || "Scha Store";
-      document.getElementById("profileSellerNameDisplay").innerText = settings.sellerName || "Scha";
-      document.getElementById("profileEmailDisplay").innerText = settings.email || "seller@scha.com";
-      document.getElementById("profilePhoneDisplay").innerText = settings.phone || "60123456789";
-      document.getElementById("profileAvatar").src = settings.logoUrl || "https://via.placeholder.com/150";
+      document.getElementById("setStoreName").value = settings.storeName;
+      document.getElementById("setSellerName").value = settings.sellerName;
+      document.getElementById("setPhone").value = settings.phone;
+      document.getElementById("setEmail").value = settings.email;
+      document.getElementById("setWaNum").value = settings.waNum;
+      document.getElementById("setWaTemplate").value = settings.waTemplate;
+      document.getElementById("previewSettingLogo").src = settings.logoUrl;
 
-      document.getElementById("custStoreTitle").innerText = translations[currentLang].custWelcome;
+      document.getElementById("custStoreTitle").innerText = `Welcome to ${settings.storeName}`;
+    }
+
+    function handleLogoUpload(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = (evt) => {
+        uploadedLogoBase64 = evt.target.result;
+        document.getElementById("previewSettingLogo").src = uploadedLogoBase64;
+      };
+      reader.readAsDataURL(file);
     }
 
     function handleSaveStoreSettings(e) {
@@ -1986,22 +1973,18 @@
       }
 
       localStorage.setItem(KEY_SETTINGS, JSON.stringify(settings));
-      loadSettingsToUI();
       alert(translations[currentLang].msgSettingSaved);
+      loadSettingsToUI();
+      switchAdminSection("dashboard");
     }
 
-    // ==========================================
-    // PUBLIC CUSTOMER CATALOG VIEW (KEMASKINI)
-    // ==========================================
     function openCustomerStoreView() {
       localStorage.setItem(KEY_CURRENT_VIEW, "customer");
-      
-      // Header atas kekal untuk language switcher sahaja
       document.getElementById("mainHeader").classList.remove("hidden");
-      document.getElementById("headerLeftInfo").classList.add("hidden"); // KEMASKINI NO 2: Buang gambar seller & words official seller portal
-      document.getElementById("btnHeaderCopyLink").classList.add("hidden"); // KEMASKINI NO 1: Buang icon copy link
+      document.getElementById("headerLeftInfo").classList.remove("hidden");
+      document.getElementById("btnHeaderCopyLink").classList.add("hidden");
       document.getElementById("btnHeaderViewStore").classList.add("hidden");
-      document.getElementById("customerCartBtn").classList.remove("hidden"); // KEMASKINI NO 1: Kekalkan Troli
+      document.getElementById("customerCartBtn").classList.remove("hidden");
 
       document.getElementById("view-auth").classList.add("hidden");
       document.getElementById("view-admin").classList.add("hidden");
@@ -2019,42 +2002,38 @@
     }
 
     function exitCustomerStoreView() {
-      showAdminView();
+      if (authSession.isLoggedIn) {
+        showAdminView();
+      } else {
+        showAuthView("signin");
+      }
     }
 
-    // KEMASKINI NO 4 & NO 5: POPULATE DROPDOWNS
     function renderCustomerDropdownFilters() {
       const catSelect = document.getElementById("custCategorySelect");
       const prodSelect = document.getElementById("custProductSelect");
+
       if (!catSelect || !prodSelect) return;
 
       const dict = translations[currentLang];
 
-      // 1. Populate Category Dropdown
-      let catHtml = `<option value="ALL">${dict.allCat}</option>`;
       const activeCats = categories.filter(c => c.status === "active");
+      catSelect.innerHTML = `<option value="ALL">${dict.allCat}</option>`;
       activeCats.forEach(c => {
-        catHtml += `<option value="${c.name}" ${selectedCategoryFilter===c.name?'selected':''}>${c.name}</option>`;
+        catSelect.innerHTML += `<option value="${c.name}">${c.name}</option>`;
       });
-      catSelect.innerHTML = catHtml;
 
-      // 2. Populate Product Dropdown based on Category selection
-      let availableProds = products;
-      if (selectedCategoryFilter !== 'ALL') {
-        availableProds = products.filter(p => p.category === selectedCategoryFilter);
-      }
-
-      let prodHtml = `<option value="ALL">${dict.allProd}</option>`;
-      availableProds.forEach(p => {
-        prodHtml += `<option value="${p.id}" ${selectedProductFilter===p.id?'selected':''}>${p.title}</option>`;
+      prodSelect.innerHTML = `<option value="ALL">${dict.allProd}</option>`;
+      products.forEach(p => {
+        prodSelect.innerHTML += `<option value="${p.id}">${p.title}</option>`;
       });
-      prodSelect.innerHTML = prodHtml;
+
+      catSelect.value = selectedCategoryFilter;
+      prodSelect.value = selectedProductFilter;
     }
 
     function onCategorySelectChange(val) {
       selectedCategoryFilter = val;
-      selectedProductFilter = 'ALL'; // reset product filter apabila kategori bertukar
-      renderCustomerDropdownFilters();
       renderCustomerProductsGrid();
     }
 
@@ -2070,68 +2049,64 @@
 
       let filtered = products;
 
-      // Filter by Category
       if (selectedCategoryFilter !== 'ALL') {
         filtered = filtered.filter(p => p.category === selectedCategoryFilter);
       }
 
-      // Filter by Product ID
       if (selectedProductFilter !== 'ALL') {
         filtered = filtered.filter(p => p.id === selectedProductFilter);
       }
 
       if (!filtered.length) {
-        grid.innerHTML = `<div class="col-span-full text-center text-slate-400 py-16 font-bold text-sm">${translations[currentLang].noData}</div>`;
+        grid.innerHTML = `<p class="col-span-full text-center text-xs text-slate-400 py-12 font-bold">${translations[currentLang].noData}</p>`;
         return;
       }
 
       filtered.forEach(p => {
         const card = document.createElement("div");
-        card.className = "glass-card rounded-2xl p-3 space-y-2 flex flex-col justify-between hover:shadow-xl transition";
-
-        const mainImg = (p.images && p.images.length) ? p.images[0] : "https://via.placeholder.com/400x400?text=Scha+Store";
-        const isBest = p.isBestSeller;
+        card.className = "glass-card rounded-2xl p-3 flex flex-col justify-between space-y-2 relative group hover:border-pink-300 transition";
+        
+        const mainImg = (p.images && p.images[0]) ? p.images[0] : 'https://via.placeholder.com/300';
+        const displayPrice = p.promoPrice > 0 ? p.promoPrice : p.price;
 
         card.innerHTML = `
           <div class="space-y-2">
-            <div class="relative rounded-xl overflow-hidden">
-              <img src="${mainImg}" class="w-full h-36 sm:h-44 square-img">
-              ${isBest ? `<span class="absolute top-2 left-2 bg-rose-500 text-white text-[9px] font-extrabold px-2 py-0.5 rounded-md shadow">BEST SELLER</span>` : ''}
-              ${p.video ? `<span class="absolute bottom-2 right-2 bg-purple-600/90 text-white text-[9px] font-bold px-2 py-0.5 rounded-md flex items-center gap-1"><i data-lucide="video" class="w-3 h-3"></i> MP4</span>` : ''}
+            <div class="relative rounded-xl overflow-hidden border border-slate-100">
+              <img src="${mainImg}" class="w-full h-36 square-img">
+              ${p.isBestSeller ? `<span class="absolute top-2 left-2 bg-amber-500 text-white text-[9px] font-extrabold px-2 py-0.5 rounded-full shadow">BEST SELLER</span>` : ''}
             </div>
             <div>
-              <span class="text-[9px] font-extrabold text-emerald-700 uppercase tracking-wider block">${p.category}</span>
-              <h4 class="font-extrabold text-slate-900 text-xs sm:text-sm line-clamp-2 leading-tight">${p.title}</h4>
-              <p class="text-[11px] text-slate-500 line-clamp-2 mt-1">${p.desc || ''}</p>
+              <span class="text-[9px] font-extrabold text-pink-600 uppercase block truncate">${p.category}</span>
+              <h4 class="font-bold text-slate-900 text-xs line-clamp-2 leading-snug">${p.title}</h4>
+              <div class="flex items-baseline gap-1.5 mt-1">
+                <span class="text-xs font-extrabold text-emerald-600">RM ${parseFloat(displayPrice).toFixed(2)}</span>
+                ${p.promoPrice > 0 ? `<span class="text-[10px] text-slate-400 line-through">RM ${parseFloat(p.price).toFixed(2)}</span>` : ''}
+              </div>
             </div>
           </div>
-
-          <div class="pt-2 border-t border-slate-100 flex items-center justify-between gap-1">
-            <div class="flex items-baseline gap-1">
-              <span class="text-xs sm:text-sm font-extrabold text-pink-600">RM ${parseFloat(p.totalPrice).toFixed(2)}</span>
-              ${p.promoPrice > 0 ? `<span class="text-[9px] text-slate-400 line-through">RM ${parseFloat(p.price).toFixed(2)}</span>` : ''}
-            </div>
-            <button onclick="addToCart('${p.id}')" class="px-3 py-1.5 bg-pink-600 hover:bg-pink-700 text-white font-bold text-xs rounded-xl shadow transition flex items-center gap-1">
-              <i data-lucide="plus" class="w-3.5 h-3.5"></i>
-              <span>+ Troli</span>
-            </button>
-          </div>
+          <button onclick="addToCart('${p.id}')" class="w-full py-2 bg-pink-600 hover:bg-pink-700 text-white text-xs font-bold rounded-xl shadow transition flex items-center justify-center gap-1">
+            <i data-lucide="shopping-cart" class="w-3.5 h-3.5"></i> + Cart
+          </button>
         `;
         grid.appendChild(card);
       });
       lucide.createIcons();
     }
 
-    // CART & WHATSAPP CHECKOUT FUNGSI
-    function addToCart(productId) {
-      const prod = products.find(p => p.id === productId);
+    function addToCart(prodId) {
+      const prod = products.find(p => p.id === prodId);
       if (!prod) return;
 
-      const existing = cart.find(item => item.id === productId);
-      if (existing) {
-        existing.qty += 1;
+      const existingIndex = cart.findIndex(item => item.id === prodId);
+      if (existingIndex !== -1) {
+        cart[existingIndex].qty += 1;
       } else {
-        cart.push({ ...prod, qty: 1 });
+        cart.push({
+          id: prod.id,
+          title: prod.title,
+          price: prod.promoPrice > 0 ? prod.promoPrice : prod.price,
+          qty: 1
+        });
       }
 
       updateCartBadge();
@@ -2161,48 +2136,36 @@
         document.getElementById("cartTotalPrice").innerText = "RM 0.00";
         return;
       }
-      emptyMsg.classList.add("hidden");
 
+      emptyMsg.classList.add("hidden");
       let total = 0;
-      cart.forEach((item, index) => {
-        const itemTotal = parseFloat(item.totalPrice) * item.qty;
+
+      cart.forEach((item, idx) => {
+        const itemTotal = item.price * item.qty;
         total += itemTotal;
 
-        const row = document.createElement("div");
-        row.className = "flex items-center justify-between gap-2 p-2 bg-slate-50 rounded-xl border border-slate-100";
-        row.innerHTML = `
-          <div class="min-w-0 flex-1">
-            <h5 class="font-bold text-slate-900 text-xs truncate">${item.title}</h5>
-            <p class="text-[10px] text-pink-600 font-bold">RM ${parseFloat(item.totalPrice).toFixed(2)} x ${item.qty}</p>
+        const div = document.createElement("div");
+        div.className = "flex items-center justify-between border-b pb-2";
+        div.innerHTML = `
+          <div class="min-w-0 flex-1 pr-2">
+            <h5 class="font-bold text-slate-900 truncate">${item.title}</h5>
+            <p class="text-[11px] text-slate-500">RM ${item.price.toFixed(2)} x ${item.qty}</p>
           </div>
-          <div class="flex items-center gap-1">
-            <button onclick="changeCartQty(${index}, -1)" class="w-6 h-6 bg-slate-200 text-slate-700 font-bold rounded-lg text-xs flex items-center justify-center">-</button>
-            <span class="text-xs font-bold w-4 text-center">${item.qty}</span>
-            <button onclick="changeCartQty(${index}, 1)" class="w-6 h-6 bg-slate-200 text-slate-700 font-bold rounded-lg text-xs flex items-center justify-center">+</button>
-            <button onclick="removeCartItem(${index})" class="p-1 text-rose-500 hover:bg-rose-50 rounded-lg ml-1">
-              <i data-lucide="trash-2" class="w-4 h-4"></i>
+          <div class="flex items-center gap-2">
+            <span class="font-extrabold text-emerald-600">RM ${itemTotal.toFixed(2)}</span>
+            <button onclick="removeFromCart(${idx})" class="p-1 text-rose-600 hover:bg-rose-50 rounded-lg">
+              <i data-lucide="x" class="w-3.5 h-3.5"></i>
             </button>
           </div>
         `;
-        container.appendChild(row);
+        container.appendChild(div);
       });
 
       document.getElementById("cartTotalPrice").innerText = `RM ${total.toFixed(2)}`;
       lucide.createIcons();
     }
 
-    function changeCartQty(index, change) {
-      if (cart[index]) {
-        cart[index].qty += change;
-        if (cart[index].qty <= 0) {
-          cart.splice(index, 1);
-        }
-      }
-      updateCartBadge();
-      renderCartItems();
-    }
-
-    function removeCartItem(index) {
+    function removeFromCart(index) {
       cart.splice(index, 1);
       updateCartBadge();
       renderCartItems();
@@ -2220,39 +2183,22 @@
         return;
       }
 
-      let itemsSummary = "";
-      let totalAmount = 0;
+      let itemsStr = "";
+      let total = 0;
 
-      cart.forEach((item, i) => {
-        const itemTotal = parseFloat(item.totalPrice) * item.qty;
-        totalAmount += itemTotal;
-        itemsSummary += `${i + 1}. ${item.title} (x${item.qty}) - RM${itemTotal.toFixed(2)}\n`;
+      cart.forEach((item, idx) => {
+        const itemTotal = item.price * item.qty;
+        total += itemTotal;
+        itemsStr += `${idx + 1}. ${item.title} (x${item.qty}) - RM ${itemTotal.toFixed(2)}\n`;
       });
 
-      // Merekod jualan secara automatik dalam sistem admin
-      const newSale = {
-        id: "sale_" + Date.now(),
-        custName: name,
-        prodName: cart.map(i => `${i.title} (${i.qty})`).join(", "),
-        amount: totalAmount,
-        date: new Date().toISOString().split('T')[0]
-      };
-      salesHistory.unshift(newSale);
-      localStorage.setItem(KEY_SALES, JSON.stringify(salesHistory));
+      let msg = settings.waTemplate;
+      msg = msg.replace("{ITEMS}", itemsStr);
+      msg = msg.replace("{TOTAL}", total.toFixed(2));
 
-      // Hantar pesanan terus ke WhatsApp
-      let message = settings.waTemplate || DEFAULT_WA_TEMPLATE;
-      message = message.replace("{ITEMS}", itemsSummary.trim());
-      message = message.replace("{TOTAL}", totalAmount.toFixed(2));
-      message = `Nama Pelanggan: ${name}\n\n` + message;
-
-      const encodedMsg = encodeURIComponent(message);
-      const waNumber = settings.waNum || "60123456789";
+      const waNumber = settings.waNum.replace(/[^0-9]/g, '');
+      const encodedMsg = encodeURIComponent(msg);
       const waUrl = `https://wa.me/${waNumber}?text=${encodedMsg}`;
-
-      cart = [];
-      updateCartBadge();
-      toggleCartModal();
 
       window.open(waUrl, "_blank");
     }
