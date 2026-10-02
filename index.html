@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Scha Store - Product Catalog</title>
+  <title>Scha Store & Product Catalog</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -33,30 +33,38 @@
   <!-- TOP BAR / HEADER -->
   <header id="mainHeader" class="bg-white/90 backdrop-blur-md border-b border-pink-200/50 sticky top-0 z-40 w-full hidden">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-2">
+      
+      <!-- HEADER LEFT: LOGO & NAME (ADMIN ONLY) -->
       <div id="headerLeftInfo" class="flex items-center gap-2 sm:gap-3 min-w-0">
         <img id="headerLogo" src="https://via.placeholder.com/150" class="w-9 h-9 sm:w-10 sm:h-10 square-img rounded-xl border border-emerald-300 shadow-sm shrink-0" alt="Logo">
         <div class="truncate">
-          <h1 id="headerStoreName" class="font-bold text-slate-900 leading-none text-xs sm:text-sm truncate">Kedai Digital</h1>
+          <h1 id="headerStoreName" class="font-bold text-slate-900 leading-none text-xs sm:text-sm truncate">Scha Store</h1>
           <span id="headerSellerName" class="text-[10px] sm:text-[11px] text-emerald-700 font-semibold truncate block" data-i18n="officialPortal">Official Seller Portal</span>
         </div>
       </div>
 
-      <div class="flex items-center gap-1.5 sm:gap-3 shrink-0">
+      <!-- HEADER RIGHT: BUTTONS & LANG -->
+      <div class="flex items-center gap-1.5 sm:gap-3 shrink-0 ml-auto">
+        
+        <!-- COPY LINK BUTTON (ADMIN VIEW ONLY) -->
         <button id="btnHeaderCopyLink" onclick="copyStoreCatalogLink()" class="flex items-center gap-1 px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl shadow-sm transition">
           <i data-lucide="copy" class="w-3.5 h-3.5"></i>
           <span class="hidden sm:inline" data-i18n="copyCatalogLink">Copy Catalog Link</span>
         </button>
 
+        <!-- VIEW STORE BUTTON (ADMIN VIEW ONLY) -->
         <button id="btnHeaderViewStore" onclick="openCustomerStoreView()" class="hidden md:flex items-center gap-1.5 px-3 py-1.5 bg-pink-600 hover:bg-pink-700 text-white text-xs font-bold rounded-xl shadow-sm transition">
           <i data-lucide="store" class="w-4 h-4"></i>
           <span data-i18n="btnViewStore">View My Store</span>
         </button>
 
+        <!-- CART BUTTON (CUSTOMER VIEW ONLY) -->
         <button id="customerCartBtn" onclick="toggleCartModal()" class="hidden relative p-2 bg-pink-100 text-pink-700 hover:bg-pink-200 rounded-xl transition">
           <i data-lucide="shopping-cart" class="w-5 h-5"></i>
           <span id="cartBadge" class="absolute -top-1 -right-1 bg-rose-500 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">0</span>
         </button>
 
+        <!-- LANGUAGE SWITCHER (ALWAYS VISIBLE IN BOTH VIEWS) -->
         <div class="flex items-center bg-slate-100 p-1 rounded-xl border border-slate-200 text-xs font-bold">
           <button onclick="setLanguage('BM')" id="langBtnBM" class="px-2 py-1 rounded-lg text-slate-600 transition">BM</button>
           <button onclick="setLanguage('BI')" id="langBtnBI" class="px-2 py-1 rounded-lg bg-pink-600 text-white transition">BI</button>
@@ -141,7 +149,7 @@
           <div class="p-3 border-b border-slate-100 mb-2 flex justify-between items-center">
             <div>
               <p id="sidebarGreeting" class="text-xs text-slate-500 font-semibold" data-i18n="welcome">Welcome,</p>
-              <h3 id="sidebarSellerName" class="font-bold text-slate-900 text-sm">Seller</h3>
+              <h3 id="sidebarSellerName" class="font-bold text-slate-900 text-sm">Scha</h3>
             </div>
             <button onclick="handleLogout()" title="Log Keluar" class="p-2 text-rose-600 hover:bg-rose-50 rounded-xl">
               <i data-lucide="log-out" class="w-4 h-4"></i>
@@ -207,10 +215,10 @@
             <div class="flex items-center gap-4">
               <img id="profileAvatar" src="https://via.placeholder.com/150" class="w-16 h-16 sm:w-20 sm:h-20 square-img rounded-2xl border-2 border-emerald-400">
               <div>
-                <h3 id="profileStoreDisplay" class="font-bold text-slate-900 text-base truncate">My Store</h3>
-                <p id="profileSellerNameDisplay" class="text-xs font-semibold text-slate-700 truncate">Seller Name</p>
-                <p id="profileEmailDisplay" class="text-xs text-slate-500 truncate">email@domain.com</p>
-                <p id="profilePhoneDisplay" class="text-xs text-slate-500 truncate">0123456789</p>
+                <h3 id="profileStoreDisplay" class="font-bold text-slate-900 text-base truncate">Scha Store</h3>
+                <p id="profileSellerNameDisplay" class="text-xs font-semibold text-slate-700 truncate">Scha</p>
+                <p id="profileEmailDisplay" class="text-xs text-slate-500 truncate">seller@scha.com</p>
+                <p id="profilePhoneDisplay" class="text-xs text-slate-500 truncate">60123456789</p>
                 <span class="inline-block mt-2 px-2.5 py-0.5 bg-emerald-100 text-emerald-800 text-[10px] font-extrabold rounded-full" data-i18n="activeSeller">ACTIVE SELLER</span>
               </div>
             </div>
@@ -221,7 +229,7 @@
             </div>
           </div>
 
-          <!-- 2. DASHBOARD SELLER (HOME UTAMA) -->
+          <!-- 2. DASHBOARD SELLER -->
           <div id="sec-dashboard" class="admin-sec space-y-4 sm:space-y-5">
             <div class="glass-card rounded-3xl p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-gradient-to-r from-emerald-500/10 via-teal-500/10 to-pink-500/10">
               <div>
@@ -312,8 +320,7 @@
                 <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider" data-i18n="monthlySalesTitle">Monthly Sales 2026</h3>
                 <span class="text-[10px] font-extrabold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full">2026</span>
               </div>
-              <div id="monthlySalesGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2.5 text-xs">
-              </div>
+              <div id="monthlySalesGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2.5 text-xs"></div>
             </div>
           </div>
 
@@ -476,7 +483,7 @@
             <div id="sellerProductsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4"></div>
           </div>
 
-          <!-- 8. PENGURUSAN KATEGORI WORKSHEET -->
+          <!-- 8. CATEGORY MANAGEMENT -->
           <div id="sec-admin-cat" class="admin-sec hidden glass-card rounded-3xl p-4 sm:p-6 space-y-4">
             <div class="flex items-center justify-between border-b pb-3">
               <div>
@@ -523,7 +530,7 @@
             </div>
           </div>
 
-          <!-- 9. SETTING PROFILE & STORE / WHATSAPP SETTINGS -->
+          <!-- 9. PROFILE & STORE / WHATSAPP SETTINGS -->
           <div id="sec-setting" class="admin-sec hidden glass-card rounded-3xl p-4 sm:p-6 space-y-5 max-w-xl mx-auto text-xs">
             <div class="flex items-center justify-between border-b pb-3">
               <h2 class="text-base font-extrabold text-slate-900" data-i18n="settingTitle">Store & WhatsApp Settings</h2>
@@ -597,16 +604,14 @@
       </div>
     </section>
 
-    <!-- PUBLIC CUSTOMER VIEW (VIEW PELANGGAN SAHAJA) -->
+    <!-- PUBLIC CUSTOMER VIEW (KATALOG PELANGGAN SAHAJA) -->
     <section id="view-customer" class="hidden space-y-4 sm:space-y-6 w-full max-w-7xl mx-auto">
       
-      <!-- HEADER KATALOG PELANGGAN (KEMASKINI POINT 1, 2, 3) -->
-      <div class="glass-card rounded-3xl p-4 sm:p-6 bg-gradient-to-r from-pink-500/10 via-purple-500/10 to-emerald-500/10 border border-white flex justify-between items-center gap-3 w-full">
+      <!-- HEADER KATALOG PELANGGAN (KEMASKINI NO 2 & NO 3) -->
+      <div class="glass-card rounded-3xl p-4 sm:p-6 bg-gradient-to-r from-pink-500/10 via-purple-500/10 to-emerald-500/10 border border-white flex justify-between items-center gap-3">
         <div class="space-y-1 min-w-0 flex-1">
-          <!-- POINT 3: Welcome to Scha Store -->
-          <h2 id="custStoreTitle" class="text-xl sm:text-2xl font-extrabold text-slate-900 break-words leading-tight">Welcome to Scha Store</h2>
-          <!-- POINT 3: Choose Products & Place Your Order Less Than 5 Minutes (MASUK DALAM SKRIN TANPA PASEK/TERPOTONG) -->
-          <p class="text-xs sm:text-sm font-semibold text-slate-700 break-words whitespace-normal leading-snug max-w-full">Choose Products &amp; Place Your Order Less Than 5 Minutes</p>
+          <h2 id="custStoreTitle" class="text-xl sm:text-3xl font-extrabold text-slate-900 leading-snug break-words" data-i18n="custWelcome">Welcome to Scha Store</h2>
+          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed font-semibold break-words" data-i18n="custWelcomeSub">Choose Products & Place Your Order Less Than 5 Minutes</p>
         </div>
 
         <button id="btnBackToAdmin" onclick="exitCustomerStoreView()" class="px-3.5 py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-xl shadow-md transition shrink-0 flex items-center gap-1.5">
@@ -615,27 +620,21 @@
         </button>
       </div>
 
-      <!-- BAHAGIAN TAPISAN DAN CARIAN KATALOG (KEMASKINI POINT 4 & 5) -->
+      <!-- BAHAGIAN DROPDOWN TAPISAN KATALOG (KEMASKINI NO 4 & NO 5) -->
       <div class="glass-card rounded-2xl p-3 sm:p-4 space-y-3">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 items-center">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 items-center">
           
-          <!-- POINT 4: DROPDOWN FILTER BY CATEGORIES -->
-          <div class="flex flex-col gap-1">
-            <label class="text-[11px] font-extrabold text-slate-600 uppercase tracking-wider flex items-center gap-1">
-              <i data-lucide="filter" class="w-3.5 h-3.5 text-pink-600"></i> Filter by Categories
-            </label>
-            <select id="custCategorySelect" onchange="filterCustomerByCategory(this.value)" class="w-full px-3.5 py-2.5 text-xs font-semibold bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-pink-400 text-slate-800 shadow-sm cursor-pointer">
-              <!-- Dynamic Category Options Inserted via JS -->
+          <!-- NO 4: DROPDOWN FILTER BY CATEGORIES -->
+          <div>
+            <label class="block text-[11px] font-extrabold text-slate-700 uppercase mb-1" data-i18n="filterByCategories">Filter by Categories</label>
+            <select id="custCategorySelect" onchange="onCategorySelectChange(this.value)" class="w-full px-3.5 py-2 text-xs bg-slate-50 font-bold text-slate-800 rounded-xl border border-slate-200 focus:outline-none focus:bg-white focus:ring-2 focus:ring-pink-300">
             </select>
           </div>
           
-          <!-- POINT 5: DROPDOWN FILTER BY PRODUCTS -->
-          <div class="flex flex-col gap-1">
-            <label class="text-[11px] font-extrabold text-slate-600 uppercase tracking-wider flex items-center gap-1">
-              <i data-lucide="search" class="w-3.5 h-3.5 text-emerald-600"></i> Filter by Products
-            </label>
-            <select id="custProductSelect" onchange="filterCustomerByProduct(this.value)" class="w-full px-3.5 py-2.5 text-xs font-semibold bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-400 text-slate-800 shadow-sm cursor-pointer">
-              <!-- Dynamic Product Options Inserted via JS -->
+          <!-- NO 5: DROPDOWN FILTER BY PRODUCTS -->
+          <div>
+            <label class="block text-[11px] font-extrabold text-slate-700 uppercase mb-1" data-i18n="filterByProducts">Filter by Products</label>
+            <select id="custProductSelect" onchange="onProductSelectChange(this.value)" class="w-full px-3.5 py-2 text-xs bg-slate-50 font-bold text-slate-800 rounded-xl border border-slate-200 focus:outline-none focus:bg-white focus:ring-2 focus:ring-pink-300">
             </select>
           </div>
 
@@ -672,7 +671,7 @@
     </button>
   </nav>
 
-  <!-- GALLERY / ALBUM MODAL (AKSES SEMUA GAMBAR) -->
+  <!-- GALLERY / ALBUM MODAL -->
   <div id="galleryModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
     <div class="bg-white w-full max-w-2xl rounded-3xl p-5 space-y-4 shadow-2xl relative max-h-[85vh] flex flex-col">
       <div class="flex justify-between items-center border-b pb-3">
@@ -815,8 +814,12 @@
         btnSaveSettings: "SIMPAN PROFIL & TETAPAN",
         btnCopyCustomerCatalog: "SALIN LINK KATALOG PELANGGAN",
         btnSignOut: "Log Keluar",
-        allCat: "Semua Kategori",
-        allProd: "Semua Produk",
+        custWelcome: "Welcome to Scha Store",
+        custWelcomeSub: "Choose Products & Place Your Order Less Than 5 Minutes",
+        filterByCategories: "Tapis Mengikut Kategori",
+        filterByProducts: "Tapis Mengikut Produk",
+        allCat: "-- Semua Kategori --",
+        allProd: "-- Semua Produk --",
         navHome: "Laman Utama",
         navAddProduct: "Add Produk",
         navAddSales: "Add Jualan",
@@ -855,7 +858,6 @@
         btnSaveCatText: "+ Simpan Kategori",
         catListHeader: "Senarai Kategori Sedia Ada",
         galleryHeader: "Gallery Gambar",
-        filterProdPh: "Tapis nama produk...",
         msgConfirmDelCat: "Adakah anda pasti mahu memadam kategori ini?",
         msgConfirmDelProd: "Adakah anda pasti mahu memadam produk ini?",
         msgSessionExpired: "Sesi anda telah tamat selepas 2 jam tidak aktif. Sila log masuk semula.",
@@ -962,8 +964,12 @@
         btnSaveSettings: "SAVE PROFILE",
         btnCopyCustomerCatalog: "COPY CUSTOMER CATALOG LINK",
         btnSignOut: "Sign Out",
-        allCat: "All Categories",
-        allProd: "All Products",
+        custWelcome: "Welcome to Scha Store",
+        custWelcomeSub: "Choose Products & Place Your Order Less Than 5 Minutes",
+        filterByCategories: "Filter by Categories",
+        filterByProducts: "Filter by Products",
+        allCat: "-- All Categories --",
+        allProd: "-- All Products --",
         navHome: "Home",
         navAddProduct: "Add Product",
         navAddSales: "Add Sales",
@@ -1002,7 +1008,6 @@
         btnSaveCatText: "+ Save Category",
         catListHeader: "Existing Category List",
         galleryHeader: "Image Gallery",
-        filterProdPh: "Filter product name...",
         msgConfirmDelCat: "Are you sure you want to delete this category?",
         msgConfirmDelProd: "Are you sure you want to delete this product?",
         msgSessionExpired: "Your session expired after 2 hours of inactivity. Please log in again.",
@@ -1025,6 +1030,7 @@
 
     let currentLang = "BI";
 
+    // STORAGE KEYS
     const KEY_PRODUCTS = "scha_prod_v4";
     const KEY_CATEGORIES = "scha_cat_v4";
     const KEY_SALES = "scha_sales_v4";
@@ -1037,7 +1043,7 @@
     const DEFAULT_WA_TEMPLATE = `Hello Scha,\n\nSaya ingin buat pesanan:\n\n{ITEMS}\n\nTotal : RM{TOTAL}\n\nSila berikan QR untuk saya buat pembayaran`;
 
     const DEFAULT_SETTINGS = {
-      storeName: "SCHA Digital Store",
+      storeName: "Scha Store",
       sellerName: "Scha",
       phone: "60123456789",
       email: "seller@scha.com",
@@ -1134,17 +1140,6 @@
       });
     }
 
-    function shareProductLink(productId) {
-      const baseUrl = window.location.href.split('?')[0];
-      const prodUrl = `${baseUrl}?mode=store&prodId=${productId}`;
-
-      navigator.clipboard.writeText(prodUrl).then(() => {
-        alert(`Pautan Produk Berjaya Disalin!\n\nLink Produk: ${prodUrl}`);
-      }).catch(err => {
-        alert(`Gagal menyalin pautan. Sila salin pautan ini secara manual:\n${prodUrl}`);
-      });
-    }
-
     function setLanguage(lang) {
       currentLang = lang;
       document.documentElement.lang = lang === "BM" ? "ms" : "en";
@@ -1163,7 +1158,7 @@
         if (dict[key]) el.placeholder = dict[key];
       });
 
-      renderCustomerDropdowns();
+      renderCustomerDropdownFilters();
       renderCustomerProductsGrid();
       if (!document.getElementById("sec-dashboard").classList.contains("hidden")) {
         renderDashboardAnalytics(currentFilterType);
@@ -1190,6 +1185,7 @@
       document.getElementById("view-customer").classList.add("hidden");
       document.getElementById("customerCartBtn").classList.add("hidden");
       document.getElementById("btnHeaderViewStore").classList.add("hidden");
+      document.getElementById("btnHeaderCopyLink").classList.add("hidden");
       document.getElementById("mobileBottomNav").classList.add("hidden");
 
       document.getElementById("formSignIn").classList.add("hidden");
@@ -1238,11 +1234,14 @@
     function showAdminView() {
       localStorage.setItem(KEY_CURRENT_VIEW, "admin");
       document.getElementById("mainHeader").classList.remove("hidden");
+      document.getElementById("headerLeftInfo").classList.remove("hidden");
+      document.getElementById("btnHeaderCopyLink").classList.remove("hidden");
+      document.getElementById("btnHeaderViewStore").classList.remove("hidden");
+      document.getElementById("customerCartBtn").classList.add("hidden");
+      
       document.getElementById("view-auth").classList.add("hidden");
       document.getElementById("view-admin").classList.remove("hidden");
       document.getElementById("view-customer").classList.add("hidden");
-      document.getElementById("customerCartBtn").classList.add("hidden");
-      document.getElementById("btnHeaderViewStore").classList.remove("hidden");
       document.getElementById("mobileBottomNav").classList.remove("hidden");
       document.getElementById("mobileBottomNav").classList.add("flex");
 
@@ -1520,60 +1519,51 @@
     function renderGalleryAlbums() {
       const tabs = document.getElementById("galleryAlbumTabs");
       const activeCats = categories.filter(c => c.status === "active");
-
-      let html = `
-        <button type="button" onclick="filterGalleryAlbum('ALL')" class="px-3 py-1 rounded-xl whitespace-nowrap ${activeGalleryAlbum === 'ALL' ? 'bg-purple-600 text-white' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}">
-          All Albums
-        </button>
-      `;
-
+      let html = `<button type="button" onclick="filterGalleryAlbum('ALL')" class="px-3 py-1 rounded-xl whitespace-nowrap ${activeGalleryAlbum==='ALL'?'bg-purple-600 text-white':'bg-slate-100 text-slate-700'}">${translations[currentLang].allCat}</button>`;
+      
       activeCats.forEach(c => {
-        html += `
-          <button type="button" onclick="filterGalleryAlbum('${c.name}')" class="px-3 py-1 rounded-xl whitespace-nowrap ${activeGalleryAlbum === c.name ? 'bg-purple-600 text-white' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}">
-            ${c.name}
-          </button>
-        `;
+        html += `<button type="button" onclick="filterGalleryAlbum('${c.name}')" class="px-3 py-1 rounded-xl whitespace-nowrap ${activeGalleryAlbum===c.name?'bg-purple-600 text-white':'bg-slate-100 text-slate-700'}">${c.name}</button>`;
       });
-
       tabs.innerHTML = html;
     }
 
-    function filterGalleryAlbum(albumName) {
-      activeGalleryAlbum = albumName;
+    function filterGalleryAlbum(catName) {
+      activeGalleryAlbum = catName;
       renderGalleryAlbums();
       renderGalleryImages();
     }
 
     function renderGalleryImages() {
       const grid = document.getElementById("galleryImagesGrid");
-      let allImages = [];
+      grid.innerHTML = "";
 
+      let allImgs = [];
       products.forEach(p => {
         if (activeGalleryAlbum === 'ALL' || p.category === activeGalleryAlbum) {
-          if (p.images && p.images.length > 0) {
-            p.images.forEach(img => allImages.push({ src: img, prodTitle: p.title, cat: p.category }));
-          } else if (p.img) {
-            allImages.push({ src: p.img, prodTitle: p.title, cat: p.category });
+          if (p.images && p.images.length) {
+            p.images.forEach(img => allImgs.push({ img, title: p.title }));
           }
         }
       });
 
-      if (allImages.length === 0) {
-        grid.innerHTML = `<div class="col-span-full text-center py-8 text-slate-400 font-bold text-xs">No images found in this album.</div>`;
+      if (!allImgs.length) {
+        grid.innerHTML = `<div class="col-span-full text-center text-slate-400 py-8">${translations[currentLang].noData}</div>`;
         return;
       }
 
-      grid.innerHTML = allImages.map((imgObj, i) => `
-        <div onclick="selectImageFromGallery('${imgObj.src}')" class="relative group cursor-pointer border border-slate-200 rounded-xl overflow-hidden hover:border-purple-500 hover:ring-2 hover:ring-purple-400 transition">
-          <img src="${imgObj.src}" class="w-full h-24 square-img">
-          <div class="absolute inset-0 bg-slate-900/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white text-[10px] font-bold p-1 text-center">
-            Select Image
-          </div>
-        </div>
-      `).join('');
+      allImgs.forEach((item, i) => {
+        const div = document.createElement("div");
+        div.className = "relative group cursor-pointer border rounded-2xl overflow-hidden hover:ring-2 ring-purple-500 transition";
+        div.onclick = () => selectGalleryImageToProduct(item.img);
+        div.innerHTML = `
+          <img src="${item.img}" class="w-full h-24 square-img">
+          <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white text-[10px] font-bold p-1 text-center">${item.title}</div>
+        `;
+        grid.appendChild(div);
+      });
     }
 
-    function selectImageFromGallery(imgSrc) {
+    function selectGalleryImageToProduct(imgSrc) {
       if (uploadedCompressedImages.length >= 10) {
         alert(translations[currentLang].msgMax10Img);
         return;
@@ -1607,61 +1597,94 @@
       reader.readAsDataURL(file);
     }
 
+    function handleLogoUpload(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      if (!['image/jpeg', 'image/png'].includes(file.type)) {
+        alert("Only PNG/JPG files are allowed!");
+        e.target.value = "";
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = (evt) => {
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement("canvas");
+          canvas.width = 300;
+          canvas.height = 300;
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(img, 0, 0, 300, 300);
+          uploadedLogoBase64 = canvas.toDataURL("image/jpeg", 0.8);
+          document.getElementById("previewSettingLogo").src = uploadedLogoBase64;
+          document.getElementById("logoUploadStatus").innerText = "Logo updated successfully!";
+        };
+        img.src = evt.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
     function populateCategoryDropdown() {
       const select = document.getElementById("pCategory");
-      if (!select) return;
       select.innerHTML = "";
       const activeCats = categories.filter(c => c.status === "active");
-      
       activeCats.forEach(c => {
         const opt = document.createElement("option");
         opt.value = c.name;
-        opt.textContent = c.name;
+        opt.innerText = c.name;
         select.appendChild(opt);
       });
+    }
+
+    function populateSalesProductDropdown() {
+      const select = document.getElementById("saleSelectProd");
+      select.innerHTML = `<option value="">-- Choose Product --</option>`;
+      products.forEach(p => {
+        const opt = document.createElement("option");
+        opt.value = p.id;
+        opt.innerText = `${p.title} (RM ${parseFloat(p.totalPrice).toFixed(2)})`;
+        select.appendChild(opt);
+      });
+    }
+
+    function autoFillSaleAmount() {
+      const prodId = document.getElementById("saleSelectProd").value;
+      const prod = products.find(p => p.id === prodId);
+      if (prod) {
+        document.getElementById("saleAmount").value = parseFloat(prod.totalPrice).toFixed(2);
+      }
     }
 
     function handleProductFormSubmit(e) {
       e.preventDefault();
       const editId = document.getElementById("editProductId").value;
-
       const title = document.getElementById("pTitle").value;
       const category = document.getElementById("pCategory").value;
-      const originalPrice = parseFloat(document.getElementById("pPrice").value) || 0;
+      const price = parseFloat(document.getElementById("pPrice").value) || 0;
       const promoPrice = parseFloat(document.getElementById("pPromoPrice").value) || 0;
-      const totalPrice = parseFloat(document.getElementById("pTotalPrice").value) || originalPrice;
+      const totalPrice = promoPrice > 0 ? promoPrice : price;
       const desc = document.getElementById("pDesc").value;
 
-      const defaultFallbackImg = "https://via.placeholder.com/300?text=Produk";
-      const finalImages = uploadedCompressedImages.length > 0 ? uploadedCompressedImages : [defaultFallbackImg];
+      if (!uploadedCompressedImages.length) {
+        uploadedCompressedImages.push("https://via.placeholder.com/400x400?text=Scha+Store");
+      }
 
       if (editId) {
-        const idx = products.findIndex(p => p.id == editId);
+        const idx = products.findIndex(p => p.id === editId);
         if (idx !== -1) {
           products[idx] = {
             ...products[idx],
-            title,
-            category,
-            price: originalPrice,
-            promoPrice,
-            totalPrice,
-            desc,
-            images: finalImages,
-            img: finalImages[0],
-            video: uploadedVideoBase64 || products[idx].video || ""
+            title, category, price, promoPrice, totalPrice, desc,
+            images: [...uploadedCompressedImages],
+            video: uploadedVideoBase64 || products[idx].video
           };
         }
       } else {
         const newProduct = {
-          id: Date.now(),
-          title,
-          category,
-          price: originalPrice,
-          promoPrice,
-          totalPrice,
-          desc,
-          images: finalImages,
-          img: finalImages[0],
+          id: "prod_" + Date.now(),
+          title, category, price, promoPrice, totalPrice, desc,
+          images: [...uploadedCompressedImages],
           video: uploadedVideoBase64,
           isBestSeller: false
         };
@@ -1670,7 +1693,6 @@
 
       localStorage.setItem(KEY_PRODUCTS, JSON.stringify(products));
       alert(translations[currentLang].msgProdSaved);
-
       resetProductForm();
       switchAdminSection("store");
     }
@@ -1683,11 +1705,10 @@
       document.getElementById("imagePreviewContainer").innerHTML = "";
       document.getElementById("imgUploadStatus").innerText = "";
       document.getElementById("videoUploadStatus").innerText = "";
-      document.getElementById("addProductTitle").innerText = translations[currentLang].addProductTitle;
     }
 
     function editProduct(id) {
-      const p = products.find(prod => prod.id == id);
+      const p = products.find(item => item.id === id);
       if (!p) return;
 
       switchAdminSection("add-product");
@@ -1695,30 +1716,31 @@
       document.getElementById("pTitle").value = p.title;
       document.getElementById("pCategory").value = p.category;
       document.getElementById("pPrice").value = p.price;
-      document.getElementById("pPromoPrice").value = p.promoPrice || "";
-      document.getElementById("pTotalPrice").value = p.totalPrice || p.price;
+      document.getElementById("pPromoPrice").value = p.promoPrice || 0;
+      document.getElementById("pTotalPrice").value = parseFloat(p.totalPrice).toFixed(2);
       document.getElementById("pDesc").value = p.desc || "";
 
-      uploadedCompressedImages = p.images ? [...p.images] : (p.img ? [p.img] : []);
+      uploadedCompressedImages = p.images ? [...p.images] : [];
+      uploadedVideoBase64 = p.video || "";
+
       renderImagePreviews();
-
-      document.getElementById("addProductTitle").innerText = "Edit Product Catalog";
-    }
-
-    function deleteProduct(id) {
-      if (confirm(translations[currentLang].msgConfirmDelProd)) {
-        products = products.filter(p => p.id != id);
-        localStorage.setItem(KEY_PRODUCTS, JSON.stringify(products));
-        renderSellerProductsGrid();
-        renderCustomerProductsGrid();
-        renderCustomerDropdowns();
+      if (uploadedVideoBase64) {
+        document.getElementById("videoUploadStatus").innerText = "Video currently attached.";
       }
     }
 
     function toggleBestSeller(id) {
-      const idx = products.findIndex(p => p.id == id);
+      const idx = products.findIndex(p => p.id === id);
       if (idx !== -1) {
         products[idx].isBestSeller = !products[idx].isBestSeller;
+        localStorage.setItem(KEY_PRODUCTS, JSON.stringify(products));
+        renderSellerProductsGrid();
+      }
+    }
+
+    function deleteProduct(id) {
+      if (confirm(translations[currentLang].msgConfirmDelProd)) {
+        products = products.filter(p => p.id !== id);
         localStorage.setItem(KEY_PRODUCTS, JSON.stringify(products));
         renderSellerProductsGrid();
       }
@@ -1728,43 +1750,45 @@
       const grid = document.getElementById("sellerProductsGrid");
       grid.innerHTML = "";
 
-      if (products.length === 0) {
-        grid.innerHTML = `<div class="col-span-full text-center py-10 glass-card rounded-3xl text-slate-400 font-bold text-xs">No products yet. Please add new product.</div>`;
+      if (!products.length) {
+        grid.innerHTML = `<div class="col-span-full text-center text-slate-400 py-12 font-bold">${translations[currentLang].noData}</div>`;
         return;
       }
 
       products.forEach(p => {
-        const displayImg = (p.images && p.images.length > 0) ? p.images[0] : (p.img || "https://via.placeholder.com/300");
         const card = document.createElement("div");
-        card.className = "glass-card rounded-2xl p-3 flex flex-col justify-between space-y-2 relative";
+        card.className = "glass-card rounded-2xl p-3.5 space-y-3 flex flex-col justify-between";
+        
+        const mainImg = (p.images && p.images.length) ? p.images[0] : "https://via.placeholder.com/400x400?text=Scha+Store";
+        const isBest = p.isBestSeller;
 
         card.innerHTML = `
           <div class="space-y-2">
-            <div class="relative">
-              <img src="${displayImg}" class="w-full h-36 square-img rounded-xl">
-              ${p.isBestSeller ? `<span class="absolute top-2 left-2 bg-amber-500 text-white text-[9px] font-extrabold px-2 py-0.5 rounded-full shadow">BEST SELLER</span>` : ''}
-              ${p.images && p.images.length > 1 ? `<span class="absolute bottom-2 right-2 bg-slate-900/80 text-white text-[9px] font-bold px-2 py-0.5 rounded-full">${p.images.length} Images</span>` : ''}
+            <div class="relative rounded-xl overflow-hidden">
+              <img src="${mainImg}" class="w-full h-40 square-img">
+              ${isBest ? `<span class="absolute top-2 left-2 bg-rose-500 text-white text-[10px] font-extrabold px-2 py-0.5 rounded-md shadow">BEST SELLER</span>` : ''}
+              <button onclick="shareProductLink('${p.id}')" title="Copy Product Link" class="absolute top-2 right-2 bg-white/90 hover:bg-white text-slate-800 p-1.5 rounded-lg shadow">
+                <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
+              </button>
             </div>
             <div>
-              <span class="text-[10px] font-bold text-pink-600 uppercase">${p.category}</span>
-              <h4 class="font-bold text-slate-900 text-xs line-clamp-1">${p.title}</h4>
-              <p class="text-[11px] text-slate-500 line-clamp-2 mt-0.5">${p.desc || ''}</p>
+              <span class="text-[10px] font-bold text-emerald-600 uppercase">${p.category}</span>
+              <h4 class="font-extrabold text-slate-900 text-xs truncate">${p.title}</h4>
+              <p class="text-xs text-slate-600 line-clamp-2 mt-0.5">${p.desc || ''}</p>
+            </div>
+            <div class="flex items-baseline gap-2">
+              <span class="text-sm font-extrabold text-pink-600">RM ${parseFloat(p.totalPrice).toFixed(2)}</span>
+              ${p.promoPrice > 0 ? `<span class="text-[10px] text-slate-400 line-through">RM ${parseFloat(p.price).toFixed(2)}</span>` : ''}
             </div>
           </div>
-          <div class="pt-2 border-t border-slate-100 flex items-center justify-between gap-1">
-            <div>
-              <span class="text-xs font-extrabold text-emerald-600">RM ${(p.totalPrice || p.price || 0).toFixed(2)}</span>
-            </div>
+
+          <div class="pt-2 border-t flex items-center justify-between gap-1 text-[11px] font-bold">
+            <button onclick="toggleBestSeller('${p.id}')" class="px-2.5 py-1.5 rounded-lg border ${isBest?'bg-amber-100 text-amber-800 border-amber-300':'bg-slate-50 text-slate-600'}">
+              ★ Best Seller
+            </button>
             <div class="flex items-center gap-1">
-              <button onclick="toggleBestSeller(${p.id})" title="Toggle Best Seller" class="p-1.5 ${p.isBestSeller ? 'bg-amber-100 text-amber-700' : 'bg-slate-100 text-slate-500'} hover:bg-amber-200 rounded-lg text-xs font-bold transition">
-                <i data-lucide="star" class="w-3.5 h-3.5"></i>
-              </button>
-              <button onclick="editProduct(${p.id})" class="p-1.5 bg-blue-50 text-blue-600 hover:bg-blue-100 rounded-lg text-xs font-bold transition">
-                <i data-lucide="edit" class="w-3.5 h-3.5"></i>
-              </button>
-              <button onclick="deleteProduct(${p.id})" class="p-1.5 bg-rose-50 text-rose-600 hover:bg-rose-100 rounded-lg text-xs font-bold transition">
-                <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
-              </button>
+              <button onclick="editProduct('${p.id}')" class="px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-lg">${translations[currentLang].editBtn}</button>
+              <button onclick="deleteProduct('${p.id}')" class="px-2.5 py-1.5 bg-rose-100 hover:bg-rose-200 text-rose-700 rounded-lg">${translations[currentLang].deleteBtn}</button>
             </div>
           </div>
         `;
@@ -1773,23 +1797,74 @@
       lucide.createIcons();
     }
 
-    function populateSalesProductDropdown() {
-      const select = document.getElementById("saleSelectProd");
-      select.innerHTML = '<option value="">-- Choose Product --</option>';
-      products.forEach(p => {
-        const opt = document.createElement("option");
-        opt.value = p.id;
-        opt.textContent = `${p.title} - RM ${(p.totalPrice || p.price || 0).toFixed(2)}`;
-        select.appendChild(opt);
-      });
+    function handleSaveCategory(e) {
+      e.preventDefault();
+      const idx = parseInt(document.getElementById("editCatIndex").value, 10);
+      const name = document.getElementById("catNameInput").value.trim().toUpperCase();
+      const status = document.getElementById("catStatusInput").value;
+      const desc = document.getElementById("catDescInput").value.trim();
+
+      if (idx >= 0) {
+        categories[idx] = { name, status, desc };
+      } else {
+        categories.push({ name, status, desc });
+      }
+
+      localStorage.setItem(KEY_CATEGORIES, JSON.stringify(categories));
+      resetCategoryForm();
+      renderCategoriesList();
+      populateCategoryDropdown();
     }
 
-    function autoFillSaleAmount() {
-      const prodId = document.getElementById("saleSelectProd").value;
-      const p = products.find(prod => prod.id == prodId);
-      if (p) {
-        document.getElementById("saleAmount").value = (p.totalPrice || p.price || 0).toFixed(2);
+    function resetCategoryForm() {
+      document.getElementById("editCatIndex").value = "-1";
+      document.getElementById("catNameInput").value = "";
+      document.getElementById("catStatusInput").value = "active";
+      document.getElementById("catDescInput").value = "";
+      document.getElementById("catFormTitle").innerText = translations[currentLang].addCatNewHeader;
+    }
+
+    function editCategory(idx) {
+      const c = categories[idx];
+      if (!c) return;
+      document.getElementById("editCatIndex").value = idx;
+      document.getElementById("catNameInput").value = c.name;
+      document.getElementById("catStatusInput").value = c.status;
+      document.getElementById("catDescInput").value = c.desc || "";
+      document.getElementById("catFormTitle").innerText = `Edit Category: ${c.name}`;
+    }
+
+    function deleteCategory(idx) {
+      if (confirm(translations[currentLang].msgConfirmDelCat)) {
+        categories.splice(idx, 1);
+        localStorage.setItem(KEY_CATEGORIES, JSON.stringify(categories));
+        renderCategoriesList();
+        populateCategoryDropdown();
       }
+    }
+
+    function renderCategoriesList() {
+      const container = document.getElementById("categoriesList");
+      container.innerHTML = "";
+
+      categories.forEach((c, i) => {
+        const item = document.createElement("div");
+        item.className = "bg-white/80 p-3 rounded-2xl border border-slate-200 flex justify-between items-center text-xs";
+        item.innerHTML = `
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="font-extrabold text-slate-900">${c.name}</span>
+              <span class="px-2 py-0.5 rounded-full text-[9px] font-bold ${c.status==='active'?'bg-emerald-100 text-emerald-800':'bg-slate-100 text-slate-600'}">${c.status.toUpperCase()}</span>
+            </div>
+            <p class="text-[11px] text-slate-500 mt-0.5">${c.desc || ''}</p>
+          </div>
+          <div class="flex items-center gap-1 font-bold">
+            <button onclick="editCategory(${i})" class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-lg">${translations[currentLang].editBtn}</button>
+            <button onclick="deleteCategory(${i})" class="px-2.5 py-1 bg-rose-100 hover:bg-rose-200 text-rose-700 rounded-lg">${translations[currentLang].deleteBtn}</button>
+          </div>
+        `;
+        container.appendChild(item);
+      });
     }
 
     function handleManualAddSales(e) {
@@ -1799,15 +1874,15 @@
       const amount = parseFloat(document.getElementById("saleAmount").value) || 0;
       const date = document.getElementById("saleDate").value;
 
-      const p = products.find(prod => prod.id == prodId);
-      const prodName = p ? p.title : "Manual Order";
+      const prod = products.find(p => p.id === prodId);
+      const prodName = prod ? prod.title : "General Item";
 
       const newSale = {
-        id: Date.now(),
-        customer: custName,
-        product: prodName,
-        amount: amount,
-        date: date
+        id: "sale_" + Date.now(),
+        custName,
+        prodName,
+        amount,
+        date
       };
 
       salesHistory.unshift(newSale);
@@ -1822,22 +1897,22 @@
       const tbody = document.getElementById("salesTableBody");
       tbody.innerHTML = "";
 
-      if (salesHistory.length === 0) {
+      if (!salesHistory.length) {
         tbody.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-slate-400 font-bold">${translations[currentLang].msgNoSalesData}</td></tr>`;
         return;
       }
 
-      salesHistory.forEach(s => {
+      salesHistory.forEach((s, idx) => {
         const tr = document.createElement("tr");
-        tr.className = "hover:bg-slate-50 transition";
+        tr.className = "hover:bg-slate-50/50";
         tr.innerHTML = `
-          <td class="p-2.5 font-bold text-slate-700">${s.date}</td>
-          <td class="p-2.5 font-semibold text-slate-900">${s.customer}</td>
-          <td class="p-2.5 text-slate-600">${s.product}</td>
+          <td class="p-2.5 font-bold text-slate-600">${s.date}</td>
+          <td class="p-2.5 font-bold text-slate-900">${s.custName}</td>
+          <td class="p-2.5 text-slate-700">${s.prodName}</td>
           <td class="p-2.5 font-extrabold text-emerald-600">RM ${parseFloat(s.amount).toFixed(2)}</td>
           <td class="p-2.5 text-right">
-            <button onclick="deleteSalesRecord(${s.id})" class="p-1 bg-rose-100 text-rose-600 rounded-lg hover:bg-rose-200">
-              <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+            <button onclick="deleteSaleRecord(${idx})" class="p-1 text-rose-600 hover:bg-rose-50 rounded-lg">
+              <i data-lucide="trash-2" class="w-4 h-4"></i>
             </button>
           </td>
         `;
@@ -1846,9 +1921,9 @@
       lucide.createIcons();
     }
 
-    function deleteSalesRecord(id) {
-      if (confirm("Adakah anda pasti mahu memadam rekod jualan ini?")) {
-        salesHistory = salesHistory.filter(s => s.id != id);
+    function deleteSaleRecord(idx) {
+      if (confirm("Padam rekod jualan ini?")) {
+        salesHistory.splice(idx, 1);
         localStorage.setItem(KEY_SALES, JSON.stringify(salesHistory));
         renderSalesHistoryTable();
         renderDashboardAnalytics(currentFilterType);
@@ -1856,149 +1931,49 @@
     }
 
     function downloadSalesCSV() {
-      if (salesHistory.length === 0) {
+      if (!salesHistory.length) {
         alert(translations[currentLang].msgNoSalesData);
         return;
       }
-      let csvContent = "data:text/csv;charset=utf-8,ID,Tarikh,Pelanggan,Produk,Amaun(RM)\n";
+
+      let csv = "Tarikh,Pelanggan,Produk,Amaun(RM)\n";
       salesHistory.forEach(s => {
-        csvContent += `${s.id},${s.date},"${s.customer}","${s.product}",${s.amount}\n`;
+        csv += `"${s.date}","${s.custName}","${s.prodName}","${parseFloat(s.amount).toFixed(2)}"\n`;
       });
-      const encodedUri = encodeURI(csvContent);
-      const link = document.createElement("a");
-      link.setAttribute("href", encodedUri);
-      link.setAttribute("download", `Rekod_Jualan_Scha_Store_${new Date().toISOString().split('T')[0]}.csv`);
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    }
 
-    function renderCategoriesList() {
-      const container = document.getElementById("categoriesList");
-      container.innerHTML = "";
-
-      categories.forEach((cat, idx) => {
-        const item = document.createElement("div");
-        item.className = "p-3 bg-white rounded-2xl border border-slate-200 flex items-center justify-between gap-2 shadow-sm";
-        item.innerHTML = `
-          <div>
-            <div class="flex items-center gap-2">
-              <h4 class="font-extrabold text-slate-900 text-xs">${cat.name}</h4>
-              <span class="px-2 py-0.5 rounded-full text-[9px] font-extrabold ${cat.status === 'active' ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-600'}">${cat.status.toUpperCase()}</span>
-            </div>
-            <p class="text-[11px] text-slate-500 mt-0.5">${cat.desc || ''}</p>
-          </div>
-          <div class="flex items-center gap-1">
-            <button onclick="editCategory(${idx})" class="p-1.5 bg-blue-50 text-blue-600 hover:bg-blue-100 rounded-xl transition">
-              <i data-lucide="edit" class="w-3.5 h-3.5"></i>
-            </button>
-            <button onclick="deleteCategory(${idx})" class="p-1.5 bg-rose-50 text-rose-600 hover:bg-rose-100 rounded-xl transition">
-              <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
-            </button>
-          </div>
-        `;
-        container.appendChild(item);
-      });
-      lucide.createIcons();
-    }
-
-    function handleSaveCategory(e) {
-      e.preventDefault();
-      const editIdx = parseInt(document.getElementById("editCatIndex").value, 10);
-      const name = document.getElementById("catNameInput").value.trim().toUpperCase();
-      const status = document.getElementById("catStatusInput").value;
-      const desc = document.getElementById("catDescInput").value.trim();
-
-      if (editIdx >= 0 && editIdx < categories.length) {
-        categories[editIdx] = { name, status, desc };
-      } else {
-        categories.push({ name, status, desc });
-      }
-
-      localStorage.setItem(KEY_CATEGORIES, JSON.stringify(categories));
-      resetCategoryForm();
-      renderCategoriesList();
-      populateCategoryDropdown();
-      renderCustomerDropdowns();
-    }
-
-    function editCategory(idx) {
-      const cat = categories[idx];
-      if (!cat) return;
-      document.getElementById("editCatIndex").value = idx;
-      document.getElementById("catNameInput").value = cat.name;
-      document.getElementById("catStatusInput").value = cat.status;
-      document.getElementById("catDescInput").value = cat.desc || "";
-      document.getElementById("catFormTitle").innerText = "Edit Category";
-    }
-
-    function deleteCategory(idx) {
-      if (confirm(translations[currentLang].msgConfirmDelCat)) {
-        categories.splice(idx, 1);
-        localStorage.setItem(KEY_CATEGORIES, JSON.stringify(categories));
-        renderCategoriesList();
-        populateCategoryDropdown();
-        renderCustomerDropdowns();
-      }
-    }
-
-    function resetCategoryForm() {
-      document.getElementById("editCatIndex").value = "-1";
-      document.getElementById("catNameInput").value = "";
-      document.getElementById("catStatusInput").value = "active";
-      document.getElementById("catDescInput").value = "";
-      document.getElementById("catFormTitle").innerText = translations[currentLang].addCatNewHeader;
+      const blob = new Blob([csv], { type: "text/csv" });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `Rekod_Jualan_Scha_${Date.now()}.csv`;
+      a.click();
     }
 
     function loadSettingsToUI() {
-      document.getElementById("setStoreName").value = settings.storeName || "";
-      document.getElementById("setSellerName").value = settings.sellerName || "";
-      document.getElementById("setPhone").value = settings.phone || "";
-      document.getElementById("setEmail").value = settings.email || "";
-      document.getElementById("setWaNum").value = settings.waNum || "";
+      document.getElementById("setStoreName").value = settings.storeName || "Scha Store";
+      document.getElementById("setSellerName").value = settings.sellerName || "Scha";
+      document.getElementById("setPhone").value = settings.phone || "60123456789";
+      document.getElementById("setEmail").value = settings.email || "seller@scha.com";
+      document.getElementById("setWaNum").value = settings.waNum || "60123456789";
       document.getElementById("setWaTemplate").value = settings.waTemplate || DEFAULT_WA_TEMPLATE;
+      document.getElementById("previewSettingLogo").src = settings.logoUrl || "https://via.placeholder.com/150";
 
-      document.getElementById("headerStoreName").innerText = settings.storeName || "SCHA Store";
+      document.getElementById("headerStoreName").innerText = settings.storeName || "Scha Store";
       document.getElementById("headerSellerName").innerText = settings.sellerName || "Scha";
+      document.getElementById("headerLogo").src = settings.logoUrl || "https://via.placeholder.com/150";
+      document.getElementById("sidebarSellerName").innerText = settings.sellerName || "Scha";
 
-      const logo = settings.logoUrl || "https://via.placeholder.com/150";
-      document.getElementById("headerLogo").src = logo;
-      document.getElementById("profileAvatar").src = logo;
-      document.getElementById("previewSettingLogo").src = logo;
+      document.getElementById("profileStoreDisplay").innerText = settings.storeName || "Scha Store";
+      document.getElementById("profileSellerNameDisplay").innerText = settings.sellerName || "Scha";
+      document.getElementById("profileEmailDisplay").innerText = settings.email || "seller@scha.com";
+      document.getElementById("profilePhoneDisplay").innerText = settings.phone || "60123456789";
+      document.getElementById("profileAvatar").src = settings.logoUrl || "https://via.placeholder.com/150";
 
-      document.getElementById("sidebarSellerName").innerText = settings.sellerName || "Seller";
-      document.getElementById("profileStoreDisplay").innerText = settings.storeName || "My Store";
-      document.getElementById("profileSellerNameDisplay").innerText = settings.sellerName || "Seller";
-      document.getElementById("profileEmailDisplay").innerText = settings.email || "";
-      document.getElementById("profilePhoneDisplay").innerText = settings.phone || "";
-    }
-
-    function handleLogoUpload(e) {
-      const file = e.target.files[0];
-      if (!file) return;
-
-      const reader = new FileReader();
-      reader.onload = (evt) => {
-        const img = new Image();
-        img.onload = () => {
-          const canvas = document.createElement("canvas");
-          canvas.width = 150;
-          canvas.height = 150;
-          const ctx = canvas.getContext("2d");
-          ctx.drawImage(img, 0, 0, 150, 150);
-          uploadedLogoBase64 = canvas.toDataURL("image/jpeg", 0.8);
-
-          document.getElementById("previewSettingLogo").src = uploadedLogoBase64;
-          document.getElementById("logoUploadStatus").innerText = "Logo ready to save.";
-        };
-        img.src = evt.target.result;
-      };
-      reader.readAsDataURL(file);
+      document.getElementById("custStoreTitle").innerText = translations[currentLang].custWelcome;
     }
 
     function handleSaveStoreSettings(e) {
       e.preventDefault();
-
       settings.storeName = document.getElementById("setStoreName").value;
       settings.sellerName = document.getElementById("setSellerName").value;
       settings.phone = document.getElementById("setPhone").value;
@@ -2015,123 +1990,131 @@
       alert(translations[currentLang].msgSettingSaved);
     }
 
-    // --- BAHAGIAN CUSTOMER STORE VIEW (VIEW PELANGGAN SAHAJA) ---
+    // ==========================================
+    // PUBLIC CUSTOMER CATALOG VIEW (KEMASKINI)
+    // ==========================================
     function openCustomerStoreView() {
       localStorage.setItem(KEY_CURRENT_VIEW, "customer");
-      document.getElementById("mainHeader").classList.add("hidden");
+      
+      // Header atas kekal untuk language switcher sahaja
+      document.getElementById("mainHeader").classList.remove("hidden");
+      document.getElementById("headerLeftInfo").classList.add("hidden"); // KEMASKINI NO 2: Buang gambar seller & words official seller portal
+      document.getElementById("btnHeaderCopyLink").classList.add("hidden"); // KEMASKINI NO 1: Buang icon copy link
+      document.getElementById("btnHeaderViewStore").classList.add("hidden");
+      document.getElementById("customerCartBtn").classList.remove("hidden"); // KEMASKINI NO 1: Kekalkan Troli
+
       document.getElementById("view-auth").classList.add("hidden");
       document.getElementById("view-admin").classList.add("hidden");
       document.getElementById("view-customer").classList.remove("hidden");
-
-      document.getElementById("customerCartBtn").classList.remove("hidden");
       document.getElementById("mobileBottomNav").classList.add("hidden");
 
-      renderCustomerDropdowns();
+      if (authSession.isLoggedIn) {
+        document.getElementById("btnBackToAdmin").classList.remove("hidden");
+      } else {
+        document.getElementById("btnBackToAdmin").classList.add("hidden");
+      }
+
+      renderCustomerDropdownFilters();
       renderCustomerProductsGrid();
     }
 
     function exitCustomerStoreView() {
-      if (authSession.isLoggedIn) {
-        showAdminView();
-      } else {
-        showAuthView("signin");
-      }
+      showAdminView();
     }
 
-    // POINT 4 & 5: RENDERING DROPDOWN FILTER BY CATEGORIES & FILTER BY PRODUCTS
-    function renderCustomerDropdowns() {
+    // KEMASKINI NO 4 & NO 5: POPULATE DROPDOWNS
+    function renderCustomerDropdownFilters() {
       const catSelect = document.getElementById("custCategorySelect");
       const prodSelect = document.getElementById("custProductSelect");
-
       if (!catSelect || !prodSelect) return;
 
-      const activeCats = categories.filter(c => c.status === "active");
       const dict = translations[currentLang];
 
       // 1. Populate Category Dropdown
-      let catHtml = `<option value="ALL">-- ${dict.allCat || 'All Categories'} --</option>`;
+      let catHtml = `<option value="ALL">${dict.allCat}</option>`;
+      const activeCats = categories.filter(c => c.status === "active");
       activeCats.forEach(c => {
-        catHtml += `<option value="${c.name}" ${selectedCategoryFilter === c.name ? 'selected' : ''}>${c.name}</option>`;
+        catHtml += `<option value="${c.name}" ${selectedCategoryFilter===c.name?'selected':''}>${c.name}</option>`;
       });
       catSelect.innerHTML = catHtml;
 
-      // 2. Populate Product Dropdown
-      let prodHtml = `<option value="ALL">-- ${dict.allProd || 'All Products'} --</option>`;
-      products.forEach(p => {
-        prodHtml += `<option value="${p.id}" ${selectedProductFilter == p.id ? 'selected' : ''}>${p.title}</option>`;
+      // 2. Populate Product Dropdown based on Category selection
+      let availableProds = products;
+      if (selectedCategoryFilter !== 'ALL') {
+        availableProds = products.filter(p => p.category === selectedCategoryFilter);
+      }
+
+      let prodHtml = `<option value="ALL">${dict.allProd}</option>`;
+      availableProds.forEach(p => {
+        prodHtml += `<option value="${p.id}" ${selectedProductFilter===p.id?'selected':''}>${p.title}</option>`;
       });
       prodSelect.innerHTML = prodHtml;
     }
 
-    function filterCustomerByCategory(categoryName) {
-      selectedCategoryFilter = categoryName;
-      selectedProductFilter = 'ALL'; 
-      document.getElementById("custProductSelect").value = 'ALL';
+    function onCategorySelectChange(val) {
+      selectedCategoryFilter = val;
+      selectedProductFilter = 'ALL'; // reset product filter apabila kategori bertukar
+      renderCustomerDropdownFilters();
       renderCustomerProductsGrid();
     }
 
-    function filterCustomerByProduct(productId) {
-      selectedProductFilter = productId;
+    function onProductSelectChange(val) {
+      selectedProductFilter = val;
       renderCustomerProductsGrid();
     }
 
     function renderCustomerProductsGrid() {
       const grid = document.getElementById("customerProductsGrid");
+      if (!grid) return;
       grid.innerHTML = "";
 
-      let filtered = [...products];
+      let filtered = products;
 
       // Filter by Category
       if (selectedCategoryFilter !== 'ALL') {
         filtered = filtered.filter(p => p.category === selectedCategoryFilter);
       }
 
-      // Filter by Product Select
+      // Filter by Product ID
       if (selectedProductFilter !== 'ALL') {
-        filtered = filtered.filter(p => p.id == selectedProductFilter);
+        filtered = filtered.filter(p => p.id === selectedProductFilter);
       }
 
-      if (filtered.length === 0) {
-        grid.innerHTML = `<div class="col-span-full text-center py-12 glass-card rounded-3xl text-slate-400 font-bold text-xs">No products found matching your search filter.</div>`;
+      if (!filtered.length) {
+        grid.innerHTML = `<div class="col-span-full text-center text-slate-400 py-16 font-bold text-sm">${translations[currentLang].noData}</div>`;
         return;
       }
 
       filtered.forEach(p => {
-        const displayImg = (p.images && p.images.length > 0) ? p.images[0] : (p.img || "https://via.placeholder.com/300");
-        const finalPrice = p.totalPrice || p.price || 0;
-
         const card = document.createElement("div");
-        card.className = "glass-card rounded-2xl sm:rounded-3xl p-3 flex flex-col justify-between space-y-2 hover:shadow-lg transition relative";
+        card.className = "glass-card rounded-2xl p-3 space-y-2 flex flex-col justify-between hover:shadow-xl transition";
+
+        const mainImg = (p.images && p.images.length) ? p.images[0] : "https://via.placeholder.com/400x400?text=Scha+Store";
+        const isBest = p.isBestSeller;
 
         card.innerHTML = `
           <div class="space-y-2">
-            <div class="relative overflow-hidden rounded-xl sm:rounded-2xl">
-              <img src="${displayImg}" class="w-full h-36 sm:h-44 square-img hover:scale-105 transition duration-300">
-              ${p.isBestSeller ? `<span class="absolute top-2 left-2 bg-amber-500 text-white text-[9px] font-extrabold px-2 py-0.5 rounded-full shadow">BEST SELLER</span>` : ''}
-              ${p.images && p.images.length > 1 ? `<span class="absolute bottom-2 right-2 bg-slate-900/80 text-white text-[9px] font-bold px-2 py-0.5 rounded-full">${p.images.length} Gambar</span>` : ''}
+            <div class="relative rounded-xl overflow-hidden">
+              <img src="${mainImg}" class="w-full h-36 sm:h-44 square-img">
+              ${isBest ? `<span class="absolute top-2 left-2 bg-rose-500 text-white text-[9px] font-extrabold px-2 py-0.5 rounded-md shadow">BEST SELLER</span>` : ''}
+              ${p.video ? `<span class="absolute bottom-2 right-2 bg-purple-600/90 text-white text-[9px] font-bold px-2 py-0.5 rounded-md flex items-center gap-1"><i data-lucide="video" class="w-3 h-3"></i> MP4</span>` : ''}
             </div>
             <div>
-              <span class="text-[9px] sm:text-[10px] font-extrabold text-pink-600 uppercase tracking-wider block">${p.category}</span>
-              <h3 class="font-extrabold text-slate-900 text-xs sm:text-sm line-clamp-2 leading-snug">${p.title}</h3>
-              <p class="text-[10px] sm:text-[11px] text-slate-500 line-clamp-2 mt-1 leading-snug">${p.desc || ''}</p>
+              <span class="text-[9px] font-extrabold text-emerald-700 uppercase tracking-wider block">${p.category}</span>
+              <h4 class="font-extrabold text-slate-900 text-xs sm:text-sm line-clamp-2 leading-tight">${p.title}</h4>
+              <p class="text-[11px] text-slate-500 line-clamp-2 mt-1">${p.desc || ''}</p>
             </div>
           </div>
 
-          <div class="pt-2 border-t border-slate-100 space-y-2">
-            <div class="flex items-baseline gap-1.5 flex-wrap">
-              <span class="text-xs sm:text-sm font-extrabold text-emerald-600">RM ${finalPrice.toFixed(2)}</span>
-              ${p.promoPrice > 0 ? `<span class="text-[10px] text-slate-400 line-through">RM ${p.price.toFixed(2)}</span>` : ''}
+          <div class="pt-2 border-t border-slate-100 flex items-center justify-between gap-1">
+            <div class="flex items-baseline gap-1">
+              <span class="text-xs sm:text-sm font-extrabold text-pink-600">RM ${parseFloat(p.totalPrice).toFixed(2)}</span>
+              ${p.promoPrice > 0 ? `<span class="text-[9px] text-slate-400 line-through">RM ${parseFloat(p.price).toFixed(2)}</span>` : ''}
             </div>
-
-            <div class="flex items-center gap-1.5">
-              <button onclick="addToCart(${p.id})" class="flex-1 py-2 bg-pink-600 hover:bg-pink-700 text-white text-[11px] sm:text-xs font-bold rounded-xl shadow-md transition flex items-center justify-center gap-1">
-                <i data-lucide="shopping-cart" class="w-3.5 h-3.5"></i>
-                <span>+ Cart</span>
-              </button>
-              <button onclick="shareProductLink(${p.id})" title="Copy Product Link" class="p-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition">
-                <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
-              </button>
-            </div>
+            <button onclick="addToCart('${p.id}')" class="px-3 py-1.5 bg-pink-600 hover:bg-pink-700 text-white font-bold text-xs rounded-xl shadow transition flex items-center gap-1">
+              <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+              <span>+ Troli</span>
+            </button>
           </div>
         `;
         grid.appendChild(card);
@@ -2139,20 +2122,16 @@
       lucide.createIcons();
     }
 
+    // CART & WHATSAPP CHECKOUT FUNGSI
     function addToCart(productId) {
-      const p = products.find(prod => prod.id == productId);
-      if (!p) return;
+      const prod = products.find(p => p.id === productId);
+      if (!prod) return;
 
-      const existingIndex = cart.findIndex(item => item.id == productId);
-      if (existingIndex !== -1) {
-        cart[existingIndex].qty += 1;
+      const existing = cart.find(item => item.id === productId);
+      if (existing) {
+        existing.qty += 1;
       } else {
-        cart.push({
-          id: p.id,
-          title: p.title,
-          price: p.totalPrice || p.price || 0,
-          qty: 1
-        });
+        cart.push({ ...prod, qty: 1 });
       }
 
       updateCartBadge();
@@ -2177,31 +2156,30 @@
       const emptyMsg = document.getElementById("cartEmptyMsg");
       container.innerHTML = "";
 
-      if (cart.length === 0) {
+      if (!cart.length) {
         emptyMsg.classList.remove("hidden");
         document.getElementById("cartTotalPrice").innerText = "RM 0.00";
         return;
       }
-
       emptyMsg.classList.add("hidden");
-      let totalOverall = 0;
 
+      let total = 0;
       cart.forEach((item, index) => {
-        const itemTotal = item.price * item.qty;
-        totalOverall += itemTotal;
+        const itemTotal = parseFloat(item.totalPrice) * item.qty;
+        total += itemTotal;
 
         const row = document.createElement("div");
-        row.className = "flex items-center justify-between gap-2 p-2.5 bg-slate-50 rounded-2xl border border-slate-100";
+        row.className = "flex items-center justify-between gap-2 p-2 bg-slate-50 rounded-xl border border-slate-100";
         row.innerHTML = `
           <div class="min-w-0 flex-1">
-            <h4 class="font-bold text-slate-900 text-xs truncate">${item.title}</h4>
-            <span class="text-[11px] text-emerald-600 font-extrabold">RM ${item.price.toFixed(2)} x ${item.qty} = RM ${itemTotal.toFixed(2)}</span>
+            <h5 class="font-bold text-slate-900 text-xs truncate">${item.title}</h5>
+            <p class="text-[10px] text-pink-600 font-bold">RM ${parseFloat(item.totalPrice).toFixed(2)} x ${item.qty}</p>
           </div>
-          <div class="flex items-center gap-1 shrink-0">
-            <button onclick="changeCartQty(${index}, -1)" class="w-6 h-6 bg-slate-200 text-slate-700 font-bold rounded-lg flex items-center justify-center hover:bg-slate-300">-</button>
-            <span class="text-xs font-bold px-1">${item.qty}</span>
-            <button onclick="changeCartQty(${index}, 1)" class="w-6 h-6 bg-slate-200 text-slate-700 font-bold rounded-lg flex items-center justify-center hover:bg-slate-300">+</button>
-            <button onclick="removeFromCart(${index})" class="p-1 text-rose-600 hover:bg-rose-50 rounded-lg ml-1">
+          <div class="flex items-center gap-1">
+            <button onclick="changeCartQty(${index}, -1)" class="w-6 h-6 bg-slate-200 text-slate-700 font-bold rounded-lg text-xs flex items-center justify-center">-</button>
+            <span class="text-xs font-bold w-4 text-center">${item.qty}</span>
+            <button onclick="changeCartQty(${index}, 1)" class="w-6 h-6 bg-slate-200 text-slate-700 font-bold rounded-lg text-xs flex items-center justify-center">+</button>
+            <button onclick="removeCartItem(${index})" class="p-1 text-rose-500 hover:bg-rose-50 rounded-lg ml-1">
               <i data-lucide="trash-2" class="w-4 h-4"></i>
             </button>
           </div>
@@ -2209,13 +2187,13 @@
         container.appendChild(row);
       });
 
-      document.getElementById("cartTotalPrice").innerText = `RM ${totalOverall.toFixed(2)}`;
+      document.getElementById("cartTotalPrice").innerText = `RM ${total.toFixed(2)}`;
       lucide.createIcons();
     }
 
-    function changeCartQty(index, delta) {
+    function changeCartQty(index, change) {
       if (cart[index]) {
-        cart[index].qty += delta;
+        cart[index].qty += change;
         if (cart[index].qty <= 0) {
           cart.splice(index, 1);
         }
@@ -2224,7 +2202,7 @@
       renderCartItems();
     }
 
-    function removeFromCart(index) {
+    function removeCartItem(index) {
       cart.splice(index, 1);
       updateCartBadge();
       renderCartItems();
@@ -2237,46 +2215,44 @@
         return;
       }
 
-      if (cart.length === 0) {
+      if (!cart.length) {
         alert(translations[currentLang].msgCartEmpty);
         return;
       }
 
-      let itemsFormatted = "";
-      let totalOverall = 0;
+      let itemsSummary = "";
+      let totalAmount = 0;
 
-      cart.forEach((item, idx) => {
-        const itemTotal = item.price * item.qty;
-        totalOverall += itemTotal;
-        itemsFormatted += `${idx + 1}. ${item.title} (x${item.qty}) - RM ${itemTotal.toFixed(2)}\n`;
+      cart.forEach((item, i) => {
+        const itemTotal = parseFloat(item.totalPrice) * item.qty;
+        totalAmount += itemTotal;
+        itemsSummary += `${i + 1}. ${item.title} (x${item.qty}) - RM${itemTotal.toFixed(2)}\n`;
       });
 
-      let waMsg = settings.waTemplate || DEFAULT_WA_TEMPLATE;
-      waMsg = waMsg.replace("{ITEMS}", itemsFormatted.trim());
-      waMsg = waMsg.replace("{TOTAL}", totalOverall.toFixed(2));
-      waMsg = `Nama Pelanggan: ${name}\n\n` + waMsg;
-
-      const recipientNumber = settings.waNum || settings.phone || "60123456789";
-      const cleanNum = recipientNumber.replace(/[^0-9]/g, '');
-      const waUrl = `https://wa.me/${cleanNum}?text=${encodeURIComponent(waMsg)}`;
-
-      // Rekod ke jualan secara automatik
-      const todayStr = new Date().toISOString().split('T')[0];
-      const newSaleRecord = {
-        id: Date.now(),
-        customer: name,
-        product: cart.map(c => `${c.title} (x${c.qty})`).join(", "),
-        amount: totalOverall,
-        date: todayStr
+      // Merekod jualan secara automatik dalam sistem admin
+      const newSale = {
+        id: "sale_" + Date.now(),
+        custName: name,
+        prodName: cart.map(i => `${i.title} (${i.qty})`).join(", "),
+        amount: totalAmount,
+        date: new Date().toISOString().split('T')[0]
       };
-      salesHistory.unshift(newSaleRecord);
+      salesHistory.unshift(newSale);
       localStorage.setItem(KEY_SALES, JSON.stringify(salesHistory));
 
-      // Clear Cart
+      // Hantar pesanan terus ke WhatsApp
+      let message = settings.waTemplate || DEFAULT_WA_TEMPLATE;
+      message = message.replace("{ITEMS}", itemsSummary.trim());
+      message = message.replace("{TOTAL}", totalAmount.toFixed(2));
+      message = `Nama Pelanggan: ${name}\n\n` + message;
+
+      const encodedMsg = encodeURIComponent(message);
+      const waNumber = settings.waNum || "60123456789";
+      const waUrl = `https://wa.me/${waNumber}?text=${encodedMsg}`;
+
       cart = [];
       updateCartBadge();
       toggleCartModal();
-      document.getElementById("custCheckoutName").value = "";
 
       window.open(waUrl, "_blank");
     }
