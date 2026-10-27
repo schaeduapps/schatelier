@@ -2,1019 +2,1113 @@
 <html lang="ms">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scha Digital Store</title>
-    <!-- Tailwind CSS -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Scha Atelier Sales Tracker</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome Icons -->
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Chart.js for Analytics -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Google Font Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'Calibri', 'sans-serif'],
-                    },
-                    colors: {
-                        pastel: {
-                            pink: '#FDE2E4',
-                            pinkDark: '#FFCAD4',
-                            blue: '#E2ECE9',
-                            blueLight: '#EDF2F4',
-                            accent: '#BEE1E6',
-                            purple: '#E2D4F0',
-                            cardBg: '#FFFFFF',
-                        }
-                    }
-                }
-            }
-        }
-    </script>
+    
+    <!-- Dynamic PWA Manifest -->
+    <link rel="manifest" id="pwa-manifest">
+
     <style>
         body {
-            font-family: 'Inter', 'Calibri', sans-serif;
+            font-family: 'Outfit', sans-serif;
+            background: linear-gradient(90deg, #89E3FF, #FF4A8B);
+            min-height: 100vh;
+            color: #000000;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
         }
-        /* Custom scrollbar */
+        .font-logo {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+        }
+        .font-date {
+            font-family: 'Inter', sans-serif;
+        }
+        .custom-card {
+            background-color: #FFB5B5;
+            border-radius: 24px;
+        }
+        .custom-input {
+            background-color: #FFB5B5;
+            border-radius: 24px;
+            color: #000000;
+            border: 2px solid transparent;
+        }
+        .custom-input:focus {
+            outline: none;
+            border-color: #000000;
+        }
+        .custom-button {
+            background-color: #FFB5B5;
+            border-radius: 24px;
+            transition: all 0.2s ease;
+        }
+        .custom-button:active {
+            filter: brightness(0.9);
+            transform: scale(0.98);
+        }
         ::-webkit-scrollbar {
             width: 6px;
             height: 6px;
         }
         ::-webkit-scrollbar-track {
-            background: #F1F5F9;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
         }
         ::-webkit-scrollbar-thumb {
-            background: #CBD5E1;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #94A3B8;
-        }
-        .gradient-pastel {
-            background: linear-gradient(135deg, #FFCAD4 0%, #BEE1E6 50%, #E2D4F0 100%);
-        }
-        .gradient-pastel-soft {
-            background: linear-gradient(135deg, #FFF0F3 0%, #F0F7F7 100%);
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
         }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col">
+<body class="flex flex-col min-h-screen text-black">
 
-    <!-- Application Header -->
-    <header class="gradient-pastel border-b border-pink-200/50 sticky top-0 z-40 shadow-sm transition-all duration-300">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
-            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                
-                <!-- CUSTOMER VIEW HEADER (Default) -->
-                <div id="customerHeaderBranding" class="flex items-center space-x-3 flex-1 min-w-0">
-                    <div class="p-2.5 bg-white/80 backdrop-blur-sm rounded-2xl shadow-sm border border-white/50 shrink-0">
-                        <i class="fa-solid fa-store text-pink-500 text-xl sm:text-2xl"></i>
-                    </div>
-                    <div class="min-w-0 flex-1">
-                        <h1 id="customerTitle" class="text-xl sm:text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight break-words">
-                            Welcome to Scha Store
-                        </h1>
-                        <p id="customerSubtext" class="text-xs sm:text-sm text-slate-700 font-semibold mt-0.5 break-words">
-                            Choose Products &amp; Click Buy Now
-                        </p>
-                    </div>
-                </div>
+    <!-- Offline Notification Banner -->
+    <div id="offline-banner" class="hidden bg-red-600 text-white text-center text-xs py-1 px-4 font-medium z-50">
+        <span data-i18n="offline_msg">Anda berada luar talian. Perubahan akan diselaraskan apabila bersambung semula.</span>
+    </div>
 
-                <!-- SELLER VIEW HEADER (Hidden by default) -->
-                <div id="sellerHeaderBranding" class="hidden flex items-center space-x-3 flex-1 min-w-0">
-                    <div class="relative shrink-0">
-                        <img id="sellerAvatarHeader" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80" alt="Seller Avatar" class="w-12 h-12 rounded-full object-cover border-2 border-white shadow-md">
-                        <span class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-emerald-500 border-2 border-white rounded-full"></span>
-                    </div>
-                    <div class="min-w-0 flex-1">
-                        <div class="flex items-center space-x-2">
-                            <h1 id="sellerShopNameHeader" class="text-lg sm:text-xl font-bold text-slate-900 truncate">
-                                Scha Official Portal
-                            </h1>
-                            <span class="bg-indigo-600 text-white text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full shadow-sm">
-                                SELLER PORTAL
-                            </span>
-                        </div>
-                        <p class="text-xs text-slate-600 font-medium">Pengurusan Katalog &amp; Jualan</p>
-                    </div>
-                </div>
+    <!-- Main Container -->
+    <div id="app" class="flex-1 flex flex-col max-w-md mx-auto w-full pb-28 relative shadow-2xl bg-gradient-to-r from-[#89E3FF] to-[#FF4A8B] min-h-screen">
 
-                <!-- Navigation Controls & View Toggles -->
-                <div class="flex items-center space-x-2 sm:space-x-3 self-end md:self-center shrink-0">
-                    
-                    <!-- COPY LINK BUTTON (SELLER VIEW ONLY) -->
-                    <button id="btnCopyCatalogLink" onclick="copyCatalogLink()" class="hidden inline-flex items-center px-3 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs sm:text-sm rounded-xl transition-all shadow-sm active:scale-95">
-                        <i class="fa-solid fa-link mr-1.5"></i>
-                        <span>Copy Catalog Link</span>
+        <!-- HEADER (Appears on all main screens) -->
+        <header id="app-header" class="px-4 pt-4 pb-2 flex items-center justify-between border-b border-black/10">
+            <!-- Top Left: Malaysia Date & Day -->
+            <div class="flex flex-col">
+                <span id="header-date" class="font-date text-sm font-bold">--/--/----</span>
+                <span id="header-day" class="font-date text-xs font-semibold text-black/80">---</span>
+            </div>
+            <!-- Top Center: Logo SCHA ATELIER -->
+            <div class="text-center cursor-pointer" onclick="switchScreen('dashboard')">
+                <h1 class="font-logo text-lg font-extrabold tracking-wider uppercase text-black">SCHA ATELIER</h1>
+            </div>
+            <!-- Top Right: Language Switch & Menu -->
+            <div class="flex items-center gap-2">
+                <button onclick="toggleLanguage()" class="bg-[#FFB5B5] px-2.5 py-1 rounded-xl text-xs font-bold border border-black/20 shadow-sm">
+                    <span id="lang-label">BM</span>
+                </button>
+                <div class="relative">
+                    <button onclick="toggleMenuDropdown()" class="bg-[#FFB5B5] w-8 h-8 rounded-xl flex items-center justify-center border border-black/20 shadow-sm">
+                        <i class="fa-solid fa-bars text-sm"></i>
                     </button>
-
-                    <!-- CART BUTTON (CUSTOMER VIEW ONLY) -->
-                    <button id="btnCartTrigger" onclick="toggleCartModal()" class="inline-flex items-center px-3.5 py-2 bg-white/90 hover:bg-white text-slate-800 font-semibold text-xs sm:text-sm rounded-xl transition-all shadow-sm border border-white/60 focus:outline-none">
-                        <i class="fa-solid fa-cart-shopping text-pink-500 mr-2"></i>
-                        <span id="cartBtnText">Cart</span>
-                        <span id="cartBadge" class="ml-2 bg-pink-500 text-white text-[11px] font-bold px-2 py-0.5 rounded-full hidden">0</span>
-                    </button>
-
-                    <!-- VIEW SWITCHER TOGGLE -->
-                    <button id="btnTogglePortal" onclick="switchView()" class="inline-flex items-center px-3.5 py-2 bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs sm:text-sm rounded-xl transition-all shadow-md active:scale-95">
-                        <i id="toggleIcon" class="fa-solid fa-user-gear mr-2 text-pink-300"></i>
-                        <span id="toggleText">Seller Portal</span>
-                    </button>
-                </div>
-
-            </div>
-        </div>
-    </header>
-
-    <!-- Main Content Body -->
-    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        
-        <!-- ========================================== -->
-        <!-- 1. CUSTOMER VIEW CONTAINER                -->
-        <!-- ========================================== -->
-        <section id="customerViewSection" class="space-y-6">
-            
-            <!-- Filters & Search Toolbar Card -->
-            <div class="bg-white p-4 sm:p-6 rounded-2xl border border-slate-200/80 shadow-sm">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    
-                    <!-- Dropdown Filter 1: Category Filter -->
-                    <div>
-                        <label for="categoryFilter" class="block text-xs font-extrabold text-slate-500 uppercase tracking-wider mb-2">
-                            <i class="fa-solid fa-layer-group text-pink-400 mr-1"></i> Filter by Categories
-                        </label>
-                        <div class="relative">
-                            <select id="categoryFilter" onchange="applyCustomerFilters()" class="w-full bg-slate-50 border border-slate-200 text-slate-800 text-sm font-medium rounded-xl focus:ring-2 focus:ring-pink-300 focus:border-pink-400 p-3 appearance-none pr-10 cursor-pointer transition-all">
-                                <option value="all">Semua Kategori (All Categories)</option>
-                            </select>
-                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-slate-400">
-                                <i class="fa-solid fa-chevron-down text-xs"></i>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Dropdown Filter 2: Product Specific Filter -->
-                    <div>
-                        <label for="productFilter" class="block text-xs font-extrabold text-slate-500 uppercase tracking-wider mb-2">
-                            <i class="fa-solid fa-box text-pink-400 mr-1"></i> Filter by Products
-                        </label>
-                        <div class="relative">
-                            <select id="productFilter" onchange="applyCustomerFilters()" class="w-full bg-slate-50 border border-slate-200 text-slate-800 text-sm font-medium rounded-xl focus:ring-2 focus:ring-pink-300 focus:border-pink-400 p-3 appearance-none pr-10 cursor-pointer transition-all">
-                                <option value="all">Semua Produk (All Products)</option>
-                            </select>
-                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-slate-400">
-                                <i class="fa-solid fa-chevron-down text-xs"></i>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Keyword Search Field -->
-                    <div>
-                        <label for="searchInput" class="block text-xs font-extrabold text-slate-500 uppercase tracking-wider mb-2">
-                            <i class="fa-solid fa-magnifying-glass text-pink-400 mr-1"></i> Search Keywords
-                        </label>
-                        <div class="relative">
-                            <input type="text" id="searchInput" oninput="applyCustomerFilters()" placeholder="Cari nama atau penerangan..." class="w-full bg-slate-50 border border-slate-200 text-slate-800 text-sm font-medium rounded-xl focus:ring-2 focus:ring-pink-300 focus:border-pink-400 p-3 pl-10 transition-all">
-                            <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400">
-                                <i class="fa-solid fa-search text-xs"></i>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-            <!-- Products Catalog Grid -->
-            <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                <!-- Products rendered dynamically -->
-            </div>
-
-            <!-- Empty Product Catalog State -->
-            <div id="noCustomerResults" class="hidden text-center py-16 bg-white rounded-2xl border border-dashed border-slate-300">
-                <div class="w-16 h-16 bg-pink-50 text-pink-400 rounded-full flex items-center justify-center mx-auto mb-3">
-                    <i class="fa-solid fa-box-open text-2xl"></i>
-                </div>
-                <h3 class="text-lg font-bold text-slate-700">Tiada produk ditemui</h3>
-                <p class="text-sm text-slate-500 mt-1">Sila cuba tetapkan semula carian atau kategori anda.</p>
-                <button onclick="resetCustomerFilters()" class="mt-4 px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs rounded-xl transition-all">
-                    Reset Filter
-                </button>
-            </div>
-
-        </section>
-
-        <!-- ========================================== -->
-        <!-- 2. SELLER / ADMIN VIEW CONTAINER           -->
-        <!-- ========================================== -->
-        <section id="sellerViewSection" class="hidden space-y-8">
-            
-            <!-- Admin Navigation Tabs -->
-            <div class="flex border-b border-slate-200 overflow-x-auto space-x-2 pb-1">
-                <button onclick="switchAdminTab('products')" id="tabBtnProducts" class="admin-tab-btn active px-4 py-2.5 rounded-xl font-bold text-sm text-slate-700 bg-white shadow-sm border border-slate-200 flex items-center space-x-2 whitespace-nowrap">
-                    <i class="fa-solid fa-boxes-stacked text-pink-500"></i>
-                    <span>Pengurusan Produk</span>
-                </button>
-                <button onclick="switchAdminTab('categories')" id="tabBtnCategories" class="admin-tab-btn px-4 py-2.5 rounded-xl font-medium text-sm text-slate-500 hover:bg-white flex items-center space-x-2 whitespace-nowrap">
-                    <i class="fa-solid fa-tags text-indigo-500"></i>
-                    <span>Pengurusan Kategori</span>
-                </button>
-                <button onclick="switchAdminTab('analytics')" id="tabBtnAnalytics" class="admin-tab-btn px-4 py-2.5 rounded-xl font-medium text-sm text-slate-500 hover:bg-white flex items-center space-x-2 whitespace-nowrap">
-                    <i class="fa-solid fa-chart-line text-emerald-500"></i>
-                    <span>Analytics &amp; Jualan</span>
-                </button>
-                <button onclick="switchAdminTab('settings')" id="tabBtnSettings" class="admin-tab-btn px-4 py-2.5 rounded-xl font-medium text-sm text-slate-500 hover:bg-white flex items-center space-x-2 whitespace-nowrap">
-                    <i class="fa-solid fa-sliders text-amber-500"></i>
-                    <span>Tetapan Kedai</span>
-                </button>
-            </div>
-
-            <!-- ADMIN TAB 1: PRODUCT MANAGEMENT -->
-            <div id="adminTabProducts" class="space-y-6">
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-4 sm:p-6 rounded-2xl border border-slate-200 shadow-sm">
-                    <div>
-                        <h2 class="text-lg font-bold text-slate-800">Senarai Produk Kedai</h2>
-                        <p class="text-xs text-slate-500">Tambah, kemaskini atau padam item jualan anda.</p>
-                    </div>
-                    <button onclick="openProductModal()" class="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm rounded-xl transition-all shadow-md flex items-center justify-center space-x-2">
-                        <i class="fa-solid fa-plus"></i>
-                        <span>Tambah Produk Baru</span>
-                    </button>
-                </div>
-
-                <!-- Admin Products Table -->
-                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left text-sm">
-                            <thead class="bg-slate-50 border-b border-slate-200 text-xs font-bold text-slate-500 uppercase">
-                                <tr>
-                                    <th class="p-4">Produk</th>
-                                    <th class="p-4">Kategori</th>
-                                    <th class="p-4">Harga (RM)</th>
-                                    <th class="p-4">Media</th>
-                                    <th class="p-4 text-right">Tindakan</th>
-                                </tr>
-                            </thead>
-                            <tbody id="adminProductsTable" class="divide-y divide-slate-100">
-                                <!-- Dynamic Rows -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ADMIN TAB 2: CATEGORIES MANAGEMENT -->
-            <div id="adminTabCategories" class="hidden space-y-6">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm h-fit">
-                        <h3 class="text-base font-bold text-slate-800 mb-4">Tambah Kategori Baru</h3>
-                        <div class="space-y-4">
-                            <div>
-                                <label class="block text-xs font-bold text-slate-600 mb-1">Nama Kategori</label>
-                                <input type="text" id="newCategoryInput" placeholder="cth: Prasekolah" class="w-full bg-slate-50 border border-slate-200 text-sm rounded-xl p-3 focus:ring-2 focus:ring-indigo-300">
-                            </div>
-                            <button onclick="addNewCategory()" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm rounded-xl transition-all shadow-sm">
-                                Simpan Kategori
-                            </button>
-                        </div>
-                    </div>
-                    <div class="md:col-span-2 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-                        <h3 class="text-base font-bold text-slate-800 mb-4">Kategori Sedia Ada</h3>
-                        <div id="categoryBadgeList" class="flex flex-wrap gap-2">
-                            <!-- Dynamic Badges -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ADMIN TAB 3: ANALYTICS & SALES DASHBOARD -->
-            <div id="adminTabAnalytics" class="hidden space-y-6">
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
-                        <div class="flex items-center justify-between">
-                            <span class="text-xs font-extrabold text-slate-400 uppercase tracking-wider">Jumlah Jualan</span>
-                            <i class="fa-solid fa-wallet text-emerald-500 text-lg"></i>
-                        </div>
-                        <p id="statTotalSales" class="text-2xl font-black text-slate-900 mt-2">RM 0.00</p>
-                    </div>
-                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
-                        <div class="flex items-center justify-between">
-                            <span class="text-xs font-extrabold text-slate-400 uppercase tracking-wider">Jumlah Pesanan</span>
-                            <i class="fa-solid fa-bag-shopping text-indigo-500 text-lg"></i>
-                        </div>
-                        <p id="statTotalOrders" class="text-2xl font-black text-slate-900 mt-2">0</p>
-                    </div>
-                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
-                        <div class="flex items-center justify-between">
-                            <span class="text-xs font-extrabold text-slate-400 uppercase tracking-wider">Jumlah Produk</span>
-                            <i class="fa-solid fa-box text-pink-500 text-lg"></i>
-                        </div>
-                        <p id="statTotalProducts" class="text-2xl font-black text-slate-900 mt-2">0</p>
-                    </div>
-                </div>
-
-                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-                    <h3 class="text-base font-bold text-slate-800 mb-4">Prestasi Jualan Kategori</h3>
-                    <div class="h-64 sm:h-80">
-                        <canvas id="salesChart"></canvas>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ADMIN TAB 4: STORE SETTINGS -->
-            <div id="adminTabSettings" class="hidden space-y-6">
-                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm max-w-2xl">
-                    <h3 class="text-base font-bold text-slate-800 mb-4">Profil &amp; Branding Kedai</h3>
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-xs font-bold text-slate-600 mb-1">Nama Kedai (Seller Shop Name)</label>
-                            <input type="text" id="settingShopName" class="w-full bg-slate-50 border border-slate-200 text-sm rounded-xl p-3">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-slate-600 mb-1">Nombor WhatsApp / Hubungi</label>
-                            <input type="text" id="settingWhatsApp" placeholder="60123456789" class="w-full bg-slate-50 border border-slate-200 text-sm rounded-xl p-3">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-slate-600 mb-1">URL Avatar / Logo Seller</label>
-                            <input type="text" id="settingAvatarUrl" class="w-full bg-slate-50 border border-slate-200 text-sm rounded-xl p-3">
-                        </div>
-                        <button onclick="saveStoreSettings()" class="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm rounded-xl transition-all shadow-sm">
-                            Simpan Perubahan
+                    <!-- Dropdown Menu -->
+                    <div id="menu-dropdown" class="hidden absolute right-0 mt-2 w-48 custom-card border border-black/20 shadow-xl z-50 py-2">
+                        <button onclick="openInfoModal()" class="w-full text-left px-4 py-2 hover:bg-black/10 text-sm font-medium flex items-center gap-2">
+                            <i class="fa-solid fa-book-open"></i> <span data-i18n="menu_guide">Panduan & Persediaan</span>
+                        </button>
+                        <button onclick="exportCSVBackup()" class="w-full text-left px-4 py-2 hover:bg-black/10 text-sm font-medium flex items-center gap-2">
+                            <i class="fa-solid fa-file-arrow-down"></i> <span data-i18n="menu_export">Eksport Sandaran</span>
+                        </button>
+                        <div class="border-t border-black/10 my-1"></div>
+                        <button onclick="logoutUser()" class="w-full text-left px-4 py-2 hover:bg-red-200 text-sm font-semibold text-red-700 flex items-center gap-2">
+                            <i class="fa-solid fa-right-from-bracket"></i> <span data-i18n="menu_logout">Log Keluar</span>
                         </button>
                     </div>
                 </div>
             </div>
+        </header>
 
-        </section>
+        <!-- CONTENT AREA -->
+        <main class="flex-1 px-4 py-4 overflow-y-auto">
 
-    </main>
-
-    <!-- Application Footer -->
-    <footer class="bg-white border-t border-slate-200 py-6 mt-auto">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-xs text-slate-500 font-medium">
-            <p>&copy; 2026 Scha Digital Store. All rights reserved.</p>
-        </div>
-    </footer>
-
-    <!-- CART DRAWER MODAL -->
-    <div id="cartModal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex justify-end opacity-0 pointer-events-none transition-opacity duration-300">
-        <div class="bg-white w-full max-w-md h-full flex flex-col shadow-2xl transform translate-x-full transition-transform duration-300" id="cartDrawer">
-            
-            <div class="p-4 sm:p-6 border-b border-slate-200 flex items-center justify-between gradient-pastel-soft">
-                <div class="flex items-center space-x-2">
-                    <i class="fa-solid fa-bag-shopping text-pink-500 text-lg"></i>
-                    <h2 class="text-lg font-bold text-slate-800">Troli Membeli-belah</h2>
+            <!-- 0) LOGIN / SIGNUP SCREEN -->
+            <section id="screen-auth" class="hidden flex flex-col justify-center items-center h-full py-8">
+                <div class="text-center mb-6">
+                    <h2 class="font-logo text-3xl font-extrabold uppercase mb-2">SCHA ATELIER</h2>
+                    <p class="text-sm font-medium text-black/80" data-i18n="auth_subtitle">Portal Pengurusan Jualan Peribadi</p>
                 </div>
-                <button onclick="toggleCartModal()" class="text-slate-400 hover:text-slate-600 p-2 rounded-xl hover:bg-white/60 transition-colors">
-                    <i class="fa-solid fa-xmark text-lg"></i>
-                </button>
-            </div>
+                
+                <div class="custom-card p-6 w-full max-w-sm shadow-lg border border-black/10">
+                    <div class="flex border-b border-black/20 mb-6">
+                        <button id="tab-login-btn" onclick="setAuthTab('login')" class="flex-1 pb-2 text-center font-bold text-sm border-b-2 border-black" data-i18n="tab_login">Log Masuk</button>
+                        <button id="tab-signup-btn" onclick="setAuthTab('signup')" class="flex-1 pb-2 text-center font-medium text-sm text-black/60 border-b-2 border-transparent" data-i18n="tab_signup">Daftar Akaun</button>
+                    </div>
 
-            <div id="cartItemsList" class="flex-grow p-4 sm:p-6 overflow-y-auto divide-y divide-slate-100">
-                <!-- Cart list rendered dynamically -->
-            </div>
+                    <form id="auth-form" onsubmit="handleAuthSubmit(event)" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold mb-1 uppercase" data-i18n="label_email">Emel</label>
+                            <input type="email" id="auth-email" required class="custom-input w-full px-4 py-3 text-sm" placeholder="owner@schatelier.com">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold mb-1 uppercase" data-i18n="label_password">Kata Laluan</label>
+                            <input type="password" id="auth-password" required class="custom-input w-full px-4 py-3 text-sm" placeholder="••••••••">
+                        </div>
+                        <div id="signup-confirm-container" class="hidden">
+                            <label class="block text-xs font-bold mb-1 uppercase" data-i18n="label_confirm_pass">Sahkan Kata Laluan</label>
+                            <input type="password" id="auth-password-confirm" class="custom-input w-full px-4 py-3 text-sm" placeholder="••••••••">
+                        </div>
+                        
+                        <div id="auth-error" class="text-xs text-red-700 font-semibold hidden"></div>
 
-            <div class="p-4 sm:p-6 border-t border-slate-200 bg-slate-50 space-y-4">
-                <div class="flex items-center justify-between text-base font-bold text-slate-800">
-                    <span>Jumlah Keseluruhan</span>
-                    <span id="cartTotalAmount" class="text-indigo-600">RM 0.00</span>
+                        <button type="submit" id="auth-submit-btn" class="w-full bg-black text-white font-bold py-3 rounded-2xl shadow-md hover:bg-black/90 transition">
+                            <span id="auth-btn-text" data-i18n="btn_login">Log Masuk</span>
+                        </button>
+
+                        <div class="text-center mt-3">
+                            <button type="button" onclick="openForgotPasswordModal()" class="text-xs font-semibold underline text-black/80 hover:text-black" data-i18n="forgot_pass">Lupa kata laluan?</button>
+                        </div>
+                    </form>
+                    
+                    <div id="signup-disabled-notice" class="hidden mt-4 p-3 bg-amber-100 rounded-xl text-xs font-medium text-amber-900 text-center">
+                        <span data-i18n="signup_disabled_msg">Pendaftaran ditutup kekal. Akaun pemilik sudah wujud.</span>
+                    </div>
                 </div>
-                <button onclick="processCheckout()" id="btnCheckout" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3.5 px-4 rounded-xl shadow-lg transition-all flex items-center justify-center space-x-2">
-                    <i class="fa-brands fa-whatsapp text-emerald-400 text-lg"></i>
-                    <span>Beli Sekarang / Checkout</span>
-                </button>
-            </div>
+            </section>
 
-        </div>
-    </div>
-
-    <!-- ADD / EDIT PRODUCT MODAL (SELLER ONLY) -->
-    <div id="productModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
-        <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
-            <div class="flex items-center justify-between border-b pb-3">
-                <h3 id="productModalTitle" class="text-lg font-bold text-slate-800">Tambah Produk Baru</h3>
-                <button onclick="closeProductModal()" class="text-slate-400 hover:text-slate-600">
-                    <i class="fa-solid fa-xmark text-lg"></i>
-                </button>
-            </div>
-
-            <form id="productForm" onsubmit="handleProductSubmit(event)" class="space-y-4">
-                <input type="hidden" id="modalProductId">
-                <div>
-                    <label class="block text-xs font-bold text-slate-600 mb-1">Nama Produk</label>
-                    <input type="text" id="modalProdName" required class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm focus:ring-2 focus:ring-indigo-300">
-                </div>
+            <!-- 1) DASHBOARD SCREEN -->
+            <section id="screen-dashboard" class="space-y-4 pb-6">
+                <!-- Row 1: Daily Sales & Monthly Sales -->
                 <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-bold text-slate-600 mb-1">Kategori</label>
-                        <select id="modalProdCategory" required class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm focus:ring-2 focus:ring-indigo-300">
-                            <!-- Dynamic options -->
-                        </select>
+                    <div class="custom-card p-4 flex flex-col justify-between shadow-md border border-black/10 min-h-[110px]">
+                        <span class="text-xs font-bold uppercase tracking-wide text-black/80" data-i18n="card_daily">Daily Sales</span>
+                        <div class="text-lg sm:text-xl font-extrabold mt-2" id="dash-daily-sales">RM 0.00</div>
                     </div>
-                    <div>
-                        <label class="block text-xs font-bold text-slate-600 mb-1">Harga (RM)</label>
-                        <input type="number" step="0.01" id="modalProdPrice" required class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm focus:ring-2 focus:ring-indigo-300">
+                    <div class="custom-card p-4 flex flex-col justify-between shadow-md border border-black/10 min-h-[110px]">
+                        <span class="text-xs font-bold uppercase tracking-wide text-black/80" data-i18n="card_monthly">Monthly Sales</span>
+                        <div class="text-lg sm:text-xl font-extrabold mt-2" id="dash-monthly-sales">RM 0.00</div>
                     </div>
                 </div>
-                <div>
-                    <label class="block text-xs font-bold text-slate-600 mb-1">Penerangan Produk</label>
-                    <textarea id="modalProdDesc" rows="3" required class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm focus:ring-2 focus:ring-indigo-300"></textarea>
+
+                <!-- Row 2: Revenue Sales (Centered ~60% width) -->
+                <div class="flex justify-center">
+                    <div class="custom-card p-4 w-3/4 sm:w-2/3 flex flex-col items-center text-center shadow-md border border-black/10 min-h-[100px]">
+                        <span class="text-xs font-bold uppercase tracking-wide text-black/80" data-i18n="card_revenue">Revenue Sales (2026)</span>
+                        <div class="text-xl sm:text-2xl font-extrabold mt-2" id="dash-revenue-sales">RM 0.00</div>
+                    </div>
                 </div>
-                <div>
-                    <label class="block text-xs font-bold text-slate-600 mb-1">Jenis Media</label>
-                    <select id="modalMediaType" onchange="toggleMediaInput()" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm mb-2">
-                        <option value="image">URL Gambar</option>
-                        <option value="video">URL Video (MP4 / YouTube Embed)</option>
-                    </select>
-                    <input type="url" id="modalMediaUrl" required placeholder="https://..." class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm">
+
+                <!-- Heading: 2026 Monthly Sales -->
+                <div class="pt-2 text-center">
+                    <h3 class="text-xl font-bold tracking-tight uppercase" data-i18n="heading_monthly_2026">2026 Monthly Sales</h3>
                 </div>
-                <div class="flex justify-end space-x-3 pt-2">
-                    <button type="button" onclick="closeProductModal()" class="px-4 py-2.5 border border-slate-200 text-slate-600 font-semibold text-xs rounded-xl hover:bg-slate-50">
-                        Batal
-                    </button>
-                    <button type="submit" class="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-xl shadow-md">
-                        Simpan Produk
-                    </button>
+
+                <!-- 12 Month Cards Grid (January - December 2026) -->
+                <div id="months-grid" class="grid grid-cols-2 gap-3">
+                    <!-- Populated dynamically -->
                 </div>
-            </form>
+            </section>
+
+            <!-- 2) SALES RECORD SCREEN -->
+            <section id="screen-record" class="space-y-6">
+                <div class="text-center">
+                    <h2 class="text-2xl font-bold tracking-tight uppercase" data-i18n="title_sales_record">Sales Record</h2>
+                </div>
+
+                <div class="custom-card p-5 shadow-lg border border-black/10 space-y-4">
+                    <form id="sales-form" onsubmit="handleSaveSale(event)" class="space-y-4">
+                        <!-- Date Field (~55% width) -->
+                        <div>
+                            <label class="block text-xs font-bold mb-1 uppercase" data-i18n="field_date">Date</label>
+                            <div class="relative w-full sm:w-3/5">
+                                <input type="date" id="record-date" required class="custom-input w-full px-4 py-3 text-sm pr-10">
+                                <div class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-black/70">
+                                    <i class="fa-solid fa-calendar-days"></i>
+                                </div>
+                            </div>
+                            <div id="err-date" class="text-xs text-red-700 font-semibold mt-1 hidden"></div>
+                        </div>
+
+                        <!-- Product Field (Full width) -->
+                        <div>
+                            <label class="block text-xs font-bold mb-1 uppercase" data-i18n="field_product">Product</label>
+                            <div class="relative w-full">
+                                <input type="text" id="record-product" list="products-datalist" required class="custom-input w-full px-4 py-3 text-sm pr-10" placeholder="Pilih atau taip produk...">
+                                <datalist id="products-datalist"></datalist>
+                                <div class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-black/70">
+                                    <i class="fa-solid fa-chevron-down"></i>
+                                </div>
+                            </div>
+                            <div id="err-product" class="text-xs text-red-700 font-semibold mt-1 hidden"></div>
+                        </div>
+
+                        <!-- Amount Field (~35% width) -->
+                        <div>
+                            <label class="block text-xs font-bold mb-1 uppercase" data-i18n="field_amount">Amount (RM)</label>
+                            <div class="relative w-full sm:w-2/5">
+                                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-bold text-black/70">RM</span>
+                                <input type="number" step="0.01" min="0.01" id="record-amount" required class="custom-input w-full pl-11 pr-4 py-3 text-sm" placeholder="0.00">
+                            </div>
+                            <div id="err-amount" class="text-xs text-red-700 font-semibold mt-1 hidden"></div>
+                        </div>
+
+                        <!-- Action Buttons: Edit, Remove, Save -->
+                        <div class="grid grid-cols-3 gap-2 pt-4">
+                            <button type="button" id="btn-edit" onclick="prepareEditMode()" class="custom-button py-3 px-2 text-xs font-bold uppercase border border-black/20 shadow-sm flex items-center justify-center gap-1">
+                                <i class="fa-solid fa-pen-to-square"></i> <span data-i18n="btn_edit">Ubah</span>
+                            </button>
+                            <button type="button" id="btn-remove" onclick="confirmRemoveSale()" disabled class="custom-button opacity-50 py-3 px-2 text-xs font-bold uppercase border border-black/20 shadow-sm flex items-center justify-center gap-1">
+                                <i class="fa-solid fa-trash"></i> <span data-i18n="btn_remove">Padam</span>
+                            </button>
+                            <button type="submit" id="btn-save" class="custom-button py-3 px-2 text-xs font-bold uppercase border border-black/20 shadow-sm flex items-center justify-center gap-1 bg-black text-white">
+                                <i class="fa-solid fa-floppy-disk"></i> <span data-i18n="btn_save">Simpan</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <!-- 3) SALES HISTORY SCREEN -->
+            <section id="screen-history" class="space-y-4">
+                <div class="text-center">
+                    <h2 class="text-2xl font-bold tracking-tight uppercase" data-i18n="title_sales_history">Sales History</h2>
+                </div>
+
+                <div id="history-list" class="space-y-3">
+                    <!-- Populated dynamically -->
+                </div>
+
+                <div id="history-empty" class="hidden text-center py-12">
+                    <p class="text-sm font-medium text-black/70" data-i18n="empty_history">Tiada jualan lagi</p>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- BOTTOM NAVIGATION -->
+        <nav id="bottom-nav" class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-[#FFB5B5] rounded-t-3xl border-t border-black/10 px-6 py-2 flex justify-around items-center z-40 shadow-lg pb-safe">
+            <button onclick="switchScreen('dashboard')" id="nav-dashboard" class="flex flex-col items-center py-2 px-4 rounded-2xl transition-all">
+                <i class="fa-solid fa-chart-pie text-lg mb-1"></i>
+                <span class="text-xs font-bold" data-i18n="nav_dashboard">Dashboard</span>
+            </button>
+            <button onclick="switchScreen('record')" id="nav-record" class="flex flex-col items-center py-2 px-4 rounded-2xl transition-all">
+                <i class="fa-solid fa-cash-register text-lg mb-1"></i>
+                <span class="text-xs font-bold" data-i18n="nav_record">Rekod Jualan</span>
+            </button>
+            <button onclick="switchScreen('history')" id="nav-history" class="flex flex-col items-center py-2 px-4 rounded-2xl transition-all">
+                <i class="fa-solid fa-clock-rotate-left text-lg mb-1"></i>
+                <span class="text-xs font-bold" data-i18n="nav_history">Sejarah Jualan</span>
+            </button>
+        </nav>
+
+    </div>
+
+    <!-- MODAL CONFIRMATION -->
+    <div id="modal-confirm" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+        <div class="custom-card p-6 max-w-xs w-full shadow-2xl border border-black/20 text-center space-y-4">
+            <h3 id="modal-confirm-title" class="font-bold text-base uppercase">Pengesahan</h3>
+            <p id="modal-confirm-text" class="text-sm font-medium"></p>
+            <div class="flex gap-2 pt-2">
+                <button onclick="closeConfirmModal(false)" class="flex-1 py-2 bg-black/10 rounded-xl text-xs font-bold" data-i18n="modal_cancel">Batal</button>
+                <button id="modal-confirm-yes" onclick="closeConfirmModal(true)" class="flex-1 py-2 bg-black text-white rounded-xl text-xs font-bold" data-i18n="modal_confirm">Sahkan</button>
+            </div>
         </div>
     </div>
 
-    <!-- TOAST NOTIFICATION -->
-    <div id="toast" class="fixed bottom-5 right-5 bg-slate-900 text-white px-4 py-3 rounded-2xl shadow-xl transform translate-y-20 opacity-0 transition-all duration-300 z-50 flex items-center space-x-3 border border-slate-700">
-        <i class="fa-solid fa-circle-check text-emerald-400 text-lg" id="toastIcon"></i>
-        <span id="toastMsg" class="text-xs sm:text-sm font-semibold">Notifikasi</span>
+    <!-- MODAL GUIDE & SETUP -->
+    <div id="modal-info" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 overflow-y-auto">
+        <div class="custom-card p-6 max-w-md w-full shadow-2xl border border-black/20 space-y-4 max-h-[85vh] overflow-y-auto my-auto">
+            <div class="flex justify-between items-center border-b border-black/10 pb-2">
+                <h3 class="font-bold text-lg uppercase" data-i18n="guide_title">Panduan & Persediaan Firebase</h3>
+                <button onclick="closeInfoModal()" class="w-8 h-8 flex items-center justify-center rounded-xl bg-black/10 hover:bg-black/20 font-bold">×</button>
+            </div>
+            
+            <div class="text-xs space-y-3 font-medium leading-relaxed">
+                <h4 class="font-bold text-sm" data-i18n="guide_h1">1. Langkah Persediaan Firebase</h4>
+                <p data-i18n="guide_p1">Bina projek di Firebase, aktifkan Authentication (Email/Password) dan Cloud Firestore.</p>
+                
+                <h4 class="font-bold text-sm" data-i18n="guide_h2">2. Peraturan Keselamatan Firestore</h4>
+                <pre class="bg-black/10 p-2 rounded-xl overflow-x-auto font-mono text-[10px]">rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /artifacts/{appId}/public/data/{document=**} {
+      allow read, write: if request.auth != null;
+    }
+    match /artifacts/{appId}/users/{userId}/{document=**} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+  }
+}</pre>
+                
+                <h4 class="font-bold text-sm" data-i18n="guide_h3">3. Pemasangan PWA</h4>
+                <p data-i18n="guide_p3"><strong>Android (Chrome):</strong> Tekan 3 titik -> Add to Home screen.<br><strong>iOS (Safari):</strong> Tekan butang Share -> Add to Home Screen.</p>
+            </div>
+
+            <div class="pt-2">
+                <button onclick="closeInfoModal()" class="w-full py-3 bg-black text-white rounded-2xl font-bold text-xs uppercase">Tutup</button>
+            </div>
+        </div>
     </div>
 
-    <script>
-        // Default Dataset Initializer
-        const DEFAULT_CATEGORIES = ['Prasekolah', 'Sekolah Rendah', 'Sekolah Menengah', 'Umum & Aksesori'];
-        
-        const DEFAULT_PRODUCTS = [
-            {
-                id: 'prod-101',
-                name: 'Modul Aktiviti Bahasa Melayu Prasekolah',
-                category: 'Prasekolah',
-                price: 15.00,
-                mediaType: 'image',
-                mediaUrl: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=600&q=80',
-                desc: 'Lembaran kerja interaktif lengkap asas kemahiran membaca & menulis untuk cilik.'
-            },
-            {
-                id: 'prod-102',
-                name: 'Set Latihan Matematik Sekolah Rendah',
-                category: 'Sekolah Rendah',
-                price: 22.50,
-                mediaType: 'image',
-                mediaUrl: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80',
-                desc: 'Koleksi soalan KBAT Matematik mengikut silibus terkini berserta skema jawapan.'
-            },
-            {
-                id: 'prod-103',
-                name: 'Nota Poket Sains SPM / Sekolah Menengah',
-                category: 'Sekolah Menengah',
-                price: 29.90,
-                mediaType: 'image',
-                mediaUrl: 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=600&q=80',
-                desc: 'Ringkasan grafik padat Sains persediaan lengkap hadapi peperiksaan utama.'
-            }
-        ];
+    <!-- MODAL FORGOT PASSWORD -->
+    <div id="modal-forgot" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+        <div class="custom-card p-6 max-w-xs w-full shadow-2xl border border-black/20 text-center space-y-4">
+            <h3 class="font-bold text-base uppercase" data-i18n="forgot_title">Set Semula Kata Laluan</h3>
+            <p class="text-xs font-medium" data-i18n="forgot_desc">Masukkan emel anda untuk menerima pautan set semula.</p>
+            <input type="email" id="forgot-email" class="custom-input w-full px-4 py-2 text-sm" placeholder="owner@schatelier.com">
+            <div id="forgot-msg" class="text-xs font-semibold"></div>
+            <div class="flex gap-2 pt-2">
+                <button onclick="closeForgotPasswordModal()" class="flex-1 py-2 bg-black/10 rounded-xl text-xs font-bold" data-i18n="modal_cancel">Batal</button>
+                <button onclick="submitForgotPassword()" class="flex-1 py-2 bg-black text-white rounded-xl text-xs font-bold" data-i18n="modal_send">Hantar</button>
+            </div>
+        </div>
+    </div>
 
-        // Core App State Store
-        const store = {
-            view: 'customer', // 'customer' | 'seller'
-            products: JSON.parse(localStorage.getItem('scha_products')) || DEFAULT_PRODUCTS,
-            categories: JSON.parse(localStorage.getItem('scha_categories')) || DEFAULT_CATEGORIES,
-            cart: [],
-            sales: JSON.parse(localStorage.getItem('scha_sales')) || [
-                { category: 'Prasekolah', amount: 150 },
-                { category: 'Sekolah Rendah', amount: 320 },
-                { category: 'Sekolah Menengah', amount: 210 }
-            ],
-            settings: JSON.parse(localStorage.getItem('scha_settings')) || {
-                shopName: 'Scha Official Store',
-                whatsapp: '60123456789',
-                avatarUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80'
+    <!-- Firebase SDK Modular v11.6.1 -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, doc, getDoc, setDoc, addDoc, updateDoc, deleteDoc, onSnapshot, query } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBOSWNBW0fDgizQvz0ty7ZBRZZf7jPOIew",
+            authDomain: "schatelier-537e1.firebaseapp.com",
+            databaseURL: "https://schatelier-537e1-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "schatelier-537e1",
+            storageBucket: "schatelier-537e1.firebasestorage.app",
+            messagingSenderId: "158405993018",
+            appId: "1:158405993018:web:386c9c78ea2f0ea3994b03"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const appId = "schatelier-537e1";
+
+        window.firebaseApp = { app, auth, db, appId };
+        window.FirebaseSDK = { 
+            signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail, signOut,
+            collection, doc, getDoc, setDoc, addDoc, updateDoc, deleteDoc, onSnapshot, query 
+        };
+
+        window.initAppLogic();
+    </script>
+
+    <!-- Main JavaScript Application Logic -->
+    <script>
+        const i18nDict = {
+            bm: {
+                offline_msg: "Anda berada luar talian. Perubahan akan diselaraskan apabila bersambung.",
+                menu_guide: "Panduan & Persediaan",
+                menu_export: "Eksport Sandaran",
+                menu_logout: "Log Keluar",
+                auth_subtitle: "Portal Pengurusan Jualan Peribadi",
+                tab_login: "Log Masuk",
+                tab_signup: "Daftar Akaun",
+                label_email: "Emel",
+                label_password: "Kata Laluan",
+                label_confirm_pass: "Sahkan Kata Laluan",
+                btn_login: "Log Masuk",
+                btn_signup: "Daftar Akaun",
+                forgot_pass: "Lupa kata laluan?",
+                signup_disabled_msg: "Pendaftaran ditutup kekal. Akaun pemilik sudah wujud.",
+                card_daily: "Daily Sales",
+                card_monthly: "Monthly Sales",
+                card_revenue: "Revenue Sales (2026)",
+                heading_monthly_2026: "2026 Monthly Sales",
+                title_sales_record: "Sales Record",
+                field_date: "Date",
+                field_product: "Product",
+                field_amount: "Amount (RM)",
+                btn_edit: "Ubah",
+                btn_remove: "Padam",
+                btn_save: "Simpan",
+                title_sales_history: "Sales History",
+                empty_history: "Tiada jualan lagi",
+                nav_dashboard: "Dashboard",
+                nav_record: "Sales Record",
+                nav_history: "Sales History",
+                modal_cancel: "Batal",
+                modal_confirm: "Sahkan",
+                guide_title: "Panduan & Persediaan Firebase",
+                guide_h1: "1. Langkah Persediaan Firebase",
+                guide_p1: "Bina projek di Firebase, aktifkan Auth (Email/Password) dan Firestore.",
+                guide_h2: "2. Peraturan Keselamatan Firestore",
+                guide_h3: "3. Pemasangan PWA",
+                guide_p3: "Android: Tekan 3 titik -> Add to Home screen. iOS: Tekan Share -> Add to Home Screen.",
+                forgot_title: "Set Semula Kata Laluan",
+                forgot_desc: "Masukkan emel anda untuk menerima pautan set semula kata laluan.",
+                modal_send: "Hantar"
+            },
+            en: {
+                offline_msg: "You are currently offline. Changes will sync when reconnected.",
+                menu_guide: "Guide & Setup",
+                menu_export: "Export Backup",
+                menu_logout: "Logout",
+                auth_subtitle: "Private Sales Management Portal",
+                tab_login: "Login",
+                tab_signup: "Sign Up",
+                label_email: "Email",
+                label_password: "Password",
+                label_confirm_pass: "Confirm Password",
+                btn_login: "Login",
+                btn_signup: "Sign Up",
+                forgot_pass: "Forgot password?",
+                signup_disabled_msg: "Sign up is permanently disabled. Owner account already exists.",
+                card_daily: "Daily Sales",
+                card_monthly: "Monthly Sales",
+                card_revenue: "Revenue Sales (2026)",
+                heading_monthly_2026: "2026 Monthly Sales",
+                title_sales_record: "Sales Record",
+                field_date: "Date",
+                field_product: "Product",
+                field_amount: "Amount (RM)",
+                btn_edit: "Edit",
+                btn_remove: "Remove",
+                btn_save: "Save",
+                title_sales_history: "Sales History",
+                empty_history: "No sales yet",
+                nav_dashboard: "Dashboard",
+                nav_record: "Sales Record",
+                nav_history: "Sales History",
+                modal_cancel: "Cancel",
+                modal_confirm: "Confirm",
+                guide_title: "Guide & Firebase Setup",
+                guide_h1: "1. Firebase Setup Steps",
+                guide_p1: "Create a Firebase project, enable Auth (Email/Password) and Firestore.",
+                guide_h2: "2. Firestore Security Rules",
+                guide_h3: "3. PWA Installation",
+                guide_p3: "Android: Tap menu -> Add to Home screen. iOS: Tap Share -> Add to Home Screen.",
+                forgot_title: "Reset Password",
+                forgot_desc: "Enter your email to receive a password reset link.",
+                modal_send: "Send"
             }
         };
 
-        let chartInstance = null;
+        const monthNamesBm = ["Januari", "Februari", "Mac", "April", "Mei", "Jun", "Julai", "Ogos", "September", "Oktober", "November", "Disember"];
+        const monthNamesEn = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-        // On DOM Load Setup
-        window.addEventListener('DOMContentLoaded', () => {
-            saveToStorage();
-            initUI();
-        });
+        let currentLang = localStorage.getItem('scha_lang') || 'bm';
+        let currentScreen = localStorage.getItem('scha_screen') || 'dashboard';
+        let authMode = 'login';
+        let salesList = [];
+        let editingSaleId = null;
+        let inactivityTimer = null;
+        let confirmCallback = null;
+        let unsubSales = null;
+        const formDraftKey = 'scha_form_draft';
 
-        function saveToStorage() {
-            localStorage.setItem('scha_products', JSON.stringify(store.products));
-            localStorage.setItem('scha_categories', JSON.stringify(store.categories));
-            localStorage.setItem('scha_sales', JSON.stringify(store.sales));
-            localStorage.setItem('scha_settings', JSON.stringify(store.settings));
-        }
+        window.initAppLogic = function() {
+            setupManifest();
+            applyLanguage();
+            setupDateHeader();
+            setupInactivityTracker();
+            loadFormDraft();
 
-        // View Switcher (Customer vs Seller)
-        function switchView() {
-            const btnText = document.getElementById('toggleText');
-            const btnIcon = document.getElementById('toggleIcon');
-            const custHeader = document.getElementById('customerHeaderBranding');
-            const sellHeader = document.getElementById('sellerHeaderBranding');
-            const custView = document.getElementById('customerViewSection');
-            const sellView = document.getElementById('sellerViewSection');
-            const btnCart = document.getElementById('btnCartTrigger');
-            const btnCopyLink = document.getElementById('btnCopyCatalogLink');
-
-            if (store.view === 'customer') {
-                store.view = 'seller';
-                btnText.innerText = 'Customer View';
-                btnIcon.className = 'fa-solid fa-store mr-2 text-pink-300';
-                
-                custHeader.classList.add('hidden');
-                sellHeader.classList.remove('hidden');
-                
-                custView.classList.add('hidden');
-                sellView.classList.remove('hidden');
-
-                btnCart.classList.add('hidden');
-                btnCopyLink.classList.remove('hidden');
-
-                renderAdminProductsTable();
-                renderCategoryBadges();
-                initAnalyticsChart();
-                loadSettingsToForm();
-                showToast('Mod Seller / Admin Diaktifkan');
-            } else {
-                store.view = 'customer';
-                btnText.innerText = 'Seller Portal';
-                btnIcon.className = 'fa-solid fa-user-gear mr-2 text-pink-300';
-
-                custHeader.classList.remove('hidden');
-                sellHeader.classList.add('hidden');
-
-                custView.classList.remove('hidden');
-                sellView.classList.add('hidden');
-
-                btnCart.classList.remove('hidden');
-                btnCopyLink.classList.add('hidden');
-
-                applyCustomerFilters();
-                showToast('Mod View Pelanggan Diaktifkan');
-            }
-        }
-
-        function initUI() {
-            populateFilterDropdowns();
-            renderCustomerProductGrid(store.products);
-            updateCartBadge();
-            
-            // Sync settings branding
-            document.getElementById('sellerShopNameHeader').innerText = store.settings.shopName;
-            document.getElementById('sellerAvatarHeader').src = store.settings.avatarUrl;
-        }
-
-        // Customer Filters Populate
-        function populateFilterDropdowns() {
-            const catSelect = document.getElementById('categoryFilter');
-            const prodSelect = document.getElementById('productFilter');
-            const modalCatSelect = document.getElementById('modalProdCategory');
-
-            const currentCat = catSelect.value;
-            const currentProd = prodSelect.value;
-
-            // Categories
-            catSelect.innerHTML = `<option value="all">Semua Kategori (All Categories)</option>` + 
-                store.categories.map(c => `<option value="${c}">${c}</option>`).join('');
-
-            modalCatSelect.innerHTML = store.categories.map(c => `<option value="${c}">${c}</option>`).join('');
-
-            // Products
-            prodSelect.innerHTML = `<option value="all">Semua Produk (All Products)</option>` + 
-                store.products.map(p => `<option value="${p.id}">${p.name}</option>`).join('');
-
-            catSelect.value = currentCat || 'all';
-            prodSelect.value = currentProd || 'all';
-        }
-
-        // Apply Filters logic for Customer
-        function applyCustomerFilters() {
-            const catVal = document.getElementById('categoryFilter').value;
-            const prodVal = document.getElementById('productFilter').value;
-            const query = document.getElementById('searchInput').value.toLowerCase().trim();
-
-            const filtered = store.products.filter(p => {
-                const matchCat = (catVal === 'all' || p.category === catVal);
-                const matchProd = (prodVal === 'all' || p.id === prodVal);
-                const matchSearch = !query || p.name.toLowerCase().includes(query) || p.desc.toLowerCase().includes(query);
-
-                return matchCat && matchProd && matchSearch;
-            });
-
-            renderCustomerProductGrid(filtered);
-        }
-
-        function resetCustomerFilters() {
-            document.getElementById('categoryFilter').value = 'all';
-            document.getElementById('productFilter').value = 'all';
-            document.getElementById('searchInput').value = '';
-            applyCustomerFilters();
-        }
-
-        // Customer Products Rendering
-        function renderCustomerProductGrid(items) {
-            const grid = document.getElementById('productGrid');
-            const noRes = document.getElementById('noCustomerResults');
-
-            if (!items || items.length === 0) {
-                grid.innerHTML = '';
-                noRes.classList.remove('hidden');
-                return;
-            }
-
-            noRes.classList.add('hidden');
-
-            grid.innerHTML = items.map(p => `
-                <div class="bg-white rounded-2xl border border-slate-200/80 overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col h-full group">
-                    <div class="aspect-video bg-slate-100 relative overflow-hidden">
-                        ${p.mediaType === 'video' ? `
-                            <iframe src="${p.mediaUrl}" class="w-full h-full object-cover" frameborder="0" allowfullscreen></iframe>
-                        ` : `
-                            <img src="${p.mediaUrl}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" onerror="this.src='https://placehold.co/600x400/f8fafc/64748b?text=Produk'">
-                        `}
-                        <span class="absolute top-3 left-3 bg-slate-900/70 backdrop-blur-md text-white text-[10px] font-bold tracking-wider uppercase px-2.5 py-1 rounded-lg">
-                            ${p.category}
-                        </span>
-                    </div>
-
-                    <div class="p-5 flex flex-col flex-grow space-y-3">
-                        <h3 class="font-bold text-slate-800 text-base leading-snug line-clamp-2" title="${p.name}">
-                            ${p.name}
-                        </h3>
-                        <p class="text-xs text-slate-500 line-clamp-2 flex-grow leading-relaxed">
-                            ${p.desc}
-                        </p>
-                        
-                        <div class="pt-3 border-t border-slate-100 flex items-center justify-between">
-                            <div>
-                                <span class="text-[10px] text-slate-400 font-bold block uppercase tracking-wider">Harga</span>
-                                <span class="text-lg font-black text-indigo-600">RM ${parseFloat(p.price).toFixed(2)}</span>
-                            </div>
-                            <button onclick="addToCart('${p.id}')" class="px-4 py-2.5 bg-pink-500 hover:bg-pink-600 active:scale-95 text-white font-bold text-xs rounded-xl transition-all shadow-sm flex items-center space-x-1.5">
-                                <i class="fa-solid fa-cart-plus"></i>
-                                <span>Buy Now</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        // Cart Logic
-        function addToCart(productId) {
-            const product = store.products.find(p => p.id === productId);
-            if (!product) return;
-
-            const existing = store.cart.find(item => item.id === productId);
-            if (existing) {
-                existing.qty += 1;
-            } else {
-                store.cart.push({ id: productId, qty: 1 });
-            }
-
-            updateCartBadge();
-            renderCart();
-            showToast('Produk ditambah ke troli!');
-            toggleCartModal();
-        }
-
-        function updateQuantity(productId, delta) {
-            const item = store.cart.find(i => i.id === productId);
-            if (item) {
-                item.qty += delta;
-                if (item.qty <= 0) {
-                    store.cart = store.cart.filter(i => i.id !== productId);
-                }
-            }
-            updateCartBadge();
-            renderCart();
-        }
-
-        function updateCartBadge() {
-            const badge = document.getElementById('cartBadge');
-            const totalQty = store.cart.reduce((sum, i) => sum + i.qty, 0);
-            if (totalQty > 0) {
-                badge.innerText = totalQty;
-                badge.classList.remove('hidden');
-            } else {
-                badge.classList.add('hidden');
-            }
-        }
-
-        function renderCart() {
-            const list = document.getElementById('cartItemsList');
-            const totalEl = document.getElementById('cartTotalAmount');
-
-            if (store.cart.length === 0) {
-                list.innerHTML = `<div class="text-center py-12 text-slate-400 text-sm font-medium">Troli anda masih kosong.</div>`;
-                totalEl.innerText = 'RM 0.00';
-                return;
-            }
-
-            let total = 0;
-            list.innerHTML = store.cart.map(cartItem => {
-                const prod = store.products.find(p => p.id === cartItem.id);
-                if (!prod) return '';
-                const subtotal = prod.price * cartItem.qty;
-                total += subtotal;
-
-                return `
-                    <div class="py-3 flex items-center justify-between space-x-3">
-                        <div class="flex items-center space-x-3 min-w-0">
-                            <img src="${prod.mediaUrl}" class="w-12 h-12 object-cover rounded-xl border border-slate-200 shrink-0" onerror="this.src='https://placehold.co/100x100'">
-                            <div class="min-w-0">
-                                <h4 class="text-xs font-bold text-slate-800 truncate">${prod.name}</h4>
-                                <span class="text-xs font-semibold text-indigo-600">RM ${prod.price.toFixed(2)}</span>
-                            </div>
-                        </div>
-                        <div class="flex items-center space-x-2 shrink-0">
-                            <div class="flex items-center border border-slate-200 rounded-lg overflow-hidden bg-slate-50">
-                                <button onclick="updateQuantity('${cartItem.id}', -1)" class="px-2 py-1 text-xs font-bold text-slate-600 hover:bg-slate-200">-</button>
-                                <span class="px-2 text-xs font-bold text-slate-800">${cartItem.qty}</span>
-                                <button onclick="updateQuantity('${cartItem.id}', 1)" class="px-2 py-1 text-xs font-bold text-slate-600 hover:bg-slate-200">+</button>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-
-            totalEl.innerText = `RM ${total.toFixed(2)}`;
-        }
-
-        function toggleCartModal() {
-            const modal = document.getElementById('cartModal');
-            const drawer = document.getElementById('cartDrawer');
-            
-            const isHidden = modal.classList.contains('opacity-0');
-            if (isHidden) {
-                renderCart();
-                modal.classList.remove('opacity-0', 'pointer-events-none');
-                drawer.classList.remove('translate-x-full');
-            } else {
-                modal.classList.add('opacity-0', 'pointer-events-none');
-                drawer.classList.add('translate-x-full');
-            }
-        }
-
-        function processCheckout() {
-            if (store.cart.length === 0) return;
-
-            let text = `*Pesanan Baru dari ${store.settings.shopName}*\n\n`;
-            let total = 0;
-
-            store.cart.forEach((item, index) => {
-                const prod = store.products.find(p => p.id === item.id);
-                if (prod) {
-                    const subtotal = prod.price * item.qty;
-                    total += subtotal;
-                    text += `${index + 1}. ${prod.name} x${item.qty} = RM ${subtotal.toFixed(2)}\n`;
-
-                    // Update sales category tracking
-                    const s = store.sales.find(x => x.category === prod.category);
-                    if (s) s.amount += subtotal;
-                    else store.sales.push({ category: prod.category, amount: subtotal });
+            ['record-date', 'record-product', 'record-amount'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.addEventListener('input', saveFormDraft);
+                    el.addEventListener('change', saveFormDraft);
                 }
             });
 
-            text += `\n*Jumlah Keseluruhan: RM ${total.toFixed(2)}*`;
+            const { auth } = window.firebaseApp;
+            const { onAuthStateChanged } = window.FirebaseSDK;
 
-            saveToStorage();
-            
-            const waNum = store.settings.whatsapp || '60123456789';
-            const url = `https://wa.me/${waNum}?text=${encodeURIComponent(text)}`;
-            
-            window.open(url, '_blank');
-            store.cart = [];
-            updateCartBadge();
-            toggleCartModal();
-            showToast('Pesanan dihantar via WhatsApp!');
-        }
-
-        // Admin Navigation Tabs Switcher
-        function switchAdminTab(tabName) {
-            ['products', 'categories', 'analytics', 'settings'].forEach(t => {
-                const btn = document.getElementById('tabBtn' + t.charAt(0).toUpperCase() + t.slice(1));
-                const content = document.getElementById('adminTab' + t.charAt(0).toUpperCase() + t.slice(1));
-
-                if (t === tabName) {
-                    btn.className = 'admin-tab-btn active px-4 py-2.5 rounded-xl font-bold text-sm text-slate-700 bg-white shadow-sm border border-slate-200 flex items-center space-x-2 whitespace-nowrap';
-                    content.classList.remove('hidden');
+            onAuthStateChanged(auth, async (user) => {
+                if (user) {
+                    document.getElementById('screen-auth').classList.add('hidden');
+                    document.getElementById('app-header').classList.remove('hidden');
+                    document.getElementById('bottom-nav').classList.remove('hidden');
+                    
+                    setupSalesListener(user.uid);
+                    switchScreen(currentScreen, true);
                 } else {
-                    btn.className = 'admin-tab-btn px-4 py-2.5 rounded-xl font-medium text-sm text-slate-500 hover:bg-white flex items-center space-x-2 whitespace-nowrap';
-                    content.classList.add('hidden');
+                    document.getElementById('app-header').classList.add('hidden');
+                    document.getElementById('bottom-nav').classList.add('hidden');
+                    document.getElementById('screen-auth').classList.remove('hidden');
+                    ['screen-dashboard', 'screen-record', 'screen-history'].forEach(s => document.getElementById(s).classList.add('hidden'));
+                    
+                    checkIfSignupAllowed();
                 }
             });
 
-            if (tabName === 'analytics') initAnalyticsChart();
-        }
+            window.addEventListener('online', updateOnlineStatus);
+            window.addEventListener('offline', updateOnlineStatus);
+            updateOnlineStatus();
 
-        // Admin Table Render
-        function renderAdminProductsTable() {
-            const table = document.getElementById('adminProductsTable');
-            table.innerHTML = store.products.map(p => `
-                <tr class="hover:bg-slate-50/80 transition-colors">
-                    <td class="p-4 font-bold text-slate-800 flex items-center space-x-3">
-                        <img src="${p.mediaUrl}" class="w-10 h-10 object-cover rounded-lg border" onerror="this.src='https://placehold.co/100'">
-                        <span class="truncate max-w-xs">${p.name}</span>
-                    </td>
-                    <td class="p-4"><span class="bg-slate-100 text-slate-700 font-semibold px-2.5 py-1 rounded-md text-xs">${p.category}</span></td>
-                    <td class="p-4 font-extrabold text-indigo-600">RM ${parseFloat(p.price).toFixed(2)}</td>
-                    <td class="p-4 uppercase text-xs font-bold text-slate-400">${p.mediaType}</td>
-                    <td class="p-4 text-right space-x-2">
-                        <button onclick="editProduct('${p.id}')" class="p-2 text-indigo-600 hover:bg-indigo-50 rounded-lg">
-                            <i class="fa-solid fa-pen"></i>
-                        </button>
-                        <button onclick="deleteProduct('${p.id}')" class="p-2 text-red-500 hover:bg-red-50 rounded-lg">
-                            <i class="fa-solid fa-trash"></i>
-                        </button>
-                    </td>
-                </tr>
-            `).join('');
-        }
-
-        // Modal Controls
-        function openProductModal(editId = null) {
-            populateFilterDropdowns();
-            const modal = document.getElementById('productModal');
-            const title = document.getElementById('productModalTitle');
-
-            if (editId) {
-                const prod = store.products.find(p => p.id === editId);
-                title.innerText = 'Kemaskini Produk';
-                document.getElementById('modalProductId').value = prod.id;
-                document.getElementById('modalProdName').value = prod.name;
-                document.getElementById('modalProdCategory').value = prod.category;
-                document.getElementById('modalProdPrice').value = prod.price;
-                document.getElementById('modalProdDesc').value = prod.desc;
-                document.getElementById('modalMediaType').value = prod.mediaType;
-                document.getElementById('modalMediaUrl').value = prod.mediaUrl;
-            } else {
-                title.innerText = 'Tambah Produk Baru';
-                document.getElementById('productForm').reset();
-                document.getElementById('modalProductId').value = '';
+            const dateInput = document.getElementById('record-date');
+            if (dateInput && !dateInput.value) {
+                dateInput.value = getKlTodayDateString();
             }
+        };
 
-            modal.classList.remove('opacity-0', 'pointer-events-none');
+        function setupManifest() {
+            const manifestData = {
+                name: "Scha Atelier Sales Tracker",
+                short_name: "Scha Atelier",
+                start_url: window.location.href,
+                display: "standalone",
+                background_color: "#89E3FF",
+                theme_color: "#FF4A8B",
+                icons: [
+                    { src: "https://placehold.co/192x192/FFB5B5/000000?text=SA", sizes: "192x192", type: "image/png" },
+                    { src: "https://placehold.co/512x512/FFB5B5/000000?text=SA", sizes: "512x512", type: "image/png" }
+                ]
+            };
+            const blob = new Blob([JSON.stringify(manifestData)], { type: 'application/json' });
+            document.getElementById('pwa-manifest').setAttribute('href', URL.createObjectURL(blob));
         }
 
-        function closeProductModal() {
-            const modal = document.getElementById('productModal');
-            modal.classList.add('opacity-0', 'pointer-events-none');
+        // Malaysia Timezone (Asia/Kuala Lumpur) with Intl.DateTimeFormat
+        function getKlDate() {
+            const locale = currentLang === 'bm' ? 'ms-MY' : 'en-GB';
+            const optionsDate = { timeZone: 'Asia/Kuala Lumpur', year: 'numeric', month: '2-digit', day: '2-digit' };
+            const optionsWeekday = { timeZone: 'Asia/Kuala Lumpur', weekday: 'long' };
+
+            const formatterDate = new Intl.DateTimeFormat('en-GB', optionsDate);
+            const formatterWeekday = new Intl.DateTimeFormat(locale, optionsWeekday);
+
+            const now = new Date();
+            const parts = formatterDate.formatToParts(now);
+            const partMap = {};
+            parts.forEach(p => partMap[p.type] = p.value);
+
+            return {
+                dateStr: `${partMap.day}/${partMap.month}/${partMap.year}`,
+                isoDateStr: `${partMap.year}-${partMap.month}-${partMap.day}`,
+                weekday: formatterWeekday.format(now),
+                month: parseInt(partMap.month, 10),
+                year: parseInt(partMap.year, 10)
+            };
         }
 
-        function handleProductSubmit(e) {
-            e.preventDefault();
-            const id = document.getElementById('modalProductId').value;
-            const name = document.getElementById('modalProdName').value;
-            const category = document.getElementById('modalProdCategory').value;
-            const price = parseFloat(document.getElementById('modalProdPrice').value);
-            const desc = document.getElementById('modalProdDesc').value;
-            const mediaType = document.getElementById('modalMediaType').value;
-            const mediaUrl = document.getElementById('modalMediaUrl').value;
-
-            if (id) {
-                // Edit
-                const index = store.products.findIndex(p => p.id === id);
-                if (index !== -1) {
-                    store.products[index] = { id, name, category, price, desc, mediaType, mediaUrl };
-                }
-            } else {
-                // New
-                const newProd = {
-                    id: 'prod-' + Date.now(),
-                    name, category, price, desc, mediaType, mediaUrl
-                };
-                store.products.push(newProd);
-            }
-
-            saveToStorage();
-            populateFilterDropdowns();
-            renderAdminProductsTable();
-            closeProductModal();
-            showToast('Produk berjaya disimpan!');
+        function getKlTodayDateString() {
+            return getKlDate().isoDateStr;
         }
 
-        function editProduct(id) {
-            openProductModal(id);
+        function setupDateHeader() {
+            const kl = getKlDate();
+            document.getElementById('header-date').innerText = kl.dateStr;
+            document.getElementById('header-day').innerText = kl.weekday;
+            setTimeout(setupDateHeader, 60000);
         }
 
-        function deleteProduct(id) {
-            if (confirm('Adakah anda pasti untuk memadam produk ini?')) {
-                store.products = store.products.filter(p => p.id !== id);
-                saveToStorage();
-                populateFilterDropdowns();
-                renderAdminProductsTable();
-                showToast('Produk telah dipadam!');
-            }
+        function toggleLanguage() {
+            currentLang = currentLang === 'bm' ? 'en' : 'bm';
+            localStorage.setItem('scha_lang', currentLang);
+            applyLanguage();
+            setupDateHeader();
+            renderDashboard();
+            renderHistory();
         }
 
-        // Category Management
-        function addNewCategory() {
-            const input = document.getElementById('newCategoryInput');
-            const val = input.value.trim();
-
-            if (val && !store.categories.includes(val)) {
-                store.categories.push(val);
-                saveToStorage();
-                populateFilterDropdowns();
-                renderCategoryBadges();
-                input.value = '';
-                showToast('Kategori baru ditambah!');
-            }
+        function applyLanguage() {
+            document.getElementById('lang-label').innerText = currentLang.toUpperCase();
+            const dict = i18nDict[currentLang];
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (dict[key]) el.innerHTML = dict[key];
+            });
         }
 
-        function renderCategoryBadges() {
-            const container = document.getElementById('categoryBadgeList');
-            container.innerHTML = store.categories.map(c => `
-                <span class="inline-flex items-center px-3 py-1.5 rounded-xl bg-slate-100 text-slate-800 text-xs font-bold border border-slate-200">
-                    ${c}
-                </span>
-            `).join('');
-        }
+        function switchScreen(screenName, skipStorage = false) {
+            currentScreen = screenName;
+            if (!skipStorage) localStorage.setItem('scha_screen', currentScreen);
 
-        // Copy Catalog Link
-        function copyCatalogLink() {
-            const dummyUrl = window.location.href;
-            const tempInput = document.createElement('input');
-            document.body.appendChild(tempInput);
-            tempInput.value = dummyUrl;
-            tempInput.select();
-            document.execCommand('copy');
-            document.body.removeChild(tempInput);
-
-            showToast('Pautan Katalog disalin ke papan klip!');
-        }
-
-        // Settings Management
-        function loadSettingsToForm() {
-            document.getElementById('settingShopName').value = store.settings.shopName;
-            document.getElementById('settingWhatsApp').value = store.settings.whatsapp;
-            document.getElementById('settingAvatarUrl').value = store.settings.avatarUrl;
-        }
-
-        function saveStoreSettings() {
-            store.settings.shopName = document.getElementById('settingShopName').value;
-            store.settings.whatsapp = document.getElementById('settingWhatsApp').value;
-            store.settings.avatarUrl = document.getElementById('settingAvatarUrl').value;
-
-            saveToStorage();
-            document.getElementById('sellerShopNameHeader').innerText = store.settings.shopName;
-            document.getElementById('sellerAvatarHeader').src = store.settings.avatarUrl;
-            showToast('Tetapan kedai dikemas kini!');
-        }
-
-        // Analytics Chart Setup
-        function initAnalyticsChart() {
-            const totalSales = store.sales.reduce((sum, s) => sum + s.amount, 0);
-            document.getElementById('statTotalSales').innerText = `RM ${totalSales.toFixed(2)}`;
-            document.getElementById('statTotalOrders').innerText = store.cart.length + 5;
-            document.getElementById('statTotalProducts').innerText = store.products.length;
-
-            const ctx = document.getElementById('salesChart').getContext('2d');
-            
-            if (chartInstance) {
-                chartInstance.destroy();
-            }
-
-            chartInstance = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: store.sales.map(s => s.category),
-                    datasets: [{
-                        label: 'Jualan (RM)',
-                        data: store.sales.map(s => s.amount),
-                        backgroundColor: ['#FFCAD4', '#BEE1E6', '#E2D4F0', '#C1FBA4'],
-                        borderRadius: 8
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { display: false }
+            const screens = ['dashboard', 'record', 'history'];
+            screens.forEach(s => {
+                const el = document.getElementById(`screen-${s}`);
+                const navBtn = document.getElementById(`nav-${s}`);
+                if (s === screenName) {
+                    el.classList.remove('hidden');
+                    if (navBtn) {
+                        navBtn.classList.add('bg-white', 'shadow-inner');
+                        navBtn.classList.remove('text-black/70');
+                    }
+                } else {
+                    el.classList.add('hidden');
+                    if (navBtn) {
+                        navBtn.classList.remove('bg-white', 'shadow-inner');
+                        navBtn.classList.add('text-black/70');
                     }
                 }
             });
+
+            if (screenName === 'dashboard') renderDashboard();
+            if (screenName === 'history') renderHistory();
+            if (screenName === 'record') updateProductDatalist();
         }
 
-        // Toast Helper
-        function showToast(msg) {
-            const toast = document.getElementById('toast');
-            document.getElementById('toastMsg').innerText = msg;
-            toast.classList.remove('translate-y-20', 'opacity-0');
-            setTimeout(() => {
-                toast.classList.add('translate-y-20', 'opacity-0');
-            }, 3000);
+        function setupInactivityTracker() {
+            const resetTimer = () => {
+                clearTimeout(inactivityTimer);
+                inactivityTimer = setTimeout(() => {
+                    const { auth } = window.firebaseApp;
+                    const { signOut } = window.FirebaseSDK;
+                    if (auth.currentUser) {
+                        signOut(auth).then(() => {
+                            showModalConfirm("Inactivity Logout", currentLang === 'bm' ? "Anda telah log keluar automatik selepas 2 jam tidak aktif." : "You were automatically logged out after 2 hours of inactivity.", () => {});
+                        });
+                    }
+                }, 2 * 60 * 60 * 1000); // 2 hours
+            };
+
+            ['click', 'touchstart', 'keypress', 'mousemove', 'scroll'].forEach(evt => {
+                window.addEventListener(evt, resetTimer, { passive: true });
+            });
+            resetTimer();
+        }
+
+        function updateOnlineStatus() {
+            const banner = document.getElementById('offline-banner');
+            if (!navigator.onLine) banner.classList.remove('hidden');
+            else banner.classList.add('hidden');
+        }
+
+        function toggleMenuDropdown() {
+            document.getElementById('menu-dropdown').classList.toggle('hidden');
+        }
+
+        window.addEventListener('click', (e) => {
+            const dropdown = document.getElementById('menu-dropdown');
+            if (dropdown && !dropdown.contains(e.target) && !e.target.closest('button[onclick="toggleMenuDropdown()"]')) {
+                dropdown.classList.add('hidden');
+            }
+        });
+
+        async function checkIfSignupAllowed() {
+            const { db, appId } = window.firebaseApp;
+            const { doc, getDoc } = window.FirebaseSDK;
+            try {
+                const metaRef = doc(db, 'artifacts', appId, 'public', 'data', 'metadata');
+                const metaSnap = await getDoc(metaRef);
+                if (metaSnap.exists() && metaSnap.data().ownerCreated) {
+                    document.getElementById('tab-signup-btn').classList.add('opacity-40', 'pointer-events-none');
+                    document.getElementById('signup-disabled-notice').classList.remove('hidden');
+                }
+            } catch (err) {
+                console.error("Signup check error:", err);
+            }
+        }
+
+        function setAuthTab(mode) {
+            authMode = mode;
+            const loginBtn = document.getElementById('tab-login-btn');
+            const signupBtn = document.getElementById('tab-signup-btn');
+            const confirmContainer = document.getElementById('signup-confirm-container');
+            const submitBtnText = document.getElementById('auth-btn-text');
+            document.getElementById('auth-error').classList.add('hidden');
+
+            if (mode === 'login') {
+                loginBtn.classList.add('border-black', 'font-bold', 'text-black');
+                loginBtn.classList.remove('border-transparent', 'text-black/60');
+                signupBtn.classList.remove('border-black', 'font-bold', 'text-black');
+                signupBtn.classList.add('border-transparent', 'text-black/60', 'font-medium');
+                confirmContainer.classList.add('hidden');
+                submitBtnText.innerText = i18nDict[currentLang].btn_login;
+            } else {
+                signupBtn.classList.add('border-black', 'font-bold', 'text-black');
+                signupBtn.classList.remove('border-transparent', 'text-black/60');
+                loginBtn.classList.remove('border-black', 'font-bold', 'text-black');
+                loginBtn.classList.add('border-transparent', 'text-black/60', 'font-medium');
+                confirmContainer.classList.remove('hidden');
+                submitBtnText.innerText = i18nDict[currentLang].btn_signup;
+            }
+        }
+
+        async function handleAuthSubmit(e) {
+            e.preventDefault();
+            const email = document.getElementById('auth-email').value;
+            const password = document.getElementById('auth-password').value;
+            const errDiv = document.getElementById('auth-error');
+            errDiv.classList.add('hidden');
+
+            const { auth, db, appId } = window.firebaseApp;
+            const { signInWithEmailAndPassword, createUserWithEmailAndPassword, doc, getDoc, setDoc } = window.FirebaseSDK;
+
+            try {
+                if (authMode === 'login') {
+                    await signInWithEmailAndPassword(auth, email, password);
+                } else {
+                    const confirmPass = document.getElementById('auth-password-confirm').value;
+                    if (password !== confirmPass) {
+                        throw new Error(currentLang === 'bm' ? "Kata laluan tidak sepadan." : "Passwords do not match.");
+                    }
+                    
+                    const metaRef = doc(db, 'artifacts', appId, 'public', 'data', 'metadata');
+                    const metaSnap = await getDoc(metaRef);
+                    if (metaSnap.exists() && metaSnap.data().ownerCreated) {
+                        throw new Error(currentLang === 'bm' ? "Pendaftaran ditutup. Akaun pemilik sudah wujud." : "Sign up closed. Owner account already exists.");
+                    }
+
+                    const cred = await createUserWithEmailAndPassword(auth, email, password);
+                    await setDoc(metaRef, { ownerCreated: true, ownerUid: cred.user.uid, createdAt: new Date().toISOString() });
+                }
+            } catch (err) {
+                errDiv.innerText = err.message;
+                errDiv.classList.remove('hidden');
+            }
+        }
+
+        function logoutUser() {
+            const { auth } = window.firebaseApp;
+            const { signOut } = window.FirebaseSDK;
+            signOut(auth);
+        }
+
+        function openForgotPasswordModal() {
+            document.getElementById('modal-forgot').classList.remove('hidden');
+            document.getElementById('forgot-msg').innerText = '';
+            document.getElementById('forgot-email').value = document.getElementById('auth-email').value;
+        }
+
+        function closeForgotPasswordModal() {
+            document.getElementById('modal-forgot').classList.add('hidden');
+        }
+
+        async function submitForgotPassword() {
+            const email = document.getElementById('forgot-email').value;
+            const msgEl = document.getElementById('forgot-msg');
+            if (!email) {
+                msgEl.innerText = currentLang === 'bm' ? "Sila masukkan emel." : "Please enter email.";
+                msgEl.className = "text-xs font-semibold text-red-700";
+                return;
+            }
+            const { auth } = window.firebaseApp;
+            const { sendPasswordResetEmail } = window.FirebaseSDK;
+            try {
+                await sendPasswordResetEmail(auth, email);
+                msgEl.innerText = currentLang === 'bm' ? "Pautan set semula telah dihantar ke emel anda." : "Reset link sent to your email.";
+                msgEl.className = "text-xs font-semibold text-green-800";
+            } catch (err) {
+                msgEl.innerText = err.message;
+                msgEl.className = "text-xs font-semibold text-red-700";
+            }
+        }
+
+        // Realtime Sales Listener
+        function setupSalesListener(userId) {
+            if (unsubSales) unsubSales();
+            const { db, appId } = window.firebaseApp;
+            const { collection, query, onSnapshot } = window.FirebaseSDK;
+
+            const salesRef = collection(db, 'artifacts', appId, 'users', userId, 'sales');
+            unsubSales = onSnapshot(query(salesRef), (snapshot) => {
+                salesList = [];
+                snapshot.forEach(docSnap => {
+                    salesList.push({ id: docSnap.id, ...docSnap.data() });
+                });
+                salesList.sort((a, b) => new Date(b.date) - new Date(a.date) || new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
+                
+                renderDashboard();
+                renderHistory();
+                updateProductDatalist();
+            }, (error) => {
+                console.error("Firestore sync error:", error);
+            });
+        }
+
+        function saveFormDraft() {
+            if (editingSaleId) return;
+            const draft = {
+                date: document.getElementById('record-date').value,
+                product: document.getElementById('record-product').value,
+                amount: document.getElementById('record-amount').value
+            };
+            localStorage.setItem(formDraftKey, JSON.stringify(draft));
+        }
+
+        function loadFormDraft() {
+            const saved = localStorage.getItem(formDraftKey);
+            if (saved && !editingSaleId) {
+                try {
+                    const data = JSON.parse(saved);
+                    if (data.date) document.getElementById('record-date').value = data.date;
+                    if (data.product) document.getElementById('record-product').value = data.product;
+                    if (data.amount) document.getElementById('record-amount').value = data.amount;
+                } catch(e) {}
+            }
+        }
+
+        function clearFormDraft() {
+            localStorage.removeItem(formDraftKey);
+        }
+
+        // Dashboard Calculations & 12 Month Cards
+        function renderDashboard() {
+            const kl = getKlDate();
+            const todayStr = kl.isoDateStr;
+            const currentMonthPrefix = `${kl.year}-${String(kl.month).padStart(2, '0')}`;
+            const targetYearStr = "2026";
+
+            let dailyTotal = 0;
+            let monthlyTotal = 0;
+            let revenueTotal = 0;
+            const monthlySums = Array(12).fill(0);
+
+            salesList.forEach(sale => {
+                const amount = parseFloat(sale.amount) || 0;
+                const saleDate = sale.date || '';
+
+                if (saleDate === todayStr) {
+                    dailyTotal += amount;
+                }
+
+                if (saleDate.startsWith(currentMonthPrefix)) {
+                    monthlyTotal += amount;
+                }
+
+                if (saleDate.startsWith(targetYearStr)) {
+                    revenueTotal += amount;
+                    const monthPart = parseInt(saleDate.split('-')[1], 10);
+                    if (monthPart >= 1 && monthPart <= 12) {
+                        monthlySums[monthPart - 1] += amount;
+                    }
+                }
+            });
+
+            document.getElementById('dash-daily-sales').innerText = `RM ${dailyTotal.toFixed(2)}`;
+            document.getElementById('dash-monthly-sales').innerText = `RM ${monthlyTotal.toFixed(2)}`;
+            document.getElementById('dash-revenue-sales').innerText = `RM ${revenueTotal.toFixed(2)}`;
+
+            const monthsGrid = document.getElementById('months-grid');
+            monthsGrid.innerHTML = '';
+            const mNames = currentLang === 'bm' ? monthNamesBm : monthNamesEn;
+
+            for (let i = 0; i < 12; i++) {
+                const mCard = document.createElement('div');
+                mCard.className = "custom-card p-3 flex flex-col items-center justify-center text-center shadow-sm border border-black/10 min-h-[75px]";
+                mCard.innerHTML = `
+                    <span class="text-xs font-bold uppercase text-black/80">${mNames[i]}</span>
+                    <div class="text-sm sm:text-base font-extrabold mt-1">RM ${monthlySums[i].toFixed(2)}</div>
+                `;
+                monthsGrid.appendChild(mCard);
+            }
+        }
+
+        function updateProductDatalist() {
+            const datalist = document.getElementById('products-datalist');
+            datalist.innerHTML = '';
+            const products = [...new Set(salesList.map(s => s.product).filter(Boolean))];
+            products.forEach(p => {
+                const opt = document.createElement('option');
+                opt.value = p;
+                datalist.appendChild(opt);
+            });
+        }
+
+        async function handleSaveSale(e) {
+            e.preventDefault();
+            const date = document.getElementById('record-date').value;
+            const product = document.getElementById('record-product').value.trim();
+            const amountStr = document.getElementById('record-amount').value;
+            const amount = parseFloat(amountStr);
+
+            let isValid = true;
+            document.getElementById('err-date').classList.add('hidden');
+            document.getElementById('err-product').classList.add('hidden');
+            document.getElementById('err-amount').classList.add('hidden');
+
+            if (!date) {
+                document.getElementById('err-date').innerText = currentLang === 'bm' ? "Tarikh diperlukan" : "Date is required";
+                document.getElementById('err-date').classList.remove('hidden');
+                isValid = false;
+            }
+            if (!product) {
+                document.getElementById('err-product').innerText = currentLang === 'bm' ? "Produk diperlukan" : "Product is required";
+                document.getElementById('err-product').classList.remove('hidden');
+                isValid = false;
+            }
+            if (isNaN(amount) || amount <= 0) {
+                document.getElementById('err-amount').innerText = currentLang === 'bm' ? "Jumlah mesti lebih dari 0" : "Amount must be greater than 0";
+                document.getElementById('err-amount').classList.remove('hidden');
+                isValid = false;
+            }
+
+            if (!isValid) return;
+
+            const { auth, db, appId } = window.firebaseApp;
+            const { collection, addDoc, doc, updateDoc } = window.FirebaseSDK;
+            const userId = auth.currentUser?.uid;
+            if (!userId) return;
+
+            try {
+                if (editingSaleId) {
+                    const saleRef = doc(db, 'artifacts', appId, 'users', userId, 'sales', editingSaleId);
+                    await updateDoc(saleRef, {
+                        date,
+                        product,
+                        amount,
+                        updatedAt: new Date().toISOString()
+                    });
+                    editingSaleId = null;
+                } else {
+                    const salesRef = collection(db, 'artifacts', appId, 'users', userId, 'sales');
+                    await addDoc(salesRef, {
+                        date,
+                        product,
+                        amount,
+                        createdAt: new Date().toISOString()
+                    });
+                }
+
+                document.getElementById('sales-form').reset();
+                document.getElementById('record-date').value = getKlTodayDateString();
+                clearFormDraft();
+                resetFormButtonsState();
+                switchScreen('history');
+            } catch (err) {
+                console.error("Save error:", err);
+                showModalConfirm("Ralat", err.message, () => {});
+            }
+        }
+
+        function prepareEditMode() {
+            if (salesList.length === 0) return;
+            loadSaleIntoForm(salesList[0]);
+        }
+
+        function loadSaleIntoForm(sale) {
+            editingSaleId = sale.id;
+            document.getElementById('record-date').value = sale.date;
+            document.getElementById('record-product').value = sale.product;
+            document.getElementById('record-amount').value = sale.amount;
+
+            const removeBtn = document.getElementById('btn-remove');
+            removeBtn.disabled = false;
+            removeBtn.classList.remove('opacity-50');
+
+            switchScreen('record');
+        }
+
+        function resetFormButtonsState() {
+            editingSaleId = null;
+            const removeBtn = document.getElementById('btn-remove');
+            removeBtn.disabled = true;
+            removeBtn.classList.add('opacity-50');
+        }
+
+        function confirmRemoveSale() {
+            if (!editingSaleId) return;
+            showModalConfirm(
+                currentLang === 'bm' ? "Padam Rekod" : "Remove Sale",
+                currentLang === 'bm' ? "Adakah anda pasti mahu memadam rekod jualan ini?" : "Are you sure you want to remove this sale record?",
+                () => deleteSale(editingSaleId)
+            );
+        }
+
+        async function deleteSale(saleId) {
+            const { auth, db, appId } = window.firebaseApp;
+            const { doc, deleteDoc } = window.FirebaseSDK;
+            const userId = auth.currentUser?.uid;
+            if (!userId) return;
+
+            try {
+                const saleRef = doc(db, 'artifacts', appId, 'users', userId, 'sales', saleId);
+                await deleteDoc(saleRef);
+
+                document.getElementById('sales-form').reset();
+                document.getElementById('record-date').value = getKlTodayDateString();
+                clearFormDraft();
+                resetFormButtonsState();
+                switchScreen('history');
+            } catch (err) {
+                console.error("Delete error:", err);
+            }
+        }
+
+        function renderHistory() {
+            const historyList = document.getElementById('history-list');
+            const emptyEl = document.getElementById('history-empty');
+            historyList.innerHTML = '';
+
+            if (salesList.length === 0) {
+                emptyEl.classList.remove('hidden');
+                return;
+            }
+            emptyEl.classList.add('hidden');
+
+            salesList.forEach(sale => {
+                const dParts = sale.date.split('-');
+                const formattedDate = dParts.length === 3 ? `${dParts[2]}/${dParts[1]}/${dParts[0].slice(-2)}` : sale.date;
+
+                const row = document.createElement('div');
+                row.className = "custom-card p-4 flex items-center justify-between shadow-md border border-black/10";
+                row.innerHTML = `
+                    <div class="flex flex-col flex-1 pr-2">
+                        <div class="flex items-center gap-3">
+                            <span class="font-date text-xs font-bold text-black/80">${formattedDate}</span>
+                            <span class="text-sm font-bold truncate max-w-[150px] sm:max-w-[200px]">${escapeHtml(sale.product)}</span>
+                        </div>
+                        <div class="text-base font-extrabold mt-1">RM ${parseFloat(sale.amount).toFixed(2)}</div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button onclick="editSaleItem('${sale.id}')" class="w-9 h-9 rounded-xl bg-white/60 hover:bg-white flex items-center justify-center text-black shadow-sm border border-black/10">
+                            <i class="fa-solid fa-pen text-xs"></i>
+                        </button>
+                        <button onclick="quickSaveItem('${sale.id}')" class="w-9 h-9 rounded-xl bg-black text-white flex items-center justify-center shadow-sm">
+                            <i class="fa-solid fa-floppy-disk text-xs"></i>
+                        </button>
+                    </div>
+                `;
+                historyList.appendChild(row);
+            });
+        }
+
+        function editSaleItem(saleId) {
+            const sale = salesList.find(s => s.id === saleId);
+            if (sale) {
+                loadSaleIntoForm(sale);
+            }
+        }
+
+        function quickSaveItem(saleId) {
+            showModalConfirm(
+                currentLang === 'bm' ? "Disimpan" : "Saved",
+                currentLang === 'bm' ? "Rekod jualan ini sudah dikemas kini dan diselaraskan." : "This sale record is up to date and synced.",
+                () => {}
+            );
+        }
+
+        function exportCSVBackup() {
+            if (salesList.length === 0) {
+                showModalConfirm("Eksport", currentLang === 'bm' ? "Tiada data untuk dieksport." : "No data to export.", () => {});
+                return;
+            }
+
+            let csvContent = "data:text/csv;charset=utf-8,ID,Date,Product,Amount(RM)\n";
+            salesList.forEach(s => {
+                csvContent += `"${s.id}","${s.date}","${escapeCsv(s.product)}","${s.amount}"\n`;
+            });
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `scha_atelier_sales_${getKlTodayDateString()}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function escapeCsv(str) {
+            return (str || '').replace(/"/g, '""');
+        }
+
+        function escapeHtml(str) {
+            return (str || '').replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+        }
+
+        function showModalConfirm(title, text, callback) {
+            document.getElementById('modal-confirm-title').innerText = title;
+            document.getElementById('modal-confirm-text').innerText = text;
+            confirmCallback = callback;
+            document.getElementById('modal-confirm').classList.remove('hidden');
+        }
+
+        function closeConfirmModal(result) {
+            document.getElementById('modal-confirm').classList.add('hidden');
+            if (result && typeof confirmCallback === 'function') {
+                confirmCallback();
+            }
+            confirmCallback = null;
+        }
+
+        function openInfoModal() {
+            document.getElementById('modal-info').classList.remove('hidden');
+            toggleMenuDropdown();
+        }
+
+        function closeInfoModal() {
+            document.getElementById('modal-info').classList.add('hidden');
         }
     </script>
 </body>
